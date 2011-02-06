@@ -1,35 +1,33 @@
 package NewGUI;
 
-import java.awt.event.ActionEvent;
-
-import javax.swing.BorderFactory;
-import javax.swing.GroupLayout;
-import javax.swing.JPanel;
-import javax.swing.LayoutStyle;
-import javax.swing.border.TitledBorder;
+import javax.swing.*;
 
 public class SettingsPanel extends JPanel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// Variables declaration - do not modify
-	private javax.swing.JButton bApply;
-	private javax.swing.JButton bCancel;
-	private javax.swing.ButtonGroup buttonGroup1;
-	private javax.swing.JComboBox cAgents;
-	private javax.swing.JComboBox cAlgorithm;
-	private javax.swing.JComboBox cDirections;
-	private javax.swing.JComboBox cHeuristic;
-	private javax.swing.JSeparator separator;
-	private javax.swing.JLabel lAgents;
-	private javax.swing.JLabel lAlgorithm;
-	private javax.swing.JLabel lDirections;
-	private javax.swing.JLabel lGridSize;
-	private javax.swing.JLabel lHeuristic;
-	private javax.swing.JLabel lNumOfAgents;
-	private javax.swing.JRadioButton rBlock;
-	private javax.swing.JRadioButton rEnd;
-	private javax.swing.JRadioButton rStart;
-	private javax.swing.JTextField tGridSize;
-	private javax.swing.JTextField tNumOfAgents;
+	private JButton _bApply;
+	private JButton _bCancel;
+	private JComboBox _cAgents;
+	private JComboBox _cAlgorithm;
+	private JComboBox _cDirections;
+	private JComboBox _cHeuristic;
+	private JSeparator _separator;
+	private JLabel _lAgents;
+	private JLabel _lAlgorithm;
+	private JLabel _lDirections;
+	private JLabel _lGridSize;
+	private JLabel _lHeuristic;
+	private JLabel _lNumOfAgents;
+	private JRadioButton _rBlock;
+	private JRadioButton _rEnd;
+	private JRadioButton _rStart;
+	private ButtonGroup _actionGroup;
+	private JTextField _tGridSize;
+	private JTextField _tNumOfAgents;
 
 	// End of variables declaration
 
@@ -40,137 +38,245 @@ public class SettingsPanel extends JPanel {
 
 	private void initComponents() {
 		this.setBorder(BorderFactory.createTitledBorder("Settings"));
-		buttonGroup1 = new javax.swing.ButtonGroup();
-		lAlgorithm = new javax.swing.JLabel("Algorithm:");
-		lHeuristic = new javax.swing.JLabel("Heuristic:");
-		cAlgorithm = new javax.swing.JComboBox();
-		cHeuristic = new javax.swing.JComboBox();
-		lDirections = new javax.swing.JLabel("Directions:");
-		cDirections = new javax.swing.JComboBox();
-		separator = new javax.swing.JSeparator();
-		lNumOfAgents = new javax.swing.JLabel("Number of Agents:");		
-		tNumOfAgents = new javax.swing.JTextField();
-		cAgents = new javax.swing.JComboBox();
-		lAgents = new javax.swing.JLabel("Agents:");
-		rStart = new javax.swing.JRadioButton("Start");
-		rEnd = new javax.swing.JRadioButton("End");
-		rBlock = new javax.swing.JRadioButton("Block");
-		lGridSize = new javax.swing.JLabel("Grid Size :");
-		tGridSize = new javax.swing.JTextField();
-		bApply = new javax.swing.JButton("Apply");
-		bCancel = new javax.swing.JButton("Cancel");
+		_lAlgorithm = new JLabel("Algorithm:");
+		_lHeuristic = new JLabel("Heuristic:");
+		_cAlgorithm = new JComboBox();
+		_cHeuristic = new JComboBox();
+		_lDirections = new JLabel("Directions:");
+		_cDirections = new JComboBox();
+		_separator = new JSeparator();
+		_lNumOfAgents = new JLabel("Number of Agents:");
+		_tNumOfAgents = new JTextField("", 3);
+		_cAgents = new JComboBox();
+		_lAgents = new JLabel("Agents:");
+		_rStart = new JRadioButton("Start");
+		_rEnd = new JRadioButton("End");
+		_rBlock = new JRadioButton("Block");
+		_actionGroup = new ButtonGroup();
+		_lGridSize = new JLabel("Grid Size :");
+		_tGridSize = new JTextField("", 3);
+		_bApply = new JButton("Apply");
+		_bCancel = new JButton("Cancel");
 
+		_cAlgorithm
+				.setModel(new DefaultComboBoxModel(new String[] { "A-Star" }));
+		_cHeuristic.setModel(new DefaultComboBoxModel(
+				new String[] { "Manhattan " }));
+		_cDirections.setModel(new DefaultComboBoxModel(new String[] {
+				"4 Directions", "8 Directions" }));
+		_cAgents.setModel(new DefaultComboBoxModel(new String[] { "Agent 1",
+				"Agent 2", "Agent 3", "Agent 4" }));
 
-		cAlgorithm.setModel(new javax.swing.DefaultComboBoxModel(new String[] {"A-Star" }));
-		cHeuristic.setModel(new javax.swing.DefaultComboBoxModel(new String[] {"Manhattan "}));
-		cDirections.setModel(new javax.swing.DefaultComboBoxModel(new String[] {"4 Directions", "8 Directions" }));
-		cAgents.setModel(new javax.swing.DefaultComboBoxModel(new String[] {"Agent 1", "Agent 2", "Agent 3", "Agent 4" }));
-		this.add(lAlgorithm);
-		this.add(cAlgorithm);
-		this.add(lHeuristic);
-		this.add(cHeuristic);
-		this.add(lDirections);
-		this.add(cDirections);
-		this.add(lNumOfAgents);
-		this.add(tNumOfAgents);
-		this.add(rStart);
-		this.add(rEnd);
-		this.add(rBlock);
-		this.add(lGridSize);
-		this.add(tGridSize);
-		this.add(bApply);
-		this.add(bCancel);
+		_actionGroup.add(_rBlock);
+		_actionGroup.add(_rStart);
+		_actionGroup.add(_rEnd);
 		
+		this.add(_lAlgorithm);
+		this.add(_cAlgorithm);
+		this.add(_lHeuristic);
+		this.add(_cHeuristic);
+		this.add(_lDirections);
+		this.add(_cDirections);
+		this.add(_lNumOfAgents);
+		this.add(_tNumOfAgents);
+		this.add(_rStart);
+		this.add(_rEnd);
+		this.add(_rBlock);
+		this.add(_lGridSize);
+		this.add(_tGridSize);
+		this.add(_bApply);
+		this.add(_bCancel);
+
 		GroupLayout layout = new GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lAlgorithm)
-                        .addPreferredGap( LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cAlgorithm,  GroupLayout.PREFERRED_SIZE,  GroupLayout.DEFAULT_SIZE,  GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lHeuristic)
-                        .addPreferredGap( LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cHeuristic,  GroupLayout.PREFERRED_SIZE,  GroupLayout.DEFAULT_SIZE,  GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lDirections)
-                        .addPreferredGap( LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cDirections,  GroupLayout.PREFERRED_SIZE,  GroupLayout.DEFAULT_SIZE,  GroupLayout.PREFERRED_SIZE))))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lNumOfAgents)
-                .addPreferredGap( LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(tNumOfAgents,  GroupLayout.PREFERRED_SIZE,  GroupLayout.DEFAULT_SIZE,  GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lAgents)
-                .addPreferredGap( LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cAgents,  GroupLayout.PREFERRED_SIZE,  GroupLayout.DEFAULT_SIZE,  GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup( GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lGridSize)
-                        .addPreferredGap( LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tGridSize,  GroupLayout.PREFERRED_SIZE,  GroupLayout.DEFAULT_SIZE,  GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(rStart)
-                        .addPreferredGap( LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(rEnd)
-                        .addPreferredGap( LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(rBlock))))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(bApply)
-                .addPreferredGap( LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(bCancel))
-            .addComponent(separator,  GroupLayout.PREFERRED_SIZE, 188,  GroupLayout.PREFERRED_SIZE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup( GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addGroup(layout.createParallelGroup( GroupLayout.Alignment.BASELINE)
-                    .addComponent(lAlgorithm)
-                    .addComponent(cAlgorithm,  GroupLayout.PREFERRED_SIZE,  GroupLayout.DEFAULT_SIZE,  GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap( LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup( GroupLayout.Alignment.BASELINE)
-                    .addComponent(lHeuristic)
-                    .addComponent(cHeuristic,  GroupLayout.PREFERRED_SIZE,  GroupLayout.DEFAULT_SIZE,  GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap( LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup( GroupLayout.Alignment.BASELINE)
-                    .addComponent(lDirections)
-                    .addComponent(cDirections,  GroupLayout.PREFERRED_SIZE,  GroupLayout.DEFAULT_SIZE,  GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap( LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(separator,  GroupLayout.PREFERRED_SIZE, 10,  GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap( LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup( GroupLayout.Alignment.BASELINE)
-                    .addComponent(lNumOfAgents)
-                    .addComponent(tNumOfAgents,  GroupLayout.PREFERRED_SIZE,  GroupLayout.DEFAULT_SIZE,  GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap( LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup( GroupLayout.Alignment.BASELINE)
-                    .addComponent(lAgents)
-                    .addComponent(cAgents,  GroupLayout.PREFERRED_SIZE,  GroupLayout.DEFAULT_SIZE,  GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap( LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup( GroupLayout.Alignment.BASELINE)
-                    .addComponent(rStart)
-                    .addComponent(rEnd)
-                    .addComponent(rBlock))
-                .addPreferredGap( LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup( GroupLayout.Alignment.BASELINE)
-                    .addComponent(lGridSize)
-                    .addComponent(tGridSize,  GroupLayout.PREFERRED_SIZE,  GroupLayout.DEFAULT_SIZE,  GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup( GroupLayout.Alignment.BASELINE)
-                    .addComponent(bApply)
-                    .addComponent(bCancel))
-                .addContainerGap(34, Short.MAX_VALUE))
-        );
-    }
-	
+		this.setLayout(layout);
+		layout.setHorizontalGroup(layout
+				.createParallelGroup(GroupLayout.Alignment.LEADING)
+				.addGroup(
+						layout.createSequentialGroup()
+								.addContainerGap()
+								.addGroup(
+										layout.createParallelGroup(
+												GroupLayout.Alignment.LEADING)
+												.addGroup(
+														layout.createSequentialGroup()
+																.addComponent(
+																		_lAlgorithm)
+																.addPreferredGap(
+																		LayoutStyle.ComponentPlacement.UNRELATED)
+																.addComponent(
+																		_cAlgorithm,
+																		GroupLayout.PREFERRED_SIZE,
+																		GroupLayout.DEFAULT_SIZE,
+																		GroupLayout.PREFERRED_SIZE))
+												.addGroup(
+														layout.createSequentialGroup()
+																.addComponent(
+																		_lHeuristic)
+																.addPreferredGap(
+																		LayoutStyle.ComponentPlacement.UNRELATED)
+																.addComponent(
+																		_cHeuristic,
+																		GroupLayout.PREFERRED_SIZE,
+																		GroupLayout.DEFAULT_SIZE,
+																		GroupLayout.PREFERRED_SIZE))
+												.addGroup(
+														layout.createSequentialGroup()
+																.addComponent(
+																		_lDirections)
+																.addPreferredGap(
+																		LayoutStyle.ComponentPlacement.RELATED)
+																.addComponent(
+																		_cDirections,
+																		GroupLayout.PREFERRED_SIZE,
+																		GroupLayout.DEFAULT_SIZE,
+																		GroupLayout.PREFERRED_SIZE))))
+				.addGroup(
+						layout.createSequentialGroup()
+								.addContainerGap()
+								.addComponent(_lNumOfAgents)
+								.addPreferredGap(
+										LayoutStyle.ComponentPlacement.UNRELATED)
+								.addComponent(_tNumOfAgents,
+										GroupLayout.PREFERRED_SIZE,
+										GroupLayout.DEFAULT_SIZE,
+										GroupLayout.PREFERRED_SIZE))
+				.addGroup(
+						layout.createSequentialGroup()
+								.addContainerGap()
+								.addComponent(_lAgents)
+								.addPreferredGap(
+										LayoutStyle.ComponentPlacement.UNRELATED)
+								.addComponent(_cAgents,
+										GroupLayout.PREFERRED_SIZE,
+										GroupLayout.DEFAULT_SIZE,
+										GroupLayout.PREFERRED_SIZE))
+				.addGroup(
+						layout.createSequentialGroup()
+								.addContainerGap()
+								.addGroup(
+										layout.createParallelGroup(
+												GroupLayout.Alignment.LEADING)
+												.addGroup(
+														layout.createSequentialGroup()
+																.addComponent(
+																		_lGridSize)
+																.addPreferredGap(
+																		LayoutStyle.ComponentPlacement.RELATED)
+																.addComponent(
+																		_tGridSize,
+																		GroupLayout.PREFERRED_SIZE,
+																		GroupLayout.DEFAULT_SIZE,
+																		GroupLayout.PREFERRED_SIZE))
+												.addGroup(
+														layout.createSequentialGroup()
+																.addComponent(
+																		_rStart)
+																.addPreferredGap(
+																		LayoutStyle.ComponentPlacement.UNRELATED)
+																.addComponent(
+																		_rEnd)
+																.addPreferredGap(
+																		LayoutStyle.ComponentPlacement.RELATED)
+																.addComponent(
+																		_rBlock))))
+				.addGroup(
+						layout.createSequentialGroup()
+								.addContainerGap()
+								.addComponent(_bApply)
+								.addPreferredGap(
+										LayoutStyle.ComponentPlacement.UNRELATED)
+								.addComponent(_bCancel))
+				.addComponent(_separator, GroupLayout.PREFERRED_SIZE, 188,
+						GroupLayout.PREFERRED_SIZE));
+		layout.setVerticalGroup(layout
+				.createParallelGroup(GroupLayout.Alignment.LEADING)
+				.addGroup(
+						layout.createSequentialGroup()
+								.addGap(5,5,5)
+								.addGroup(
+										layout.createParallelGroup(
+												GroupLayout.Alignment.BASELINE)
+												.addComponent(_lAlgorithm)
+												.addComponent(
+														_cAlgorithm,
+														GroupLayout.PREFERRED_SIZE,
+														GroupLayout.DEFAULT_SIZE,
+														GroupLayout.PREFERRED_SIZE))
+								.addPreferredGap(
+										LayoutStyle.ComponentPlacement.UNRELATED)
+								.addGroup(
+										layout.createParallelGroup(
+												GroupLayout.Alignment.BASELINE)
+												.addComponent(_lHeuristic)
+												.addComponent(
+														_cHeuristic,
+														GroupLayout.PREFERRED_SIZE,
+														GroupLayout.DEFAULT_SIZE,
+														GroupLayout.PREFERRED_SIZE))
+								.addPreferredGap(
+										LayoutStyle.ComponentPlacement.UNRELATED)
+								.addGroup(
+										layout.createParallelGroup(
+												GroupLayout.Alignment.BASELINE)
+												.addComponent(_lDirections)
+												.addComponent(
+														_cDirections,
+														GroupLayout.PREFERRED_SIZE,
+														GroupLayout.DEFAULT_SIZE,
+														GroupLayout.PREFERRED_SIZE))
+								.addPreferredGap(
+										LayoutStyle.ComponentPlacement.RELATED)
+								.addComponent(_separator,
+										GroupLayout.PREFERRED_SIZE, 10,
+										GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(
+										LayoutStyle.ComponentPlacement.RELATED)
+								.addGroup(
+										layout.createParallelGroup(
+												GroupLayout.Alignment.BASELINE)
+												.addComponent(_lNumOfAgents)
+												.addComponent(
+														_tNumOfAgents,
+														GroupLayout.PREFERRED_SIZE,
+														GroupLayout.DEFAULT_SIZE,
+														GroupLayout.PREFERRED_SIZE))
+								.addPreferredGap(
+										LayoutStyle.ComponentPlacement.RELATED)
+								.addGroup(
+										layout.createParallelGroup(
+												GroupLayout.Alignment.BASELINE)
+												.addComponent(_lAgents)
+												.addComponent(
+														_cAgents,
+														GroupLayout.PREFERRED_SIZE,
+														GroupLayout.DEFAULT_SIZE,
+														GroupLayout.PREFERRED_SIZE))
+								.addPreferredGap(
+										LayoutStyle.ComponentPlacement.UNRELATED)
+								.addGroup(
+										layout.createParallelGroup(
+												GroupLayout.Alignment.BASELINE)
+												.addComponent(_rStart)
+												.addComponent(_rEnd)
+												.addComponent(_rBlock))
+								.addPreferredGap(
+										LayoutStyle.ComponentPlacement.UNRELATED)
+								.addGroup(
+										layout.createParallelGroup(
+												GroupLayout.Alignment.BASELINE)
+												.addComponent(_lGridSize)
+												.addComponent(
+														_tGridSize,
+														GroupLayout.PREFERRED_SIZE,
+														GroupLayout.DEFAULT_SIZE,
+														GroupLayout.PREFERRED_SIZE))
+								.addGap(18, 18, 18)
+								.addGroup(
+										layout.createParallelGroup(
+												GroupLayout.Alignment.BASELINE)
+												.addComponent(_bApply)
+												.addComponent(_bCancel))
+								.addContainerGap(34, Short.MAX_VALUE)));
+	}
 
 }
