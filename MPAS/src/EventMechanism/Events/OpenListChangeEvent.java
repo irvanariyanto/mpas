@@ -1,4 +1,4 @@
-package EventMechanism;
+package EventMechanism.Events;
 
 import java.util.Vector;
 
@@ -6,16 +6,17 @@ import EventMechanism.ApplicationEvent;
 import EventMechanism.ApplicationEventSource;
 import algorithms.myPoint;
 
-public class ClosedListChangeEvent extends ApplicationEvent {
+
+public class OpenListChangeEvent extends ApplicationEvent {
 	private Vector<myPoint> _points;
-	public ClosedListChangeEvent(ApplicationEventSource source,Vector<myPoint> points) {
+	public OpenListChangeEvent(ApplicationEventSource source,Vector<myPoint> points) {
 		super(source);
 		this._points = points;
 	}
 
 	@Override
 	public String getDescription() {
-		return "ClosedListChangeEvent";
+		return "OpenListChangeEvent";
 	}
 
 	public Vector<myPoint> get_points() {

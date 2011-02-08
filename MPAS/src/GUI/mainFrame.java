@@ -7,9 +7,9 @@ package GUI;
 import Controller.Controller;
 import EventMechanism.ApplicationEvent;
 import EventMechanism.ApplicationEventListener;
-import EventMechanism.finalPathEvent;
 import EventMechanism.Events.ClosedListChangeEvent;
 import EventMechanism.Events.OpenListChangeEvent;
+import EventMechanism.Events.finalPathEvent;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
