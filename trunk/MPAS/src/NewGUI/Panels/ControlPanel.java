@@ -1,14 +1,15 @@
-package NewGUI;
+package NewGUI.Panels;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.GroupLayout;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
 
 public class ControlPanel extends JPanel {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	// Variables declaration - do not modify
+	// Variables declaration 
 	private  JButton bFindPath;
 	private  JButton bStop;
 	private  JButton bStep;
@@ -49,6 +50,6 @@ public class ControlPanel extends JPanel {
 				      .addComponent(bStep)
 				      .addComponent(bClearPath)
 				);
-		
 	}
+	
 }

@@ -7,13 +7,13 @@ import java.util.Observable;
 import java.util.PriorityQueue;
 import java.util.Vector;
 
-import Events.ApplicationEvent;
-import Events.ApplicationEventListener;
-import Events.ApplicationEventListenerCollection;
-import Events.ApplicationEventSource;
-import Events.ClosedListChangeEvent;
-import Events.OpenListChangeEvent;
-import Events.finalPathEvent;
+import EventMechanism.ApplicationEvent;
+import EventMechanism.ApplicationEventListener;
+import EventMechanism.ApplicationEventListenerCollection;
+import EventMechanism.ApplicationEventSource;
+import EventMechanism.finalPathEvent;
+import EventMechanism.Events.ClosedListChangeEvent;
+import EventMechanism.Events.OpenListChangeEvent;
 
 
 import maps.Mover;

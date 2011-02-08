@@ -5,11 +5,11 @@
 package GUI;
 
 import Controller.Controller;
-import Events.ApplicationEvent;
-import Events.ApplicationEventListener;
-import Events.ClosedListChangeEvent;
-import Events.OpenListChangeEvent;
-import Events.finalPathEvent;
+import EventMechanism.ApplicationEvent;
+import EventMechanism.ApplicationEventListener;
+import EventMechanism.finalPathEvent;
+import EventMechanism.Events.ClosedListChangeEvent;
+import EventMechanism.Events.OpenListChangeEvent;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
