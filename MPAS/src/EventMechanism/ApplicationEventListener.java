@@ -1,4 +1,4 @@
-package Events;
+package EventMechanism;
 
 public interface ApplicationEventListener {
 

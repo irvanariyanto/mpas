@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package NewGUI;
+package NewGUI.Panels;
 
 import java.awt.AWTEvent;
 import java.awt.Color;
@@ -10,8 +10,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+
 
 import algorithms.myPoint;
 
@@ -47,7 +46,7 @@ public class NewCell extends Component {
 	}
 
 	// Constructor
-	public NewCell(myPoint p, boolean block,mainF main) {
+	public NewCell(myPoint p, boolean block,mainPanel main) {
 		this._position = p;
 		this._agnetNum=0;
 		init();
@@ -62,10 +61,6 @@ public class NewCell extends Component {
 
 		// Action and mouse listener support
 		enableEvents(AWTEvent.MOUSE_EVENT_MASK);
-
-		MouseListener mouseOnCell = new MouseOnCell();
-		this.addMouseListener(mouseOnCell);
-
 	}
 
 	/**
