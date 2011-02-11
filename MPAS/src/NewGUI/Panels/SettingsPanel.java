@@ -1,5 +1,8 @@
 package NewGUI.Panels;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.*;
 
 public class SettingsPanel extends JPanel {
@@ -69,59 +72,59 @@ public class SettingsPanel extends JPanel {
 		_actionGroup.add(_rEnd);
 		
 		//adding ActionListeners
-		_cAlgorithm.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+		_cAlgorithm.addActionListener(new  ActionListener() {
+            public void actionPerformed( ActionEvent evt) {
                 _cAlgorithmActionPerformed(evt);
             }
         });	
-		_cHeuristic.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+		_cHeuristic.addActionListener(new  ActionListener() {
+            public void actionPerformed( ActionEvent evt) {
                 _cHeuristicActionPerformed(evt);
             }
         });	
-		_cDirections.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+		_cDirections.addActionListener(new  ActionListener() {
+            public void actionPerformed( ActionEvent evt) {
                 _cDirectionsActionPerformed(evt);
             }
         });
 		
-		 _tGridSize.addActionListener(new java.awt.event.ActionListener() {
-			 public void actionPerformed(java.awt.event.ActionEvent evt) {
+		 _tGridSize.addActionListener(new  ActionListener() {
+			 public void actionPerformed( ActionEvent evt) {
 				 _tGridSizeActionPerformed(evt);
 			 }      
 	     });		 
-	     _bApply.addActionListener(new java.awt.event.ActionListener() {
-	    	 public void actionPerformed(java.awt.event.ActionEvent evt) {
+	     _bApply.addActionListener(new  ActionListener() {
+	    	 public void actionPerformed( ActionEvent evt) {
 	    		 _bApplyActionPerformed(evt);
 	         }
 	     });
-	     _bCancel.addActionListener(new java.awt.event.ActionListener() {
-	    	 public void actionPerformed(java.awt.event.ActionEvent evt) {
+	     _bCancel.addActionListener(new  ActionListener() {
+	    	 public void actionPerformed( ActionEvent evt) {
 	    		 _bCancelActionPerformed(evt);
 	    	 }
 	     });
-        _cAgents.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        _cAgents.addActionListener(new  ActionListener() {
+            public void actionPerformed( ActionEvent evt) {
                 _cAgentsActionPerformed(evt);
             }
         });
-        _rStart.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        _rStart.addActionListener(new  ActionListener() {
+            public void actionPerformed( ActionEvent evt) {
                 _rStartActionPerformed(evt);
             }
         });
-        _rEnd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        _rEnd.addActionListener(new  ActionListener() {
+            public void actionPerformed( ActionEvent evt) {
                 _rEndActionPerformed(evt);
             }
         });
-        _rBlock.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        _rBlock.addActionListener(new  ActionListener() {
+            public void actionPerformed( ActionEvent evt) {
                 _rBlockActionPerformed(evt);
             }
         });		 
-        _bGeneratePositions.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        _bGeneratePositions.addActionListener(new  ActionListener() {
+            public void actionPerformed( ActionEvent evt) {
                 _bGeneratePositionsActionPerformed(evt);
             }
         });		
@@ -131,139 +134,141 @@ public class SettingsPanel extends JPanel {
 		GroupLayout layout = new GroupLayout(this);
 		this.setLayout(layout);
 		layout.setHorizontalGroup(
-	            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+	            layout.createParallelGroup( GroupLayout.Alignment.LEADING)
 	            .addGroup(layout.createSequentialGroup()
-	                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+	                .addGroup(layout.createParallelGroup( GroupLayout.Alignment.LEADING)
 	                    .addGroup(layout.createSequentialGroup()
 	                        .addContainerGap()
-	                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+	                        .addGroup(layout.createParallelGroup( GroupLayout.Alignment.LEADING)
 	                            .addComponent(_lAlgorithm)
 	                            .addComponent(_lDirections)
 	                            .addComponent(_lHeuristic))
 	                        .addGap(18, 18, 18)
-	                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-	                            .addComponent(_cAlgorithm, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-	                            .addComponent(_cHeuristic, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+	                        .addGroup(layout.createParallelGroup( GroupLayout.Alignment.LEADING, false)
+	                            .addComponent(_cAlgorithm, 0,  GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+	                            .addComponent(_cHeuristic, 0,  GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 	                            .addComponent(_cDirections, 0, 102, Short.MAX_VALUE)))
 	                    .addGroup(layout.createSequentialGroup()
 	                        .addContainerGap()
 	                        .addComponent(_lNumOfAgents)
-	                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-	                        .addComponent(_sNumOfAgents, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-	                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+	                        .addPreferredGap( LayoutStyle.ComponentPlacement.RELATED)
+	                        .addComponent(_sNumOfAgents,  GroupLayout.PREFERRED_SIZE, 88,  GroupLayout.PREFERRED_SIZE)
+	                        .addPreferredGap( LayoutStyle.ComponentPlacement.RELATED)
 	                        .addComponent(_lNumber))
 	                    .addGroup(layout.createSequentialGroup()
 	                        .addContainerGap()
 	                        .addComponent(_rStart)
-	                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+	                        .addPreferredGap( LayoutStyle.ComponentPlacement.UNRELATED)
 	                        .addComponent(_rEnd)
-	                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+	                        .addPreferredGap( LayoutStyle.ComponentPlacement.RELATED)
 	                        .addComponent(_rBlock))
 	                    .addGroup(layout.createSequentialGroup()
 	                        .addContainerGap()
 	                        .addComponent(_lAgents)
-	                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-	                        .addComponent(_cAgents, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+	                        .addPreferredGap( LayoutStyle.ComponentPlacement.UNRELATED)
+	                        .addComponent(_cAgents,  GroupLayout.PREFERRED_SIZE, 33,  GroupLayout.PREFERRED_SIZE))
 	                    .addGroup(layout.createSequentialGroup()
 	                        .addContainerGap()
 	                        .addComponent(_bGeneratePositions))
 	                    .addGroup(layout.createSequentialGroup()
 	                        .addContainerGap()
 	                        .addComponent(_lGridSize)
-	                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-	                        .addComponent(_tGridSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+	                        .addPreferredGap( LayoutStyle.ComponentPlacement.RELATED)
+	                        .addComponent(_tGridSize,  GroupLayout.PREFERRED_SIZE,  GroupLayout.DEFAULT_SIZE,  GroupLayout.PREFERRED_SIZE))
 	                    .addGroup(layout.createSequentialGroup()
 	                        .addGap(45, 45, 45)
 	                        .addComponent(_bApply)
-	                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+	                        .addPreferredGap( LayoutStyle.ComponentPlacement.UNRELATED)
 	                        .addComponent(_bCancel)))
-	                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+	                .addContainerGap( GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 	            .addGroup(layout.createSequentialGroup()
 	                .addContainerGap()
-	                .addComponent(_separator, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE))
+	                .addComponent(_separator,  GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE))
 	        );
 	        layout.setVerticalGroup(
-	            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+	            layout.createParallelGroup( GroupLayout.Alignment.LEADING)
 	            .addGroup(layout.createSequentialGroup()
-	                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+	                .addGroup(layout.createParallelGroup( GroupLayout.Alignment.TRAILING)
 	                    .addGroup(layout.createSequentialGroup()
-	                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+	                        .addGroup(layout.createParallelGroup( GroupLayout.Alignment.BASELINE)
 	                            .addComponent(_lAlgorithm)
-	                            .addComponent(_cAlgorithm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-	                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-	                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-	                            .addComponent(_cHeuristic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+	                            .addComponent(_cAlgorithm,  GroupLayout.PREFERRED_SIZE,  GroupLayout.DEFAULT_SIZE,  GroupLayout.PREFERRED_SIZE))
+	                        .addPreferredGap( LayoutStyle.ComponentPlacement.RELATED)
+	                        .addGroup(layout.createParallelGroup( GroupLayout.Alignment.BASELINE)
+	                            .addComponent(_cHeuristic,  GroupLayout.PREFERRED_SIZE,  GroupLayout.DEFAULT_SIZE,  GroupLayout.PREFERRED_SIZE)
 	                            .addComponent(_lHeuristic))
-	                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-	                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-	                            .addComponent(_cDirections, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+	                        .addPreferredGap( LayoutStyle.ComponentPlacement.RELATED)
+	                        .addGroup(layout.createParallelGroup( GroupLayout.Alignment.BASELINE)
+	                            .addComponent(_cDirections,  GroupLayout.PREFERRED_SIZE,  GroupLayout.DEFAULT_SIZE,  GroupLayout.PREFERRED_SIZE)
 	                            .addComponent(_lDirections))
-	                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-	                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-	                            .addComponent(_sNumOfAgents, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+	                        .addPreferredGap( LayoutStyle.ComponentPlacement.UNRELATED)
+	                        .addGroup(layout.createParallelGroup( GroupLayout.Alignment.TRAILING)
+	                            .addComponent(_sNumOfAgents,  GroupLayout.PREFERRED_SIZE,  GroupLayout.DEFAULT_SIZE,  GroupLayout.PREFERRED_SIZE)
 	                            .addComponent(_lNumOfAgents)))
 	                    .addComponent(_lNumber))
-	                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-	                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+	                .addPreferredGap( LayoutStyle.ComponentPlacement.RELATED)
+	                .addGroup(layout.createParallelGroup( GroupLayout.Alignment.BASELINE)
 	                    .addComponent(_lGridSize)
-	                    .addComponent(_tGridSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-	                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-	                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+	                    .addComponent(_tGridSize,  GroupLayout.PREFERRED_SIZE,  GroupLayout.DEFAULT_SIZE,  GroupLayout.PREFERRED_SIZE))
+	                .addPreferredGap( LayoutStyle.ComponentPlacement.UNRELATED)
+	                .addGroup(layout.createParallelGroup( GroupLayout.Alignment.BASELINE)
 	                    .addComponent(_bApply)
 	                    .addComponent(_bCancel))
-	                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-	                .addComponent(_separator, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+	                .addPreferredGap( LayoutStyle.ComponentPlacement.UNRELATED)
+	                .addComponent(_separator,  GroupLayout.PREFERRED_SIZE, 10,  GroupLayout.PREFERRED_SIZE)
 	                .addGap(1, 1, 1)
-	                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+	                .addGroup(layout.createParallelGroup( GroupLayout.Alignment.BASELINE)
 	                    .addComponent(_lAgents)
-	                    .addComponent(_cAgents, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-	                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-	                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+	                    .addComponent(_cAgents,  GroupLayout.PREFERRED_SIZE,  GroupLayout.DEFAULT_SIZE,  GroupLayout.PREFERRED_SIZE))
+	                .addPreferredGap( LayoutStyle.ComponentPlacement.RELATED)
+	                .addGroup(layout.createParallelGroup( GroupLayout.Alignment.BASELINE)
 	                    .addComponent(_rStart)
 	                    .addComponent(_rEnd)
 	                    .addComponent(_rBlock))
-	                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+	                .addPreferredGap( LayoutStyle.ComponentPlacement.RELATED)
 	                .addComponent(_bGeneratePositions)
-	                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+	                .addContainerGap( GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 	        );
 		}
 	
-	private void _cAlgorithmActionPerformed(java.awt.event.ActionEvent evt) {
+	private void _cAlgorithmActionPerformed( ActionEvent evt) {
+		JComboBox tComboBox = (JComboBox)evt.getSource();
+        String algorithmName = (String)tComboBox.getSelectedItem();
+        System.out.println(algorithmName);
+    }
+	
+	private void _cHeuristicActionPerformed( ActionEvent evt) {
         // TODO add your handling code here:
     }
 	
-	private void _cHeuristicActionPerformed(java.awt.event.ActionEvent evt) {
+	private void _cDirectionsActionPerformed( ActionEvent evt) {
         // TODO add your handling code here:
     }
 	
-	private void _cDirectionsActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-    }
-	
-	private void _tGridSizeActionPerformed(java.awt.event.ActionEvent evt) {
+	private void _tGridSizeActionPerformed( ActionEvent evt) {
         // TODO add your handling code here:
     }
 	                                    
-	private void _bApplyActionPerformed(java.awt.event.ActionEvent evt) {                                       
+	private void _bApplyActionPerformed( ActionEvent evt) {                                       
 	     // TODO add your handling code here:
 	} 
-	private void _bCancelActionPerformed(java.awt.event.ActionEvent evt) {
+	private void _bCancelActionPerformed( ActionEvent evt) {
         // TODO add your handling code here:
     }
-	private void _cAgentsActionPerformed(java.awt.event.ActionEvent evt) {
+	private void _cAgentsActionPerformed( ActionEvent evt) {
         // TODO add your handling code here:
     }
-	private void _rStartActionPerformed(java.awt.event.ActionEvent evt) {
+	private void _rStartActionPerformed( ActionEvent evt) {
         // TODO add your handling code here:
     }
-    private void _rEndActionPerformed(java.awt.event.ActionEvent evt) {                                     
+    private void _rEndActionPerformed( ActionEvent evt) {                                     
         // TODO add your handling code here:
     }
-    private void _rBlockActionPerformed(java.awt.event.ActionEvent evt) {
+    private void _rBlockActionPerformed( ActionEvent evt) {
         // TODO add your handling code here:
     }
 
-    private void _bGeneratePositionsActionPerformed(java.awt.event.ActionEvent evt) {
+    private void _bGeneratePositionsActionPerformed( ActionEvent evt) {
         // TODO add your handling code here:
     }
 	
