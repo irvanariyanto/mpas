@@ -1,15 +1,17 @@
-package algorithms;
+package algorithmsNEW;
 
 import java.util.Vector;
+
+import algorithms.myPoint;
 
 import test.moverStub;
 
 import maps.MapInterface;
 import maps.Mover;
 
-public class myState implements Comparable<myState>,StateInterface {
+public class myState implements Comparable<myState>,StateInterface<myPoint> {
 	private Vector<myPoint> _Coordinates;
-	private StateInterface _parent;
+	private StateInterface<myPoint> _parent;
 	private float _cost;
 	private float _heuristic;
 	private MapInterface _map;
@@ -42,11 +44,11 @@ public class myState implements Comparable<myState>,StateInterface {
 		return _Coordinates;
 	}
 
-	public void set_parent(StateInterface _parent) {
+	public void set_parent(StateInterface<myPoint> _parent) {
 		this._parent = _parent;
 	}
 
-	public StateInterface get_parent() {
+	public StateInterface<myPoint> get_parent() {
 		return _parent;
 	}
 
@@ -146,10 +148,10 @@ public class myState implements Comparable<myState>,StateInterface {
 	 * @return
 	 */
 	@Override
-	public Vector<StateInterface> expand() {
+	public Vector<StateInterface<myPoint>> expand() {
 		if (this.get_Coordinates().size() == 1) {
 			Vector<myPoint> moves = this._map.getAllMoves(this.get_Coordinates().elementAt(0));
-			Vector<StateInterface> res = new Vector<StateInterface>();
+			Vector<StateInterface<myPoint>> res = new Vector<StateInterface<myPoint>>();
 			for (myPoint p : moves) {
 				Vector<myPoint> tCoordinates = new Vector<myPoint>();
 				tCoordinates.add(p);
@@ -157,13 +159,13 @@ public class myState implements Comparable<myState>,StateInterface {
 			}
 			return res;
 		} else {
-			Vector<StateInterface> res = new Vector<StateInterface>();
+			Vector<StateInterface<myPoint>> res = new Vector<StateInterface<myPoint>>();
 			myState tState = new myState(this);
 			myPoint tPoint = tState.get_Coordinates().remove(0);
 			Vector<myPoint> moves = this._map.getAllMoves(tPoint);
-			Vector<StateInterface> tStates = tState.expand();
+			Vector<StateInterface<myPoint>> tStates = tState.expand();
 			for (myPoint p : moves) {
-				for (StateInterface s : tStates) {
+				for (StateInterface<myPoint> s : tStates) {
 					myState tmyState = (myState)s;
 					if (checkIfLegal(this, p, tmyState)) {
 						Vector<myPoint> tCoordinates = new Vector<myPoint>(tmyState.get_Coordinates());
@@ -194,7 +196,7 @@ public class myState implements Comparable<myState>,StateInterface {
 	}
 
 	@Override
-	public float calcDistance(StateInterface neighbor) {
+	public float calcDistance(StateInterface<myPoint> neighbor) {
 		float ans = 0;
 		myState s = (myState)neighbor;
 		for (int i = 0; i < s.get_Coordinates().size();i++){

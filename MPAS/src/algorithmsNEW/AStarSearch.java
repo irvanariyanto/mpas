@@ -1,27 +1,27 @@
-package algorithms;
+package algorithmsNEW;
 
 
-import heuristics.NewHeuristicInterface;
+import heuristicsNEW.NewHeuristicInterface;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.PriorityQueue;
 import java.util.Vector;
 
-public class AStarSearch implements SearchInterface {
+public class AStarSearch<E> implements SearchInterface<E> {
 
-	private PriorityQueue<StateInterface> _openList;
-	private HashSet<StateInterface> _closedList;
+	private PriorityQueue<StateInterface<E>> _openList;
+	private HashSet<StateInterface<E>> _closedList;
 	private NewHeuristicInterface _heuristic;
-	private HashMap<StateInterface,StateInterface> _expaned;
+	private HashMap<StateInterface<E>,StateInterface<E>> _expaned;
 	public AStarSearch(NewHeuristicInterface heuristic){
 		this._heuristic = heuristic;
-		this._openList = new PriorityQueue<StateInterface>();
-		this._closedList = new HashSet<StateInterface>();
-		this._expaned = new HashMap<StateInterface, StateInterface>();
+		this._openList = new PriorityQueue<StateInterface<E>>();
+		this._closedList = new HashSet<StateInterface<E>>();
+		this._expaned = new HashMap<StateInterface<E>, StateInterface<E>>();
 	}
 	@Override
-	public Vector<StateInterface> findPath(StateInterface start,StateInterface goal) {
+	public Vector<StateInterface<E>> findPath(StateInterface<E> start,StateInterface<E> goal) {
 		//init
 		start.set_cost(0);
 		start.set_heuristic(0);
@@ -29,13 +29,13 @@ public class AStarSearch implements SearchInterface {
 		this._openList.add(start);
 		while (!this._openList.isEmpty()){
 			boolean tentativeIsBetter = false;
-			StateInterface current = this._openList.poll();
+			StateInterface<E> current = this._openList.poll();
 			if (current.equals(goal)){
 				return reconstructPath(start,current);
 			}
 			this._closedList.add(current);
-			Vector<StateInterface> neighbors = current.expand();
-			for (StateInterface neighbor : neighbors){
+			Vector<StateInterface<E>> neighbors = current.expand();
+			for (StateInterface<E> neighbor : neighbors){
 				if (this._closedList.contains(neighbor))
 					continue;
 				float tentativeCost = current.get_cost() + current.calcDistance(neighbor);
@@ -57,8 +57,8 @@ public class AStarSearch implements SearchInterface {
 		}
 		return null;
 	}
-	private Vector<StateInterface> reconstructPath(StateInterface initialState,StateInterface current) {
-		Vector<StateInterface> path = new Vector<StateInterface>();
+	private Vector<StateInterface<E>> reconstructPath(StateInterface<E> initialState,StateInterface<E> current) {
+		Vector<StateInterface<E>> path = new Vector<StateInterface<E>>();
 		if (current != null ) {
 			while (!current.equals(initialState)) {
 				path.add(current);

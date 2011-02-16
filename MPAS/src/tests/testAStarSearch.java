@@ -1,17 +1,18 @@
 package tests;
 
-import heuristics.ManhattanHeuristicNew;
-import heuristics.NewHeuristicInterface;
+import heuristicsNEW.ManhattanHeuristicNew;
+import heuristicsNEW.NewHeuristicInterface;
+
 import java.util.Vector;
 import junit.framework.TestCase;
 import maps.TileStatus;
 import maps.TiledMapImpl;
 import org.junit.Before;
-import algorithms.AStarSearch;
-import algorithms.SearchInterface;
-import algorithms.StateInterface;
 import algorithms.myPoint;
-import algorithms.myState;
+import algorithmsNEW.AStarSearch;
+import algorithmsNEW.SearchInterface;
+import algorithmsNEW.StateInterface;
+import algorithmsNEW.myState;
 
 
 public class testAStarSearch extends TestCase {
