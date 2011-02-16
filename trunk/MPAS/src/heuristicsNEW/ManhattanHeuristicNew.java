@@ -1,10 +1,10 @@
-package heuristics;
+package heuristicsNEW;
 
 import java.util.Vector;
 
-import algorithms.StateInterface;
 import algorithms.myPoint;
-import algorithms.myState;
+import algorithmsNEW.StateInterface;
+import algorithmsNEW.myState;
 
 public class ManhattanHeuristicNew implements NewHeuristicInterface {
 
