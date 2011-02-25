@@ -75,4 +75,22 @@ public class mainPanel extends JPanel{
     public JButton getbCanel(){
     	return this._configPanel.getbCanel();
     }
+    
+    public String getAlgorithmChosen(){
+    	return this._algorithmChosen;
+    }
+    public String getHeuristicChosen(){
+    	return this._heuristicChosen;
+    }
+    
+    public boolean get_directionChosen(){ // true = 8D, false = 4D(){
+    	return this._directionChosen;
+    }
+    
+    public int getNumberOfAgents(){ 
+    	return this._numberOfAgents;
+    }
+    public int getGridSize(){ 
+    	return this._gridSize;
+    }
 }
