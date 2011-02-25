@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 public class SettingsPanel extends JPanel {
 
@@ -47,7 +49,7 @@ public class SettingsPanel extends JPanel {
 		_cDirections = new JComboBox();
 		_lNumOfAgents = new JLabel("Number of Agents:");
 		_sNumOfAgents = new JSlider(1,100);
-		_lNumber = new JLabel("1");
+		_lNumber = new JLabel("2");
 		_lGridSize = new JLabel("Grid Size :");
 		_tGridSize = new JTextField("", 3);
 		_bApply = new JButton("Apply");
@@ -67,47 +69,26 @@ public class SettingsPanel extends JPanel {
 		_cHeuristic.setModel(new DefaultComboBoxModel(new String[] { "Manhattan " }));
 		_cDirections.setModel(new DefaultComboBoxModel(new String[] {"4 Directions", "8 Directions" }));
 		_cAgents.setModel(new DefaultComboBoxModel(new String[] { "1","2", "3", "4" }));
+		_sNumOfAgents.setValue(2);
 		_actionGroup.add(_rBlock);
 		_actionGroup.add(_rStart);
 		_actionGroup.add(_rEnd);
 		
 		//adding ActionListeners
-		_cAlgorithm.addActionListener(new  ActionListener() {
-            public void actionPerformed( ActionEvent evt) {
-                _cAlgorithmActionPerformed(evt);
-            }
-        });	
-		_cHeuristic.addActionListener(new  ActionListener() {
-            public void actionPerformed( ActionEvent evt) {
-                _cHeuristicActionPerformed(evt);
-            }
-        });	
-		_cDirections.addActionListener(new  ActionListener() {
-            public void actionPerformed( ActionEvent evt) {
-                _cDirectionsActionPerformed(evt);
-            }
-        });
-		
-		 _tGridSize.addActionListener(new  ActionListener() {
-			 public void actionPerformed( ActionEvent evt) {
-				 _tGridSizeActionPerformed(evt);
-			 }      
-	     });		 
-	     _bApply.addActionListener(new  ActionListener() {
-	    	 public void actionPerformed( ActionEvent evt) {
-	    		 _bApplyActionPerformed(evt);
-	         }
-	     });
-	     _bCancel.addActionListener(new  ActionListener() {
-	    	 public void actionPerformed( ActionEvent evt) {
-	    		 _bCancelActionPerformed(evt);
-	    	 }
-	     });
-        _cAgents.addActionListener(new  ActionListener() {
-            public void actionPerformed( ActionEvent evt) {
-                _cAgentsActionPerformed(evt);
-            }
-        });
+
+		_sNumOfAgents.addChangeListener(new ChangeListener(){
+			public void stateChanged(ChangeEvent e) {
+				JSlider slider = (JSlider) e.getSource();
+				int value = slider.getValue();
+			    _lNumber.setText("" + value);
+				
+			}
+			
+		});
+				 
+	    
+	     
+       
         _rStart.addActionListener(new  ActionListener() {
             public void actionPerformed( ActionEvent evt) {
                 _rStartActionPerformed(evt);
@@ -230,34 +211,8 @@ public class SettingsPanel extends JPanel {
 	                .addContainerGap( GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 	        );
 		}
+		                                 
 	
-	private void _cAlgorithmActionPerformed( ActionEvent evt) {
-		JComboBox tComboBox = (JComboBox)evt.getSource();
-        String algorithmName = (String)tComboBox.getSelectedItem();
-        System.out.println(algorithmName);
-    }
-	
-	private void _cHeuristicActionPerformed( ActionEvent evt) {
-        // TODO add your handling code here:
-    }
-	
-	private void _cDirectionsActionPerformed( ActionEvent evt) {
-        // TODO add your handling code here:
-    }
-	
-	private void _tGridSizeActionPerformed( ActionEvent evt) {
-        // TODO add your handling code here:
-    }
-	                                    
-	private void _bApplyActionPerformed( ActionEvent evt) {                                       
-	     // TODO add your handling code here:
-	} 
-	private void _bCancelActionPerformed( ActionEvent evt) {
-        // TODO add your handling code here:
-    }
-	private void _cAgentsActionPerformed( ActionEvent evt) {
-        // TODO add your handling code here:
-    }
 	private void _rStartActionPerformed( ActionEvent evt) {
         // TODO add your handling code here:
     }
@@ -271,6 +226,38 @@ public class SettingsPanel extends JPanel {
     private void _bGeneratePositionsActionPerformed( ActionEvent evt) {
         // TODO add your handling code here:
     }
+    
+    public JButton getbApply(){
+    	return this._bApply;
+    }
+    
+    public JButton getbCanel(){
+    	return this._bCancel;
+    }
+
+	public String getAlgorithm() {
+		return this._cAlgorithm.getActionCommand();
+	}
+
+	public String getHeuristic() {
+		return this._cHeuristic.getActionCommand();
+	}
+
+	public boolean getDirection() {
+		if (this._cHeuristic.getActionCommand() == "8 Directions")
+			return true;
+		else
+			return false;
+	}
+	
+	public int getNumberOfAgents() {
+		return this._sNumOfAgents.getValue();
+	}
+	
+	public int getGridSize() {
+		String size = this._tGridSize.getText();
+		return  Integer.parseInt(size);
+	}
 	
 
 }

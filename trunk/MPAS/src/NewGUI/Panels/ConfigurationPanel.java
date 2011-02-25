@@ -2,6 +2,7 @@ package NewGUI.Panels;
 
 import java.awt.Component;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 
 public class ConfigurationPanel extends JPanel {
@@ -30,6 +31,35 @@ public class ConfigurationPanel extends JPanel {
 		this.add(_controlPanel);
 		this.add(_infoPanel);
 	}
+	
+	public JButton getbApply(){
+    	return this._setPanel.getbApply();
+    }
+    
+    public JButton getbCanel(){
+    	return this._setPanel.getbCanel();
+    }
+
+    public String getAlgorithm() {
+		return this._setPanel.getAlgorithm();
+	}
+
+	public String getHeuristic() {
+		return this._setPanel.getHeuristic();
+	}
+
+	public int getNumberOfAgents() {
+		return this._setPanel.getNumberOfAgents();
+	}
+
+	public boolean getDirection() {
+		return this._setPanel.getDirection();
+	}
+
+	public int getGridSize() {
+		return this._setPanel.getGridSize();
+	}
+
 	
 }//end of class ConfigurationPanel
 
