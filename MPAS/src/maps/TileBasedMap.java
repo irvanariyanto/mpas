@@ -11,7 +11,7 @@ import algorithms.myPoint;
  * 
  * 
  */
-public interface TileBasedMap extends MapInterface {
+public interface TileBasedMap extends MapInterface<myPoint> {
 	/**
 	 * Get the width of the tile map. The slightly odd name is used
 	 * to distiguish this method from commonly used names in game maps.

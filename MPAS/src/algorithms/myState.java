@@ -11,9 +11,9 @@ public class myState implements Comparable<myState>,StateInterface<myPoint> {
 	private StateInterface<myPoint> _parent;
 	private float _cost;
 	private float _heuristic;
-	private MapInterface _map;
+	private MapInterface<myPoint> _map;
 	
-	public myState(Vector<myPoint> coordinates,MapInterface map) {
+	public myState(Vector<myPoint> coordinates,MapInterface<myPoint> map) {
 		this._Coordinates = coordinates;
 		this._cost = 0;
 		this._heuristic = 0;
@@ -29,7 +29,7 @@ public class myState implements Comparable<myState>,StateInterface<myPoint> {
 		this._map = state.getMap();
 	}
 
-	private MapInterface getMap() {
+	private MapInterface<myPoint> getMap() {
 		return this._map;
 	}
 
