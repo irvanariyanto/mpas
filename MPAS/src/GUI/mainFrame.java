@@ -34,8 +34,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
-import algorithmsNEW.AStarSearch;
-import algorithmsNEW.myPoint;
+import algorithms.AStarSearch;
+import algorithms.myPoint;
 
 /**
  * 

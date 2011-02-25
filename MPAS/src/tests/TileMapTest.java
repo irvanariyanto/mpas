@@ -7,7 +7,7 @@ import org.junit.Before;
 import junit.framework.TestCase;
 import maps.TileStatus;
 import maps.TiledMapImpl;
-import algorithmsNEW.myPoint;
+import algorithms.myPoint;
 
 
 public class TileMapTest extends TestCase {

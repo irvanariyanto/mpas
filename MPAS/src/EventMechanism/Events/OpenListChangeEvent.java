@@ -4,7 +4,7 @@ import java.util.Vector;
 
 import EventMechanism.ApplicationEvent;
 import EventMechanism.ApplicationEventSource;
-import algorithmsNEW.myPoint;
+import algorithms.myPoint;
 
 
 public class OpenListChangeEvent extends ApplicationEvent {
