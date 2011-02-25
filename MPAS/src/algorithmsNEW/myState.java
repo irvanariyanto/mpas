@@ -2,12 +2,9 @@ package algorithmsNEW;
 
 import java.util.Vector;
 
-import algorithms.myPoint;
 
-import test.moverStub;
 
 import maps.MapInterface;
-import maps.Mover;
 
 public class myState implements Comparable<myState>,StateInterface<myPoint> {
 	private Vector<myPoint> _Coordinates;

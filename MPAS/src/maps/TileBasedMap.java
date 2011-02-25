@@ -2,7 +2,7 @@ package maps;
 
 import java.util.Vector;
 
-import algorithms.myPoint;
+import algorithmsNEW.myPoint;
 
 /**
  * The description for the data we're pathfinding over. This provides the contract
@@ -47,7 +47,7 @@ public interface TileBasedMap extends MapInterface {
 	 * @param y The y coordinate of the tile to check
 	 * @return True if the location is blocked
 	 */
-	public boolean blocked(Mover mover, int x, int y);
+	public boolean blocked(int x, int y);
 	
 	/**
 	 * Get the cost of moving through the given tile. This can be used to 
@@ -61,9 +61,9 @@ public interface TileBasedMap extends MapInterface {
 	 * @param ty The y coordinate of the tile we're moving to
 	 * @return The relative cost of moving across the given tile
 	 */
-	public float getCost(Mover mover, int sx, int sy, int tx, int ty);
+	public float getCost(int sx, int sy, int tx, int ty);
 
-	public Vector<myPoint> getAllMoves(Mover mover, myPoint p);
+	public Vector<myPoint> getAllMoves(myPoint p);
 	
 	public void setTile(int x, int y,TileStatus status);
 	

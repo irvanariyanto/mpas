@@ -6,7 +6,7 @@ import java.util.Vector;
 import javax.swing.JPanel;
 
 import GUI.Cell;
-import algorithms.myPoint;
+import algorithmsNEW.myPoint;
 
 public class GridPanel extends JPanel {
 	

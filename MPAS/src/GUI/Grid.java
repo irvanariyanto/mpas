@@ -16,7 +16,7 @@ import javax.swing.Timer;
 import java.util.Vector;
 
 import GUI.Cell.Status;
-import algorithms.myPoint;
+import algorithmsNEW.myPoint;
 
 /**
  * 
@@ -40,8 +40,8 @@ public class Grid extends JPanel {
 	private Vector<myPoint> _closedList;
 	private Vector<myPoint> _openList;
 	transient Image buffer;
-	private mainFrame _mFrame;
-
+//	private mainFrame _mFrame;
+/*
 	// constructor
 	public Grid(mainFrame main) {
 		super();
@@ -57,7 +57,7 @@ public class Grid extends JPanel {
 		this.set_closedList(new Vector<myPoint>());
 		this.set_openList(new Vector<myPoint>());
 	}
-
+*/
 	public void set_starts(myPoint[] _starts) {
 		this._starts = _starts;
 	}
@@ -193,12 +193,13 @@ public class Grid extends JPanel {
 	 * @param x
 	 * @param y
 	 */
+	/*
 	public void setFinalPathCell(int x, int y, int agentNum) {
 		this._grid[x][y].set_status(Status.Path);
 		this._grid[x][y].set_agent(agentNum);
 		repaint();
 	}
-
+*/
 	/**
 	 * set the grid's width
 	 * 
@@ -396,7 +397,7 @@ public class Grid extends JPanel {
 			}
 		}
 	}
-
+/*
 	public void drawFinalPaths(Vector<Vector<myPoint>> finalPath) {
 		for (int i = 0; i < finalPath.size(); i++) {
 			Vector<myPoint> tStep = finalPath.elementAt(i);
@@ -436,5 +437,5 @@ public class Grid extends JPanel {
 		}
 		
 	}
-
+*/
 }// end of class

@@ -5,7 +5,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-import Controller.Controller;
 import NewGUI.Panels.mainPanel;
 
 public class MainFrame2 extends JFrame {
@@ -16,7 +15,6 @@ public class MainFrame2 extends JFrame {
 	private JMenu _FileMenu,_MapMenu, _helpMenu;	
 	private JMenuItem _openMap, _saveMap, _exitItem;
 	private mainPanel _mainPanel;
-	private Controller _controller;
 	// End of variables declaration
 	
 	

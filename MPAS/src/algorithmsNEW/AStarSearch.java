@@ -1,24 +1,31 @@
 package algorithmsNEW;
 
 
-import heuristicsNEW.NewHeuristicInterface;
+import heuristicsNEW.HeuristicInterface;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.PriorityQueue;
 import java.util.Vector;
 
-public class AStarSearch<E> implements SearchInterface<E> {
+import EventMechanism.ApplicationEventListener;
+import EventMechanism.ApplicationEventListenerCollection;
+import EventMechanism.ApplicationEventSource;
+
+public class AStarSearch<E> implements SearchInterface<E>,ApplicationEventSource,Pausable {
 
 	private PriorityQueue<StateInterface<E>> _openList;
 	private HashSet<StateInterface<E>> _closedList;
-	private NewHeuristicInterface _heuristic;
+	private HeuristicInterface<StateInterface<E>> _heuristic;
 	private HashMap<StateInterface<E>,StateInterface<E>> _expaned;
-	public AStarSearch(NewHeuristicInterface heuristic){
+	private ApplicationEventListenerCollection _listeners;
+	private boolean _pause;
+	public AStarSearch(HeuristicInterface<StateInterface<E>> heuristic){
 		this._heuristic = heuristic;
 		this._openList = new PriorityQueue<StateInterface<E>>();
 		this._closedList = new HashSet<StateInterface<E>>();
 		this._expaned = new HashMap<StateInterface<E>, StateInterface<E>>();
+		this._pause = false;
 	}
 	@Override
 	public Vector<StateInterface<E>> findPath(StateInterface<E> start,StateInterface<E> goal) {
@@ -67,6 +74,40 @@ public class AStarSearch<E> implements SearchInterface<E> {
 
 		}
 		return path;
+	}
+	@Override
+	public void addListener(ApplicationEventListener listener) {
+		this._listeners.add(listener);
+		
+	}
+	@Override
+	public void removeListener(ApplicationEventListener listener) {
+		this._listeners.remove(listener);
+		
+	}
+	@Override
+	public void clearListeners() {
+		this._listeners.clear();
+		
+	}
+	@Override
+	public void pause() {
+		try {
+			this.wait();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	@Override
+	public void resume() {
+		this.notify();
+		
+	}
+	@Override
+	public void setPause(boolean shouldPause) {
+		this._pause = shouldPause;		
 	}
 
 }

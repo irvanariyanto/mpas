@@ -5,11 +5,9 @@ import java.util.Vector;
 import org.junit.Before;
 
 import junit.framework.TestCase;
-import maps.Mover;
 import maps.TileStatus;
 import maps.TiledMapImpl;
-import test.moverStub;
-import algorithms.myPoint;
+import algorithmsNEW.myPoint;
 
 
 public class TileMapTest extends TestCase {
@@ -27,11 +25,10 @@ public class TileMapTest extends TestCase {
 	}
 	
 	public void testMoves(){
-		Mover mover1 = new moverStub();
 		myPoint p1 = new myPoint(4,1);
 		myPoint res1 = new myPoint(3,1);
 		myPoint res2 = new myPoint(4,2);
-		Vector<myPoint> moves = this._map.getAllMoves(mover1, p1);
+		Vector<myPoint> moves = this._map.getAllMoves( p1);
 		Vector<myPoint> result = new Vector<myPoint>();
 		result.add(res1);
 		result.add(p1);
@@ -44,7 +41,7 @@ public class TileMapTest extends TestCase {
 		result2.add(res3);
 		result2.add(p2);
 		result2.add(res4);
-		AssertEquals(result2, this._map.getAllMoves(mover1, p2));
+		AssertEquals(result2, this._map.getAllMoves( p2));
 		
 	}
 	public boolean AssertEquals(Vector<myPoint> expected,Vector<myPoint> actual){

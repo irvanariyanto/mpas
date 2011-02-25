@@ -1,5 +1,5 @@
 package Controller;
-
+/*
 import heuristics.HeuristicInterface;
 import heuristics.ManhattanHeuristic;
 
@@ -20,7 +20,7 @@ import EventMechanism.Events.OpenListChangeEvent;
 import EventMechanism.Events.finalPathEvent;
 import GUI.mainFrame;
 import algorithms.AStarPathFinder;
-import algorithms.myPoint;
+import algorithmsNEW.myPoint;
 
 public class Controller implements ControllerInterFace,ApplicationEventSource{
 	private AStarPathFinder _pathFinder;
@@ -127,3 +127,4 @@ public class Controller implements ControllerInterFace,ApplicationEventSource{
 		
 	}
 }
+*/

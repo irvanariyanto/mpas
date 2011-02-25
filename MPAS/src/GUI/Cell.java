@@ -13,7 +13,7 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import algorithms.myPoint;
+import algorithmsNEW.myPoint;
 
 /**
  * 
@@ -37,9 +37,9 @@ public class Cell extends Component {
 	private double _distFromStart;
 	private double _distFromFinish;
 	private double _cost;
-	private mainFrame _main;
+//	private mainFrame _main;
 	private int _agnetNum;
-
+/*
 	// Constructor
 	public Cell(myPoint point,mainFrame main) {
 		this._main=main;
@@ -56,7 +56,7 @@ public class Cell extends Component {
 		init();
 		this.set_status(Status.Blocked);
 	}
-
+*/
 	private void init() {
 		this.set_status(Status.Empty);
 		this._distFromStart = -1;
@@ -167,7 +167,8 @@ public class Cell extends Component {
 		g.drawRect(0, 0, size.width - 2, size.height - 2);
 	}
 
-	@Override
+	//@Override
+	/*
 	public void processMouseEvent(MouseEvent event) {
 		super.processMouseEvent(event);
 		if (event.getID() == MouseEvent.MOUSE_PRESSED) {
@@ -213,6 +214,6 @@ public class Cell extends Component {
 		
 	}
 
-
+*/
 }// end of class Cell
 

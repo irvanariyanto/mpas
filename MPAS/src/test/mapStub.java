@@ -2,11 +2,10 @@ package test;
 
 import java.util.Vector;
 
-import maps.Mover;
 import maps.TileBasedMap;
 import maps.TileStatus;
 
-import algorithms.myPoint;
+import algorithmsNEW.myPoint;
 
 public class mapStub implements TileBasedMap {
 
@@ -29,27 +28,17 @@ public class mapStub implements TileBasedMap {
 	}
 
 	@Override
-	public boolean blocked(Mover mover, int x, int y) {
+	public boolean blocked(int x, int y) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public float getCost(Mover mover, int sx, int sy, int tx, int ty) {
+	public float getCost(int sx, int sy, int tx, int ty) {
 		// TODO Auto-generated method stub
 		return 1;
 	}
 
-	@Override
-	public Vector<myPoint> getAllMoves(Mover mover, myPoint p) {
-		myPoint p1 = new myPoint(p.getX() - 1,p.getY());
-		myPoint p2 = new myPoint(p.getX() + 1,p.getY());
-		Vector<myPoint> res = new Vector<myPoint>();
-		res.add(p1);
-		res.add(p2);
-		
-		return res;
-	}
 
 	@Override
 	public Vector<myPoint> getAllMoves(myPoint position) {
