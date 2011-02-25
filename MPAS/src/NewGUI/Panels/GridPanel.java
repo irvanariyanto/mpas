@@ -1,11 +1,12 @@
 package NewGUI.Panels;
 
+import java.awt.Event;
 import java.awt.GridLayout;
-import java.util.Vector;
+
 
 import javax.swing.JPanel;
 
-import GUI.Cell;
+
 import algorithms.myPoint;
 
 public class GridPanel extends JPanel {
@@ -18,7 +19,9 @@ public class GridPanel extends JPanel {
 	private NewCell _grid[][];
 	// End of variables declaration
 	
-	
+	/**
+	 * Constructor
+	 */
 	public GridPanel( int size) {		
 		super();
 		_width= size;
@@ -33,12 +36,35 @@ public class GridPanel extends JPanel {
 		}
 	}
 
+	/**
+	 * getter
+	 * @return grid's width
+	 */
 	public int get_width() {
 		return _width;
 	}
 	
+	/**
+	 * getter
+	 * @return grid's height
+	 */
 	public int get_height() {
 		return _height;
 	}
+	
+	/**
+	 * set the cell in x,y to be starting point
+	 * 
+	 * @param x
+	 * @param y
+	 */
+	public void setStartCell(int x, int y,int agentNumber) {
+		this._grid[x][y].set_status(NewGUI.Panels.NewCell.Status.Start,agentNumber);
+		repaint();
+	}
 
+	public void setEndCell(int x, int y, int agentNumber) {
+		this._grid[x][y].set_status(NewGUI.Panels.NewCell.Status.Finish,agentNumber);
+		repaint();
+	}
 }

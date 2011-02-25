@@ -1,9 +1,7 @@
 package NewGUI;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.Event;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -50,5 +48,7 @@ public class MainFrame2 extends JFrame {
 		this.setJMenuBar(_menuBar);
 		this.add(_mainPanel);
 	}
+	
+	
 
 }

@@ -16,11 +16,18 @@ public class ControlPanel extends JPanel {
 	private  JButton bClearPath;
 	// End of variables declaration
 
+	/**
+	 * Constructor
+	 */
 	public ControlPanel() {
+		super();
 		initComponents();
 
 	}
 
+	/**
+	 * initialize all the swing Components
+	 */
 	private void initComponents() {
 		this.setBorder(BorderFactory.createTitledBorder("Control"));
 		bFindPath = new JButton("Find Path");
