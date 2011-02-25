@@ -1,17 +1,17 @@
 package tests;
-
-import heuristicsNEW.ManhattanHeuristicNew;
-import heuristicsNEW.NewHeuristicInterface;
+/*
+import heuristicsNEW.ManhattanHeuristic;
+import heuristicsNEW.HeuristicInterface;
 
 import java.util.Vector;
 import junit.framework.TestCase;
 import maps.TileStatus;
 import maps.TiledMapImpl;
 import org.junit.Before;
-import algorithms.myPoint;
 import algorithmsNEW.AStarSearch;
 import algorithmsNEW.SearchInterface;
 import algorithmsNEW.StateInterface;
+import algorithmsNEW.myPoint;
 import algorithmsNEW.myState;
 
 
@@ -29,7 +29,7 @@ public class testAStarSearch extends TestCase {
 		this._map.setTile(4, 1, TileStatus.blocked);
 		
 	}
-	
+
 	public void testMoves(){
 		myPoint s1 = new myPoint(4,4);
 		myPoint s2 = new myPoint(3,0);
@@ -43,7 +43,7 @@ public class testAStarSearch extends TestCase {
 		vFinish.add(g2);
 		StateInterface start = new myState(vStart, _map);
 		StateInterface goal = new myState(vFinish,_map);
-		NewHeuristicInterface h = new ManhattanHeuristicNew();
+		HeuristicInterface h = new ManhattanHeuristic();
 		SearchInterface search = new AStarSearch(h);
 		Vector<StateInterface> path = search.findPath(start, goal);
 		for (int i = 0; i < path.size();i++){
@@ -66,3 +66,4 @@ public class testAStarSearch extends TestCase {
 		
 	}
 }
+*/

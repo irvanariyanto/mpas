@@ -4,7 +4,7 @@ import java.util.Vector;
 
 import EventMechanism.ApplicationEvent;
 import EventMechanism.ApplicationEventSource;
-import algorithms.myPoint;
+import algorithmsNEW.myPoint;
 
 public class ClosedListChangeEvent extends ApplicationEvent {
 	private Vector<myPoint> _points;

@@ -2,9 +2,8 @@ package maps;
 
 import java.util.Vector;
 
-import test.moverStub;
 
-import algorithms.myPoint;
+import algorithmsNEW.myPoint;
 
 /**
  * an implementation of the tiled based map interface
@@ -45,23 +44,23 @@ public class TiledMapImpl implements TileBasedMap {
 	}
 
 	@Override
-	public boolean blocked(Mover mover, int x, int y) {	
+	public boolean blocked(int x, int y) {	
 		return !(this._tiles[x][y].get_status() == TileStatus.free);
 	}
 
 	@Override
-	public float getCost(Mover mover, int sx, int sy, int tx, int ty) {
+	public float getCost(int sx, int sy, int tx, int ty) {
 		// TODO Auto-generated method stub
 		return 1;
 	}
 
 	@Override
-	public Vector<myPoint> getAllMoves(Mover mover, myPoint p) {
+	public Vector<myPoint> getAllMoves(myPoint p) {
 		Vector<myPoint> res = new Vector<myPoint>();
 		for (int i = p.getX() - 1; i <= p.getX() + 1;i++){
 			for (int j = p.getY()- 1; j <= p.getY() + 1;j++){
 				if (i == p.getX() || j == p.getY() || this._diagonal == true){
-					if (inMap(i,j) && !blocked(mover,i,j)){
+					if (inMap(i,j) && !blocked(i,j)){
 						myPoint tPoint = new myPoint(i,j);
 						//for debugging canceled the stay in one place
 				//		if (!(i == p.getX() && j == p.getY()))
@@ -84,12 +83,6 @@ public class TiledMapImpl implements TileBasedMap {
 	public void setTile(int x, int y,TileStatus status){
 		Tile tTile = this._tiles[x][y];
 		tTile.set_status(status);
-	}
-	@Override
-	public Vector<myPoint> getAllMoves(myPoint position) {
-		//TODO fix later, remove the mover
-		Mover m = new moverStub();
-		return getAllMoves(m, position);
 	}
 	@Override
 	public double calcDistance(myPoint from, myPoint to) {

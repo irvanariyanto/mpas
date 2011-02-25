@@ -12,7 +12,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 
 
-import algorithms.myPoint;
+import algorithmsNEW.myPoint;
 
 /**
  * 

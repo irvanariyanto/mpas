@@ -4,7 +4,7 @@
  */
 package GUI;
 
-import Controller.Controller;
+//import Controller.Controller;
 import EventMechanism.ApplicationEvent;
 import EventMechanism.ApplicationEventListener;
 import EventMechanism.Events.ClosedListChangeEvent;
@@ -34,17 +34,18 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
-import algorithms.AStarPathFinder;
-import algorithms.myPoint;
+import algorithmsNEW.AStarSearch;
+import algorithmsNEW.myPoint;
 
 /**
  * 
  * @author Liron Katav
  */
+/*
 public class mainFrame extends JFrame implements ActionListener, ItemListener {
-	/**
-	 * 
-	 */
+	
+	 
+	
 	private static final long serialVersionUID = 1L;
 	private JPanel _selectionPanel;
 	public JPanel __mainPanel;
@@ -78,7 +79,7 @@ public class mainFrame extends JFrame implements ActionListener, ItemListener {
 	private void initComponenets() {
 		set_grid(new Grid(this));
 		set_controller(new Controller(this));
-		this._controller.addListener(new MainWindowListener());
+//		this._controller.addListener(new MainWindowListener());
 		_selectionPanel = new JPanel();
 		__mainPanel = new JPanel();
 		_contorlPanel = new JPanel();
@@ -384,6 +385,7 @@ public class mainFrame extends JFrame implements ActionListener, ItemListener {
 	/**
 	 * @return the _showFinalPath
 	 */
+/*
 	public boolean get_showFinalPath() {
 		return this._showFinalPath;
 	}
@@ -391,6 +393,7 @@ public class mainFrame extends JFrame implements ActionListener, ItemListener {
 	/**
 	 * @return the _showFinalPath
 	 */
+/*
 	public boolean get_showOpenList() {
 		return this._showOpenList;
 	}
@@ -398,16 +401,17 @@ public class mainFrame extends JFrame implements ActionListener, ItemListener {
 	/**
 	 * @return the _showFinalPath
 	 */
+/*
 	public boolean get_showClosedList() {
 		return this._showClosedList;
 	}
-
+/*
 	protected class MainWindowListener implements ApplicationEventListener {
 
 		@Override
 		public void handle(ApplicationEvent event) {
 			if (event instanceof finalPathEvent) {
-				AStarPathFinder pathFinder = (AStarPathFinder) event
+				AStarSearch pathFinder = (AStarSearch<E>) event
 						.getSource();
 				mainFrame.this._finalPaths = pathFinder.get_finalPath();
 				if (mainFrame.this._finalPaths.isEmpty()) {
@@ -429,7 +433,7 @@ public class mainFrame extends JFrame implements ActionListener, ItemListener {
 					if (mainFrame.this.get_showFinalPath() == true) {
 						mainFrame.this.get_grid().drawFinalPaths(
 								pathFinder.get_finalPath());
-					} else {
+					} else {*/
 						/*
 						 * for(int i=0; i<pathFinder.get_finalPath().size()-1;
 						 * i++){ Vector<myPoint> tstep =
@@ -444,7 +448,7 @@ public class mainFrame extends JFrame implements ActionListener, ItemListener {
 						 * 
 						 * }
 						 */
-						mainFrame.this.get_grid().drawFinalPaths(
+					/*	mainFrame.this.get_grid().drawFinalPaths(
 								pathFinder.get_finalPath());
 					}
 					mainFrame.this._bStart.setEnabled(true);
@@ -464,8 +468,8 @@ public class mainFrame extends JFrame implements ActionListener, ItemListener {
 			}
 
 		}
+*/
+	//}
 
-	}
-
-}// end of class
+//}// end of class
 

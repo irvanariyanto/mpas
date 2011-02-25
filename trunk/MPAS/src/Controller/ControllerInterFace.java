@@ -2,7 +2,7 @@ package Controller;
 
 import java.util.Vector;
 
-import algorithms.myPoint;
+import algorithmsNEW.myPoint;
 
 public interface ControllerInterFace {
 	

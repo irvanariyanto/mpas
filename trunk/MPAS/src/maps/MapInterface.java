@@ -1,7 +1,8 @@
 package maps;
 
 import java.util.Vector;
-import algorithms.myPoint;
+
+import algorithmsNEW.myPoint;
 
 public interface MapInterface {
 
