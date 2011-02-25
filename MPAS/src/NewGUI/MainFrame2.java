@@ -1,5 +1,9 @@
 package NewGUI;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -9,6 +13,8 @@ import NewGUI.Panels.mainPanel;
 
 public class MainFrame2 extends JFrame {
 
+	
+	
 	private static final long serialVersionUID = 1L;
 	// Variables declaration 
 	private JMenuBar _menuBar;
@@ -43,6 +49,6 @@ public class MainFrame2 extends JFrame {
 		
 		this.setJMenuBar(_menuBar);
 		this.add(_mainPanel);
-		
 	}
+
 }

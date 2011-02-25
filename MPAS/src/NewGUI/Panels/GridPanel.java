@@ -41,7 +41,4 @@ public class GridPanel extends JPanel {
 		return _height;
 	}
 
-	
-	
-
 }
