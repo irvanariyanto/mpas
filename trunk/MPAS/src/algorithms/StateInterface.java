@@ -11,4 +11,5 @@ public interface StateInterface<E> {
 	public float get_cost();
 	public float calcDistance(StateInterface<E> neighbor);
 	public StateInterface<E> get_parent();
+	public Vector<E> get_Coordinates();
 }

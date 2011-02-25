@@ -4,7 +4,7 @@ import heuristics.HeuristicInterface;
 
 import java.util.Vector;
 
-import algorithms.StateInterface;
+
 import algorithms.myPoint;
 import algorithms.myState;
 

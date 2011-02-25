@@ -16,6 +16,7 @@ public class TiledMapImpl implements TileBasedMap {
 	private int _height;
 	private Tile[][] _tiles;
 	private boolean _diagonal;
+	
 	public TiledMapImpl(int width,int height,boolean diagonal){
 		this._width =  width;
 		this._height = height;

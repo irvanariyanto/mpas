@@ -2,19 +2,13 @@ package Controller;
 
 import java.util.Vector;
 
+import algorithms.StateInterface;
 import algorithms.myPoint;
 
-public interface ControllerInterFace {
+public interface ControllerInterFace<E> {
 	
-	/**
-	 * returns the final Path
-	 * @param _startPoints
-	 * @param _endPoints
-	 * @param _blocked
-	 * @return
-	 */
-	public void findPath(myPoint[] startPoints,
-									myPoint[] endPoints, 
-									Vector<myPoint> _blocked);
 
+	public void findPath(Vector<E>starts ,Vector<E> endPoints);
+	
+	public Vector<StateInterface<E>> getPath();
 }

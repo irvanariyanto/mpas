@@ -4,8 +4,8 @@ import java.util.Vector;
 
 import algorithms.myPoint;
 
-public interface MapInterface {
+public interface MapInterface<T> {
 
-	public Vector<myPoint> getAllMoves(myPoint position);
-	public double calcDistance(myPoint from,myPoint to);
+	public Vector<T> getAllMoves(myPoint position);
+	public double calcDistance(T from,T to);
 }
