@@ -16,11 +16,18 @@ public class InfoPanel extends JPanel {
     private javax.swing.JTextArea _tOpenList;
     // End of variables declaration
     
+    /**
+	 * Constructor
+	 */
 	public InfoPanel() {
+		super();
 		initComponents();
 
 	}
 
+	/**
+	 * initialize all the swing Components
+	 */
 	private void initComponents() {
 		this.setBorder(BorderFactory.createTitledBorder("Information"));
 		_scrollPane = new JScrollPane();
