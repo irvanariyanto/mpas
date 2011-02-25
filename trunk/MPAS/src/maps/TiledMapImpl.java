@@ -3,7 +3,7 @@ package maps;
 import java.util.Vector;
 
 
-import algorithmsNEW.myPoint;
+import algorithms.myPoint;
 
 /**
  * an implementation of the tiled based map interface

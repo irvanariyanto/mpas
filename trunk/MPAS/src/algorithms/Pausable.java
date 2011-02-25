@@ -1,4 +1,4 @@
-package algorithmsNEW;
+package algorithms;
 
 public interface Pausable {
 	public void pause();

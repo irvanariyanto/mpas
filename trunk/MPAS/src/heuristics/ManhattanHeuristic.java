@@ -1,18 +1,19 @@
 package heuristics;
 
+import heuristics.HeuristicInterface;
+
 import java.util.Vector;
 
-import maps.Mover;
-import maps.TileBasedMap;
+import algorithms.StateInterface;
 import algorithms.myPoint;
+import algorithms.myState;
 
-public class ManhattanHeuristic implements HeuristicInterface {
-	/**
-	 * the sum of all Manhattan values for all agents in the search
-	 */
+public class ManhattanHeuristic implements HeuristicInterface<myState> {
+
 	@Override
-	public float getCost(TileBasedMap map, Vector<Mover> movers,
-			Vector<myPoint> start, Vector<myPoint> ends) {
+	public float calcHeuristic(myState current, myState goal) {
+		Vector<myPoint> start = current.get_Coordinates();
+		Vector<myPoint> ends = goal.get_Coordinates(); 
 		float res = 0;
 		for (int i = 0;i < start.size();i++){
 			myPoint s = start.elementAt(i);

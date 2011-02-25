@@ -2,7 +2,7 @@ package maps;
 
 import java.util.Vector;
 
-import algorithmsNEW.myPoint;
+import algorithms.myPoint;
 
 /**
  * The description for the data we're pathfinding over. This provides the contract

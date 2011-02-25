@@ -1,7 +1,7 @@
-package algorithmsNEW;
+package algorithms;
 
 
-import heuristicsNEW.HeuristicInterface;
+import heuristics.HeuristicInterface;
 
 import java.util.HashMap;
 import java.util.HashSet;

@@ -16,7 +16,7 @@ import javax.swing.Timer;
 import java.util.Vector;
 
 import GUI.Cell.Status;
-import algorithmsNEW.myPoint;
+import algorithms.myPoint;
 
 /**
  * 
