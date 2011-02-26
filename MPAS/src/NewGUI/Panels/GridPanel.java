@@ -144,8 +144,7 @@ public class GridPanel extends JPanel implements ApplicationEventSource{
 			this.get_blockList().remove(p);
 		} else {
 			this.get_blockList().add(p);
-			this._grid[p.getX()][p.getY()].set_status(NewGUI.Panels.NewCell.Status.Blocked);
-			
+			this._grid[p.getX()][p.getY()].set_status(NewGUI.Panels.NewCell.Status.Blocked);			
 		}
 		repaint();		
 	}
@@ -159,6 +158,63 @@ public class GridPanel extends JPanel implements ApplicationEventSource{
 			}
 		}
 		return ans;
+	}
+
+	public void clearPositions() {
+		Vector<myPoint> startList = this.get_startsList();
+		Vector<myPoint> finishList = this.get_FinishList();
+		for(myPoint p: startList){
+			if(p==null) continue;
+			else this._grid[p.getX()][p.getY()].set_status(NewGUI.Panels.NewCell.Status.Empty);
+		}
+		this._startsList.removeAllElements();
+		for(myPoint p: finishList){
+			if(p==null) continue;
+			else this._grid[p.getX()][p.getY()].set_status(NewGUI.Panels.NewCell.Status.Empty);
+		}
+		this._startsList.removeAllElements();
+		repaint();
+	}
+
+	public void GeneratePositions() {
+		clearPositions();
+		//generate starting points
+		for(int i=1; i<=NUM_OF_AGENT; i++){
+			int randomX =(int) ((Math.random()*_width));  
+			int randomY =(int) ((Math.random()*_height));
+			myPoint p = new myPoint(randomX, randomY); 
+			if(this._blockList.contains(p)){
+				continue;
+			}
+			if(this.get_startsList().contains(p)){
+				continue;
+			}
+			if(this.get_FinishList().contains(p)){
+				continue;
+			}
+			else{
+				setStartCell(p,i );
+			}
+		}
+		//generate finishing points
+		for(int i=1; i<=NUM_OF_AGENT; i++){
+			int randomX =(int) ((Math.random()*_width));  
+			int randomY =(int) ((Math.random()*_height));
+			myPoint p = new myPoint(randomX, randomY); 
+			if(this._blockList.contains(p)){
+				continue;
+			}
+			if(this.get_startsList().contains(p)){
+				continue;
+			}
+			if(this.get_FinishList().contains(p)){
+				continue;
+			}
+			else{
+				setFinishCell(p,i );
+			}
+		}
+		repaint();
 	}
 
 	@Override
@@ -182,12 +238,12 @@ public class GridPanel extends JPanel implements ApplicationEventSource{
 	protected class GridListener implements ApplicationEventListener {
 		@Override
 		public void handle(ApplicationEvent event) {
-			GridPanel.this._listeners.fireEvent(event);
-			
+			GridPanel.this._listeners.fireEvent(event);			
 		}
 
 	}
 
+	
 	
 
 	

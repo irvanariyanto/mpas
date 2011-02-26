@@ -177,13 +177,11 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 
 
 	protected void ClearPositionsActionPerformed(ActionEvent evt) {
-		// TODO Auto-generated method stub
-		
+		this._grid.clearPositions();	
 	}
 
 	protected void bGeneratePositionsActionPerformed(ActionEvent evt) {
-		// TODO Auto-generated method stub
-		
+		this._grid.GeneratePositions();		
 	}
 	private void ChangeComboBoxSize(int numberofAgents) {
 		this._configPanel.getSettingPanel().ChangeComboBoxSize(numberofAgents);
