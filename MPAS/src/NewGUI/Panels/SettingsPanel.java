@@ -250,7 +250,7 @@ public class SettingsPanel extends JPanel {
     public JButton getbClearPositions(){
     	return this._bClearPositions;
     }
-
+    
     /**
      * returns the RadioButton block
      * @return block RadioButton component
@@ -343,6 +343,8 @@ public class SettingsPanel extends JPanel {
 			this._cAgents.addItem(i);
 		}
 	}
+
+	
 
 	
 

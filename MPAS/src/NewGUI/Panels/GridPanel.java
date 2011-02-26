@@ -150,7 +150,16 @@ public class GridPanel extends JPanel implements ApplicationEventSource{
 		repaint();		
 	}
 	
-
+	public boolean checkArguments() {
+		boolean ans = true;
+		for (int i = 0; i < NUM_OF_AGENT; i++) {
+			if (this._starts[i] == null | this._finishes[i] == null) {
+				ans = false;
+				break;
+			}
+		}
+		return ans;
+	}
 
 	@Override
 	public void addListener(ApplicationEventListener listener) {
@@ -178,6 +187,8 @@ public class GridPanel extends JPanel implements ApplicationEventSource{
 		}
 
 	}
+
+	
 
 	
 

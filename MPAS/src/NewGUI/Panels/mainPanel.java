@@ -7,30 +7,37 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
 
+import Controller.GridController;
 import EventMechanism.ApplicationEvent;
 import EventMechanism.ApplicationEventListener;
+import EventMechanism.ApplicationEventListenerCollection;
+import EventMechanism.ApplicationEventSource;
 import EventMechanism.Events.SetBlockCellEvent;
 import EventMechanism.Events.SetFinishCellEvent;
 import EventMechanism.Events.SetStartCellEvent;
 
 
-public class mainPanel extends JPanel {
+public class mainPanel extends JPanel implements ApplicationEventSource{
 
-	//private fields
+	private static final long serialVersionUID = 1L;
+	
+	// Variables declaration
 	private String _algorithmChosen;
 	private String _heuristicChosen;
 	private boolean _directionChosen; // 1 = 8D, 0 = 4D
 	private int _numberOfAgents;
 	private int _gridSize;
 	
-	private static final long serialVersionUID = 1L;
-	// Variables declaration 
+	
+	private ApplicationEventListenerCollection _listeners; 
 	private GridPanel _grid;
-	private ConfigurationPanel _configPanel;	
+	private ConfigurationPanel _configPanel;
+	private GridController _controller;
 	// End of variables declaration
 	
 
@@ -48,6 +55,9 @@ public class mainPanel extends JPanel {
 	private void initComponenets() {
 		_grid = new GridPanel(20);		
 		_configPanel = new ConfigurationPanel();
+		_controller = new GridController();
+		init_controller();	
+		this._listeners = new ApplicationEventListenerCollection();
 		this.setLayout(new BorderLayout(2,2));
 		this.add(_configPanel , BorderLayout.WEST);
 		this.add(_grid , BorderLayout.CENTER);
@@ -91,13 +101,18 @@ public class mainPanel extends JPanel {
             	ClearPositionsActionPerformed(evt);
             }
         });	
+        getbFindPath().addActionListener(new  ActionListener() {
+	    	 public void actionPerformed( ActionEvent evt) {
+	    		 bFindPathActionPerformed(evt);
+	         }
+	     });
 		this._grid.addListener(new MainFrameListener());
 		this._grid.setAgentNumber(1);	
 	}	
 	
-
-
-	
+	public GridController get_controller() {
+		return this._controller;
+	}
 
 	/**
 	 * when the apply button is pressed
@@ -115,13 +130,31 @@ public class mainPanel extends JPanel {
 		this._grid.setAgentNumber(1);	
 		ChangeGridPanel(_gridSize);	
 		ChangeComboBoxSize(_numberOfAgents);
+		init_controller();		
+	}
+	
+	private void init_controller(){
+		this._controller.setAlgorithm(_algorithmChosen);
+		this._controller.setHeuristic(_heuristicChosen);
+		this._controller.setDirection(_directionChosen);
+		this._controller.setNumberOfAgents (_numberOfAgents);
+		this._controller.setMapSize (_gridSize);
 	}
 	
 	protected void bCancelActionPerformed(ActionEvent evt) {
 		// TODO Auto-generated method stub	
 	}
 	
-	
+	protected void bFindPathActionPerformed(ActionEvent evt) {
+		if (this._grid.checkArguments()) {
+			this._controller.setTile(this._grid.get_blockList());
+			this.get_controller().findPath(this._grid.get_startsList(),this._grid.get_FinishList());
+		} else {
+			JOptionPane.showMessageDialog(this,
+					"You havn't entered all the parameters, please try again",
+					"Missing Argumets", JOptionPane.ERROR_MESSAGE);
+		}
+	}	
 	protected void rEndActionPerformed(ActionEvent evt) {
 		this._grid.set_editMode(NewCell.SET_FINISH);
 		
@@ -183,6 +216,7 @@ public class mainPanel extends JPanel {
     	return this._configPanel.getSettingPanel().getbCancel();
     }
     
+    
     /**
      * returns the GeneratePositions button
      * @return GeneratePositions button component
@@ -197,6 +231,13 @@ public class mainPanel extends JPanel {
      */
     public JButton getbClearPositions(){
     	return this._configPanel.getSettingPanel().getbClearPositions();
+    }
+    /**
+     * returns the findPath button
+     * @return findPath button component
+     */
+	public JButton getbFindPath(){
+    	return this._configPanel.getControlPanel().getbFindPath();
     }
     /**
      * returns the set start radio button
@@ -284,10 +325,25 @@ public class mainPanel extends JPanel {
 			if (event instanceof SetFinishCellEvent) {
 				SetFinishCellEvent finishEvent = (SetFinishCellEvent)event;
 				mainPanel.this._grid.setFinishCell(finishEvent.getPosition(),finishEvent.getAgent());
-			}
-			
+			}		
 		}
+	}
 
+    @Override
+	public void addListener(ApplicationEventListener listener) {
+		this._listeners.add(listener);
+		
+	}
+
+	@Override
+	public void clearListeners() {
+		this._listeners.clear();
+		
+	}
+
+	@Override
+	public void removeListener(ApplicationEventListener listener) {
+		this._listeners.remove(listener);
 	}
    
 }

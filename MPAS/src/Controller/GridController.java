@@ -1,6 +1,7 @@
 package Controller;
 
 import heuristics.HeuristicInterface;
+import heuristics.ManhattanHeuristic;
 
 import java.util.Vector;
 
@@ -9,6 +10,14 @@ import maps.TileBasedMap;
 import maps.TileStatus;
 import maps.TiledMapImpl;
 
+import EventMechanism.ApplicationEvent;
+import EventMechanism.ApplicationEventListener;
+import EventMechanism.ApplicationEventListenerCollection;
+import EventMechanism.ApplicationEventSource;
+import EventMechanism.Events.SetBlockCellEvent;
+import EventMechanism.Events.SetFinishCellEvent;
+import EventMechanism.Events.SetStartCellEvent;
+import NewGUI.Panels.mainPanel;
 import algorithms.SearchInterface;
 import algorithms.StateInterface;
 import algorithms.myPoint;
@@ -23,16 +32,17 @@ public class GridController implements ControllerInterFace<myPoint>{
 	private boolean _diagonal;
 	private Vector<StateInterface<myPoint>> _finalPath;
 	
+	public GridController() {
+		//this._heuristic = new ManhattanHeuristic<myPoint>();
+		//this._pathFinder = new AStarPathFinder(this._heuristic);		
+	}
 	@Override
 	public void findPath(Vector<myPoint> starts,
-			Vector<myPoint> endPoints) {
-		
+			Vector<myPoint> endPoints) {		
 		StateInterface<myPoint> start = new myState(starts, this._map);
 		StateInterface<myPoint> goal = new myState(endPoints,this._map);
 		PathFinderThread t = new PathFinderThread(start, goal);
-		t.run();
-		
-		
+		t.run();	
 	}
 
 
@@ -46,10 +56,30 @@ public class GridController implements ControllerInterFace<myPoint>{
 		}
 	}
 
-
+	
 	@Override
 	public Vector<StateInterface<myPoint>> getPath() {
 		return this._finalPath;
+	}
+	
+	public void setAlgorithm(String chosen) {
+		// TODO Auto-generated method stub	
+	}
+
+	public void setHeuristic(String chosen) {
+		// TODO Auto-generated method stub
+		
+	}
+	public void setDirection(boolean chosen) {
+		this._diagonal = chosen;
+		
+	}
+	public void setNumberOfAgents(int num) {
+		this.numOfAgents = num;
+		
+	}
+	public void setMapSize(int size) {
+		setMap(size);
 	}
 	
 	private class PathFinderThread implements Runnable {
@@ -68,5 +98,7 @@ public class GridController implements ControllerInterFace<myPoint>{
 		}
 		
 	}
+
+
 
 }
