@@ -13,20 +13,27 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 
+import EventMechanism.ApplicationEventListener;
+import EventMechanism.ApplicationEventListenerCollection;
+import EventMechanism.ApplicationEventSource;
+import EventMechanism.Events.SetBlockCellEvent;
+import EventMechanism.Events.SetFinishCellEvent;
+import EventMechanism.Events.SetStartCellEvent;
+import NewGUI.MainFrame2;
 import algorithms.myPoint;
 
 /**
  * 
  * @author Liron Katav
  */
-public class NewCell extends Component {
+public class NewCell extends Component  implements ApplicationEventSource{
 
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+	public static final int SET_BLOCKS=0,SET_START=1,SET_FINISH=2;
 	public static enum Status {
 		Empty, Start, Finish, Blocked, inOpenList, inClosedList,Path;
 	}
@@ -35,26 +42,29 @@ public class NewCell extends Component {
 	private myPoint _position;
 	private Status _status;
 	private int _agnetNum;
+	static int _editMode ;
+	public static int _agentSelected;
+	private ApplicationEventListenerCollection _listeners;
 
 	// Constructor
 	public NewCell(myPoint point) {
-		super();
-		this._position = point;
-		this._agnetNum=0;
+		this._position = point;	
 		init();
 	}
 
 	// Constructor
-	public NewCell(myPoint p, boolean block,mainPanel main) {
-		this._position = p;
-		this._agnetNum=0;
-		init();
+	public NewCell(myPoint p, boolean block) {
+		this._position = p;	
 		this.set_status(Status.Blocked);
+		init();	
 	}
 
 	private void init() {
 		this.set_status(Status.Empty);
+		this._agnetNum=0;
+		_editMode = SET_BLOCKS;
 		// Action and mouse listener support
+		this._listeners = new ApplicationEventListenerCollection();
 		enableEvents(AWTEvent.MOUSE_EVENT_MASK);
 	}
 
@@ -85,6 +95,14 @@ public class NewCell extends Component {
 		return _status;
 	}
 	
+	public int get_editMode() {
+		return _editMode;
+		
+	}
+	public void set_editMode (int editMode){
+		NewCell._editMode = editMode;
+		
+	}
 	public int get_agent() {
 		return _agnetNum;
 		
@@ -125,7 +143,7 @@ public class NewCell extends Component {
 		g.setColor(Color.black);	
 		
 		if(this._agnetNum != 0){
-			g.setFont(new Font("sansserif", Font.BOLD, 13));
+			g.setFont(new Font("sansserif", Font.BOLD, 10));
 			g.drawString(Integer.toString(this._agnetNum),5,15);
 		}
 		g.drawRect(0, 0, size.width - 2, size.height - 2);
@@ -135,7 +153,15 @@ public class NewCell extends Component {
 		super.processMouseEvent(event);
 		if (event.getID() == MouseEvent.MOUSE_PRESSED) {
 			myPoint p = getPointFromSource(event);
-			System.out.println("x:" + p.getX() + "y:" + p.getY());
+			if(_editMode ==  SET_BLOCKS){
+				this._listeners.fireEvent(new SetBlockCellEvent(this,p));
+			}
+			if(_editMode ==  SET_START){
+				this._listeners.fireEvent(new SetStartCellEvent(this,p,_agentSelected));
+			}
+			if(_editMode ==  SET_FINISH ){
+				this._listeners.fireEvent(new SetFinishCellEvent(this,p,_agentSelected));
+			}
 		}
 	}
 
@@ -145,5 +171,24 @@ public class NewCell extends Component {
 		return c.getPosition();
 	}
 
+	@Override
+	public void addListener(ApplicationEventListener listener) {
+		this._listeners.add(listener);
+		
+	}
+
+	@Override
+	public void clearListeners() {
+		this._listeners.clear();
+		
+	}
+
+	@Override
+	public void removeListener(ApplicationEventListener listener) {
+		this._listeners.remove(listener);
+	}
+
+	
+	
 }// end of class Cell
 

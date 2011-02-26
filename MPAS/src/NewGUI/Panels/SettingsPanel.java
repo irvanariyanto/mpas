@@ -27,14 +27,13 @@ public class SettingsPanel extends JPanel {
 	private JLabel _lNumOfAgents;
 	private JLabel _lNumber;
 	private JLabel _lSize;
-	private JRadioButton _rBlock;
-	private JRadioButton _rEnd;
-	private JRadioButton _rStart;
+	private JRadioButton _rSetBlock;
+	private JRadioButton _rSetFinish;
+	private JRadioButton _rSetStart;
 	private JSlider _sNumOfAgents;
 	private JSeparator _separator;
-	private JSlider _sGridSize;
+	private JSlider _sGridSize;	
 	// End of variables declaration
-
 	/**
 	 * Constructor
 	 */
@@ -66,9 +65,9 @@ public class SettingsPanel extends JPanel {
 		_separator = new JSeparator();
 		_lAgents = new JLabel("Agent's number:");
 		_cAgents = new JComboBox();
-		_rStart = new JRadioButton("Start");
-		_rEnd = new JRadioButton("End");
-		_rBlock = new JRadioButton("Block");
+		_rSetStart = new JRadioButton("Start");
+		_rSetFinish = new JRadioButton("End");
+		_rSetBlock = new JRadioButton("Block");
 		_actionGroup = new ButtonGroup();
 		_bGeneratePositions= new JButton("Generate Positions");
 
@@ -78,9 +77,10 @@ public class SettingsPanel extends JPanel {
 		_cAgents.setModel(new DefaultComboBoxModel(new String[] { "1","2" }));
 		_sNumOfAgents.setValue(2);
 		_sGridSize.setValue(20);
-		_actionGroup.add(_rBlock);
-		_actionGroup.add(_rStart);
-		_actionGroup.add(_rEnd);
+		_actionGroup.add(_rSetBlock);
+		_actionGroup.add(_rSetStart);
+		_actionGroup.add(_rSetFinish);
+		_rSetBlock.setSelected(true);
 		_bCancel.setEnabled(false);
 		
 		//adding ActionListeners
@@ -100,21 +100,7 @@ public class SettingsPanel extends JPanel {
 			}			
 		});
 		
-        _rStart.addActionListener(new  ActionListener() {
-            public void actionPerformed( ActionEvent evt) {
-                _rStartActionPerformed(evt);
-            }
-        });
-        _rEnd.addActionListener(new  ActionListener() {
-            public void actionPerformed( ActionEvent evt) {
-                _rEndActionPerformed(evt);
-            }
-        });
-        _rBlock.addActionListener(new  ActionListener() {
-            public void actionPerformed( ActionEvent evt) {
-                _rBlockActionPerformed(evt);
-            }
-        });		 
+        
         _bGeneratePositions.addActionListener(new  ActionListener() {
             public void actionPerformed( ActionEvent evt) {
                 _bGeneratePositionsActionPerformed(evt);
@@ -140,11 +126,11 @@ public class SettingsPanel extends JPanel {
 	                            .addComponent(_cDirections, 0, 102, Short.MAX_VALUE)))
 	                    .addGroup(layout.createSequentialGroup()
 	                        .addContainerGap()
-	                        .addComponent(_rStart)
+	                        .addComponent(_rSetStart)
 	                        .addPreferredGap( LayoutStyle.ComponentPlacement.UNRELATED)
-	                        .addComponent(_rEnd)
+	                        .addComponent(_rSetFinish)
 	                        .addPreferredGap( LayoutStyle.ComponentPlacement.RELATED)
-	                        .addComponent(_rBlock))
+	                        .addComponent(_rSetBlock))
 	                    .addGroup(layout.createSequentialGroup()
 	                        .addContainerGap()
 	                        .addComponent(_lAgents)
@@ -218,24 +204,16 @@ public class SettingsPanel extends JPanel {
 	                    .addComponent(_cAgents,  GroupLayout.PREFERRED_SIZE,  GroupLayout.DEFAULT_SIZE,  GroupLayout.PREFERRED_SIZE))
 	                .addPreferredGap( LayoutStyle.ComponentPlacement.RELATED)
 	                .addGroup(layout.createParallelGroup( GroupLayout.Alignment.BASELINE)
-	                    .addComponent(_rStart)
-	                    .addComponent(_rEnd)
-	                    .addComponent(_rBlock))
+	                    .addComponent(_rSetStart)
+	                    .addComponent(_rSetFinish)
+	                    .addComponent(_rSetBlock))
 	                .addPreferredGap( LayoutStyle.ComponentPlacement.RELATED)
 	                .addComponent(_bGeneratePositions)
 	                .addContainerGap( GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 	        );
 	    }                               
 	
-	private void _rStartActionPerformed( ActionEvent evt) {
-        // TODO add your handling code here:
-    }
-    private void _rEndActionPerformed( ActionEvent evt) {                                     
-        // TODO add your handling code here:
-    }
-    private void _rBlockActionPerformed( ActionEvent evt) {
-        // TODO add your handling code here:
-    }
+	
 
     private void _bGeneratePositionsActionPerformed( ActionEvent evt) {
         // TODO add your handling code here:
@@ -256,6 +234,35 @@ public class SettingsPanel extends JPanel {
     	return this._bCancel;
     }
 
+    /**
+     * returns the RadioButton block
+     * @return block RadioButton component
+     */
+    public JRadioButton getRBlock(){
+    	return this._rSetBlock;
+    }
+    /**
+     * returns the RadioButton setStart
+     * @return start RadioButton component
+     */
+    public JRadioButton getRStart(){
+    	return this._rSetStart;
+    }
+    /**
+     * returns the RadioButton setFinish
+     * @return finish RadioButton component
+     */
+    public JRadioButton getRFinish(){
+    	return this._rSetFinish;
+    }
+    
+    /**
+     * returns the Agent comboBox 
+     * @return Agent comboBox   component
+     */
+    public JComboBox get_cAgents(){
+    	return this._cAgents;
+    }
     /**
      * returns the String from the combobox where the user select the algorithm
      * @return Algorithm name
@@ -292,6 +299,13 @@ public class SettingsPanel extends JPanel {
 		return this._sNumOfAgents.getValue();
 	}
 	
+	/**
+	 * return the agent
+	 * @return agent's number
+	 */
+	public int getAgentNumber() {
+		return this._cAgents.getSelectedIndex();		 
+	}
 	/**
 	 * return the grid size
 	 * @return grid size
