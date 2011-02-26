@@ -5,7 +5,6 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
@@ -112,6 +111,7 @@ public class mainPanel extends JPanel {
 		_gridSize = this._configPanel.getSettingPanel().getGridSize();
 		getSetBlock().setSelected(true);
 		this._grid.set_editMode(NewCell.SET_BLOCKS);
+		this._grid.setNUM_OF_AGENT(_numberOfAgents);
 		this._grid.setAgentNumber(1);	
 		ChangeGridPanel(_gridSize);	
 		ChangeComboBoxSize(_numberOfAgents);
@@ -274,19 +274,16 @@ public class mainPanel extends JPanel {
 		@Override
 		public void handle(ApplicationEvent event) {
 			if (event instanceof SetBlockCellEvent) {
-				//need to add validation tests 
 				SetBlockCellEvent blockEvent = (SetBlockCellEvent)event;
-				mainPanel.this._grid.setBlockCell(blockEvent.getPosition().getX(), blockEvent.getPosition().getY());
+				mainPanel.this._grid.setBlockCell(blockEvent.getPosition());
 			}
 			if (event instanceof SetStartCellEvent) {
-				//need to add validation tests 
 				SetStartCellEvent startEvent = (SetStartCellEvent)event;
-				mainPanel.this._grid.setStartCell(startEvent.getPosition().getX(), startEvent.getPosition().getY(),startEvent.getAgent());
+				mainPanel.this._grid.setStartCell(startEvent.getPosition(),startEvent.getAgent());
 			}
 			if (event instanceof SetFinishCellEvent) {
-				//need to add validation tests 
 				SetFinishCellEvent finishEvent = (SetFinishCellEvent)event;
-				mainPanel.this._grid.setFinishCell(finishEvent.getPosition().getX(), finishEvent.getPosition().getY(),finishEvent.getAgent());
+				mainPanel.this._grid.setFinishCell(finishEvent.getPosition(),finishEvent.getAgent());
 			}
 			
 		}

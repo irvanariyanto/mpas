@@ -268,8 +268,7 @@ public class Grid extends JPanel {
 			this.get_starts()[agent] = p;
 			setStartCell(p.getX(), p.getY());
 		} else {
-			setEmptyCell(this.get_starts()[agent].getX(),
-					this.get_starts()[agent].getY());
+			setEmptyCell(this.get_starts()[agent].getX(),this.get_starts()[agent].getY());
 			this.get_starts()[agent] = p;
 			setStartCell(p.getX(), p.getY());
 		}

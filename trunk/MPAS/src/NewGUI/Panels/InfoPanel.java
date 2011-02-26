@@ -32,6 +32,7 @@ public class InfoPanel extends JPanel {
 		this.setBorder(BorderFactory.createTitledBorder("Information"));
 		_scrollPane = new JScrollPane();
 		_tOpenList = new JTextArea(5,20);
+		_tOpenList.setEditable(false);
 	    _lOpenList = new JLabel("Open List:");
 	    _scrollPane.setViewportView(_tOpenList);
 	    this.add(_lOpenList);
