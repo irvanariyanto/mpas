@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<Map Length = "10">
+	<BlockedTile x="4" y="5"/>
+	<BlockedTile x="4" y="4"/>
+	<BlockedTile x="0" y="5"/>
+</Map>
