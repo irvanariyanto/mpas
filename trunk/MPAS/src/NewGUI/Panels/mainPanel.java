@@ -4,9 +4,22 @@ import java.awt.BorderLayout;
 import java.awt.Event;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Vector;
 
+import javax.swing.AbstractButton;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+
+
+import EventMechanism.ApplicationEvent;
+import EventMechanism.ApplicationEventListener;
+import EventMechanism.Events.SetBlockCellEvent;
+import EventMechanism.Events.SetFinishCellEvent;
+import EventMechanism.Events.SetStartCellEvent;
+import algorithms.myPoint;
 
 
 public class mainPanel extends JPanel {
@@ -47,18 +60,35 @@ public class mainPanel extends JPanel {
 	    		 _bApplyActionPerformed(evt);
 	         }
 	     });
-		getbCanel().addActionListener(new  ActionListener() {
+		getbCancel().addActionListener(new  ActionListener() {
 	    	 public void actionPerformed( ActionEvent evt) {
 	    		 _bCancelActionPerformed(evt);
 	    	 }
 	     });
-		_grid.setStartCell(0,0,2);
-		_grid.setEndCell(0,3,2);
+		getSetBlock().addActionListener(new  ActionListener() {
+	    	 public void actionPerformed( ActionEvent evt) {
+	    		 _rBlockActionPerformed(evt);
+	    	 }
+	     });
+		getSetStart().addActionListener(new  ActionListener() {
+            public void actionPerformed( ActionEvent evt) {
+                _rStartActionPerformed(evt);
+            }
+        });
+        getSetFinish().addActionListener(new  ActionListener() {
+            public void actionPerformed( ActionEvent evt) {
+                _rEndActionPerformed(evt);
+            }
+        });
+        getAgentComboBox().addActionListener(new  ActionListener() {
+            public void actionPerformed( ActionEvent evt) {
+            	AgentComboBoxActionPerformed(evt);
+            }
+        });	 
+		this._grid.addListener(new MainFrameListener());
 	}	
 	
-	protected void _bCancelActionPerformed(ActionEvent evt) {
-		// TODO Auto-generated method stub	
-	}
+
 
 	/**
 	 * when the apply button is pressed
@@ -70,10 +100,37 @@ public class mainPanel extends JPanel {
 		_directionChosen = this._configPanel.getSettingPanel().getDirection();
 		_numberOfAgents = this._configPanel.getSettingPanel().getNumberOfAgents();		
 		_gridSize = this._configPanel.getSettingPanel().getGridSize();
+		getSetBlock().setSelected(true);
+		this._grid.set_editMode(NewCell.SET_BLOCKS);
 		ChangeGridPanel(_gridSize);	
 		ChangeComboBoxSize(_numberOfAgents);
 	}
 	
+	protected void _bCancelActionPerformed(ActionEvent evt) {
+		// TODO Auto-generated method stub	
+	}
+	
+	protected void _rEndActionPerformed(ActionEvent evt) {
+		this._grid.set_editMode(NewCell.SET_FINISH);
+		
+	}
+
+	protected void _rStartActionPerformed(ActionEvent evt) {
+		this._grid.set_editMode(NewCell.SET_START);
+		
+	}
+
+	protected void _rBlockActionPerformed(ActionEvent evt) {
+		this._grid.set_editMode(NewCell.SET_BLOCKS);	
+	}
+
+
+	protected void AgentComboBoxActionPerformed(ActionEvent evt) {
+		int agentSelected = this._configPanel.getSettingPanel().get_cAgents().getSelectedIndex();
+		this._grid.setAgentNumber(agentSelected+1);	
+	}
+
+
 	private void ChangeComboBoxSize(int numberofAgents) {
 		this._configPanel.getSettingPanel().ChangeComboBoxSize(numberofAgents);
 	}
@@ -87,6 +144,7 @@ public class mainPanel extends JPanel {
 		this._grid = new GridPanel(gridSize);
 		this.add(_grid , BorderLayout.CENTER);
 		this._grid .revalidate();
+		this._grid.addListener(new MainFrameListener());
 	}
 	
 	/**
@@ -100,8 +158,40 @@ public class mainPanel extends JPanel {
      * returns the Cancel button
      * @return Cancel button component
      */
-    public JButton getbCanel(){
+    public JButton getbCancel(){
     	return this._configPanel.getSettingPanel().getbCancel();
+    }
+    
+    /**
+     * returns the set start radio button
+     * @return setStart radioButton component
+     */
+	public JRadioButton getSetStart(){
+    	return this._configPanel.getSettingPanel().getRStart();
+    }
+	
+	/**
+     * returns the set finish radio button
+     * @return setFinish radioButton component
+     */
+	public JRadioButton getSetFinish(){
+    	return this._configPanel.getSettingPanel().getRFinish();
+    }
+	
+	/**
+     * returns the set block radio button
+     * @return setblock radioButton component
+     */
+	public JRadioButton getSetBlock(){
+    	return this._configPanel.getSettingPanel().getRBlock();
+    }
+    
+	 /**
+     * returns the Agent comboBox 
+     * @return Agent comboBox   component
+     */
+    public JComboBox getAgentComboBox(){
+    	return this._configPanel.getSettingPanel().get_cAgents();
     }
     
     /**
@@ -143,6 +233,28 @@ public class mainPanel extends JPanel {
     	return this._gridSize;
     }
 
-	
+    protected class MainFrameListener implements ApplicationEventListener {
+
+		@Override
+		public void handle(ApplicationEvent event) {
+			if (event instanceof SetBlockCellEvent) {
+				//need to add validation tests 
+				SetBlockCellEvent blockEvent = (SetBlockCellEvent)event;
+				mainPanel.this._grid.setBlockCell(blockEvent.getPosition().getX(), blockEvent.getPosition().getY());
+			}
+			if (event instanceof SetStartCellEvent) {
+				//need to add validation tests 
+				SetStartCellEvent startEvent = (SetStartCellEvent)event;
+				mainPanel.this._grid.setStartCell(startEvent.getPosition().getX(), startEvent.getPosition().getY(),startEvent.getAgent());
+			}
+			if (event instanceof SetFinishCellEvent) {
+				//need to add validation tests 
+				SetFinishCellEvent finishEvent = (SetFinishCellEvent)event;
+				mainPanel.this._grid.setFinishCell(finishEvent.getPosition().getX(), finishEvent.getPosition().getY(),finishEvent.getAgent());
+			}
+			
+		}
+
+	}
    
 }
