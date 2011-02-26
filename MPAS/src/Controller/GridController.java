@@ -29,7 +29,8 @@ public class GridController implements ControllerInterFace<myPoint>{
 		
 		StateInterface<myPoint> start = new myState(starts, this._map);
 		StateInterface<myPoint> goal = new myState(endPoints,this._map);
-		this._pathFinder.findPath(start , goal);
+		PathFinderThread t = new PathFinderThread(start, goal);
+		t.run();
 		
 		
 	}
@@ -50,4 +51,22 @@ public class GridController implements ControllerInterFace<myPoint>{
 	public Vector<StateInterface<myPoint>> getPath() {
 		return this._finalPath;
 	}
+	
+	private class PathFinderThread implements Runnable {
+		
+		private StateInterface<myPoint> _start;
+		private StateInterface<myPoint> _goal;
+		
+		public PathFinderThread(StateInterface<myPoint> start,StateInterface<myPoint> goal){
+			this._start = start;
+			this._goal = goal;
+		}
+		@Override
+		public void run() {
+			Vector<StateInterface<myPoint>> path = GridController.this._pathFinder.findPath(_start, _goal);
+			GridController.this._finalPath = path;
+		}
+		
+	}
+
 }

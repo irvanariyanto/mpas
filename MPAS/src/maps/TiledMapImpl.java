@@ -93,4 +93,15 @@ public class TiledMapImpl implements TileBasedMap {
 		else
 			return 1;
 	}
+	@Override
+	public String toString(){
+		String res ="";
+		for (int i = 0; i < this._height; i++){
+			for (int j = 0 ; j < this._width ; j++){
+				res+= "x:" + i + " y:" + j + " " + this.blocked(i, j) + "\t";
+			}
+			res += "\n";
+		}
+		return res;
+	}
 }
