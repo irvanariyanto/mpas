@@ -8,7 +8,7 @@ import java.awt.AWTEvent;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Event;
+
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
@@ -19,7 +19,6 @@ import EventMechanism.ApplicationEventSource;
 import EventMechanism.Events.SetBlockCellEvent;
 import EventMechanism.Events.SetFinishCellEvent;
 import EventMechanism.Events.SetStartCellEvent;
-import NewGUI.MainFrame2;
 import algorithms.myPoint;
 
 /**
@@ -59,6 +58,9 @@ public class NewCell extends Component  implements ApplicationEventSource{
 		init();	
 	}
 
+	/**
+	 * initialize the components
+	 */
 	private void init() {
 		this.set_status(Status.Empty);
 		this._agnetNum=0;
@@ -82,31 +84,57 @@ public class NewCell extends Component  implements ApplicationEventSource{
 		this._position = position;
 	}
 
+	/**
+	 * set the status and the agentNmber
+	 * @param status
+	 * @param agentNumber
+	 */
 	public void set_status(Status status, int agentNumber) {
 		this._status = status;
 		this._agnetNum = agentNumber;
 	}
 
+	/**
+	 * set the status
+	 * @param status
+	 */
 	public void set_status(Status status) {
 		this._status = status;
 	}
 
+	/**
+	 * @return the _status
+	 */
 	public Status get_status() {
 		return _status;
 	}
 	
+	/**
+	 * @return the _editMode
+	 */
 	public int get_editMode() {
 		return _editMode;
 		
 	}
+	/**
+	 * set the editMode
+	 * @param editMode
+	 */
 	public void set_editMode (int editMode){
 		NewCell._editMode = editMode;
 		
 	}
+	/**
+	 * @return the _agnetNum
+	 */
 	public int get_agent() {
 		return _agnetNum;
 		
 	}
+	/**
+	 * set the editMode
+	 * @param _agnetNum
+	 */
 	public void set_agent(int agentNum) {
 		this._agnetNum = agentNum;
 		

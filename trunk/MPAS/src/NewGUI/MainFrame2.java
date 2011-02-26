@@ -1,7 +1,5 @@
 package NewGUI;
 
-import java.awt.Event;
-
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;

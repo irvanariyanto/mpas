@@ -1,15 +1,13 @@
 package NewGUI.Panels;
 
 import java.awt.BorderLayout;
-import java.awt.Event;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Vector;
 
 import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
@@ -19,7 +17,6 @@ import EventMechanism.ApplicationEventListener;
 import EventMechanism.Events.SetBlockCellEvent;
 import EventMechanism.Events.SetFinishCellEvent;
 import EventMechanism.Events.SetStartCellEvent;
-import algorithms.myPoint;
 
 
 public class mainPanel extends JPanel {
@@ -57,44 +54,57 @@ public class mainPanel extends JPanel {
 		this.add(_grid , BorderLayout.CENTER);
 		getbApply().addActionListener(new  ActionListener() {
 	    	 public void actionPerformed( ActionEvent evt) {
-	    		 _bApplyActionPerformed(evt);
+	    		 bApplyActionPerformed(evt);
 	         }
 	     });
 		getbCancel().addActionListener(new  ActionListener() {
 	    	 public void actionPerformed( ActionEvent evt) {
-	    		 _bCancelActionPerformed(evt);
+	    		 bCancelActionPerformed(evt);
 	    	 }
 	     });
 		getSetBlock().addActionListener(new  ActionListener() {
 	    	 public void actionPerformed( ActionEvent evt) {
-	    		 _rBlockActionPerformed(evt);
+	    		 rBlockActionPerformed(evt);
 	    	 }
 	     });
 		getSetStart().addActionListener(new  ActionListener() {
             public void actionPerformed( ActionEvent evt) {
-                _rStartActionPerformed(evt);
+                rStartActionPerformed(evt);
             }
         });
         getSetFinish().addActionListener(new  ActionListener() {
             public void actionPerformed( ActionEvent evt) {
-                _rEndActionPerformed(evt);
+                rEndActionPerformed(evt);
             }
         });
         getAgentComboBox().addActionListener(new  ActionListener() {
             public void actionPerformed( ActionEvent evt) {
             	AgentComboBoxActionPerformed(evt);
             }
-        });	 
+        });	
+        getbGeneratePositions().addActionListener(new  ActionListener() {
+            public void actionPerformed( ActionEvent evt) {
+            	bGeneratePositionsActionPerformed(evt);
+            }
+        });	
+        getbClearPositions().addActionListener(new  ActionListener() {
+            public void actionPerformed( ActionEvent evt) {
+            	ClearPositionsActionPerformed(evt);
+            }
+        });	
 		this._grid.addListener(new MainFrameListener());
+		this._grid.setAgentNumber(1);	
 	}	
 	
 
+
+	
 
 	/**
 	 * when the apply button is pressed
 	 * @param evt
 	 */
-	protected void _bApplyActionPerformed(ActionEvent evt) {
+	protected void bApplyActionPerformed(ActionEvent evt) {
 		_algorithmChosen = this._configPanel.getSettingPanel().getAlgorithm();
 		_heuristicChosen = this._configPanel.getSettingPanel().getHeuristic();
 		_directionChosen = this._configPanel.getSettingPanel().getDirection();
@@ -102,25 +112,27 @@ public class mainPanel extends JPanel {
 		_gridSize = this._configPanel.getSettingPanel().getGridSize();
 		getSetBlock().setSelected(true);
 		this._grid.set_editMode(NewCell.SET_BLOCKS);
+		this._grid.setAgentNumber(1);	
 		ChangeGridPanel(_gridSize);	
 		ChangeComboBoxSize(_numberOfAgents);
 	}
 	
-	protected void _bCancelActionPerformed(ActionEvent evt) {
+	protected void bCancelActionPerformed(ActionEvent evt) {
 		// TODO Auto-generated method stub	
 	}
 	
-	protected void _rEndActionPerformed(ActionEvent evt) {
+	
+	protected void rEndActionPerformed(ActionEvent evt) {
 		this._grid.set_editMode(NewCell.SET_FINISH);
 		
 	}
 
-	protected void _rStartActionPerformed(ActionEvent evt) {
+	protected void rStartActionPerformed(ActionEvent evt) {
 		this._grid.set_editMode(NewCell.SET_START);
 		
 	}
 
-	protected void _rBlockActionPerformed(ActionEvent evt) {
+	protected void rBlockActionPerformed(ActionEvent evt) {
 		this._grid.set_editMode(NewCell.SET_BLOCKS);	
 	}
 
@@ -131,6 +143,15 @@ public class mainPanel extends JPanel {
 	}
 
 
+	protected void ClearPositionsActionPerformed(ActionEvent evt) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	protected void bGeneratePositionsActionPerformed(ActionEvent evt) {
+		// TODO Auto-generated method stub
+		
+	}
 	private void ChangeComboBoxSize(int numberofAgents) {
 		this._configPanel.getSettingPanel().ChangeComboBoxSize(numberofAgents);
 	}
@@ -162,6 +183,21 @@ public class mainPanel extends JPanel {
     	return this._configPanel.getSettingPanel().getbCancel();
     }
     
+    /**
+     * returns the GeneratePositions button
+     * @return GeneratePositions button component
+     */
+    public JButton getbGeneratePositions(){
+    	return this._configPanel.getSettingPanel().getbGeneratePositions();
+    }
+    
+    /**
+     * returns the ClearPositions button
+     * @return ClearPositions button component
+     */
+    public JButton getbClearPositions(){
+    	return this._configPanel.getSettingPanel().getbClearPositions();
+    }
     /**
      * returns the set start radio button
      * @return setStart radioButton component

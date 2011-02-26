@@ -15,6 +15,7 @@ public class SettingsPanel extends JPanel {
 	private JButton _bApply;
 	private JButton _bCancel;
 	private JButton _bGeneratePositions;
+	private JButton _bClearPositions;
 	private JComboBox _cAgents;
 	private JComboBox _cAlgorithm;
 	private JComboBox _cDirections;
@@ -66,10 +67,11 @@ public class SettingsPanel extends JPanel {
 		_lAgents = new JLabel("Agent's number:");
 		_cAgents = new JComboBox();
 		_rSetStart = new JRadioButton("Start");
-		_rSetFinish = new JRadioButton("End");
+		_rSetFinish = new JRadioButton("Finish");
 		_rSetBlock = new JRadioButton("Block");
 		_actionGroup = new ButtonGroup();
 		_bGeneratePositions= new JButton("Generate Positions");
+		_bClearPositions= new JButton("Clear All Positions");
 
 		_cAlgorithm.setModel(new DefaultComboBoxModel(new String[] { "A-Star" }));
 		_cHeuristic.setModel(new DefaultComboBoxModel(new String[] { "Manhattan " }));
@@ -100,17 +102,13 @@ public class SettingsPanel extends JPanel {
 			}			
 		});
 		
+ 	
         
-        _bGeneratePositions.addActionListener(new  ActionListener() {
-            public void actionPerformed( ActionEvent evt) {
-                _bGeneratePositionsActionPerformed(evt);
-            }
-        });		
-
+		//setting the layout
 		GroupLayout layout = new GroupLayout(this);
 		this.setLayout(layout);
 		layout.setHorizontalGroup(
-				layout.createParallelGroup( GroupLayout.Alignment.LEADING)
+	            layout.createParallelGroup( GroupLayout.Alignment.LEADING)
 	            .addGroup(layout.createSequentialGroup()
 	                .addGroup(layout.createParallelGroup( GroupLayout.Alignment.LEADING)
 	                    .addGroup(layout.createSequentialGroup()
@@ -137,9 +135,6 @@ public class SettingsPanel extends JPanel {
 	                        .addPreferredGap( LayoutStyle.ComponentPlacement.UNRELATED)
 	                        .addComponent(_cAgents,  GroupLayout.PREFERRED_SIZE,  GroupLayout.DEFAULT_SIZE,  GroupLayout.PREFERRED_SIZE))
 	                    .addGroup(layout.createSequentialGroup()
-	                        .addContainerGap()
-	                        .addComponent(_bGeneratePositions))
-	                    .addGroup(layout.createSequentialGroup()
 	                        .addGroup(layout.createParallelGroup( GroupLayout.Alignment.TRAILING)
 	                            .addGroup( GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
 	                                .addContainerGap()
@@ -160,7 +155,12 @@ public class SettingsPanel extends JPanel {
 	                        .addPreferredGap( LayoutStyle.ComponentPlacement.UNRELATED)
 	                        .addGroup(layout.createParallelGroup( GroupLayout.Alignment.LEADING)
 	                            .addComponent(_lSize)
-	                            .addComponent(_lNumber))))
+	                            .addComponent(_lNumber)))
+	                    .addGroup(layout.createSequentialGroup()
+	                        .addContainerGap()
+	                        .addGroup(layout.createParallelGroup( GroupLayout.Alignment.TRAILING, false)
+	                            .addComponent(_bClearPositions,  GroupLayout.Alignment.LEADING,  GroupLayout.DEFAULT_SIZE,  GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+	                            .addComponent(_bGeneratePositions,  GroupLayout.Alignment.LEADING,  GroupLayout.DEFAULT_SIZE,  GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
 	                .addContainerGap())
 	            .addGroup(layout.createSequentialGroup()
 	                .addContainerGap()
@@ -209,6 +209,8 @@ public class SettingsPanel extends JPanel {
 	                    .addComponent(_rSetBlock))
 	                .addPreferredGap( LayoutStyle.ComponentPlacement.RELATED)
 	                .addComponent(_bGeneratePositions)
+	                .addPreferredGap( LayoutStyle.ComponentPlacement.RELATED)
+	                .addComponent(_bClearPositions)
 	                .addContainerGap( GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 	        );
 	    }                               
@@ -232,6 +234,21 @@ public class SettingsPanel extends JPanel {
      */
     public JButton getbCancel(){
     	return this._bCancel;
+    }
+
+    /**
+     * returns the GeneratePositions button
+     * @return GeneratePositions button component
+     */
+    public JButton getbGeneratePositions() {
+    	return this._bGeneratePositions;
+	}
+    /**
+     * returns the ClearPositions button
+     * @return ClearPositions button component
+     */
+    public JButton getbClearPositions(){
+    	return this._bClearPositions;
     }
 
     /**
@@ -263,6 +280,8 @@ public class SettingsPanel extends JPanel {
     public JComboBox get_cAgents(){
     	return this._cAgents;
     }
+    
+    
     /**
      * returns the String from the combobox where the user select the algorithm
      * @return Algorithm name
@@ -303,7 +322,7 @@ public class SettingsPanel extends JPanel {
 	 * return the agent
 	 * @return agent's number
 	 */
-	public int getAgentNumber() {
+	public int getAgentSelectedNumber() {
 		return this._cAgents.getSelectedIndex();		 
 	}
 	/**
@@ -314,11 +333,17 @@ public class SettingsPanel extends JPanel {
 		return this._sGridSize.getValue();
 	}
 
+	/**
+	 * change the agent combobox according to the new number of agents
+	 * @param numberofAgents
+	 */
 	public void ChangeComboBoxSize(int numberofAgents) {
 		this._cAgents.removeAllItems();
 		for(int i= 1; i <= numberofAgents; i++){
 			this._cAgents.addItem(i);
 		}
 	}
+
+	
 
 }
