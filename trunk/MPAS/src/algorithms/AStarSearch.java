@@ -20,6 +20,7 @@ public class AStarSearch<E> implements SearchInterface<E>,ApplicationEventSource
 	private HashMap<StateInterface<E>,StateInterface<E>> _expaned;
 	private ApplicationEventListenerCollection _listeners;
 	private boolean _pause;
+	
 	public AStarSearch(HeuristicInterface<StateInterface<E>> heuristic){
 		this._heuristic = heuristic;
 		this._openList = new PriorityQueue<StateInterface<E>>();

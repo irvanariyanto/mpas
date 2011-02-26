@@ -10,6 +10,7 @@ import maps.TileBasedMap;
 import maps.TileStatus;
 import maps.TiledMapImpl;
 
+import algorithms.AStarSearch;
 import algorithms.SearchInterface;
 import algorithms.StateInterface;
 import algorithms.myPoint;
@@ -17,16 +18,19 @@ import algorithms.myState;
 
 public class GridController implements ControllerInterFace<myPoint>{
 	
-	private HeuristicInterface<myPoint> _heuristic;
+	private HeuristicInterface<StateInterface<myPoint>> _heuristic;
 	private SearchInterface<myPoint> _pathFinder;
 	private TileBasedMap _map;
-	private int numOfAgents;
+	private int _numOfAgents;
 	private boolean _diagonal;
 	private Vector<StateInterface<myPoint>> _finalPath;
 	
 	public GridController() {
-		//this._heuristic = new ManhattanHeuristic<myPoint>();
-		//this._pathFinder = new AStarPathFinder(this._heuristic);		
+	//	this._numOfAgents = 2;
+		this._heuristic = new ManhattanHeuristic();
+		this._pathFinder = new AStarSearch<myPoint>(this._heuristic);	
+		this._diagonal = false;
+		//this._map = new TiledMapImpl(10, 10, this._diagonal);
 	}
 	@Override
 	public void findPath(Vector<myPoint> starts,
@@ -67,7 +71,7 @@ public class GridController implements ControllerInterFace<myPoint>{
 		
 	}
 	public void setNumberOfAgents(int num) {
-		this.numOfAgents = num;
+		this._numOfAgents = num;
 		
 	}
 	public void setMapSize(int size) {
