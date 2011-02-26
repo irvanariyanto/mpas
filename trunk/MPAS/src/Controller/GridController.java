@@ -5,19 +5,11 @@ import heuristics.ManhattanHeuristic;
 
 import java.util.Vector;
 
-import maps.MapInterface;
+
 import maps.TileBasedMap;
 import maps.TileStatus;
 import maps.TiledMapImpl;
 
-import EventMechanism.ApplicationEvent;
-import EventMechanism.ApplicationEventListener;
-import EventMechanism.ApplicationEventListenerCollection;
-import EventMechanism.ApplicationEventSource;
-import EventMechanism.Events.SetBlockCellEvent;
-import EventMechanism.Events.SetFinishCellEvent;
-import EventMechanism.Events.SetStartCellEvent;
-import NewGUI.Panels.mainPanel;
 import algorithms.SearchInterface;
 import algorithms.StateInterface;
 import algorithms.myPoint;

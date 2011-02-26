@@ -3,7 +3,6 @@ package Controller;
 import java.util.Vector;
 
 import algorithms.StateInterface;
-import algorithms.myPoint;
 
 public interface ControllerInterFace<E> {
 	
