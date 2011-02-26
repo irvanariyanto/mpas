@@ -99,6 +99,9 @@ public class NewCell extends Component  implements ApplicationEventSource{
 	 * @param status
 	 */
 	public void set_status(Status status) {
+		if(status == Status.Empty){
+			this._agnetNum=0;
+		}
 		this._status = status;
 	}
 
