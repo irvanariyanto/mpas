@@ -176,13 +176,11 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 		Vector<myPoint> startList = this.get_startsList();
 		Vector<myPoint> finishList = this.get_FinishList();
 		for(myPoint p: startList){
-			if(p==null) continue;
-			else this._grid[p.getX()][p.getY()].set_status(NewGUI.Panels.NewCell.Status.Empty);
+			this._grid[p.getX()][p.getY()].set_status(NewGUI.Panels.NewCell.Status.Empty);
 		}
 		this._startsList.removeAllElements();
 		for(myPoint p: finishList){
-			if(p==null) continue;
-			else this._grid[p.getX()][p.getY()].set_status(NewGUI.Panels.NewCell.Status.Empty);
+			 this._grid[p.getX()][p.getY()].set_status(NewGUI.Panels.NewCell.Status.Empty);
 		}
 		this._startsList.removeAllElements();
 		repaint();
@@ -207,12 +205,15 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 				int randomY =(int) ((Math.random()*_height));
 				myPoint p = new myPoint(randomX, randomY); 
 				if(this.get_blockList().contains(p)){
+					i--;
 					continue;
 				}
 				if(this.get_startsList().contains(p)){
+					i--;
 					continue;
 				}
 				if(this.get_FinishList().contains(p)){
+					i--;
 					continue;
 				}
 				else{
@@ -225,12 +226,15 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 				int randomY =(int) ((Math.random()*_height));
 				myPoint p = new myPoint(randomX, randomY); 
 				if(this.get_blockList().contains(p)){
+					i--;
 					continue;
 				}
 				if(this.get_startsList().contains(p)){
+					i--;
 					continue;
 				}
 				if(this.get_FinishList().contains(p)){
+					i--;
 					continue;
 				}
 				else{
