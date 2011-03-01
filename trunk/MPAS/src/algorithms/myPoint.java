@@ -47,6 +47,13 @@ public class myPoint {
         public boolean equals(myPoint other) {
                         return (other.x == x) && (other.y == y);
         }
+        
+        /**
+         * @see Object#equals(Object)
+         */
+        public boolean equals(Object other) {
+                        return (((myPoint)other).x == x) && (((myPoint)other).y == y);
+        }
         public String toString(){
                 return "(" + this.x + "," + this.y + ")";
         }

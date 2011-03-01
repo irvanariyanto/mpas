@@ -2,12 +2,21 @@ package NewGUI.Panels;
 
 
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
 
 
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 
 
 
@@ -18,7 +27,7 @@ import EventMechanism.ApplicationEventSource;
 
 import algorithms.myPoint;
 
-public class GridPanel extends JPanel implements ApplicationEventSource{
+public class GridPanel extends JPanel implements ApplicationEventSource {
 	
 
 	private static final long serialVersionUID = 1L;
@@ -57,6 +66,7 @@ public class GridPanel extends JPanel implements ApplicationEventSource{
 		this._listeners = new ApplicationEventListenerCollection();
 	}
 
+
 	/**
 	 * getter
 	 * @return grid's width
@@ -74,18 +84,20 @@ public class GridPanel extends JPanel implements ApplicationEventSource{
 	}
 	
 	public Vector<myPoint> get_startsList(){
-        //create list for this object array.
-        List<myPoint> list = Arrays.asList(this._starts);
-        // create vector for given list.
-        this._startsList = new Vector<myPoint>(list);		
+        for (int i=0; i< this._starts.length; i++){
+        	if (this._starts[i] != null){
+        		this._startsList.add(_starts[i]);
+        	}
+        }
 		return this._startsList;
 	}
 	
 	public Vector<myPoint> get_FinishList(){
-        //create list for this object array.
-        List<myPoint> list = Arrays.asList(this._finishes);
-        // create vector for given list.
-        this._FinishList = new Vector<myPoint>(list);		
+		for (int i=0; i< this._finishes.length; i++){
+        	if (this._finishes[i] != null){
+        		this._FinishList.add(_finishes[i]);
+        	}
+        }
 		return this._FinishList;
 	}
 	
@@ -176,45 +188,60 @@ public class GridPanel extends JPanel implements ApplicationEventSource{
 		repaint();
 	}
 
+	public void clearBlocks() {
+		Vector<myPoint> Block = this.get_blockList();
+		for(myPoint p: Block){
+			if(p==null) continue;
+			else this._grid[p.getX()][p.getY()].set_status(NewGUI.Panels.NewCell.Status.Empty);
+		}
+		this._blockList.removeAllElements();		
+		repaint();
+	}
+	
 	public void GeneratePositions() {
 		clearPositions();
-		//generate starting points
-		for(int i=1; i<=NUM_OF_AGENT; i++){
-			int randomX =(int) ((Math.random()*_width));  
-			int randomY =(int) ((Math.random()*_height));
-			myPoint p = new myPoint(randomX, randomY); 
-			if(this._blockList.contains(p)){
-				continue;
+		if ((_height*_width - _blockList.size())/2 >  NUM_OF_AGENT){
+			//generate starting points
+			for(int i=1; i<=NUM_OF_AGENT; i++){
+				int randomX =(int) ((Math.random()*_width));  
+				int randomY =(int) ((Math.random()*_height));
+				myPoint p = new myPoint(randomX, randomY); 
+				if(this.get_blockList().contains(p)){
+					continue;
+				}
+				if(this.get_startsList().contains(p)){
+					continue;
+				}
+				if(this.get_FinishList().contains(p)){
+					continue;
+				}
+				else{
+					setStartCell(p,i );
+				}
 			}
-			if(this.get_startsList().contains(p)){
-				continue;
+			//generate finishing points
+			for(int i=1; i<=NUM_OF_AGENT; i++){
+				int randomX =(int) ((Math.random()*_width));  
+				int randomY =(int) ((Math.random()*_height));
+				myPoint p = new myPoint(randomX, randomY); 
+				if(this.get_blockList().contains(p)){
+					continue;
+				}
+				if(this.get_startsList().contains(p)){
+					continue;
+				}
+				if(this.get_FinishList().contains(p)){
+					continue;
+				}
+				else{
+					setFinishCell(p,i );
+				}
 			}
-			if(this.get_FinishList().contains(p)){
-				continue;
-			}
-			else{
-				setStartCell(p,i );
-			}
+			repaint();
 		}
-		//generate finishing points
-		for(int i=1; i<=NUM_OF_AGENT; i++){
-			int randomX =(int) ((Math.random()*_width));  
-			int randomY =(int) ((Math.random()*_height));
-			myPoint p = new myPoint(randomX, randomY); 
-			if(this._blockList.contains(p)){
-				continue;
-			}
-			if(this.get_startsList().contains(p)){
-				continue;
-			}
-			if(this.get_FinishList().contains(p)){
-				continue;
-			}
-			else{
-				setFinishCell(p,i );
-			}
+		else{
+			//TO-DO add error message
 		}
-		repaint();
 	}
 
 	@Override
@@ -243,9 +270,5 @@ public class GridPanel extends JPanel implements ApplicationEventSource{
 
 	}
 
-	
-	
-
-	
-
 }
+

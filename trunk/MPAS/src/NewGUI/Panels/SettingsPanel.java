@@ -2,12 +2,15 @@ package NewGUI.Panels;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-public class SettingsPanel extends JPanel {
+public class SettingsPanel extends JPanel  {
 
 	private static final long serialVersionUID = 1L;
 	// Variables declaration 
@@ -41,6 +44,7 @@ public class SettingsPanel extends JPanel {
 	public SettingsPanel() {
 		super();
 		initComponents();
+		
 
 	}
 
@@ -217,6 +221,7 @@ public class SettingsPanel extends JPanel {
 	
 	
 
+
     private void _bGeneratePositionsActionPerformed( ActionEvent evt) {
         // TODO add your handling code here:
     }
@@ -345,6 +350,8 @@ public class SettingsPanel extends JPanel {
 	}
 
 	
+
+
 
 	
 
