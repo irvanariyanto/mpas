@@ -29,6 +29,7 @@ public class AStarSearch<E> implements SearchInterface<E>,ApplicationEventSource
 		this._closedList = new HashSet<StateInterface<E>>();
 		this._expaned = new HashMap<StateInterface<E>, StateInterface<E>>();
 		this._pause = false;
+		this._listeners = new ApplicationEventListenerCollection();
 	}
 	public AStarSearch(HeuristicInterface<StateInterface<E>> heuristic,boolean pause){
 		this._heuristic = heuristic;
@@ -36,6 +37,7 @@ public class AStarSearch<E> implements SearchInterface<E>,ApplicationEventSource
 		this._closedList = new HashSet<StateInterface<E>>();
 		this._expaned = new HashMap<StateInterface<E>, StateInterface<E>>();
 		this._pause = pause;
+		this._listeners = new ApplicationEventListenerCollection();
 	}
 	@Override
 	public Vector<StateInterface<E>> findPath(StateInterface<E> start,StateInterface<E> goal) {
