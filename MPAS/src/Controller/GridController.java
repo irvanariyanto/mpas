@@ -32,6 +32,7 @@ public class GridController implements ControllerInterFace<myPoint>{
 		this._heuristic = new ManhattanHeuristic();
 		this._pathFinder = new AStarSearch<myPoint>(this._heuristic);	
 		this._diagonal = false;
+		
 		//this._map = new TiledMapImpl(10, 10, this._diagonal);
 	}
 	@Override

@@ -51,7 +51,7 @@ public class TiledMapImpl implements TileBasedMap {
 
 	@Override
 	public float getCost(int sx, int sy, int tx, int ty) {
-		// TODO Auto-generated method stub
+		// TODO fix for diagonal
 		return 1;
 	}
 
