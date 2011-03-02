@@ -105,6 +105,7 @@ public class MainFrame2 extends JFrame {
 			this._mainPanel.ChangeGridPanel(map.getHeightInTiles()); 
 			this._mainPanel.get_controller().setMap(map);
 			this._mainPanel.getGrid().drawMap(map);
+			this._mainPanel.getConfiguarationPanel().getSettingsPanel().setGridSizeValue(map.getHeightInTiles());
 		}
 	}
 	private void saveMap(){
@@ -135,8 +136,12 @@ public class MainFrame2 extends JFrame {
 	    		Scenario s = GridMapUtility.loadScenario(tFile);
 				this._mainPanel.ChangeGridPanel(s.getMap().getHeightInTiles()); 
 				this._mainPanel.get_controller().setMap(s.getMap());
-				this._mainPanel.get_controller().setNumberOfAgents(s.getStartLocations().size());
+				int numOfAgents = s.getStartLocations().size();
+				this._mainPanel.get_controller().setNumberOfAgents(numOfAgents);
 				this._mainPanel.getGrid().drawScenario(s);
+				this._mainPanel.getConfiguarationPanel().getSettingsPanel().setGridSizeValue(s.getMap().getHeightInTiles());
+				this._mainPanel.getConfiguarationPanel().getSettingsPanel().setNumOfAgentsValue(numOfAgents);
+				
 	    	}
 	}
 }

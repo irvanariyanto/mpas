@@ -337,7 +337,13 @@ public class SettingsPanel extends JPanel  {
 	public int getGridSize() {
 		return this._sGridSize.getValue();
 	}
-
+	public void setGridSizeValue(int value){
+		this._sGridSize.setValue(value);
+	}
+	public void setNumOfAgentsValue(int numOfAgents) {
+		this._sNumOfAgents.setValue(numOfAgents);
+		
+	}
 	/**
 	 * change the agent combobox according to the new number of agents
 	 * @param numberofAgents
@@ -348,6 +354,8 @@ public class SettingsPanel extends JPanel  {
 			this._cAgents.addItem(i);
 		}
 	}
+
+
 
 	
 
