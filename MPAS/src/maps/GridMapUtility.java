@@ -33,11 +33,13 @@ public class GridMapUtility {
 			Document doc = dBuilder.parse(file);
 			doc.getDocumentElement().normalize();
 			Element root = doc.getDocumentElement();
-			int length = Integer.parseInt(root.getAttribute("Length"));
+			NodeList tList = doc.getElementsByTagName("Map");
+			Element mapElement = (Element)tList.item(0);
+			int length = Integer.parseInt(mapElement.getAttribute("Length"));
 			// boolean diagonal =
 			// Boolean.parseBoolean(root.getAttribute("Diagonal"));
 			TileBasedMap map = new TiledMapImpl(length, length, false);
-			NodeList nList = doc.getElementsByTagName("*");
+			NodeList nList = mapElement.getElementsByTagName("*");
 			for (int i = 0; i < nList.getLength(); i++) {
 				Element tElement = (Element) nList.item(i);
 				String type = tElement.getNodeName();
@@ -76,16 +78,18 @@ public class GridMapUtility {
 
 			// root elements
 			Document doc = docBuilder.newDocument();
-			Element rootElement = doc.createElement("Map");
+			Element rootElement = doc.createElement("Scenario");
 			doc.appendChild(rootElement);
-			rootElement.setAttribute("Length", "" + tileBasedMap.getHeightInTiles());
+			Element mapElement = doc.createElement("Map");
+			rootElement.appendChild(mapElement);
+			mapElement.setAttribute("Length", "" + tileBasedMap.getHeightInTiles());
 			for (int i = 0; i < tileBasedMap.getHeightInTiles(); i++) {
 				for (int j = 0; j < tileBasedMap.getWidthInTiles(); j++) {
 					if (tileBasedMap.blocked(i, j)) {
 						Element blockedTile = doc.createElement("BlockedTile");
 						blockedTile.setAttribute("x", "" + i);
 						blockedTile.setAttribute("y", "" + j);
-						rootElement.appendChild(blockedTile);
+						mapElement.appendChild(blockedTile);
 					}
 				}
 			}
@@ -117,19 +121,23 @@ public class GridMapUtility {
 			TileBasedMap map = scenario.getMap();
 			// root elements
 			Document doc = docBuilder.newDocument();
-			Element rootElement = doc.createElement("Map");
+			Element rootElement = doc.createElement("Scenario");
 			doc.appendChild(rootElement);
-			rootElement.setAttribute("Length", "" + map.getHeightInTiles());
+			Element mapElement = doc.createElement("Map");
+			rootElement.appendChild(mapElement);
+			mapElement.setAttribute("Length", "" + map.getHeightInTiles());
 			for (int i = 0; i < map.getHeightInTiles(); i++) {
 				for (int j = 0; j < map.getWidthInTiles(); j++) {
 					if (map.blocked(i, j)) {
 						Element blockedTile = doc.createElement("BlockedTile");
 						blockedTile.setAttribute("x", "" + i);
 						blockedTile.setAttribute("y", "" + j);
-						rootElement.appendChild(blockedTile);
+						mapElement.appendChild(blockedTile);
 					}
 				}
 			}
+			Element agentsElement = doc.createElement("Agents");
+			rootElement.appendChild(agentsElement);
 			for (int i = 0 ; i < scenario.getStartLocations().size();i++){
 				myPoint tStart = scenario.getStartLocations().elementAt(i);
 				myPoint tGoal = scenario.getGoalLocations().elementAt(i);
@@ -138,6 +146,7 @@ public class GridMapUtility {
 				tAgent.setAttribute("sy", "" + tStart.getY());
 				tAgent.setAttribute("gx", "" + tGoal.getX());
 				tAgent.setAttribute("gy", "" + tGoal.getY());
+				agentsElement.appendChild(tAgent);
 			}
 			// write the content into xml file
 			TransformerFactory transformerFactory = TransformerFactory
