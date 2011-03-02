@@ -31,9 +31,8 @@ public class GridController implements ControllerInterFace<myPoint>{
 	//	this._numOfAgents = 2;
 		this._heuristic = new ManhattanHeuristic();
 		this._pathFinder = new AStarSearch<myPoint>(this._heuristic);	
-		this._diagonal = false;
-		
-		//this._map = new TiledMapImpl(10, 10, this._diagonal);
+		this._diagonal = false;		
+		//this._map = new TiledMapImpl(20, 20, this._diagonal);
 	}
 	@Override
 	public void findPath(Vector<myPoint> starts,
@@ -59,6 +58,10 @@ public class GridController implements ControllerInterFace<myPoint>{
 		}
 	}
 
+	//Liron addition
+	public void setTile(myPoint blockedTile) {
+			this._map.setTile(blockedTile.getX(), blockedTile.getY(), TileStatus.blocked);
+	}
 	
 	@Override
 	public Vector<StateInterface<myPoint>> getPath() {

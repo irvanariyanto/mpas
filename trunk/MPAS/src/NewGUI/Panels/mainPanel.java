@@ -31,7 +31,7 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 	private String _heuristicChosen;
 	private boolean _directionChosen; // 1 = 8D, 0 = 4D
 	private int _numberOfAgents;
-	private int _gridSize;
+	private int _gridSize ;
 	
 	
 	private ApplicationEventListenerCollection _listeners; 
@@ -55,7 +55,8 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 	 * initialize all the swing Components
 	 */
 	private void initComponenets() {
-		_grid = new GridPanel(20);		
+		_grid = new GridPanel(20);	
+		_gridSize = 20;
 		_configPanel = new ConfigurationPanel();
 		_controller = new GridController();
 		init_controller();	
@@ -109,7 +110,7 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 	         }
 	     });
 		this._grid.addListener(new MainFrameListener());
-		this._grid.setAgentNumber(1);	
+		this._grid.setAgentNumber(1);			
 	}	
 	
 	public GridController get_controller() {
@@ -143,6 +144,7 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 		this._controller.setDirection(_directionChosen);
 		this._controller.setNumberOfAgents (_numberOfAgents);
 		this._controller.setMapSize (_gridSize);
+		
 	}
 	
 	protected void bCancelActionPerformed(ActionEvent evt) {
@@ -319,6 +321,7 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 			if (event instanceof SetBlockCellEvent) {
 				SetBlockCellEvent blockEvent = (SetBlockCellEvent)event;
 				mainPanel.this._grid.setBlockCell(blockEvent.getPosition());
+				mainPanel.this._controller.setTile(blockEvent.getPosition());
 			}
 			if (event instanceof SetStartCellEvent) {
 				SetStartCellEvent startEvent = (SetStartCellEvent)event;
