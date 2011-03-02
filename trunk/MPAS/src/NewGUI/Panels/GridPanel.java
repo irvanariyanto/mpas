@@ -18,6 +18,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 
+import maps.Scenario;
+import maps.TileBasedMap;
+
 
 
 import EventMechanism.ApplicationEvent;
@@ -117,7 +120,26 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	public void setNUM_OF_AGENT (int numberOfAgents){
 		GridPanel.NUM_OF_AGENT = numberOfAgents;		
 	}
-	
+	//amit's addon
+	public void  drawMap(TileBasedMap map){
+		for (int i = 0; i < map.getWidthInTiles();i++){
+			for (int j = 0; j  < map.getHeightInTiles();j++){
+				if (map.blocked(i, j)){
+					setBlockedCell(i, j);
+				}
+			}
+		}
+	}
+	//TODO maybe needs more stuff
+	public void drawScenario(Scenario s){
+		drawMap(s.getMap());
+		int numOfAgents = s.getStartLocations().size();
+		setNUM_OF_AGENT(numOfAgents);
+		for (int i = 0; i < numOfAgents ; i++){
+			setStartCell(s.getStartLocations().elementAt(i), i);
+			setFinishCell(s.getGoalLocations().elementAt(i),i);
+		}
+	}
 	/**
 	 * set the cell in x,y to be starting point
 	 * 
@@ -159,6 +181,11 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 			this._grid[p.getX()][p.getY()].set_status(NewGUI.Panels.NewCell.Status.Blocked);			
 		}
 		repaint();		
+	}
+	//amit
+	public void setBlockedCell(int row,int column){
+		setBlockCell(new myPoint(row,column));
+	
 	}
 	
 	public boolean checkArguments() {

@@ -4,22 +4,25 @@ import java.util.Vector;
 
 import EventMechanism.ApplicationEvent;
 import EventMechanism.ApplicationEventSource;
+import algorithms.StateInterface;
 import algorithms.myPoint;
 
-public class ClosedListChangeEvent extends ApplicationEvent {
-	private Vector<myPoint> _points;
-	public ClosedListChangeEvent(ApplicationEventSource source,Vector<myPoint> points) {
+public class ClosedListChangeEvent<E> extends ApplicationEvent {
+	private StateInterface<E> _state;
+	public ClosedListChangeEvent(ApplicationEventSource source,StateInterface<E> current) {
 		super(source);
-		this._points = points;
+		this._state = current;
 	}
 
 	@Override
 	public String getDescription() {
 		return "ClosedListChangeEvent";
 	}
-
-	public Vector<myPoint> get_points() {
-		return _points;
+	
+	public StateInterface<E> getState(){
+		
+		return this._state;
 	}
+
 
 }
