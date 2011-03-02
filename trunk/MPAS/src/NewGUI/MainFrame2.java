@@ -13,6 +13,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 import maps.GridMapUtility;
+import maps.Scenario;
 import maps.TileBasedMap;
 
 import NewGUI.Panels.mainPanel;
@@ -78,7 +79,7 @@ public class MainFrame2 extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
+				loadScenario();
 				
 			}
 		});
@@ -86,26 +87,27 @@ public class MainFrame2 extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				saveScenario();
 				
 			}
+
 		});
 		
 
 	}
-	public void loadMap() {
+	private void loadMap() {
 		JFileChooser fc = new JFileChooser();
     //	fc.addChoosableFileFilter(new TextFileFilter());
     	fc.showOpenDialog(this);
     	File tMapFile = fc.getSelectedFile();
 		if (tMapFile != null){
 			TileBasedMap map = GridMapUtility.loadMap(tMapFile);
-			this._mainPanel.ChangeGridPanel(map.getCells().length); //TODO change it later so it won't use getCells
+			this._mainPanel.ChangeGridPanel(map.getHeightInTiles()); 
 			this._mainPanel.get_controller().setMap(map);
 			this._mainPanel.getGrid().drawMap(map);
 		}
 	}
-	public void saveMap(){
+	private void saveMap(){
 		JFileChooser fc = new JFileChooser();
 	    //	fc.addChoosableFileFilter(new TextFileFilter());
 	    	fc.showSaveDialog(this);
@@ -116,4 +118,25 @@ public class MainFrame2 extends JFrame {
 	}
 	
 
+	private void saveScenario() {
+		JFileChooser fc = new JFileChooser();
+    //	fc.addChoosableFileFilter(new TextFileFilter());
+    	fc.showSaveDialog(this);
+    	File tFile = fc.getSelectedFile();
+		Scenario s = new Scenario(this._mainPanel.get_controller().getMap(),this._mainPanel.getGrid().get_startsList(),this._mainPanel.getGrid().get_FinishList());
+		GridMapUtility.saveSecnario(s, tFile);
+	}
+	private void loadScenario(){
+		JFileChooser fc = new JFileChooser();
+	    //	fc.addChoosableFileFilter(new TextFileFilter());
+	    	fc.showOpenDialog(this);
+	    	File tFile = fc.getSelectedFile();
+	    	if (tFile != null){
+	    		Scenario s = GridMapUtility.loadScenario(tFile);
+				this._mainPanel.ChangeGridPanel(s.getMap().getHeightInTiles()); 
+				this._mainPanel.get_controller().setMap(s.getMap());
+				this._mainPanel.getGrid().drawMap(s.getMap());
+				this._mainPanel.getGrid().drawScenario(s);
+	    	}
+	}
 }

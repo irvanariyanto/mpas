@@ -114,7 +114,7 @@ public class GridMapUtility {
 
 	}
 
-	public static void saveSecnario(Scenario scenario, String filename) {
+	public static void saveSecnario(Scenario scenario, File file) {
 		try {
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -153,7 +153,7 @@ public class GridMapUtility {
 					.newInstance();
 			Transformer transformer = transformerFactory.newTransformer();
 			DOMSource source = new DOMSource(doc);
-			StreamResult result = new StreamResult(new File(filename));
+			StreamResult result = new StreamResult(file);
 			transformer.transform(source, result);
 
 		} catch (ParserConfigurationException pce) {

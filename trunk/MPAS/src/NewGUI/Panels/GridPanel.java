@@ -47,6 +47,12 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	private Vector<myPoint> _blockList;
 	// End of variables declaration
 	
+	public void setStarts(Vector<myPoint> starts){
+		this._startsList = starts;
+	}
+	public void setFinishes(Vector<myPoint> finishes){
+		this._FinishList = finishes;
+	}
 	/**
 	 * Constructor
 	 */
@@ -132,6 +138,8 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	}
 	//TODO maybe needs more stuff
 	public void drawScenario(Scenario s){
+		this._startsList = s.getStartLocations();
+		this._FinishList = s.getGoalLocations();
 		drawMap(s.getMap());
 		int numOfAgents = s.getStartLocations().size();
 		setNUM_OF_AGENT(numOfAgents);
