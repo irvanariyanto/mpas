@@ -37,7 +37,7 @@ public class ConfigurationPanel extends JPanel {
 		this.add(_infoPanel);
 	}
 	
-	public SettingsPanel getSettingPanel(){
+	public SettingsPanel getSettingsPanel(){
 		return this._setPanel;
 	}
 	

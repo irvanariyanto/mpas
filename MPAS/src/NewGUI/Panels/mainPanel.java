@@ -51,6 +51,9 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 	public GridPanel getGrid(){
 		return this._grid;
 	}
+	public ConfigurationPanel getConfiguarationPanel(){
+		return this._configPanel;
+	}
 	/**
 	 * initialize all the swing Components
 	 */
@@ -122,11 +125,11 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 	 * @param evt
 	 */
 	protected void bApplyActionPerformed(ActionEvent evt) {
-		_algorithmChosen = this._configPanel.getSettingPanel().getAlgorithm();
-		_heuristicChosen = this._configPanel.getSettingPanel().getHeuristic();
-		_directionChosen = this._configPanel.getSettingPanel().getDirection();
-		_numberOfAgents = this._configPanel.getSettingPanel().getNumberOfAgents();		
-		_gridSize = this._configPanel.getSettingPanel().getGridSize();
+		_algorithmChosen = this._configPanel.getSettingsPanel().getAlgorithm();
+		_heuristicChosen = this._configPanel.getSettingsPanel().getHeuristic();
+		_directionChosen = this._configPanel.getSettingsPanel().getDirection();
+		_numberOfAgents = this._configPanel.getSettingsPanel().getNumberOfAgents();		
+		_gridSize = this._configPanel.getSettingsPanel().getGridSize();
 		getSetBlock().setSelected(true);
 		this._grid.set_editMode(NewCell.SET_BLOCKS);
 		this._grid.setNUM_OF_AGENT(_numberOfAgents);
@@ -177,7 +180,7 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 
 
 	protected void AgentComboBoxActionPerformed(ActionEvent evt) {
-		int agentSelected = this._configPanel.getSettingPanel().get_cAgents().getSelectedIndex();
+		int agentSelected = this._configPanel.getSettingsPanel().get_cAgents().getSelectedIndex();
 		this._grid.setAgentNumber(agentSelected+1);	
 	}
 
@@ -190,7 +193,7 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 		this._grid.GeneratePositions();		
 	}
 	private void ChangeComboBoxSize(int numberofAgents) {
-		this._configPanel.getSettingPanel().ChangeComboBoxSize(numberofAgents);
+		this._configPanel.getSettingsPanel().ChangeComboBoxSize(numberofAgents);
 	}
 
 	/**
@@ -210,14 +213,14 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
      * @return Apply button component
      */
 	public JButton getbApply(){
-    	return this._configPanel.getSettingPanel().getbApply();
+    	return this._configPanel.getSettingsPanel().getbApply();
     }
 	/**
      * returns the Cancel button
      * @return Cancel button component
      */
     public JButton getbCancel(){
-    	return this._configPanel.getSettingPanel().getbCancel();
+    	return this._configPanel.getSettingsPanel().getbCancel();
     }
     
     
@@ -226,7 +229,7 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
      * @return GeneratePositions button component
      */
     public JButton getbGeneratePositions(){
-    	return this._configPanel.getSettingPanel().getbGeneratePositions();
+    	return this._configPanel.getSettingsPanel().getbGeneratePositions();
     }
     
     /**
@@ -234,7 +237,7 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
      * @return ClearPositions button component
      */
     public JButton getbClearPositions(){
-    	return this._configPanel.getSettingPanel().getbClearPositions();
+    	return this._configPanel.getSettingsPanel().getbClearPositions();
     }
     /**
      * returns the findPath button
@@ -248,7 +251,7 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
      * @return setStart radioButton component
      */
 	public JRadioButton getSetStart(){
-    	return this._configPanel.getSettingPanel().getRStart();
+    	return this._configPanel.getSettingsPanel().getRStart();
     }
 	
 	/**
@@ -256,7 +259,7 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
      * @return setFinish radioButton component
      */
 	public JRadioButton getSetFinish(){
-    	return this._configPanel.getSettingPanel().getRFinish();
+    	return this._configPanel.getSettingsPanel().getRFinish();
     }
 	
 	/**
@@ -264,7 +267,7 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
      * @return setblock radioButton component
      */
 	public JRadioButton getSetBlock(){
-    	return this._configPanel.getSettingPanel().getRBlock();
+    	return this._configPanel.getSettingsPanel().getRBlock();
     }
     
 	 /**
@@ -272,7 +275,7 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
      * @return Agent comboBox   component
      */
     public JComboBox getAgentComboBox(){
-    	return this._configPanel.getSettingPanel().get_cAgents();
+    	return this._configPanel.getSettingsPanel().get_cAgents();
     }
     
     /**
