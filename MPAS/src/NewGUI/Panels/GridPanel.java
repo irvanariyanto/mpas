@@ -69,7 +69,7 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 		this._listeners = new ApplicationEventListenerCollection();
 	}
 
-
+	
 	/**
 	 * getter
 	 * @return grid's width
