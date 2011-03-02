@@ -61,7 +61,7 @@ public interface TileBasedMap extends MapInterface<myPoint> {
 	 * @param ty The y coordinate of the tile we're moving to
 	 * @return The relative cost of moving across the given tile
 	 */
-	public float getCost(int sx, int sy, int tx, int ty);
+	public double getCost(int sx, int sy, int tx, int ty);
 
 	public Vector<myPoint> getAllMoves(myPoint p);
 	

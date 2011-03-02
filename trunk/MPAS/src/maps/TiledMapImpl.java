@@ -50,9 +50,11 @@ public class TiledMapImpl implements TileBasedMap {
 	}
 
 	@Override
-	public float getCost(int sx, int sy, int tx, int ty) {
-		// TODO fix for diagonal
-		return 1;
+	public double getCost(int sx, int sy, int tx, int ty) {
+		if (Math.abs(sx - tx) + Math.abs(sy-ty) > 1)
+			return Math.sqrt(2.0);
+		else
+			return 1;
 	}
 
 	@Override

@@ -110,8 +110,8 @@ public class MainFrame2 extends JFrame {
 	    //	fc.addChoosableFileFilter(new TextFileFilter());
 	    	fc.showSaveDialog(this);
 	    	File tMapFile = fc.getSelectedFile();
-	    	this._mainPanel.get_controller().setMap(this._mainPanel.getGrid().get_height()); //TODO remove later when map is properly initialized
-	    	this._mainPanel.get_controller().setTile(this._mainPanel.getGrid().get_blockList());
+	  //  	this._mainPanel.get_controller().setMap(this._mainPanel.getGrid().get_height()); //TODO remove later when map is properly initialized
+	    //	this._mainPanel.get_controller().setTile(this._mainPanel.getGrid().get_blockList());
 	    	GridMapUtility.saveMap(tMapFile, this._mainPanel.get_controller().getMap());
 	}
 	
