@@ -24,14 +24,13 @@ import algorithms.myPoint;
 
 public class GridMapUtility {
 
-	public static TileBasedMap loadMap(String filename) {
+	public static TileBasedMap loadMap(File file) {
 
 		try {
-			File fXmlFile = new File(filename);
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory
 					.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-			Document doc = dBuilder.parse(fXmlFile);
+			Document doc = dBuilder.parse(file);
 			doc.getDocumentElement().normalize();
 			Element root = doc.getDocumentElement();
 			int length = Integer.parseInt(root.getAttribute("Length"));
@@ -70,7 +69,7 @@ public class GridMapUtility {
 		return null;
 	}
 
-	public static void saveMap(String filename, TiledMapImpl map) {
+	public static void saveMap(File file, TileBasedMap tileBasedMap) {
 		try {
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -79,10 +78,10 @@ public class GridMapUtility {
 			Document doc = docBuilder.newDocument();
 			Element rootElement = doc.createElement("Map");
 			doc.appendChild(rootElement);
-			rootElement.setAttribute("Length", "" + map.getHeightInTiles());
-			for (int i = 0; i < map.getHeightInTiles(); i++) {
-				for (int j = 0; j < map.getWidthInTiles(); j++) {
-					if (map.blocked(i, j)) {
+			rootElement.setAttribute("Length", "" + tileBasedMap.getHeightInTiles());
+			for (int i = 0; i < tileBasedMap.getHeightInTiles(); i++) {
+				for (int j = 0; j < tileBasedMap.getWidthInTiles(); j++) {
+					if (tileBasedMap.blocked(i, j)) {
 						Element blockedTile = doc.createElement("BlockedTile");
 						blockedTile.setAttribute("x", "" + i);
 						blockedTile.setAttribute("y", "" + j);
@@ -95,7 +94,7 @@ public class GridMapUtility {
 					.newInstance();
 			Transformer transformer = transformerFactory.newTransformer();
 			DOMSource source = new DOMSource(doc);
-			StreamResult result = new StreamResult(new File(filename));
+			StreamResult result = new StreamResult(file);
 			transformer.transform(source, result);
 
 		} catch (ParserConfigurationException pce) {
@@ -161,17 +160,16 @@ public class GridMapUtility {
 
 	}
 
-	public static Scenario loadScenario(String filename) {
+	public static Scenario loadScenario(File file) {
 		Scenario scenario = null;
 		try {
-			TileBasedMap map = loadMap(filename);
+			TileBasedMap map = loadMap(file);
 			Vector<myPoint> starts = new Vector<myPoint>();
 			Vector<myPoint> goals  = new Vector<myPoint>();
-			File fXmlFile = new File(filename);
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory
 					.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-			Document doc = dBuilder.parse(fXmlFile);
+			Document doc = dBuilder.parse(file);
 			doc.getDocumentElement().normalize();
 			Element root = doc.getDocumentElement();
 			NodeList nList = root.getElementsByTagName("*");

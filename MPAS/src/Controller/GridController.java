@@ -3,9 +3,11 @@ package Controller;
 import heuristics.HeuristicInterface;
 import heuristics.ManhattanHeuristic;
 
+import java.io.File;
 import java.util.Vector;
 
 
+import maps.GridMapUtility;
 import maps.TileBasedMap;
 import maps.TileStatus;
 import maps.TiledMapImpl;
@@ -46,6 +48,10 @@ public class GridController implements ControllerInterFace<myPoint>{
 		this._map = new TiledMapImpl(length,length,this._diagonal);
 	}
 	
+	public void setMap(TileBasedMap map){
+		this._map = map;
+	}
+	
 	public void setTile(Vector<myPoint> blockedTiles) {
 		for (myPoint p : blockedTiles) {
 			this._map.setTile(p.getX(), p.getY(), TileStatus.blocked);
@@ -77,6 +83,7 @@ public class GridController implements ControllerInterFace<myPoint>{
 	public void setMapSize(int size) {
 		setMap(size);
 	}
+
 	
 	private class PathFinderThread implements Runnable {
 		
@@ -93,6 +100,11 @@ public class GridController implements ControllerInterFace<myPoint>{
 			GridController.this._finalPath = path;
 		}
 		
+	}
+
+
+	public TileBasedMap getMap() {
+		return this._map;
 	}
 
 

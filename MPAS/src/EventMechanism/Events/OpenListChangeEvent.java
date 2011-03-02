@@ -4,14 +4,15 @@ import java.util.Vector;
 
 import EventMechanism.ApplicationEvent;
 import EventMechanism.ApplicationEventSource;
+import algorithms.StateInterface;
 import algorithms.myPoint;
 
 
-public class OpenListChangeEvent extends ApplicationEvent {
-	private Vector<myPoint> _points;
-	public OpenListChangeEvent(ApplicationEventSource source,Vector<myPoint> points) {
+public class OpenListChangeEvent<E> extends ApplicationEvent {
+	private StateInterface<E> _state;
+	public OpenListChangeEvent(ApplicationEventSource source,StateInterface<E> current) {
 		super(source);
-		this._points = points;
+		this._state = current;
 	}
 
 	@Override
@@ -19,8 +20,8 @@ public class OpenListChangeEvent extends ApplicationEvent {
 		return "OpenListChangeEvent";
 	}
 
-	public Vector<myPoint> get_points() {
-		return _points;
-	}
 
+	public StateInterface<E> getState(){
+		return this._state;
+	}
 }

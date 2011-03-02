@@ -40,7 +40,7 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 	private GridController _controller;
 	// End of variables declaration
 	
-
+	
 	/**
 	 * Constructor
 	 */
@@ -48,7 +48,9 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 		super();
 		initComponenets();
 	}
-
+	public GridPanel getGrid(){
+		return this._grid;
+	}
 	/**
 	 * initialize all the swing Components
 	 */
@@ -193,7 +195,7 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 	 * change the grid panel to the new grid size which is given
 	 * @param gridSize
 	 */
-	private void ChangeGridPanel(int gridSize){		
+	public void ChangeGridPanel(int gridSize){		
 		this.remove(_grid );
 		this._grid = new GridPanel(gridSize);
 		this.add(_grid , BorderLayout.CENTER);

@@ -104,4 +104,12 @@ public class TiledMapImpl implements TileBasedMap {
 		}
 		return res;
 	}
+	@Override
+	public Tile[][] getCells() {
+		return this._tiles;
+	}
+	@Override
+	public Tile getCell(int row, int column) {
+		return this._tiles[row][column];
+	}
 }

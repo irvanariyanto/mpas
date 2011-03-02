@@ -65,6 +65,10 @@ public interface TileBasedMap extends MapInterface<myPoint> {
 
 	public Vector<myPoint> getAllMoves(myPoint p);
 	
+	public Tile[][] getCells();
+	
+	public Tile getCell(int row,int column);
+	
 	public void setTile(int x, int y,TileStatus status);
 	
 	public void setTile(int x,int y,TileStatus status,float cost);

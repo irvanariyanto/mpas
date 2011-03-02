@@ -11,6 +11,8 @@ import java.util.Vector;
 import EventMechanism.ApplicationEventListener;
 import EventMechanism.ApplicationEventListenerCollection;
 import EventMechanism.ApplicationEventSource;
+import EventMechanism.Events.ClosedListChangeEvent;
+import EventMechanism.Events.OpenListChangeEvent;
 
 public class AStarSearch<E> implements SearchInterface<E>,ApplicationEventSource,Pausable {
 
@@ -28,6 +30,13 @@ public class AStarSearch<E> implements SearchInterface<E>,ApplicationEventSource
 		this._expaned = new HashMap<StateInterface<E>, StateInterface<E>>();
 		this._pause = false;
 	}
+	public AStarSearch(HeuristicInterface<StateInterface<E>> heuristic,boolean pause){
+		this._heuristic = heuristic;
+		this._openList = new PriorityQueue<StateInterface<E>>();
+		this._closedList = new HashSet<StateInterface<E>>();
+		this._expaned = new HashMap<StateInterface<E>, StateInterface<E>>();
+		this._pause = pause;
+	}
 	@Override
 	public Vector<StateInterface<E>> findPath(StateInterface<E> start,StateInterface<E> goal) {
 		//init
@@ -38,10 +47,14 @@ public class AStarSearch<E> implements SearchInterface<E>,ApplicationEventSource
 		while (!this._openList.isEmpty()){
 			boolean tentativeIsBetter = false;
 			StateInterface<E> current = this._openList.poll();
+			if (this._pause){ // in case running in debug mode
+				pause();
+			}
 			if (current.equals(goal)){
 				return reconstructPath(start,current);
 			}
 			this._closedList.add(current);
+			this._listeners.fireEvent(new ClosedListChangeEvent<E>(this,current)); // notifying the Controller
 			Vector<StateInterface<E>> neighbors = current.expand();
 			for (StateInterface<E> neighbor : neighbors){
 				if (this._closedList.contains(neighbor))
@@ -52,6 +65,7 @@ public class AStarSearch<E> implements SearchInterface<E>,ApplicationEventSource
 				neighbor.set_parent(current);
 				if (!this._openList.contains(neighbor)){
 					this._openList.add(neighbor);
+					this._listeners.fireEvent(new OpenListChangeEvent<E>(this,neighbor)); // notifying the Controller
 					tentativeIsBetter = true;
 				}
 				else if(tentativeCost < this._expaned.get(neighbor).get_cost()){
@@ -103,7 +117,7 @@ public class AStarSearch<E> implements SearchInterface<E>,ApplicationEventSource
 	}
 	@Override
 	public void resume() {
-		this.notify();
+		this.notifyAll();
 		
 	}
 	@Override
