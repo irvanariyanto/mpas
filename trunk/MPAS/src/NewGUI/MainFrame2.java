@@ -135,7 +135,7 @@ public class MainFrame2 extends JFrame {
 	    		Scenario s = GridMapUtility.loadScenario(tFile);
 				this._mainPanel.ChangeGridPanel(s.getMap().getHeightInTiles()); 
 				this._mainPanel.get_controller().setMap(s.getMap());
-				this._mainPanel.getGrid().drawMap(s.getMap());
+				this._mainPanel.get_controller().setNumberOfAgents(s.getStartLocations().size());
 				this._mainPanel.getGrid().drawScenario(s);
 	    	}
 	}

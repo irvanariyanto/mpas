@@ -124,7 +124,9 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	}
 	
 	public void setNUM_OF_AGENT (int numberOfAgents){
-		GridPanel.NUM_OF_AGENT = numberOfAgents;		
+		GridPanel.NUM_OF_AGENT = numberOfAgents;	
+		_starts = new myPoint[NUM_OF_AGENT];
+		_finishes = new myPoint[NUM_OF_AGENT];
 	}
 	//amit's addon
 	public void  drawMap(TileBasedMap map){
@@ -144,8 +146,8 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 		int numOfAgents = s.getStartLocations().size();
 		setNUM_OF_AGENT(numOfAgents);
 		for (int i = 0; i < numOfAgents ; i++){
-			setStartCell(s.getStartLocations().elementAt(i), i);
-			setFinishCell(s.getGoalLocations().elementAt(i),i);
+			setStartCell(s.getStartLocations().elementAt(i), i + 1);
+			setFinishCell(s.getGoalLocations().elementAt(i),i + 1);
 		}
 	}
 	/**
