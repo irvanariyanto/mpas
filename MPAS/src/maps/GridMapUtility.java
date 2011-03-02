@@ -33,7 +33,7 @@ public class GridMapUtility {
 			Document doc = dBuilder.parse(file);
 			doc.getDocumentElement().normalize();
 			Element root = doc.getDocumentElement();
-			NodeList tList = doc.getElementsByTagName("Map");
+			NodeList tList = root.getElementsByTagName("Map");
 			Element mapElement = (Element)tList.item(0);
 			int length = Integer.parseInt(mapElement.getAttribute("Length"));
 			// boolean diagonal =
@@ -181,7 +181,7 @@ public class GridMapUtility {
 			Document doc = dBuilder.parse(file);
 			doc.getDocumentElement().normalize();
 			Element root = doc.getDocumentElement();
-			NodeList nList = root.getElementsByTagName("*");
+			NodeList nList = root.getElementsByTagName("Agent");
 			for (int i = 0; i < nList.getLength(); i++){
 				Element tElement = (Element)nList.item(i);
 				if (tElement.getNodeName().equals("Agent")){
