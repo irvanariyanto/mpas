@@ -304,6 +304,15 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 			drawFinalPathCell(p.getX(), p.getY(),j+1);	
 		}
 	}
+
+	
+	public void setEmptyStep(Vector<myPoint> tStep) {
+		for (int j=0; j< tStep.size(); j++){
+			myPoint p = tStep.elementAt(j); 
+			this._grid[getX()][p.getY()].set_status(Status.Empty);	
+		}
+		
+	}
 	
 	public void drawOpenListCell(int x, int y) {
 		this._grid[x][y].set_status(Status.inOpenList);
