@@ -164,11 +164,8 @@ public class NewCell extends Component  implements ApplicationEventSource{
 		if (this._status == Status.inClosedList) {
 			g.setColor(Color.darkGray);
 		}
-		if (this._status == Status.Path && this._agnetNum ==1) {
+		if (this._status == Status.Path ) {
 			g.setColor(Color.blue);
-		}
-		if (this._status == Status.Path && this._agnetNum ==2) {
-			g.setColor(Color.cyan);
 		}
 		g.fillRect(0, 0, size.width-1, size.height-1);	
 		g.setColor(Color.black);	

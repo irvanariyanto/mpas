@@ -1,32 +1,20 @@
 package NewGUI.Panels;
 
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Vector;
-
-
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
+
 
 import maps.Scenario;
 import maps.TileBasedMap;
-
-
-
 import EventMechanism.ApplicationEvent;
 import EventMechanism.ApplicationEventListener;
 import EventMechanism.ApplicationEventListenerCollection;
 import EventMechanism.ApplicationEventSource;
+import NewGUI.Panels.NewCell.Status;
 
 import algorithms.myPoint;
 
@@ -211,7 +199,7 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 
 	public void clearPositions() {
 		Vector<myPoint> startList = this.get_startsList();
-		Vector<myPoint> finishList = this.get_FinishList();
+		Vector<myPoint> finishList = this.get_FinishList();	
 		for(myPoint p: startList){
 			this._grid[p.getX()][p.getY()].set_status(NewGUI.Panels.NewCell.Status.Empty);
 		}
@@ -220,6 +208,8 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 			 this._grid[p.getX()][p.getY()].set_status(NewGUI.Panels.NewCell.Status.Empty);
 		}
 		this._startsList.removeAllElements();
+		_starts = new myPoint[NUM_OF_AGENT];
+		_finishes = new myPoint[NUM_OF_AGENT];
 		repaint();
 	}
 
@@ -284,6 +274,60 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 			//TO-DO add error message
 		}
 	}
+	
+
+	public void drawFinalPathCell(int x, int y) {
+		this._grid[x][y].set_status(Status.Path);
+		repaint();
+	}
+
+	public void drawFinalPathCell(int x, int y, int agent) {
+		this._grid[x][y].set_status(Status.Path);
+		repaint();
+	}
+	
+	
+	public void drawFinalPaths(Vector<Vector<myPoint>> finalPath) {
+		for (int i = 0; i < finalPath.size(); i++) {
+			Vector<myPoint> tStep = finalPath.elementAt(i);
+			for (int j=0; j< tStep.size(); j++){
+				myPoint p = tStep.elementAt(j); 
+				drawFinalPathCell(p.getX(), p.getY(),j+1);
+			
+			}
+		}
+	}
+	
+	public void drawOneStep(Vector<myPoint> tStep) {
+		for (int j=0; j< tStep.size(); j++){
+			myPoint p = tStep.elementAt(j); 
+			drawFinalPathCell(p.getX(), p.getY(),j+1);	
+		}
+	}
+	
+	public void drawOpenListCell(int x, int y) {
+		this._grid[x][y].set_status(Status.inOpenList);
+		repaint();
+	}
+
+	public void drawOpenList(Vector<myPoint> points) {
+		for (myPoint p : points) {
+			this.drawOpenListCell(p.getX(), p.getY());
+		}
+	}
+	
+	public void drawClosedListCell(int x, int y) {
+		this._grid[x][y].set_status(Status.inClosedList);
+		repaint();
+	}
+
+	public void drawClosedList(Vector<myPoint> points) {
+		for (myPoint p : points) {
+			this.drawClosedListCell(p.getX(), p.getY());
+		}
+	}
+	
+
 
 	@Override
 	public void addListener(ApplicationEventListener listener) {
