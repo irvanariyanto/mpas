@@ -12,13 +12,15 @@ import maps.TileBasedMap;
 import maps.TileStatus;
 import maps.TiledMapImpl;
 
+import EventMechanism.ApplicationEvent;
+import EventMechanism.ApplicationEventListener;
 import algorithms.AStarSearch;
 import algorithms.SearchInterface;
 import algorithms.StateInterface;
 import algorithms.myPoint;
 import algorithms.myState;
 
-public class GridController implements ControllerInterFace<myPoint>{
+public class GridController implements ControllerInterFace<myPoint>,ApplicationEventListener{
 	
 	private HeuristicInterface<StateInterface<myPoint>> _heuristic;
 	private SearchInterface<myPoint> _pathFinder;
@@ -30,7 +32,8 @@ public class GridController implements ControllerInterFace<myPoint>{
 	public GridController() {
 	//	this._numOfAgents = 2;
 		this._heuristic = new ManhattanHeuristic();
-		this._pathFinder = new AStarSearch<myPoint>(this._heuristic);	
+		this._pathFinder = new AStarSearch<myPoint>(this._heuristic);
+		((AStarSearch<myPoint>)this._pathFinder).addListener(this); //TODO remove that ugly casting later
 		this._diagonal = false;		
 		//this._map = new TiledMapImpl(20, 20, this._diagonal);
 	}
@@ -109,6 +112,12 @@ public class GridController implements ControllerInterFace<myPoint>{
 
 	public TileBasedMap getMap() {
 		return this._map;
+	}
+	
+	@Override
+	public void handle(ApplicationEvent event) {
+		// TODO Auto-generated method stub
+		
 	}
 
 
