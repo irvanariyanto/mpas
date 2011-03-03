@@ -60,7 +60,14 @@ public class MainFrame2 extends JFrame {
 		
 		this.setJMenuBar(_menuBar);
 		this.add(_mainPanel);
-		
+		_exitItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MainFrame2.this.dispose();
+				
+			}
+		});
 		_openMap.addActionListener(new ActionListener() {	
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
