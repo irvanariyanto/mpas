@@ -4,12 +4,15 @@ import java.awt.BorderLayout;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+
+import algorithms.myPoint;
 
 
 import Controller.GridController;
@@ -20,6 +23,7 @@ import EventMechanism.ApplicationEventSource;
 import EventMechanism.Events.SetBlockCellEvent;
 import EventMechanism.Events.SetFinishCellEvent;
 import EventMechanism.Events.SetStartCellEvent;
+import EventMechanism.Events.finalPathEvent;
 
 
 public class mainPanel extends JPanel implements ApplicationEventSource{
@@ -63,6 +67,17 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 		_configPanel = new ConfigurationPanel();
 		_controller = new GridController();
 		init_controller();	
+		this._controller.addListener(new ApplicationEventListener() {
+			
+			@Override
+			public void handle(ApplicationEvent event) {
+				if (event instanceof finalPathEvent){
+					Vector<Vector<myPoint>> path = mainPanel.this._controller.getFinalPath();
+					mainPanel.this._grid.drawFinalPaths(path);
+				}
+				
+			}
+		});
 		this._listeners = new ApplicationEventListenerCollection();
 		this.setLayout(new BorderLayout(2,2));
 		this.add(_configPanel , BorderLayout.WEST);
