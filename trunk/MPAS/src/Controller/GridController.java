@@ -14,13 +14,16 @@ import maps.TiledMapImpl;
 
 import EventMechanism.ApplicationEvent;
 import EventMechanism.ApplicationEventListener;
+import EventMechanism.ApplicationEventListenerCollection;
+import EventMechanism.ApplicationEventSource;
+import EventMechanism.Events.finalPathEvent;
 import algorithms.AStarSearch;
 import algorithms.SearchInterface;
 import algorithms.StateInterface;
 import algorithms.myPoint;
 import algorithms.myState;
 
-public class GridController implements ControllerInterFace<myPoint>,ApplicationEventListener{
+public class GridController implements ControllerInterFace<myPoint>,ApplicationEventListener,ApplicationEventSource{
 	
 	private HeuristicInterface<StateInterface<myPoint>> _heuristic;
 	private SearchInterface<myPoint> _pathFinder;
@@ -28,8 +31,9 @@ public class GridController implements ControllerInterFace<myPoint>,ApplicationE
 	private int _numOfAgents;
 	private boolean _diagonal;
 	private Vector<StateInterface<myPoint>> _finalPath;
-	
+	private ApplicationEventListenerCollection _listeners;
 	public GridController() {
+		this._listeners = new ApplicationEventListenerCollection();
 	//	this._numOfAgents = 2;
 		this._heuristic = new ManhattanHeuristic();
 		this._pathFinder = new AStarSearch<myPoint>(this._heuristic);
@@ -43,7 +47,7 @@ public class GridController implements ControllerInterFace<myPoint>,ApplicationE
 		StateInterface<myPoint> start = new myState(starts, this._map);
 		StateInterface<myPoint> goal = new myState(endPoints,this._map);
 		PathFinderThread t = new PathFinderThread(start, goal);
-		t.run();	
+		t.start();	
 	}
 
 
@@ -92,7 +96,7 @@ public class GridController implements ControllerInterFace<myPoint>,ApplicationE
 	}
 
 	
-	private class PathFinderThread implements Runnable {
+	private class PathFinderThread extends Thread {
 		
 		private StateInterface<myPoint> _start;
 		private StateInterface<myPoint> _goal;
@@ -105,6 +109,7 @@ public class GridController implements ControllerInterFace<myPoint>,ApplicationE
 		public void run() {
 			Vector<StateInterface<myPoint>> path = GridController.this._pathFinder.findPath(_start, _goal);
 			GridController.this._finalPath = path;
+			GridController.this._listeners.fireEvent(new finalPathEvent(GridController.this));
 		}
 		
 	}
@@ -119,7 +124,49 @@ public class GridController implements ControllerInterFace<myPoint>,ApplicationE
 		// TODO Auto-generated method stub
 		
 	}
-
+	@Override
+	public void addListener(ApplicationEventListener listener) {
+		this._listeners.add(listener);
+		
+	}
+	@Override
+	public void removeListener(ApplicationEventListener listener) {
+		this._listeners.remove(listener);
+		
+	}
+	@Override
+	public void clearListeners() {
+		this._listeners.clear();
+		
+	}
+	/**
+	 * Converts the final path from vector of states to Vector of point vectors
+	 * @param path
+	 * @return
+	 */
+	public Vector<Vector<myPoint>> convertPath(Vector<StateInterface<myPoint>> path){
+		Vector<Vector<myPoint>> res = new Vector<Vector<myPoint>>();
+		int numOfAgents = path.elementAt(0).get_Coordinates().size();
+		for (int j = 0; j < numOfAgents ; j++){
+			Vector<myPoint> tRoute = new Vector<myPoint>();
+			res.add(tRoute);
+		}
+		for (int i = 0; i < path.size();i++){
+			Vector<myPoint> tCoordinates = path.elementAt(i).get_Coordinates();
+			for (int j = 0 ; j < tCoordinates.size();j++){
+				res.elementAt(j).add(tCoordinates.elementAt(j));
+			}
+		}
+		
+		return res;
+	}
+	public Vector<Vector<myPoint>> getFinalPath(){
+		if (this._finalPath!= null){
+			return convertPath(_finalPath);
+		}
+		else
+			return null;
+	}
 
 
 }
