@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Vector;
 
+import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -62,8 +63,8 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 	 * initialize all the swing Components
 	 */
 	private void initComponenets() {
-		_grid = new GridPanel(20);	
-		_gridSize = 20;
+		_grid = new GridPanel(15);	
+		_gridSize = 15;
 		_configPanel = new ConfigurationPanel();
 		_controller = new GridController();
 		init_controller();	
@@ -119,7 +120,18 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
         });	
         getbClearPositions().addActionListener(new  ActionListener() {
             public void actionPerformed( ActionEvent evt) {
-            	ClearPositionsActionPerformed(evt);
+            	bClearPositionsActionPerformed(evt);
+            }
+        });	
+        
+        getbRandomMap().addActionListener(new  ActionListener() {
+            public void actionPerformed( ActionEvent evt) {
+            	bRandomMapActionPerformed(evt);
+            }
+        });	
+        getbClearMap().addActionListener(new  ActionListener() {
+            public void actionPerformed( ActionEvent evt) {
+            	bClearMapActionPerformed(evt);
             }
         });	
         getbFindPath().addActionListener(new  ActionListener() {
@@ -128,8 +140,10 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 	         }
 	     });
 		this._grid.addListener(new MainFrameListener());
-		this._grid.setAgentNumber(1);			
+		this._grid.setAgentNumber(1);//Default			
 	}	
+	
+	
 	
 	public GridController get_controller() {
 		return this._controller;
@@ -153,7 +167,7 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 		this._grid.clearPositions();
 		ChangeGridPanel(_gridSize);	
 		ChangeComboBoxSize(_numberOfAgents);
-		init_controller();		
+		init_controller(_algorithmChosen,_heuristicChosen,_directionChosen,_numberOfAgents,_gridSize);	
 	}
 	
 	private void init_controller(){
@@ -161,12 +175,29 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 		this._controller.setHeuristic(_heuristicChosen);
 		this._controller.setDirection(_directionChosen);
 		this._controller.setNumberOfAgents (_numberOfAgents);
-		this._controller.setMapSize (_gridSize);
-		
+		this._controller.setMapSize (_gridSize);		
+	}
+	
+	private void init_controller(String algo, String heuristic, boolean dir, int numOfAgents, int gridSize){
+		this._controller.setAlgorithm(algo);
+		this._controller.setHeuristic(heuristic);
+		this._controller.setDirection(dir);
+		this._controller.setNumberOfAgents (numOfAgents);
+		this._controller.setMapSize (gridSize);		
 	}
 	
 	protected void bCancelActionPerformed(ActionEvent evt) {
 		// TODO Auto-generated method stub	
+	}
+	
+	protected void bClearMapActionPerformed(ActionEvent evt) {
+		this._grid.clearBlocks();
+		//this._controller.clearMap();
+		
+	}
+	protected void bRandomMapActionPerformed(ActionEvent evt) {
+		this._grid.createRandomBlocks(this._configPanel.getSettingsPanel().getsDensityValue());
+		
 	}
 	
 	protected void bFindPathActionPerformed(ActionEvent evt) {
@@ -200,7 +231,7 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 	}
 
 
-	protected void ClearPositionsActionPerformed(ActionEvent evt) {
+	protected void bClearPositionsActionPerformed(ActionEvent evt) {
 		this._grid.clearPositions();	
 	}
 
@@ -261,6 +292,14 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 	public JButton getbFindPath(){
     	return this._configPanel.getControlPanel().getbFindPath();
     }
+	
+	public JButton getbRandomMap(){ 
+		return this._configPanel.getSettingsPanel().getbRandomMap();
+	}
+	
+	public JButton getbClearMap(){ 
+		return this._configPanel.getSettingsPanel().getbClearMap();
+	}
     /**
      * returns the set start radio button
      * @return setStart radioButton component
@@ -331,6 +370,8 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
     public int getGridSize(){ 
     	return this._gridSize;
     }
+    
+ 
 
     protected class MainFrameListener implements ApplicationEventListener {
 

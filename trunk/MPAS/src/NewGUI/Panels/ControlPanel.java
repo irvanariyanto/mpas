@@ -63,5 +63,6 @@ public class ControlPanel extends JPanel {
 	public JButton getbFindPath() {
 		return this._bFindPath;
 	}
+
 	
 }
