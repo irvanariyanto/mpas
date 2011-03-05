@@ -17,6 +17,7 @@ import algorithms.myPoint;
 
 
 import Controller.GridController;
+import Defaults.defaultsValues;
 import EventMechanism.ApplicationEvent;
 import EventMechanism.ApplicationEventListener;
 import EventMechanism.ApplicationEventListenerCollection;
@@ -63,8 +64,8 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 	 * initialize all the swing Components
 	 */
 	private void initComponenets() {
-		_grid = new GridPanel(15);	
-		_gridSize = 15;
+		_grid = new GridPanel(defaultsValues.GridSize);	
+		_gridSize = defaultsValues.GridSize;
 		_configPanel = new ConfigurationPanel();
 		_controller = new GridController();
 		init_controller();	
