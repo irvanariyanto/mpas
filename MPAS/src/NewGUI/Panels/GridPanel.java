@@ -83,7 +83,9 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	public Vector<myPoint> get_startsList(){
         for (int i=0; i< this._starts.length; i++){
         	if (this._starts[i] != null){
-        		this._startsList.add(_starts[i]);
+        		if(!this._startsList.contains(_starts[i])){
+        			this._startsList.add(_starts[i]);
+        		}      		
         	}
         }
 		return this._startsList;
@@ -92,7 +94,9 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	public Vector<myPoint> get_FinishList(){
 		for (int i=0; i< this._finishes.length; i++){
         	if (this._finishes[i] != null){
+        		if(!this._FinishList.contains(_finishes[i])){
         		this._FinishList.add(_finishes[i]);
+        		}
         	}
         }
 		return this._FinishList;
@@ -223,51 +227,72 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 		repaint();
 	}
 	
+	public void createRandomBlocks(int percent) {
+		clearBlocks();
+		int totalCells = this._height * this._width;
+		int numOfBlocks = (totalCells * percent) /100;
+		int counter = 0;
+		while (counter < numOfBlocks){
+			int randomX =(int) ((Math.random()*_width));  
+			int randomY =(int) ((Math.random()*_height));
+			myPoint p = new myPoint(randomX, randomY); 
+			if(this.get_blockList().contains(p)){
+				continue;
+			}
+			else{
+				setBlockCell(p);
+				counter++;
+			}
+		}
+		
+		
+	}
+	
 	public void GeneratePositions() {
 		clearPositions();
 		if ((_height*_width - _blockList.size())/2 >  NUM_OF_AGENT){
 			//generate starting points
-			for(int i=1; i<=NUM_OF_AGENT; i++){
+			int agentConter = 1;
+			while(agentConter<=NUM_OF_AGENT){
 				int randomX =(int) ((Math.random()*_width));  
 				int randomY =(int) ((Math.random()*_height));
 				myPoint p = new myPoint(randomX, randomY); 
 				if(this.get_blockList().contains(p)){
-					i--;
 					continue;
 				}
 				if(this.get_startsList().contains(p)){
-					i--;
 					continue;
 				}
 				if(this.get_FinishList().contains(p)){
-					i--;
 					continue;
 				}
 				else{
-					setStartCell(p,i );
+					setStartCell(p,agentConter );
+					agentConter++;
 				}
 			}
 			//generate finishing points
-			for(int i=1; i<=NUM_OF_AGENT; i++){
+			agentConter = 1;
+			while(agentConter<=NUM_OF_AGENT){
 				int randomX =(int) ((Math.random()*_width));  
 				int randomY =(int) ((Math.random()*_height));
 				myPoint p = new myPoint(randomX, randomY); 
 				if(this.get_blockList().contains(p)){
-					i--;
 					continue;
 				}
 				if(this.get_startsList().contains(p)){
-					i--;
 					continue;
 				}
 				if(this.get_FinishList().contains(p)){
-					i--;
 					continue;
 				}
 				else{
-					setFinishCell(p,i );
+					setFinishCell(p,agentConter );
+					agentConter++;
 				}
 			}
+			this.get_startsList();
+			this.get_FinishList();
 			repaint();
 		}
 		else{
@@ -363,6 +388,8 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 		}
 
 	}
+
+	
 
 }
 

@@ -67,7 +67,7 @@ public class SettingsPanel extends JPanel  {
 		_lNumber = new JLabel("2");
 		_lGridSize = new JLabel("Grid Size :");
 		_sGridSize = new JSlider(3, 100);
-		_lSize = new JLabel("20 * 20");
+		_lSize = new JLabel("15 * 15");
 		_bApply = new JButton("Apply");
 		_bCancel = new JButton("Cancel");
 		_separator1 = new JSeparator();
@@ -84,15 +84,15 @@ public class SettingsPanel extends JPanel  {
 		_bRandomMap = new JButton("Random Map");
 		_lDensity = new JLabel("Density:");
 		_sDensity = new JSlider(0,100);
-		_lDensityNumber = new JLabel("50 %");
+		_lDensityNumber = new JLabel("20 %");
 
 		_cAlgorithm.setModel(new DefaultComboBoxModel(new String[] { "A-Star" }));
 		_cHeuristic.setModel(new DefaultComboBoxModel(new String[] { "Manhattan " }));
 		_cDirections.setModel(new DefaultComboBoxModel(new String[] {"4 Directions", "8 Directions" }));
 		_cAgents.setModel(new DefaultComboBoxModel(new String[] { "1","2" }));
 		_sNumOfAgents.setValue(2);
-		_sGridSize.setValue(20);
-		_sDensity.setValue(50);
+		_sGridSize.setValue(15);
+		_sDensity.setValue(20);
 		_actionGroup.add(_rSetBlock);
 		_actionGroup.add(_rSetStart);
 		_actionGroup.add(_rSetFinish);
@@ -270,6 +270,8 @@ public class SettingsPanel extends JPanel  {
     public JButton getbCancel(){
     	return this._bCancel;
     }
+    
+    
 
     /**
      * returns the GeneratePositions button
@@ -285,6 +287,14 @@ public class SettingsPanel extends JPanel  {
     public JButton getbClearPositions(){
     	return this._bClearPositions;
     }
+    
+    public JButton getbRandomMap() {
+		return this._bRandomMap;
+	}
+    
+    public JButton getbClearMap() {
+		return this._bClearMap;
+	}
     
     /**
      * returns the RadioButton block
@@ -385,6 +395,11 @@ public class SettingsPanel extends JPanel  {
 		}
 	}
 
+	
+
+	public int getsDensityValue(){
+		return this._sDensity.getValue();
+	}
 
 
 	
