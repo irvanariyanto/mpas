@@ -40,12 +40,15 @@ public class GridController implements ControllerInterFace<myPoint>,ApplicationE
 		this._listeners = new ApplicationEventListenerCollection();
 	//	this._numOfAgents = 2;
 		this._heuristic = new ManhattanHeuristic();
-		((AStarSearch<myPoint>)this._pathFinder).addListener(this); //TODO remove that ugly casting later
+		
 		this._diagonal = false;	
 		this._scenario = null;
 		//this._map = new TiledMapImpl(20, 20, this._diagonal);
 	}
-	
+	public void initAlgorithm(){
+		this._pathFinder = new AStarSearch<myPoint>(this._heuristic);
+		((AStarSearch<myPoint>)this._pathFinder).addListener(this); //TODO remove that ugly casting later
+	}
 	public void setScenario(Scenario s){
 		this._scenario = s;
 		
@@ -56,14 +59,14 @@ public class GridController implements ControllerInterFace<myPoint>,ApplicationE
 	@Override
 	public void findPath(Vector<myPoint> starts,
 			Vector<myPoint> endPoints) {	
-		this._pathFinder = new AStarSearch<myPoint>(this._heuristic);
+		initAlgorithm();
 		StateInterface<myPoint> start = new myState(starts, this._map);
 		StateInterface<myPoint> goal = new myState(endPoints,this._map);
 		PathFinderThread t = new PathFinderThread(start, goal);
 		t.start();	
 	}
 	public void runAlgorithmWithPause(Vector<myPoint> starts,Vector<myPoint> endPoints){
-		this._pathFinder = new AStarSearch<myPoint>(this._heuristic);
+		initAlgorithm();
 		this._pathFinder.setPause(true);
 		StateInterface<myPoint> start = new myState(starts, this._map);
 		StateInterface<myPoint> goal = new myState(endPoints,this._map);
