@@ -48,7 +48,6 @@ public class ConfigurationPanel extends JPanel {
 	public InfoPanel getInfoPanel(){
 		return this._infoPanel;
 	}
-	
 
 	
 }//end of class ConfigurationPanel

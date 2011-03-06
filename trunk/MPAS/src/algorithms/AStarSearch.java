@@ -50,6 +50,8 @@ public class AStarSearch<E> implements SearchInterface<E>,ApplicationEventSource
 			boolean tentativeIsBetter = false;
 			StateInterface<E> current = this._openList.poll();
 			if (this._pause){ // in case running in debug mode
+				System.out.println("node is: " + current.toString());
+				this._listeners.fireEvent(new OpenListChangeEvent<E>(this, current));
 				pause();
 			}
 			if (current.equals(goal)){
@@ -67,7 +69,7 @@ public class AStarSearch<E> implements SearchInterface<E>,ApplicationEventSource
 				neighbor.set_parent(current);
 				if (!this._openList.contains(neighbor)){
 					this._openList.add(neighbor);
-					this._listeners.fireEvent(new OpenListChangeEvent<E>(this,neighbor)); // notifying the Controller
+			//		this._listeners.fireEvent(new OpenListChangeEvent<E>(this,neighbor)); // notifying the Controller
 					tentativeIsBetter = true;
 				}
 				else if(tentativeCost < this._expaned.get(neighbor).get_cost()){
@@ -108,7 +110,7 @@ public class AStarSearch<E> implements SearchInterface<E>,ApplicationEventSource
 		
 	}
 	@Override
-	public void pause() {
+	public synchronized void pause() {
 		try {
 			this.wait();
 		} catch (InterruptedException e) {
@@ -118,7 +120,7 @@ public class AStarSearch<E> implements SearchInterface<E>,ApplicationEventSource
 		
 	}
 	@Override
-	public void resume() {
+	public synchronized void resume() {
 		this.notifyAll();
 		
 	}
