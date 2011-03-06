@@ -49,7 +49,7 @@ public class AStarSearch<E> implements SearchInterface<E>,ApplicationEventSource
 		while (!this._openList.isEmpty()){
 			boolean tentativeIsBetter = false;
 			StateInterface<E> current = this._openList.poll();
-			if (this._pause){ // in case running in debug mode
+			if (this._pause && current != start){ // in case running in debug mode
 				System.out.println("node is: " + current.toString());
 				this._listeners.fireEvent(new OpenListChangeEvent<E>(this, current));
 				pause();

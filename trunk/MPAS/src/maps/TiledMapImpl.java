@@ -100,7 +100,12 @@ public class TiledMapImpl implements TileBasedMap {
 		String res ="";
 		for (int i = 0; i < this._height; i++){
 			for (int j = 0 ; j < this._width ; j++){
-				res+= "x:" + i + " y:" + j + " " + this.blocked(i, j) + "\t";
+				res+= "x:" + i + " y:" + j + " ";
+				if (this.blocked(i, j))
+					res+= "T";
+				else
+					res+= "F";
+				res+= "\t";
 			}
 			res += "\n";
 		}

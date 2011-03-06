@@ -172,6 +172,7 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 	
 	protected void bStepActionPerformed(ActionEvent evt) {
 		if (this._firstStep){
+			System.out.println(this._controller.getMap().toString());
 			this._controller.runAlgorithmWithPause(this._grid.get_startsList(),this._grid.get_FinishList());
 			_firstStep = false;
 		}
