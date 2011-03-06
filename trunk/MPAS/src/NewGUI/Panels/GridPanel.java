@@ -219,18 +219,21 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 		repaint();
 	}
 
-	public void clearBlocks() {
-		Vector<myPoint> Block = this.get_blockList();
-		for(myPoint p: Block){
-			if(p==null) continue;
-			else this._grid[p.getX()][p.getY()].set_status(NewGUI.Panels.NewCell.Status.Empty);
-		}
-		this._blockList.removeAllElements();		
+	public void clearBlocks( TileBasedMap map) {
+		if(this.get_blockList() != null){
+			Vector<myPoint> Block = this.get_blockList();
+			for(myPoint p: Block){
+				if(p==null) continue;
+				else this._grid[p.getX()][p.getY()].set_status(NewGUI.Panels.NewCell.Status.Empty);
+				map.setTile(p.getX(), p.getY(), TileStatus.free);
+			}
+			this._blockList.removeAllElements();
+			}		
 		repaint();
 	}
 	
-	public void clearAll() {
-		clearBlocks();
+	public void clearAll(TileBasedMap map) {
+		clearBlocks(map);
 		clearPositions();
 		clearFinalPath();
 	}
@@ -255,7 +258,7 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	}
 	
 	public void createRandomBlocks(int percent, TileBasedMap map) {
-		clearBlocks();
+		clearBlocks(map);
 		int totalCells = this._height * this._width;
 		int numOfBlocks = (totalCells * percent) /100;
 		int counter = 0;
@@ -277,13 +280,12 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 				map.setTile(p.getX(), p.getY(), TileStatus.blocked);
 				counter++;
 			}
-		}
-		
-		
+		}	
 	}
 	
 	public void GeneratePositions() {
 		clearPositions();
+		clearFinalPath();
 		if ((_height*_width - _blockList.size())/2 >  NUM_OF_AGENT){
 			//generate starting points
 			int agentConter = 1;
@@ -342,6 +344,7 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 
 	public void drawFinalPathCell(int x, int y, int agent) {
 		this._grid[x][y].set_status(Status.Path);
+		this._grid[x][y].set_agent(agent);
 		repaint();
 	}
 	
@@ -349,10 +352,10 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	public void drawFinalPaths(Vector<Vector<myPoint>> finalPath) {
 		_finalPaths = finalPath;
 		for (int i = 0; i < finalPath.size(); i++) {
-			Vector<myPoint> tStep = finalPath.elementAt(i);
-			for (int j=0; j< tStep.size(); j++){
-				myPoint p = tStep.elementAt(j); 
-				drawFinalPathCell(p.getX(), p.getY(),j+1);
+			Vector<myPoint> tState = finalPath.elementAt(i);
+			for (int j=0; j< tState.size(); j++){
+				myPoint p = tState.elementAt(j); 
+				drawFinalPathCell(p.getX(), p.getY(),i+1);
 			
 			}
 		}
