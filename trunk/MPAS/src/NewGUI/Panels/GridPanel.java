@@ -264,6 +264,12 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 			if(this.get_blockList().contains(p)){
 				continue;
 			}
+			if(this.get_startsList().contains(p)){
+				continue;
+			}
+			if(this.get_FinishList().contains(p)){
+				continue;
+			}
 			else{
 				setBlockCell(p);
 				map.setTile(p.getX(), p.getY(), TileStatus.blocked);
@@ -367,7 +373,7 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	public void setEmptyStep(Vector<myPoint> tStep) {
 		for (int j=0; j< tStep.size(); j++){
 			myPoint p = tStep.elementAt(j); 
-			this._grid[p.getX()][p.getY()].set_status(Status.Empty);	
+			this._grid[p.getX()][p.getY()].set_status(Status.Empty);
 		}
 		
 	}
