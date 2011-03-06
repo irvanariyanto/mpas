@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 
 import maps.Scenario;
 import maps.TileBasedMap;
+import maps.TileStatus;
 import EventMechanism.ApplicationEvent;
 import EventMechanism.ApplicationEventListener;
 import EventMechanism.ApplicationEventListenerCollection;
@@ -251,7 +252,7 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 		}
 	}
 	
-	public void createRandomBlocks(int percent) {
+	public void createRandomBlocks(int percent, TileBasedMap map) {
 		clearBlocks();
 		int totalCells = this._height * this._width;
 		int numOfBlocks = (totalCells * percent) /100;
@@ -265,6 +266,7 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 			}
 			else{
 				setBlockCell(p);
+				map.setTile(p.getX(), p.getY(), TileStatus.blocked);
 				counter++;
 			}
 		}
