@@ -63,6 +63,8 @@ public class ControlPanel extends JPanel {
 	public JButton getbFindPath() {
 		return this._bFindPath;
 	}
-
+	public JButton getStepButton(){
+		return this._bStep;
+	}
 	
 }

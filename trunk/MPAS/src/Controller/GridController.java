@@ -8,6 +8,7 @@ import java.util.Vector;
 
 
 import maps.GridMapUtility;
+import maps.Scenario;
 import maps.TileBasedMap;
 import maps.TileStatus;
 import maps.TiledMapImpl;
@@ -16,7 +17,9 @@ import EventMechanism.ApplicationEvent;
 import EventMechanism.ApplicationEventListener;
 import EventMechanism.ApplicationEventListenerCollection;
 import EventMechanism.ApplicationEventSource;
+import EventMechanism.Events.OpenListChangeEvent;
 import EventMechanism.Events.finalPathEvent;
+import EventMechanism.Events.showOpenListStateEvent;
 import algorithms.AStarSearch;
 import algorithms.SearchInterface;
 import algorithms.StateInterface;
@@ -29,6 +32,7 @@ public class GridController implements ControllerInterFace<myPoint>,ApplicationE
 	private SearchInterface<myPoint> _pathFinder;
 	private TileBasedMap _map;
 	private int _numOfAgents;
+	private Scenario _scenario;
 	private boolean _diagonal;
 	private Vector<StateInterface<myPoint>> _finalPath;
 	private ApplicationEventListenerCollection _listeners;
@@ -36,20 +40,36 @@ public class GridController implements ControllerInterFace<myPoint>,ApplicationE
 		this._listeners = new ApplicationEventListenerCollection();
 	//	this._numOfAgents = 2;
 		this._heuristic = new ManhattanHeuristic();
-		this._pathFinder = new AStarSearch<myPoint>(this._heuristic);
 		((AStarSearch<myPoint>)this._pathFinder).addListener(this); //TODO remove that ugly casting later
-		this._diagonal = false;		
+		this._diagonal = false;	
+		this._scenario = null;
 		//this._map = new TiledMapImpl(20, 20, this._diagonal);
+	}
+	
+	public void setScenario(Scenario s){
+		this._scenario = s;
+		
+	}
+	public void resumeAlgorithm(){
+		this._pathFinder.resume();
 	}
 	@Override
 	public void findPath(Vector<myPoint> starts,
-			Vector<myPoint> endPoints) {		
+			Vector<myPoint> endPoints) {	
+		this._pathFinder = new AStarSearch<myPoint>(this._heuristic);
 		StateInterface<myPoint> start = new myState(starts, this._map);
 		StateInterface<myPoint> goal = new myState(endPoints,this._map);
 		PathFinderThread t = new PathFinderThread(start, goal);
 		t.start();	
 	}
-
+	public void runAlgorithmWithPause(Vector<myPoint> starts,Vector<myPoint> endPoints){
+		this._pathFinder = new AStarSearch<myPoint>(this._heuristic);
+		this._pathFinder.setPause(true);
+		StateInterface<myPoint> start = new myState(starts, this._map);
+		StateInterface<myPoint> goal = new myState(endPoints,this._map);
+		PathFinderThread t = new PathFinderThread(start, goal);
+		t.start();	
+	}
 
 	public void setMap(int length){
 		this._map = new TiledMapImpl(length,length,this._diagonal);
@@ -121,7 +141,11 @@ public class GridController implements ControllerInterFace<myPoint>,ApplicationE
 	
 	@Override
 	public void handle(ApplicationEvent event) {
-		// TODO Auto-generated method stub
+		if (event instanceof OpenListChangeEvent){
+			OpenListChangeEvent<myPoint> e = (OpenListChangeEvent<myPoint>)event;
+			this._listeners.fireEvent(new showOpenListStateEvent<myPoint>(this,e.getState().get_Coordinates()));
+		}
+
 		
 	}
 	@Override
