@@ -244,7 +244,7 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 		repaint();		
 	}
 	
-	public void LoadScenario(){
+	public void LoadPositions(){
 	for (int i = 0; i < NUM_OF_AGENT ; i++){
 			setStartCell(this.get_startsList().elementAt(i), i + 1);
 			setFinishCell(this.get_FinishList().elementAt(i),i + 1);
@@ -348,10 +348,16 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 		}
 	}
 	
-	public void drawOneStep(Vector<myPoint> tStep) {
+	public void drawOneFinalStep(Vector<myPoint> tStep) {
 		for (int j=0; j< tStep.size(); j++){
 			myPoint p = tStep.elementAt(j); 
 			drawFinalPathCell(p.getX(), p.getY(),j+1);	
+		}
+	}
+	public void drawOneStep(Vector<myPoint> tStep) {
+		for (int j=0; j< tStep.size(); j++){
+			myPoint p = tStep.elementAt(j); 
+			drawOpenListCell(p.getX(), p.getY());	
 		}
 	}
 
@@ -359,7 +365,7 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	public void setEmptyStep(Vector<myPoint> tStep) {
 		for (int j=0; j< tStep.size(); j++){
 			myPoint p = tStep.elementAt(j); 
-			this._grid[getX()][p.getY()].set_status(Status.Empty);	
+			this._grid[p.getX()][p.getY()].set_status(Status.Empty);	
 		}
 		
 	}
