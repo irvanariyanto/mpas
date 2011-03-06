@@ -177,7 +177,7 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 		}
 		else{
 			if (oldState != null){
-				//this.getGrid().setEmptyStep(oldState);
+				this.getGrid().setEmptyStep(oldState);
 			}
 			this._controller.resumeAlgorithm();
 
@@ -283,7 +283,7 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 	
 	protected void bClearPathActionPerformed(ActionEvent evt) {
 		this._grid.clearFinalPath();
-		this._grid.LoadScenario();
+		this._grid.LoadPositions();
 		
 	}
 
