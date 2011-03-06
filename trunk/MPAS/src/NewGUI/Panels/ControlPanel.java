@@ -66,5 +66,9 @@ public class ControlPanel extends JPanel {
 	public JButton getStepButton(){
 		return this._bStep;
 	}
+
+	public JButton getbClearPath() {
+		return this._bClearPath;
+	}
 	
 }

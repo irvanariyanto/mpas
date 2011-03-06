@@ -33,6 +33,7 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	private Vector<myPoint> _startsList;
 	private Vector<myPoint> _FinishList;
 	private Vector<myPoint> _blockList;
+	private Vector<Vector<myPoint>> _finalPaths;
 	// End of variables declaration
 	
 	public void setStarts(Vector<myPoint> starts){
@@ -227,6 +228,29 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 		repaint();
 	}
 	
+	public void clearAll() {
+		clearBlocks();
+		clearPositions();
+		clearFinalPath();
+	}
+	
+	public void clearFinalPath() {
+		for(Vector<myPoint> state: _finalPaths){
+			for(myPoint p: state){
+				this._grid[p.getX()][p.getY()].set_status(NewGUI.Panels.NewCell.Status.Empty);
+			}
+		}
+		this._finalPaths.removeAllElements();		
+		repaint();		
+	}
+	
+	public void LoadScenario(){
+	for (int i = 0; i < NUM_OF_AGENT ; i++){
+			setStartCell(this.get_startsList().elementAt(i), i + 1);
+			setFinishCell(this.get_FinishList().elementAt(i),i + 1);
+		}
+	}
+	
 	public void createRandomBlocks(int percent) {
 		clearBlocks();
 		int totalCells = this._height * this._width;
@@ -313,6 +337,7 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	
 	
 	public void drawFinalPaths(Vector<Vector<myPoint>> finalPath) {
+		_finalPaths = finalPath;
 		for (int i = 0; i < finalPath.size(); i++) {
 			Vector<myPoint> tStep = finalPath.elementAt(i);
 			for (int j=0; j< tStep.size(); j++){
@@ -388,6 +413,8 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 		}
 
 	}
+
+	
 
 	
 
