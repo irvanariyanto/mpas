@@ -144,9 +144,15 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 	    		 bFindPathActionPerformed(evt);
 	         }
 	     });
+        getbClearPath().addActionListener(new  ActionListener() {
+	    	 public void actionPerformed( ActionEvent evt) {
+	    		 bClearPathActionPerformed(evt);
+	         }
+	     });
 		this._grid.addListener(new MainFrameListener());
 		this._grid.setAgentNumber(1);//Default			
 	}	
+	
 	
 	
 	
@@ -196,7 +202,7 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 	}
 	
 	protected void bClearMapActionPerformed(ActionEvent evt) {
-		this._grid.clearBlocks();
+		this._grid.clearAll();
 		//this._controller.clearMap();
 		
 	}
@@ -245,6 +251,12 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 	}
 	private void ChangeComboBoxSize(int numberofAgents) {
 		this._configPanel.getSettingsPanel().ChangeComboBoxSize(numberofAgents);
+	}
+	
+	protected void bClearPathActionPerformed(ActionEvent evt) {
+		this._grid.clearFinalPath();
+		this._grid.LoadScenario();
+		
 	}
 
 	/**
@@ -304,6 +316,10 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 	
 	public JButton getbClearMap(){ 
 		return this._configPanel.getSettingsPanel().getbClearMap();
+	}
+	
+	public JButton getbClearPath(){ 
+		return this._configPanel.getControlPanel().getbClearPath();
 	}
     /**
      * returns the set start radio button
