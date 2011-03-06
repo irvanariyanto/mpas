@@ -171,7 +171,7 @@ public class NewCell extends Component  implements ApplicationEventSource{
 		g.setColor(Color.black);	
 		
 		if(this._agnetNum != 0){
-			g.setFont(new Font("sansserif", Font.BOLD, 10));
+			g.setFont(new Font("sansserif", Font.BOLD, 11));
 			g.drawString(Integer.toString(this._agnetNum),5,15);
 		}
 		g.drawRect(0, 0, size.width - 2, size.height - 2);

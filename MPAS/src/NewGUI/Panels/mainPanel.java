@@ -86,6 +86,7 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 				else if (event instanceof showOpenListStateEvent<?>){
 					mainPanel.this.oldState = ((showOpenListStateEvent<myPoint>)event).getCoordinates();
 					mainPanel.this.getGrid().drawOneStep(mainPanel.this.oldState);
+					mainPanel.this._configPanel.getInfoPanel().writeToTextArea(mainPanel.this.oldState.toString());
 				}
 				
 			}

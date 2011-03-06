@@ -39,4 +39,8 @@ public class InfoPanel extends JPanel {
 	    this.add(_scrollPane);
 
 	}
+	
+	public void writeToTextArea(String text){
+		this._tOpenList.setText(text);
+	}
 }
