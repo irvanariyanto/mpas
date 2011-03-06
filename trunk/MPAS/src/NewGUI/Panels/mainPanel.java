@@ -273,10 +273,12 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 
 
 	protected void bClearPositionsActionPerformed(ActionEvent evt) {
-		this._grid.clearPositions();	
+		this._grid.clearPositions();
+		this._grid.clearFinalPath();
 	}
 
 	protected void bGeneratePositionsActionPerformed(ActionEvent evt) {
+		this._grid.clearFinalPath();	
 		this._grid.GeneratePositions();		
 	}
 	private void ChangeComboBoxSize(int numberofAgents) {
