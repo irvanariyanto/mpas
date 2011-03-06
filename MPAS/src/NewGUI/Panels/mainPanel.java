@@ -27,6 +27,7 @@ import EventMechanism.Events.SetBlockCellEvent;
 import EventMechanism.Events.SetFinishCellEvent;
 import EventMechanism.Events.SetStartCellEvent;
 import EventMechanism.Events.finalPathEvent;
+import EventMechanism.Events.showOpenListStateEvent;
 
 
 public class mainPanel extends JPanel implements ApplicationEventSource{
@@ -39,7 +40,8 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 	private boolean _directionChosen; // 1 = 8D, 0 = 4D
 	private int _numberOfAgents;
 	private int _gridSize ;
-	
+	//for running in step mode
+	private boolean _firstStep;
 	
 	private ApplicationEventListenerCollection _listeners; 
 	private GridPanel _grid;
@@ -47,6 +49,8 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 	private GridController _controller;
 	// End of variables declaration
 	
+	//TODO make it better later
+	private Vector<myPoint> oldState;
 	
 	/**
 	 * Constructor
@@ -54,6 +58,7 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 	public mainPanel() {
 		super();
 		initComponenets();
+		_firstStep = true;
 	}
 	public GridPanel getGrid(){
 		return this._grid;
@@ -78,8 +83,9 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 					Vector<Vector<myPoint>> path = mainPanel.this._controller.getFinalPath();
 					mainPanel.this._grid.drawFinalPaths(path);
 				}
-				else if (event instanceof OpenListChangeEvent){
-					
+				else if (event instanceof showOpenListStateEvent<?>){
+					mainPanel.this.oldState = ((showOpenListStateEvent<myPoint>)event).getCoordinates();
+					mainPanel.this.getGrid().drawOneStep(mainPanel.this.oldState);
 				}
 				
 			}
@@ -149,6 +155,14 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 	    		 bClearPathActionPerformed(evt);
 	         }
 	     });
+        getStepButton().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent evt) {
+				bStepActionPerformed(evt);
+				
+			}
+		});
 		this._grid.addListener(new MainFrameListener());
 		this._grid.setAgentNumber(1);//Default			
 	}	
@@ -156,6 +170,20 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 	
 	
 	
+	protected void bStepActionPerformed(ActionEvent evt) {
+		if (this._firstStep){
+			this._controller.runAlgorithmWithPause(this._grid.get_startsList(),this._grid.get_FinishList());
+			_firstStep = false;
+		}
+		else{
+			if (oldState != null){
+				//this.getGrid().setEmptyStep(oldState);
+			}
+			this._controller.resumeAlgorithm();
+
+		}
+		
+	}
 	public GridController get_controller() {
 		return this._controller;
 	}
@@ -320,6 +348,9 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 	
 	public JButton getbClearPath(){ 
 		return this._configPanel.getControlPanel().getbClearPath();
+	}
+	public JButton getStepButton(){
+		return this._configPanel.getControlPanel().getStepButton();
 	}
     /**
      * returns the set start radio button
