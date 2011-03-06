@@ -72,4 +72,6 @@ public interface TileBasedMap extends MapInterface<myPoint> {
 	public void setTile(int x, int y,TileStatus status);
 	
 	public void setTile(int x,int y,TileStatus status,float cost);
+	
+	public void setDiagonal(boolean diag);
 }

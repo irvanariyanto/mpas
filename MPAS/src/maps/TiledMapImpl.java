@@ -119,4 +119,7 @@ public class TiledMapImpl implements TileBasedMap {
 	public Tile getCell(int row, int column) {
 		return this._tiles[row][column];
 	}
+	public void setDiagonal(boolean diag){
+		this._diagonal = diag;
+	}
 }

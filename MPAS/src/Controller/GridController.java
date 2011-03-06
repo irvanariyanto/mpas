@@ -107,6 +107,7 @@ public class GridController implements ControllerInterFace<myPoint>,ApplicationE
 	}
 	public void setDirection(boolean chosen) {
 		this._diagonal = chosen;
+		this._map.setDiagonal(true);
 		
 	}
 	public void setNumberOfAgents(int num) {
