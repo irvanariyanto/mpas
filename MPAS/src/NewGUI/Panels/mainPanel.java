@@ -22,6 +22,7 @@ import EventMechanism.ApplicationEvent;
 import EventMechanism.ApplicationEventListener;
 import EventMechanism.ApplicationEventListenerCollection;
 import EventMechanism.ApplicationEventSource;
+import EventMechanism.Events.OpenListChangeEvent;
 import EventMechanism.Events.SetBlockCellEvent;
 import EventMechanism.Events.SetFinishCellEvent;
 import EventMechanism.Events.SetStartCellEvent;
@@ -76,6 +77,9 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 				if (event instanceof finalPathEvent){
 					Vector<Vector<myPoint>> path = mainPanel.this._controller.getFinalPath();
 					mainPanel.this._grid.drawFinalPaths(path);
+				}
+				else if (event instanceof OpenListChangeEvent){
+					
 				}
 				
 			}
