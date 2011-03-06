@@ -213,7 +213,7 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 		for(myPoint p: finishList){
 			 this._grid[p.getX()][p.getY()].set_status(NewGUI.Panels.NewCell.Status.Empty);
 		}
-		this._startsList.removeAllElements();
+		this._FinishList.removeAllElements();
 		_starts = new myPoint[NUM_OF_AGENT];
 		_finishes = new myPoint[NUM_OF_AGENT];
 		repaint();
@@ -236,12 +236,14 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	}
 	
 	public void clearFinalPath() {
-		for(Vector<myPoint> state: _finalPaths){
-			for(myPoint p: state){
-				this._grid[p.getX()][p.getY()].set_status(NewGUI.Panels.NewCell.Status.Empty);
+		if (_finalPaths != null){
+			for(Vector<myPoint> state: _finalPaths){
+				for(myPoint p: state){
+					this._grid[p.getX()][p.getY()].set_status(NewGUI.Panels.NewCell.Status.Empty);
+				}
 			}
+			this._finalPaths.removeAllElements();	
 		}
-		this._finalPaths.removeAllElements();		
 		repaint();		
 	}
 	
@@ -365,7 +367,7 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	public void drawOneStep(Vector<myPoint> tStep) {
 		for (int j=0; j< tStep.size(); j++){
 			myPoint p = tStep.elementAt(j); 
-			drawOpenListCell(p.getX(), p.getY());	
+			drawOpenListCell(p.getX(), p.getY(), j+1);	
 		}
 	}
 
@@ -380,6 +382,12 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	
 	public void drawOpenListCell(int x, int y) {
 		this._grid[x][y].set_status(Status.inOpenList);
+		repaint();
+	}
+	
+	public void drawOpenListCell(int x, int y, int agent) {
+		this._grid[x][y].set_status(Status.inOpenList);
+		this._grid[x][y].set_agent(agent);
 		repaint();
 	}
 
