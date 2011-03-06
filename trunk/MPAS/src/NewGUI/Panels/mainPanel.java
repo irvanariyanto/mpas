@@ -235,7 +235,7 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 		
 	}
 	protected void bRandomMapActionPerformed(ActionEvent evt) {
-		this._grid.createRandomBlocks(this._configPanel.getSettingsPanel().getsDensityValue());
+		this._grid.createRandomBlocks(this._configPanel.getSettingsPanel().getsDensityValue(), this._controller.getMap());
 		
 	}
 	
