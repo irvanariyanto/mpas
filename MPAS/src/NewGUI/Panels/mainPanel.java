@@ -204,7 +204,7 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 		this._grid.set_editMode(NewCell.SET_BLOCKS);
 		this._grid.setNUM_OF_AGENT(_numberOfAgents);
 		this._grid.setAgentNumber(1);	
-		this._grid.clearBlocks();
+		this._grid.clearBlocks(this._controller.getMap());
 		this._grid.clearPositions();
 		ChangeGridPanel(_gridSize);	
 		ChangeComboBoxSize(_numberOfAgents);
@@ -232,7 +232,7 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 	}
 	
 	protected void bClearMapActionPerformed(ActionEvent evt) {
-		this._grid.clearAll();
+		this._grid.clearAll(this._controller.getMap());
 		//this._controller.clearMap();
 		
 	}

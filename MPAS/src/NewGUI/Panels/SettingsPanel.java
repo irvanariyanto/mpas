@@ -334,7 +334,7 @@ public class SettingsPanel extends JPanel  {
      * @return Algorithm name
      */
 	public String getAlgorithm() {
-		return this._cAlgorithm.getActionCommand();
+		return (String)this._cAlgorithm.getSelectedItem();
 	}
 
 	/**
@@ -342,7 +342,7 @@ public class SettingsPanel extends JPanel  {
      * @return heuristic name
      */
 	public String getHeuristic() {
-		return this._cHeuristic.getActionCommand();
+		return (String)this._cHeuristic.getSelectedItem();
 	}
 
 	/**
@@ -352,7 +352,8 @@ public class SettingsPanel extends JPanel  {
 	 * @return true if 8D is chosen
 	 */
 	public boolean getDirection() {
-		if (this._cHeuristic.getActionCommand() == "8 Directions")
+		String s  = (String) this._cDirections.getSelectedItem();
+		if (s.equals("8 Directions"))
 			return true;
 		else
 			return false;
