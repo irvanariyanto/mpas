@@ -1,6 +1,9 @@
-package algorithms;
+package algorithms.Interfaces;
 
 import java.util.Vector;
+
+import maps.MapInterface;
+import algorithms.myPoint;
 
 public interface StateInterface<E> {
 	public float get_f();
@@ -12,4 +15,7 @@ public interface StateInterface<E> {
 	public float calcDistance(StateInterface<E> neighbor);
 	public StateInterface<E> get_parent();
 	public Vector<E> get_Coordinates();
+	public float get_heuristic();
+	public MapInterface<E> getMap();
+	public StateInterface<E> Convert2SingleAgent(int i);
 }

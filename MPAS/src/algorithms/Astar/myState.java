@@ -1,6 +1,9 @@
-package algorithms;
+package algorithms.Astar;
 
 import java.util.Vector;
+
+import algorithms.myPoint;
+import algorithms.Interfaces.StateInterface;
 
 
 
@@ -29,7 +32,7 @@ public class myState implements Comparable<myState>,StateInterface<myPoint> {
 		this._map = state.getMap();
 	}
 
-	private MapInterface<myPoint> getMap() {
+	public MapInterface<myPoint> getMap() {
 		return this._map;
 	}
 
@@ -201,6 +204,15 @@ public class myState implements Comparable<myState>,StateInterface<myPoint> {
 		}
 		return ans;
 		
+	}
+
+	@Override
+	public StateInterface<myPoint> Convert2SingleAgent(int i) {
+		myPoint myLocation = this._Coordinates.elementAt(i);
+		Vector<myPoint> newVector = new Vector<myPoint>();
+		newVector.add(myLocation);
+		
+		return new myState(newVector, this.getMap());
 	}
 
 

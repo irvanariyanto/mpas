@@ -4,8 +4,8 @@ import java.util.Vector;
 
 import EventMechanism.ApplicationEvent;
 import EventMechanism.ApplicationEventSource;
-import algorithms.StateInterface;
 import algorithms.myPoint;
+import algorithms.Interfaces.StateInterface;
 
 
 public class OpenListChangeEvent<E> extends ApplicationEvent {

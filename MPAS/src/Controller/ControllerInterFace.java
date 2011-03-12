@@ -2,7 +2,7 @@ package Controller;
 
 import java.util.Vector;
 
-import algorithms.StateInterface;
+import algorithms.Interfaces.StateInterface;
 
 public interface ControllerInterFace<E> {
 	
