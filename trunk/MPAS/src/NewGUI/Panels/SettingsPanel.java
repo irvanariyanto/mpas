@@ -89,7 +89,7 @@ public class SettingsPanel extends JPanel  {
 		_lDensityNumber = new JLabel(defaultsValues.Density + " %");
 
 		_cAlgorithm.setModel(new DefaultComboBoxModel(new String[] { "A-Star" }));
-		_cHeuristic.setModel(new DefaultComboBoxModel(new String[] { "Manhattan " }));
+		_cHeuristic.setModel(new DefaultComboBoxModel(new String[] { "Manhattan " ,"DiagonalDistance"}));
 		_cDirections.setModel(new DefaultComboBoxModel(new String[] {"4 Directions", "8 Directions" }));
 		_cAgents.setModel(new DefaultComboBoxModel(new String[] { "1","2" }));
 		_sNumOfAgents.setValue(defaultsValues.NumberOfAgents );

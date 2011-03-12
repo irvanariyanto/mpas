@@ -1,5 +1,6 @@
 package Controller;
 
+import heuristics.DiagonalDistanceHeuristic;
 import heuristics.HeuristicInterface;
 import heuristics.ManhattanHeuristic;
 
@@ -20,11 +21,11 @@ import EventMechanism.ApplicationEventSource;
 import EventMechanism.Events.OpenListChangeEvent;
 import EventMechanism.Events.finalPathEvent;
 import EventMechanism.Events.showOpenListStateEvent;
-import algorithms.AStarSearch;
-import algorithms.SearchInterface;
-import algorithms.StateInterface;
 import algorithms.myPoint;
-import algorithms.myState;
+import algorithms.Astar.AStarSearch;
+import algorithms.Astar.myState;
+import algorithms.Interfaces.SearchInterface;
+import algorithms.Interfaces.StateInterface;
 
 public class GridController implements ControllerInterFace<myPoint>,ApplicationEventListener,ApplicationEventSource{
 	
@@ -39,14 +40,15 @@ public class GridController implements ControllerInterFace<myPoint>,ApplicationE
 	public GridController() {
 		this._listeners = new ApplicationEventListenerCollection();
 	//	this._numOfAgents = 2;
-		this._heuristic = new ManhattanHeuristic();
+	//	this._heuristic = new ManhattanHeuristic();
+		this._heuristic = new DiagonalDistanceHeuristic();
 		this._diagonal = false;	
 		this._scenario = null;
 		//this._map = new TiledMapImpl(20, 20, this._diagonal);
 	}
 	public void initAlgorithm(){
 		this._pathFinder = new AStarSearch<myPoint>(this._heuristic);
-		((AStarSearch<myPoint>)this._pathFinder).addListener(this); //TODO remove that ugly casting later
+		this._pathFinder.addListener(this); 
 	}
 	public void setScenario(Scenario s){
 		this._scenario = s;
@@ -98,12 +100,19 @@ public class GridController implements ControllerInterFace<myPoint>,ApplicationE
 	}
 	
 	public void setAlgorithm(String chosen) {
-		// TODO Auto-generated method stub	
+
 	}
 
 	public void setHeuristic(String chosen) {
-		// TODO Auto-generated method stub
-		
+		if (chosen.equals("Manhattan")){
+			this._heuristic = new ManhattanHeuristic();
+		}
+		else if(chosen.equals("DiagonalDistance")){
+			this._heuristic = new DiagonalDistanceHeuristic();
+		}
+		else{
+			this._heuristic = new ManhattanHeuristic();
+		}
 	}
 	public void setDirection(boolean chosen) {
 		this._diagonal = chosen;

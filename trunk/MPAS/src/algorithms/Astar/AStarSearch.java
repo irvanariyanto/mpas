@@ -1,4 +1,4 @@
-package algorithms;
+package algorithms.Astar;
 
 
 import heuristics.HeuristicInterface;
@@ -8,36 +8,39 @@ import java.util.HashSet;
 import java.util.PriorityQueue;
 import java.util.Vector;
 
+import algorithms.Interfaces.Pausable;
+import algorithms.Interfaces.PausableSearchAlgorithm;
+import algorithms.Interfaces.SearchInterface;
+import algorithms.Interfaces.StateInterface;
+
 import EventMechanism.ApplicationEventListener;
 import EventMechanism.ApplicationEventListenerCollection;
 import EventMechanism.ApplicationEventSource;
 import EventMechanism.Events.ClosedListChangeEvent;
 import EventMechanism.Events.OpenListChangeEvent;
 
-public class AStarSearch<E> implements SearchInterface<E>,ApplicationEventSource,Pausable {
+public class AStarSearch<E> extends PausableSearchAlgorithm<E> {
 
 	private PriorityQueue<StateInterface<E>> _openList;
 	private HashSet<StateInterface<E>> _closedList;
 	private HeuristicInterface<StateInterface<E>> _heuristic;
 	private HashMap<StateInterface<E>,StateInterface<E>> _expaned;
-	private ApplicationEventListenerCollection _listeners;
-	private boolean _pause;
 	
 	public AStarSearch(HeuristicInterface<StateInterface<E>> heuristic){
+		super();
 		this._heuristic = heuristic;
 		this._openList = new PriorityQueue<StateInterface<E>>();
 		this._closedList = new HashSet<StateInterface<E>>();
 		this._expaned = new HashMap<StateInterface<E>, StateInterface<E>>();
 		this._pause = false;
-		this._listeners = new ApplicationEventListenerCollection();
 	}
 	public AStarSearch(HeuristicInterface<StateInterface<E>> heuristic,boolean pause){
+		super();
 		this._heuristic = heuristic;
 		this._openList = new PriorityQueue<StateInterface<E>>();
 		this._closedList = new HashSet<StateInterface<E>>();
 		this._expaned = new HashMap<StateInterface<E>, StateInterface<E>>();
 		this._pause = pause;
-		this._listeners = new ApplicationEventListenerCollection();
 	}
 	@Override
 	public Vector<StateInterface<E>> findPath(StateInterface<E> start,StateInterface<E> goal) {
@@ -94,39 +97,6 @@ public class AStarSearch<E> implements SearchInterface<E>,ApplicationEventSource
 		}
 		return path;
 	}
-	@Override
-	public void addListener(ApplicationEventListener listener) {
-		this._listeners.add(listener);
-		
-	}
-	@Override
-	public void removeListener(ApplicationEventListener listener) {
-		this._listeners.remove(listener);
-		
-	}
-	@Override
-	public void clearListeners() {
-		this._listeners.clear();
-		
-	}
-	@Override
-	public synchronized void pause() {
-		try {
-			this.wait();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
-	@Override
-	public synchronized void resume() {
-		this.notifyAll();
-		
-	}
-	@Override
-	public void setPause(boolean shouldPause) {
-		this._pause = shouldPause;		
-	}
+
 
 }
