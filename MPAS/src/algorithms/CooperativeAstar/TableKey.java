@@ -1,6 +1,8 @@
 package algorithms.CooperativeAstar;
 
-public class TableKey {
+import algorithms.myPoint;
+
+public class TableKey implements TableKeyInterface<myPoint> {
 	private int _x;
 	private int _y;
 	private int _t;
