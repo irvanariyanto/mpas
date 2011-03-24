@@ -10,7 +10,7 @@ import algorithms.myPoint;
 import algorithms.Astar.myState;
 import algorithms.Interfaces.StateInterface;
 
-public class CAStarState implements StateInterface<myPoint>,Comparable<CAStarState> {
+public class CAStarState implements CAstarStateInterface<myPoint>,Comparable<CAStarState> {
 	private Vector<myPoint> _Coordinates;
 	private StateInterface<myPoint> _parent;
 	private float _cost;
