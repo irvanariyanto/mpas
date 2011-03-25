@@ -17,6 +17,7 @@ import maps.Scenario;
 import maps.TileBasedMap;
 
 import NewGUI.Panels.mainPanel;
+import Utils.ScenarioFileFilter;
 
 public class MainFrame2 extends JFrame {
 
@@ -104,7 +105,7 @@ public class MainFrame2 extends JFrame {
 	}
 	private void loadMap() {
 		JFileChooser fc = new JFileChooser();
-    //	fc.addChoosableFileFilter(new TextFileFilter());
+    	fc.addChoosableFileFilter(new ScenarioFileFilter());
     	fc.showOpenDialog(this);
     	File tMapFile = fc.getSelectedFile();
 		if (tMapFile != null){
@@ -117,7 +118,7 @@ public class MainFrame2 extends JFrame {
 	}
 	private void saveMap(){
 		JFileChooser fc = new JFileChooser();
-	    //	fc.addChoosableFileFilter(new TextFileFilter());
+	    	fc.addChoosableFileFilter(new ScenarioFileFilter());
 	    	fc.showSaveDialog(this);
 	    	File tMapFile = fc.getSelectedFile();
 	  //  	this._mainPanel.get_controller().setMap(this._mainPanel.getGrid().get_height()); //TODO remove later when map is properly initialized
@@ -128,7 +129,7 @@ public class MainFrame2 extends JFrame {
 
 	private void saveScenario() {
 		JFileChooser fc = new JFileChooser();
-    //	fc.addChoosableFileFilter(new TextFileFilter());
+    	fc.addChoosableFileFilter(new ScenarioFileFilter());
     	fc.showSaveDialog(this);
     	File tFile = fc.getSelectedFile();
 		Scenario s = new Scenario(this._mainPanel.get_controller().getMap(),this._mainPanel.getGrid().get_startsList(),this._mainPanel.getGrid().get_FinishList());
@@ -136,7 +137,7 @@ public class MainFrame2 extends JFrame {
 	}
 	private void loadScenario(){
 		JFileChooser fc = new JFileChooser();
-	    //	fc.addChoosableFileFilter(new TextFileFilter());
+	    	fc.addChoosableFileFilter(new ScenarioFileFilter());
 	    	fc.showOpenDialog(this);
 	    	File tFile = fc.getSelectedFile();
 	    	if (tFile != null){
