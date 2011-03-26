@@ -43,4 +43,9 @@ public class InfoPanel extends JPanel {
 	public void writeToTextArea(String text){
 		this._tOpenList.append(text + "\n");
 	}
+
+	public void setText(String string) {
+		this._tOpenList.setText(string);
+		
+	}
 }
