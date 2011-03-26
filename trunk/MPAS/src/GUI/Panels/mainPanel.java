@@ -12,6 +12,7 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.SwingUtilities;
 
 import algorithms.myPoint;
 
@@ -28,6 +29,7 @@ import EventMechanism.Events.SetFinishCellEvent;
 import EventMechanism.Events.SetStartCellEvent;
 import EventMechanism.Events.finalPathEvent;
 import EventMechanism.Events.showOpenListStateEvent;
+import NewGUI.AutoStepsThread;
 
 
 public class mainPanel extends JPanel implements ApplicationEventSource{
@@ -181,24 +183,29 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 	
 	protected void bStepActionPerformed(ActionEvent evt) {
 		if (_configPanel.getControlPanel().getAutoButton().isSelected()){
-			
+			new AutoStepsThread(100,this);
+			this._configPanel.getControlPanel().getStepButton().setEnabled(false);
 		}
 		else{
-			if (this._firstStep){
-				System.out.println(this._controller.getMap().toString());
-				this._controller.runAlgorithmWithPause(this._grid.get_startsList(),this._grid.get_FinishList());
-				_firstStep = false;
-			}
-			else{
-				if (oldState != null){
-					this.getGrid().setEmptyStep(oldState);
-				}
-				this._controller.resumeAlgorithm();
-
-			}
+			performStep();
 		}
 
 		
+	}
+	//TODO move to gui controller
+	public void performStep(){
+		if (this._firstStep){
+			System.out.println(this._controller.getMap().toString());
+			this._controller.runAlgorithmWithPause(this._grid.get_startsList(),this._grid.get_FinishList());
+			_firstStep = false;
+		}
+		else{
+			if (oldState != null){
+				this.getGrid().setEmptyStep(oldState);
+			}
+			this._controller.resumeAlgorithm();
+
+		}
 	}
 	public GridController get_controller() {
 		return this._controller;
