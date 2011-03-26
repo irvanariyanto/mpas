@@ -26,8 +26,8 @@ public class MainFrame2 extends JFrame {
 	private static final long serialVersionUID = 1L;
 	// Variables declaration 
 	private JMenuBar _menuBar;
-	private JMenu _FileMenu,_MapMenu, _helpMenu;	
-	private JMenuItem _openMap, _saveMap, _exitItem,_loadScenario,_saveScenario;
+	private JMenu _FileMenu,_MapMenu, _helpMenu,_EditMenu,_ViewMenu;	
+	private JMenuItem _openMap, _saveMap, _exitItem,_loadScenario,_saveScenario,_ColorsEditor;
 	private mainPanel _mainPanel;
 	// End of variables declaration
 	
@@ -42,11 +42,16 @@ public class MainFrame2 extends JFrame {
 		this._FileMenu = new JMenu("File");
 		this._MapMenu = new JMenu("Grid Map");
 		this._helpMenu = new JMenu("Help");
+		this._EditMenu = new JMenu("Edit");
+		this._ViewMenu = new JMenu("View");
 		this._mainPanel = new mainPanel();		
 		_menuBar.add(_FileMenu);
+		_menuBar.add(_EditMenu);
+		_menuBar.add(_ViewMenu);
 		_exitItem = new JMenuItem("Exit");
 		_FileMenu.add(_exitItem);
-
+		_ColorsEditor = new JMenuItem("Colors Editor");
+		_EditMenu.add(_ColorsEditor);
 		_menuBar.add(_MapMenu);
 		_openMap = new JMenuItem("Load map");
 		_MapMenu.add(_openMap);
