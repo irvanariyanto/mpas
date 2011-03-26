@@ -49,6 +49,7 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 	private GridPanel _grid;
 	private ConfigurationPanel _configPanel;
 	private GridController _controller;
+	private AutoStepsThread _stepThread;
 	// End of variables declaration
 	
 	//TODO make it better later
@@ -183,7 +184,8 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 	
 	protected void bStepActionPerformed(ActionEvent evt) {
 		if (_configPanel.getControlPanel().getAutoButton().isSelected()){
-			//new AutoStepsThread(100,this);
+			_stepThread = new AutoStepsThread(1000,this);
+			_stepThread.start();
 			this._configPanel.getControlPanel().getStepButton().setEnabled(false);
 		}
 		else{

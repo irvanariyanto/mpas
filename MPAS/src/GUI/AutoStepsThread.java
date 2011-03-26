@@ -3,7 +3,7 @@ package GUI;
 import Controller.GridController;
 import GUI.Panels.mainPanel;
 
-public class AutoStepsThread implements Runnable{
+public class AutoStepsThread extends Thread{
 
 	private int _interval;
 	private boolean _finished;
