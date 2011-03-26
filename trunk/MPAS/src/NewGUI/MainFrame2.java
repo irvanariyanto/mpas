@@ -17,7 +17,7 @@ import maps.Scenario;
 import maps.TileBasedMap;
 
 import NewGUI.Panels.mainPanel;
-import Utils.ScenarioFileFilter;
+import NewGUI.utils.ScenarioFileFilter;
 
 public class MainFrame2 extends JFrame {
 
