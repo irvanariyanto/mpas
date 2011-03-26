@@ -86,6 +86,7 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 				if (event instanceof finalPathEvent){
 					Vector<Vector<myPoint>> path = mainPanel.this._controller.getFinalPath();
 					mainPanel.this._grid.drawFinalPaths(path);
+					mainPanel.this.reset();
 				}
 				else if (event instanceof showOpenListStateEvent<?>){
 					mainPanel.this.oldState = ((showOpenListStateEvent<myPoint>)event).getCoordinates();
@@ -167,11 +168,22 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 				
 			}
 		});
+        getStopButton().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				stop();
+				
+			}
+		});
         _configPanel.getControlPanel().getAutoButton().addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				if (!_configPanel.getControlPanel().getAutoButton().isSelected()){
+					_configPanel.getControlPanel().getStepButton().setEnabled(true);
+					_stepThread.stop();
+				}
 				
 			}
 		});
@@ -179,12 +191,27 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 		this._grid.setAgentNumber(1);//Default			
 	}	
 	
+	public void stop(){
+		reset();
+		if (this._controller.getAlgorithmThread() != null){
+			this._controller.getAlgorithmThread().stop();
+		}
+	
+	}
 	
 	
-	
+	protected void reset() {
+		if (_stepThread != null){
+			_stepThread.stop();
+		}
+		_firstStep = true;
+		_configPanel.getControlPanel().getStepButton().setEnabled(true);
+		
+	}
 	protected void bStepActionPerformed(ActionEvent evt) {
 		if (_configPanel.getControlPanel().getAutoButton().isSelected()){
-			_stepThread = new AutoStepsThread(1000,this);
+			int value = _configPanel.getControlPanel().getAutoStepValue() * 1000;
+			_stepThread = new AutoStepsThread(value,this);
 			_stepThread.start();
 			this._configPanel.getControlPanel().getStepButton().setEnabled(false);
 		}
@@ -357,6 +384,10 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
      */
     public JButton getbClearPositions(){
     	return this._configPanel.getSettingsPanel().getbClearPositions();
+    }
+    
+    public JButton getStopButton(){
+    	return this._configPanel.getControlPanel().getStopButton();
     }
     /**
      * returns the findPath button
