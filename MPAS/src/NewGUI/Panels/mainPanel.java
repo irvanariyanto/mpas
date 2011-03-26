@@ -164,6 +164,14 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 				
 			}
 		});
+        _configPanel.getControlPanel().getAutoButton().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		this._grid.addListener(new MainFrameListener());
 		this._grid.setAgentNumber(1);//Default			
 	}	
@@ -172,18 +180,24 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 	
 	
 	protected void bStepActionPerformed(ActionEvent evt) {
-		if (this._firstStep){
-			System.out.println(this._controller.getMap().toString());
-			this._controller.runAlgorithmWithPause(this._grid.get_startsList(),this._grid.get_FinishList());
-			_firstStep = false;
+		if (_configPanel.getControlPanel().getAutoButton().isSelected()){
+			
 		}
 		else{
-			if (oldState != null){
-				this.getGrid().setEmptyStep(oldState);
+			if (this._firstStep){
+				System.out.println(this._controller.getMap().toString());
+				this._controller.runAlgorithmWithPause(this._grid.get_startsList(),this._grid.get_FinishList());
+				_firstStep = false;
 			}
-			this._controller.resumeAlgorithm();
+			else{
+				if (oldState != null){
+					this.getGrid().setEmptyStep(oldState);
+				}
+				this._controller.resumeAlgorithm();
 
+			}
 		}
+
 		
 	}
 	public GridController get_controller() {
