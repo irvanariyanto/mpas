@@ -4,6 +4,9 @@ import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JToggleButton;
+
+import com.sun.java.swing.plaf.nimbus.ToggleButtonPainter;
 
 
 public class ControlPanel extends JPanel {
@@ -14,6 +17,7 @@ public class ControlPanel extends JPanel {
 	private  JButton _bStop;
 	private  JButton _bStep;
 	private  JButton _bClearPath;
+	private JToggleButton _tbAutoStepMode;
 	// End of variables declaration
 
 	/**
@@ -33,11 +37,13 @@ public class ControlPanel extends JPanel {
 		_bFindPath = new JButton("Find Path");
 		_bStop = new JButton("Stop");
 		_bStep = new JButton("Step");
+		_tbAutoStepMode = new JToggleButton("Auto");
 		_bClearPath = new JButton("Clear Path");
 		this.add(_bFindPath);
 		this.add(_bStop);
 		this.add(_bStep);
 		this.add(_bClearPath);
+		this.add(_tbAutoStepMode);
 		GroupLayout layout = new GroupLayout(this);
 		this.setLayout(layout);
 		layout.setAutoCreateGaps(true);
@@ -48,7 +54,8 @@ public class ControlPanel extends JPanel {
 				    		  .addComponent(_bFindPath)
 						      .addComponent(_bStop)
 						      .addComponent(_bStep)
-						      .addComponent(_bClearPath))
+						      .addComponent(_bClearPath)
+						      .addComponent(_tbAutoStepMode))
 				);
 				layout.setVerticalGroup(
 				   layout.createSequentialGroup()
@@ -56,9 +63,12 @@ public class ControlPanel extends JPanel {
 				      .addComponent(_bStop)
 				      .addComponent(_bStep)
 				      .addComponent(_bClearPath)
+				      .addComponent(_tbAutoStepMode)
 				);
 	}
-
+	public JToggleButton getAutoButton(){
+		return this._tbAutoStepMode;
+	}
 
 	public JButton getbFindPath() {
 		return this._bFindPath;
