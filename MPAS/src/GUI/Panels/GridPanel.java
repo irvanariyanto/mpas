@@ -286,7 +286,7 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	public void GeneratePositions() {
 		clearPositions();
 		clearFinalPath();
-		if ((_height*_width - _blockList.size())/2 >  NUM_OF_AGENT){
+		if ((_height*_width - _blockList.size())/2 >=  NUM_OF_AGENT){
 			//generate starting points
 			int agentConter = 1;
 			while(agentConter<=NUM_OF_AGENT){

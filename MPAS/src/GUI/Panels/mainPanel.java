@@ -12,7 +12,10 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JSlider;
 import javax.swing.SwingUtilities;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import algorithms.myPoint;
 
@@ -100,15 +103,31 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 		this.setLayout(new BorderLayout(2,2));
 		this.add(_configPanel , BorderLayout.WEST);
 		this.add(_grid , BorderLayout.CENTER);
-		getbApply().addActionListener(new  ActionListener() {
+		getcAlgorithm().addActionListener(new  ActionListener() {
 	    	 public void actionPerformed( ActionEvent evt) {
-	    		 bApplyActionPerformed(evt);
+	    		 cAlgorithmActionPerformed(evt);
 	         }
 	     });
-		getbCancel().addActionListener(new  ActionListener() {
+		getcHeuristic().addActionListener(new  ActionListener() {
 	    	 public void actionPerformed( ActionEvent evt) {
-	    		 bCancelActionPerformed(evt);
-	    	 }
+	    		 cHeuristicActionPerformed(evt);
+	         }
+	     });
+		getcDirections().addActionListener(new  ActionListener() {
+	    	 public void actionPerformed( ActionEvent evt) {
+	    		 cDirectionsActionPerformed(evt);
+	         }
+	     });
+		getsNumOfAgents().addChangeListener(new ChangeListener(){
+			public void stateChanged(ChangeEvent evt) {
+				sNumOfAgentsActionPerformed(evt);
+				
+			}
+	     });
+		getsGridSize().addChangeListener(new ChangeListener(){
+			public void stateChanged(ChangeEvent evt) {
+				sGridSizeActionPerformed(evt);			
+			}
 	     });
 		getSetBlock().addActionListener(new  ActionListener() {
 	    	 public void actionPerformed( ActionEvent evt) {
@@ -200,6 +219,8 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 	}
 	
 	
+
+
 	protected void reset() {
 		if (_stepThread != null){
 			_stepThread.stop();
@@ -208,18 +229,17 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 		_configPanel.getControlPanel().getStepButton().setEnabled(true);
 		
 	}
+	
 	protected void bStepActionPerformed(ActionEvent evt) {
 		if (_configPanel.getControlPanel().getAutoButton().isSelected()){
-			int value = _configPanel.getControlPanel().getAutoStepValue() * 1000;
-			_stepThread = new AutoStepsThread(value,this);
+			_stepThread = new AutoStepsThread(1000,this);
 			_stepThread.start();
 			this._configPanel.getControlPanel().getStepButton().setEnabled(false);
 		}
 		else{
 			performStep();
 		}
-
-		
+	
 	}
 	//TODO move to gui controller
 	public void performStep(){
@@ -233,33 +253,12 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 				this.getGrid().setEmptyStep(oldState);
 			}
 			this._controller.resumeAlgorithm();
-
 		}
 	}
 	public GridController get_controller() {
 		return this._controller;
 	}
 
-	/**
-	 * when the apply button is pressed
-	 * @param evt
-	 */
-	protected void bApplyActionPerformed(ActionEvent evt) {
-		_algorithmChosen = this._configPanel.getSettingsPanel().getAlgorithm();
-		_heuristicChosen = this._configPanel.getSettingsPanel().getHeuristic();
-		_directionChosen = this._configPanel.getSettingsPanel().getDirection();
-		_numberOfAgents = this._configPanel.getSettingsPanel().getNumberOfAgents();		
-		_gridSize = this._configPanel.getSettingsPanel().getGridSize();
-		getSetBlock().setSelected(true);
-		this._grid.set_editMode(NewCell.SET_BLOCKS);
-		this._grid.setNUM_OF_AGENT(_numberOfAgents);
-		this._grid.setAgentNumber(1);	
-		this._grid.clearBlocks(this._controller.getMap());
-		this._grid.clearPositions();
-		ChangeGridPanel(_gridSize);	
-		ChangeComboBoxSize(_numberOfAgents);
-		init_controller(_algorithmChosen,_heuristicChosen,_directionChosen,_numberOfAgents,_gridSize);	
-	}
 	
 	private void init_controller(){
 		this._controller.setAlgorithm(_algorithmChosen);
@@ -277,10 +276,40 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 		this._controller.setMapSize (gridSize);		
 	}
 	
-	protected void bCancelActionPerformed(ActionEvent evt) {
-		// TODO Auto-generated method stub	
+
+	protected void sGridSizeActionPerformed(ChangeEvent evt) {
+		this._grid.clearBlocks(this._controller.getMap());
+		this._grid.clearPositions();
+		_gridSize = this._configPanel.getSettingsPanel().getGridSize();
+		ChangeGridPanel(_gridSize);	
+		init_controller(_algorithmChosen,_heuristicChosen,_directionChosen,_numberOfAgents,_gridSize);
+		
 	}
-	
+	protected void sNumOfAgentsActionPerformed(ChangeEvent evt) {
+		_numberOfAgents = this._configPanel.getSettingsPanel().getNumberOfAgents();
+		ChangeComboBoxSize(_numberOfAgents);
+		this._grid.setNUM_OF_AGENT(_numberOfAgents);
+		this._grid.setAgentNumber(1);
+		this._grid.clearBlocks(this._controller.getMap());
+		this._grid.clearPositions();
+		init_controller(_algorithmChosen,_heuristicChosen,_directionChosen,_numberOfAgents,_gridSize);
+		
+	}
+	protected void cDirectionsActionPerformed(ActionEvent evt) {
+		_directionChosen = this._configPanel.getSettingsPanel().getDirection();
+		init_controller(_algorithmChosen,_heuristicChosen,_directionChosen,_numberOfAgents,_gridSize);
+		
+	}
+	protected void cHeuristicActionPerformed(ActionEvent evt) {
+		_heuristicChosen = this._configPanel.getSettingsPanel().getHeuristic();
+		init_controller(_algorithmChosen,_heuristicChosen,_directionChosen,_numberOfAgents,_gridSize);
+		
+	}
+	protected void cAlgorithmActionPerformed(ActionEvent evt) {
+		_algorithmChosen = this._configPanel.getSettingsPanel().getAlgorithm();
+		init_controller(_algorithmChosen,_heuristicChosen,_directionChosen,_numberOfAgents,_gridSize);
+		
+	}
 	protected void bClearMapActionPerformed(ActionEvent evt) {
 		this._grid.clearAll(this._controller.getMap());
 		//this._controller.clearMap();
@@ -318,7 +347,7 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 
 
 	protected void AgentComboBoxActionPerformed(ActionEvent evt) {
-		int agentSelected = this._configPanel.getSettingsPanel().get_cAgents().getSelectedIndex();
+		int agentSelected = this._configPanel.getSettingsPanel().getcAgents().getSelectedIndex();
 		this._grid.setAgentNumber(agentSelected+1);	
 	}
 
@@ -354,20 +383,6 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 		this._grid.addListener(new MainFrameListener());
 	}
 	
-	/**
-     * returns the Apply button
-     * @return Apply button component
-     */
-	public JButton getbApply(){
-    	return this._configPanel.getSettingsPanel().getbApply();
-    }
-	/**
-     * returns the Cancel button
-     * @return Cancel button component
-     */
-    public JButton getbCancel(){
-    	return this._configPanel.getSettingsPanel().getbCancel();
-    }
     
     
     /**
@@ -404,7 +419,21 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 	public JButton getbClearMap(){ 
 		return this._configPanel.getSettingsPanel().getbClearMap();
 	}
-	
+	public JComboBox getcAlgorithm(){
+		return this._configPanel.getSettingsPanel().getcAlgorithm();
+	}
+	public JComboBox getcHeuristic(){
+		return this._configPanel.getSettingsPanel().getcHeuristic();
+	}
+	public JComboBox getcDirections(){
+		return this._configPanel.getSettingsPanel().getcDirections();
+	}
+	public JSlider getsNumOfAgents(){
+		return this._configPanel.getSettingsPanel().getsNumOfAgents();
+	}
+	public JSlider getsGridSize(){
+		return this._configPanel.getSettingsPanel().getsGridSize();
+	}
 	public JButton getbClearPath(){ 
 		return this._configPanel.getControlPanel().getbClearPath();
 	}
@@ -440,7 +469,7 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
      * @return Agent comboBox   component
      */
     public JComboBox getAgentComboBox(){
-    	return this._configPanel.getSettingsPanel().get_cAgents();
+    	return this._configPanel.getSettingsPanel().getcAgents();
     }
     
     /**
