@@ -290,8 +290,8 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 		ChangeComboBoxSize(_numberOfAgents);
 		this._grid.setNUM_OF_AGENT(_numberOfAgents);
 		this._grid.setAgentNumber(1);
-		this._grid.clearBlocks(this._controller.getMap());
-		this._grid.clearPositions();
+		//this._grid.clearBlocks(this._controller.getMap());
+		//this._grid.clearPositions();
 		init_controller(_algorithmChosen,_heuristicChosen,_directionChosen,_numberOfAgents,_gridSize);
 		
 	}
