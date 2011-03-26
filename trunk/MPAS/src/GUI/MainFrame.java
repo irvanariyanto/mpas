@@ -12,6 +12,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+import Utils.MyLogger;
+
 import maps.GridMapUtility;
 import maps.Scenario;
 import maps.TileBasedMap;
@@ -77,7 +79,7 @@ public class MainFrame extends JFrame {
 		_openMap.addActionListener(new ActionListener() {	
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				loadMap();
+				loadMap();			
 			}
 		});
 		_saveMap.addActionListener(new ActionListener() {

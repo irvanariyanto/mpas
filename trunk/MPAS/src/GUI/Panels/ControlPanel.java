@@ -10,6 +10,8 @@ import javax.swing.JToggleButton;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import Utils.MyLogger;
+
 import Defaults.defaultsValues;
 
 
@@ -85,7 +87,7 @@ public class ControlPanel extends JPanel {
 			public void stateChanged(ChangeEvent e) {
 				JSlider slider = (JSlider) e.getSource();
 				int value = slider.getValue();
-			    _lSec.setText(value + " Sec");				
+			    _lSec.setText(value + " Sec");
 			}			
 		});
 	    }
