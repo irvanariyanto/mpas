@@ -159,8 +159,7 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 	     });
         getStepButton().addActionListener(new ActionListener() {
 			
-			@Override
-			public void actionPerformed(ActionEvent evt) {
+        	public void actionPerformed(ActionEvent evt) {
 				bStepActionPerformed(evt);
 				
 			}
@@ -243,6 +242,7 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 	}
 	
 	protected void bFindPathActionPerformed(ActionEvent evt) {
+		this._configPanel.getInfoPanel().setText("");
 		if (this._grid.checkArguments()) {
 			this._controller.setTile(this._grid.get_blockList());
 			this.get_controller().findPath(this._grid.get_startsList(),this._grid.get_FinishList());
