@@ -106,5 +106,11 @@ public class ControlPanel extends JPanel {
 	public JButton getbClearPath() {
 		return this._bClearPath;
 	}
-	
+
+	public JButton getStopButton() {
+		return this._bStop;
+	}
+	public int getAutoStepValue(){
+		return this._sAutoStepMode.getValue();
+	}
 }

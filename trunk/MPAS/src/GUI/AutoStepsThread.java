@@ -30,6 +30,8 @@ public class AutoStepsThread extends Thread{
 	public synchronized void setFinished(boolean finished){
 		this._finished = finished;
 	}
-
+	public synchronized void setInterval(int interval){
+		this._interval = interval;
+	}
 	
 }

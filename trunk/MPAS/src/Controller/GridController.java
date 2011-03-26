@@ -35,6 +35,7 @@ public class GridController implements ControllerInterFace<myPoint>,ApplicationE
 	private int _numOfAgents;
 	private Scenario _scenario;
 	private boolean _diagonal;
+	private PathFinderThread _pathfinderThread = null;
 	private Vector<StateInterface<myPoint>> _finalPath;
 	private ApplicationEventListenerCollection _listeners;
 	public GridController() {
@@ -57,14 +58,17 @@ public class GridController implements ControllerInterFace<myPoint>,ApplicationE
 	public void resumeAlgorithm(){
 		this._pathFinder.resume();
 	}
+	public PathFinderThread getAlgorithmThread(){
+		return this._pathfinderThread;
+	}
 	@Override
 	public void findPath(Vector<myPoint> starts,
 			Vector<myPoint> endPoints) {	
 		initAlgorithm();
 		StateInterface<myPoint> start = new myState(starts, this._map);
 		StateInterface<myPoint> goal = new myState(endPoints,this._map);
-		PathFinderThread t = new PathFinderThread(start, goal);
-		t.start();	
+		_pathfinderThread = new PathFinderThread(start, goal);
+		_pathfinderThread.start();	
 	}
 	public void runAlgorithmWithPause(Vector<myPoint> starts,Vector<myPoint> endPoints){
 		initAlgorithm();
@@ -130,7 +134,7 @@ public class GridController implements ControllerInterFace<myPoint>,ApplicationE
 	}
 
 	
-	private class PathFinderThread extends Thread {
+	public class PathFinderThread extends Thread {
 		
 		private StateInterface<myPoint> _start;
 		private StateInterface<myPoint> _goal;
