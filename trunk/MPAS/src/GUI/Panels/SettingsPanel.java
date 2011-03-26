@@ -13,8 +13,6 @@ public class SettingsPanel extends JPanel  {
 	private static final long serialVersionUID = 1L;
 	// Variables declaration 
 	private ButtonGroup _actionGroup;
-	private JButton _bApply;
-	private JButton _bCancel;
 	private JButton _bGeneratePositions;
 	private JButton _bClearPositions;
 	private JButton _bClearMap;
@@ -49,8 +47,6 @@ public class SettingsPanel extends JPanel  {
 	public SettingsPanel() {
 		super();
 		initComponents();
-		
-
 	}
 
 	/**
@@ -70,8 +66,6 @@ public class SettingsPanel extends JPanel  {
 		_lGridSize = new JLabel("Grid Size :");
 		_sGridSize = new JSlider(3, 100);
 		_lSize = new JLabel(defaultsValues.GridSize + " * " +  defaultsValues.GridSize);
-		_bApply = new JButton("Apply");
-		_bCancel = new JButton("Cancel");
 		_separator1 = new JSeparator();
 		_separator2 = new JSeparator();
 		_lAgents = new JLabel("Agent's number:");
@@ -99,7 +93,6 @@ public class SettingsPanel extends JPanel  {
 		_actionGroup.add(_rSetStart);
 		_actionGroup.add(_rSetFinish);
 		_rSetBlock.setSelected(true);
-		_bCancel.setEnabled(false);
 		
 		//adding ActionListeners
 		_sNumOfAgents.addChangeListener(new ChangeListener(){
@@ -159,10 +152,7 @@ public class SettingsPanel extends JPanel  {
 	                        .addPreferredGap( LayoutStyle.ComponentPlacement.UNRELATED)
 	                        .addComponent(_lSize))
 	                    .addGroup(layout.createSequentialGroup()
-	                        .addComponent(_bApply)
-	                        .addPreferredGap( LayoutStyle.ComponentPlacement.UNRELATED)
-	                        .addComponent(_bCancel))
-	                    .addGroup(layout.createSequentialGroup()
+	                        .addPreferredGap( LayoutStyle.ComponentPlacement.UNRELATED))                    .addGroup(layout.createSequentialGroup()
 	                        .addComponent(_lAgents)
 	                        .addPreferredGap( LayoutStyle.ComponentPlacement.UNRELATED)
 	                        .addComponent(_cAgents,  GroupLayout.PREFERRED_SIZE,  GroupLayout.DEFAULT_SIZE,  GroupLayout.PREFERRED_SIZE))
@@ -222,9 +212,7 @@ public class SettingsPanel extends JPanel  {
 	                    .addComponent(_sGridSize,  GroupLayout.PREFERRED_SIZE,  GroupLayout.DEFAULT_SIZE,  GroupLayout.PREFERRED_SIZE)
 	                    .addComponent(_lSize))
 	                .addPreferredGap( LayoutStyle.ComponentPlacement.RELATED)
-	                .addGroup(layout.createParallelGroup( GroupLayout.Alignment.BASELINE)
-	                    .addComponent(_bApply)
-	                    .addComponent(_bCancel))
+	                .addGroup(layout.createParallelGroup( GroupLayout.Alignment.BASELINE))
 	                .addPreferredGap( LayoutStyle.ComponentPlacement.RELATED)
 	                .addComponent(_separator1,  GroupLayout.PREFERRED_SIZE, 10,  GroupLayout.PREFERRED_SIZE)
 	                .addGap(1, 1, 1)
@@ -256,24 +244,7 @@ public class SettingsPanel extends JPanel  {
 	                .addContainerGap())
 	        );
 	    }
-
-   
-    /**
-     * returns the Apply button
-     * @return Apply button component
-     */
-    public JButton getbApply(){
-    	return this._bApply;
-    }
-    /**
-     * returns the Cancel button
-     * @return Cancel button component
-     */
-    public JButton getbCancel(){
-    	return this._bCancel;
-    }
-    
-    
+  
 
     /**
      * returns the GeneratePositions button
@@ -324,8 +295,26 @@ public class SettingsPanel extends JPanel  {
      * returns the Agent comboBox 
      * @return Agent comboBox   component
      */
-    public JComboBox get_cAgents(){
+    public JComboBox getcAgents(){
     	return this._cAgents;
+    }
+    
+    public JComboBox getcAlgorithm(){
+    	return this._cAlgorithm;
+    }
+    public JComboBox getcHeuristic(){
+    	return this._cHeuristic;
+    }
+    public JComboBox getcDirections(){
+    	return this._cDirections;
+    }
+    
+    public JSlider getsNumOfAgents(){
+    	return this._sNumOfAgents;
+    }
+    
+    public JSlider getsGridSize(){
+    	return this._sGridSize;
     }
     
     
