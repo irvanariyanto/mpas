@@ -29,7 +29,7 @@ import EventMechanism.Events.SetFinishCellEvent;
 import EventMechanism.Events.SetStartCellEvent;
 import EventMechanism.Events.finalPathEvent;
 import EventMechanism.Events.showOpenListStateEvent;
-import NewGUI.AutoStepsThread;
+import GUI.AutoStepsThread;
 
 
 public class mainPanel extends JPanel implements ApplicationEventSource{
@@ -183,7 +183,7 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 	
 	protected void bStepActionPerformed(ActionEvent evt) {
 		if (_configPanel.getControlPanel().getAutoButton().isSelected()){
-			new AutoStepsThread(100,this);
+			//new AutoStepsThread(100,this);
 			this._configPanel.getControlPanel().getStepButton().setEnabled(false);
 		}
 		else{
