@@ -41,7 +41,7 @@ public class ControlPanel extends JPanel {
 	 */
 	private void initComponents() {
 		this.setBorder(BorderFactory.createTitledBorder("Control"));
-		_bFindPath = new JButton("Find Path");
+		_bFindPath = new JButton("Start");
 		_bStop = new JButton("Stop");
 		_bStep = new JButton("Step");
 		_tbAutoStepMode = new JToggleButton("Auto");
