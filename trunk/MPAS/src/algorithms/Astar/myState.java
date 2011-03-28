@@ -81,7 +81,15 @@ public class myState implements Comparable<myState>,StateInterface<myPoint> {
 		} else if (f > of) {
 			return 1;
 		} else {
-			return 0;
+			if (_heuristic < other.get_heuristic()){
+				return -1;
+			}
+			else if(_heuristic > other.get_heuristic()){
+				return 1;
+			}
+			else{
+				return 0;
+			}
 		}
 	}
 	@Override

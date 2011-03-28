@@ -48,8 +48,11 @@ public class ControlPanel extends JPanel {
 		_bStep = new JButton("Step");
 		_tbAutoStepMode = new JToggleButton("Auto");
 		_bClearPath = new JButton("Clear Path");
-		_sAutoStepMode = new JSlider(0,100);
-	    _lSec = new JLabel(defaultsValues.AutoStepTimer + " sec");
+		_sAutoStepMode = new JSlider(1,30,1);
+		_sAutoStepMode.setPaintTicks(true);
+		_sAutoStepMode.setMajorTickSpacing(5);
+	    _lSec = new JLabel(_sAutoStepMode.getValue() * 100 + " msec");
+
 		GroupLayout layout = new GroupLayout(this);
 		this.setLayout(layout);
 		layout.setAutoCreateGaps(true);
@@ -82,7 +85,8 @@ public class ControlPanel extends JPanel {
 	                            .addComponent(_bClearPath))
 	    );
 		
-		_sAutoStepMode.setValue(defaultsValues.AutoStepTimer );
+		//added to mainPanel
+		/*
 		_sAutoStepMode.addChangeListener(new ChangeListener(){
 			public void stateChanged(ChangeEvent e) {
 				JSlider slider = (JSlider) e.getSource();
@@ -90,6 +94,7 @@ public class ControlPanel extends JPanel {
 			    _lSec.setText(value + " Sec");
 			}			
 		});
+		*/
 	    }
 	
 	public JToggleButton getAutoButton(){
@@ -112,5 +117,14 @@ public class ControlPanel extends JPanel {
 	}
 	public int getAutoStepValue(){
 		return this._sAutoStepMode.getValue();
+	}
+
+	public JSlider getAutoStepSlider() {
+		return this._sAutoStepMode;
+	}
+
+	public void setAutoStepLabel(String string) {
+		this._lSec.setText(string);
+		
 	}
 }

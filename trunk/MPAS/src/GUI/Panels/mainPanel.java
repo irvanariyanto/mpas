@@ -206,6 +206,19 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 				
 			}
 		});
+        _configPanel.getControlPanel().getAutoStepSlider().addChangeListener(new ChangeListener() {
+			//TODO remove duplicate listeners
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				JSlider slider = (JSlider) e.getSource();
+				int value = slider.getValue();
+			    _configPanel.getControlPanel().setAutoStepLabel(value *100 + " msec");
+			    if (_stepThread !=null){
+				_stepThread.setInterval(_configPanel.getControlPanel().getAutoStepValue() * 100);
+			    }
+				
+			}
+		});
 		this._grid.addListener(new MainFrameListener());
 		this._grid.setAgentNumber(1);//Default			
 	}	
@@ -232,7 +245,7 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 	
 	protected void bStepActionPerformed(ActionEvent evt) {
 		if (_configPanel.getControlPanel().getAutoButton().isSelected()){
-			_stepThread = new AutoStepsThread(1000,this);
+			_stepThread = new AutoStepsThread(this._configPanel.getControlPanel().getAutoStepValue()*100,this);
 			_stepThread.start();
 			this._configPanel.getControlPanel().getStepButton().setEnabled(false);
 		}
