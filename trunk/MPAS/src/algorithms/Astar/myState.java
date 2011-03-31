@@ -136,7 +136,10 @@ public class myState implements Comparable<myState>,StateInterface<myPoint> {
 		ans += "Current position: <";
 		for (myPoint p : this._Coordinates) {
 			ans += p.toString();
-		}/*
+		}
+		ans += ">";
+		/*
+		
 		ans += ">\nParent: ";
 		if (this._parent == null) {
 			ans += "null";

@@ -2,7 +2,7 @@ package algorithms.CooperativeAstar;
 
 import algorithms.myPoint;
 
-public class PointKeyFactory extends AbstractKeyFactoy<myPoint>{
+public class PointKeyFactory extends AbstractKeyFactory<myPoint>{
 
 	@Override
 	public TableKeyInterface<myPoint> createKey(myPoint data, int time) {

@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.PriorityQueue;
 import java.util.Vector;
 
+import Utils.MyLogger;
 import algorithms.Interfaces.Pausable;
 import algorithms.Interfaces.PausableSearchAlgorithm;
 import algorithms.Interfaces.SearchInterface;
@@ -52,8 +53,9 @@ public class AStarSearch<E> extends PausableSearchAlgorithm<E> {
 		while (!this._openList.isEmpty()){
 			boolean tentativeIsBetter = false;
 			StateInterface<E> current = this._openList.poll();
+			MyLogger.getInstance().info(current.toString());
 			if (this._pause && current != start){ // in case running in debug mode
-				System.out.println("node is: " + current.toString());
+				System.out.println("node is: " + current.toString());				
 				this._listeners.fireEvent(new OpenListChangeEvent<E>(this, current));
 				pause();
 			}
