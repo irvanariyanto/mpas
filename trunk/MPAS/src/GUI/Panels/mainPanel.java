@@ -345,17 +345,17 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 		}
 	}	
 	protected void rEndActionPerformed(ActionEvent evt) {
-		this._grid.set_editMode(NewCell.SET_FINISH);
+		this._grid.set_editMode(Cell.SET_FINISH);
 		
 	}
 
 	protected void rStartActionPerformed(ActionEvent evt) {
-		this._grid.set_editMode(NewCell.SET_START);
+		this._grid.set_editMode(Cell.SET_START);
 		
 	}
 
 	protected void rBlockActionPerformed(ActionEvent evt) {
-		this._grid.set_editMode(NewCell.SET_BLOCKS);	
+		this._grid.set_editMode(Cell.SET_BLOCKS);	
 	}
 
 

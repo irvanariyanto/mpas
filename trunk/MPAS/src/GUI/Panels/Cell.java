@@ -25,7 +25,7 @@ import algorithms.myPoint;
  * 
  * @author Liron Katav
  */
-public class NewCell extends Component  implements ApplicationEventSource{
+public class Cell extends Component  implements ApplicationEventSource{
 
 
 	/**
@@ -36,23 +36,32 @@ public class NewCell extends Component  implements ApplicationEventSource{
 	public static enum Status {
 		Empty, Start, Finish, Blocked, inOpenList, inClosedList,Path;
 	}
+	public static enum Direction {
+		LEFT_RIGHT, RIGHT_LEFT ,DOWN_TOP,TOP_DOWN,
+		TOPLEFT_DOWNRIGHT,DOWNRIGHT_TOPLEFT,DOWNLEFT_TOPRIGHT,TOPRIGHT_DOWNLEFT,
+		LEFT_TOP,TOP_LEFT,
+		LEFT_DOWN,DOWN_LEFT,
+		TOP_RIGHT,RIGHT_TOP,
+		RIGHT_DOWN,DOWN_RIGHT;
+	}
 
 	// fields
 	private myPoint _position;
 	private Status _status;
+	private Direction _direction;
 	private int _agnetNum;
 	static int _editMode ;
 	public static int _agentSelected;
 	private ApplicationEventListenerCollection _listeners;
 
 	// Constructor
-	public NewCell(myPoint point) {
+	public Cell(myPoint point) {
 		this._position = point;	
 		init();
 	}
 
 	// Constructor
-	public NewCell(myPoint p, boolean block) {
+	public Cell(myPoint p, boolean block) {
 		this._position = p;	
 		this.set_status(Status.Blocked);
 		init();	
@@ -65,6 +74,7 @@ public class NewCell extends Component  implements ApplicationEventSource{
 		this.set_status(Status.Empty);
 		this._agnetNum=0;
 		_editMode = SET_BLOCKS;
+		this._direction = null;
 		// Action and mouse listener support
 		this._listeners = new ApplicationEventListenerCollection();
 		enableEvents(AWTEvent.MOUSE_EVENT_MASK);
@@ -113,6 +123,21 @@ public class NewCell extends Component  implements ApplicationEventSource{
 	}
 	
 	/**
+	 * set the status and the agentNmber
+	 * @param status
+	 */
+	public void set_Direction(Direction dir) {
+		this._direction = dir;
+	}
+	/**
+	 * set the status and the agentNmber
+	 * @param status
+	 */
+	public void set_Direction(Direction dir, int agentNum) {
+		this._direction = dir;
+		this._agnetNum = agentNum;
+	}
+	/**
 	 * @return the _editMode
 	 */
 	public int get_editMode() {
@@ -124,7 +149,7 @@ public class NewCell extends Component  implements ApplicationEventSource{
 	 * @param editMode
 	 */
 	public void set_editMode (int editMode){
-		NewCell._editMode = editMode;
+		Cell._editMode = editMode;
 		
 	}
 	/**
@@ -145,36 +170,77 @@ public class NewCell extends Component  implements ApplicationEventSource{
 
 	@Override
 	public void paint(Graphics g) {	
-		Dimension size = getSize();
-		if (this._status == Status.Empty) {
-			g.setColor(Color.white);
-		}
-		if (this._status == Status.Start) {
-			g.setColor(Color.green);
-		}
-		if (this._status == Status.Finish) {
-			g.setColor(Color.red);
-		}
-		if (this._status == Status.Blocked) {
-			g.setColor(Color.black);
-		}
-		if (this._status == Status.inOpenList) {
-			g.setColor(Color.gray);
-		}
-		if (this._status == Status.inClosedList) {
-			g.setColor(Color.darkGray);
-		}
-		if (this._status == Status.Path ) {
-			g.setColor(Color.yellow);
-		}
-		g.fillRect(0, 0, size.width-1, size.height-1);	
-		g.setColor(Color.black);	
 		
+		Dimension size = getSize();
+		Dimension RectSize = new Dimension(size.width -2,size.height -2);		
+		SetColorByStatus(g,this._status);		
+		g.fillRect(0, 0, size.width-1, size.height-1);		
+		g.setColor(Color.black);
+		g.drawRect(0, 0, RectSize.width, RectSize.height );
+		if(this._status == Status.Path && this._direction!=null){
+			drawDircetion(g,this._direction,RectSize);			
+		}
 		if(this._agnetNum != 0){
 			g.setFont(new Font("sansserif", Font.BOLD, 11));
 			g.drawString(Integer.toString(this._agnetNum),5,15);
 		}
-		g.drawRect(0, 0, size.width - 2, size.height - 2);
+		
+	}
+
+	private void SetColorByStatus(Graphics g,Status status) {
+		if (status == Status.Empty) {
+			g.setColor(Color.white);
+		}
+		if (status == Status.Start) {
+			g.setColor(Color.green);
+		}
+		if (status == Status.Finish) {
+			g.setColor(Color.red);
+		}
+		if (status == Status.Blocked) {
+			g.setColor(Color.black);
+		}
+		if (status == Status.inOpenList) {
+			g.setColor(Color.gray);
+		}
+		if (status == Status.inClosedList) {
+			g.setColor(Color.darkGray);
+		}
+		if (status == Status.Path ) {
+			g.setColor(Color.yellow);			
+		}		
+	}
+
+	private void drawDircetion(Graphics g, Direction direction,Dimension size) {
+		if (direction==Direction.LEFT_RIGHT || direction==Direction.RIGHT_LEFT ){
+			g.drawLine(0, size.height/2, size.width,size.height/2 );
+		}
+		if (direction==Direction.TOP_DOWN || direction==Direction.DOWN_TOP){
+			g.drawLine(size.width/2, 0, size.width/2,size.height);
+		}
+		if (direction==Direction.TOPLEFT_DOWNRIGHT || direction==Direction.DOWNRIGHT_TOPLEFT){
+			g.drawLine(0, size.height, size.width,0);
+		}
+		if (direction==Direction.DOWNLEFT_TOPRIGHT || direction==Direction.TOPRIGHT_DOWNLEFT){
+			g.drawLine(0, 0, size.width,size.height);
+		}
+		if (direction==Direction.LEFT_TOP || direction==Direction.TOP_LEFT){
+			g.drawLine(0, size.height/2, size.width/2,size.height/2);
+			g.drawLine(size.width/2,size.height/2, size.width/2,0);
+		}
+		if (direction==Direction.LEFT_DOWN || direction==Direction.DOWN_LEFT){
+			g.drawLine(0, size.height/2, size.width/2,size.height/2);
+			g.drawLine(size.width/2,size.height/2, size.width/2,size.height);
+		}
+		if (direction==Direction.TOP_RIGHT || direction==Direction.RIGHT_TOP){
+			g.drawLine(size.width/2, 0, size.width/2,size.height/2);
+			g.drawLine(size.width/2,size.height/2, size.width,size.height/2);
+		}
+		if (direction==Direction.RIGHT_DOWN || direction==Direction.DOWN_RIGHT){
+			g.drawLine(size.width, size.height/2, size.width/2,size.height/2);
+			g.drawLine(size.width/2,size.height/2, size.width/2,size.height);
+		}
+		
 	}
 
 	public void processMouseEvent(MouseEvent event) {
@@ -195,7 +261,7 @@ public class NewCell extends Component  implements ApplicationEventSource{
 
 	private myPoint getPointFromSource(MouseEvent event) {
 		Object obj = event.getSource();
-		NewCell c = ((NewCell) obj);
+		Cell c = ((Cell) obj);
 		return c.getPosition();
 	}
 
