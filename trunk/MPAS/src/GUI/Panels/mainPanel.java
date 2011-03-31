@@ -88,7 +88,8 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 			public void handle(ApplicationEvent event) {
 				if (event instanceof finalPathEvent){
 					Vector<Vector<myPoint>> path = mainPanel.this._controller.getFinalPath();
-					mainPanel.this._grid.drawFinalPaths(path);
+					//true means to draw with lines
+					mainPanel.this._grid.drawFinalPaths(path,false);
 					mainPanel.this.reset();
 				}
 				else if (event instanceof showOpenListStateEvent<?>){

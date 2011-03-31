@@ -4,6 +4,7 @@ package GUI.Panels;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.util.Collections;
 import java.util.Vector;
 import javax.swing.JPanel;
 
@@ -15,6 +16,7 @@ import EventMechanism.ApplicationEvent;
 import EventMechanism.ApplicationEventListener;
 import EventMechanism.ApplicationEventListenerCollection;
 import EventMechanism.ApplicationEventSource;
+import GUI.Panels.Cell.Direction;
 import GUI.Panels.Cell.Status;
 
 import algorithms.myPoint;
@@ -348,25 +350,127 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 		repaint();
 	}
 	
+	public void drawFinalPathCell(int x, int y, int agent, Direction direction) {
+		this._grid[x][y].set_status(Status.Path);
+		this._grid[x][y].set_agent(agent);
+		this._grid[x][y].add_Direction(direction);
+		repaint();
+	}
+	
+	public void drawFinalPaths(Vector<Vector<myPoint>> finalPath, boolean withLines) {
+		 _finalPaths = finalPath;
+		 if (withLines){
+			 drawFinalPathsWithLines(_finalPaths);			
+		}
+		else{
+			drawFinalPaths(_finalPaths);
+		}
+	}
 	
 	public void drawFinalPaths(Vector<Vector<myPoint>> finalPath) {
-		_finalPaths = finalPath;
-		for (int i = 0; i < finalPath.size(); i++) {
-			Vector<myPoint> tState = finalPath.elementAt(i);
-			for (int j=0; j< tState.size(); j++){
-				myPoint p = tState.elementAt(j); 
-				drawFinalPathCell(p.getX(), p.getY(),i+1);
-			
+        for (int i = 0; i < finalPath.size(); i++) {
+                Vector<myPoint> tPath = finalPath.elementAt(i);
+                for (int j=0; j< tPath.size(); j++){
+                        myPoint p = tPath.elementAt(j); 
+                        drawFinalPathCell(p.getX(), p.getY(),i+1);               
+                }
+        }
+	}
+	
+	
+	public void drawOneFinalStep(Vector<myPoint> tStep, boolean withLines) {
+		for (int j=0; j< tStep.size(); j++){
+			myPoint p = tStep.elementAt(j); 
+			if (withLines){
+				drawFinalPathCell(p.getX(), p.getY(),j+1,Direction.DOWN_LEFT);
+			}
+			else{
+				drawFinalPathCell(p.getX(), p.getY(),j+1);
 			}
 		}
 	}
 	
-	public void drawOneFinalStep(Vector<myPoint> tStep) {
+	public void drawFinalPathsWithLines(Vector<Vector<myPoint>> finalPath){
+		for (int i = 0; i < finalPath.size(); i++) {
+			Vector<myPoint> tPath = finalPath.elementAt(i);
+			Collections.reverse(tPath);
+			myPoint prePoint,currentPoint,nextPoint;
+            for (int j=0; j < tPath.size(); j++){  
+            	if(j==0){
+            		prePoint = tPath.elementAt(0);  
+            	}
+            	else{
+            		prePoint = tPath.elementAt(j-1);	
+            	}            	  
+            	currentPoint = tPath.elementAt(j);
+            	if(j==tPath.size()-1)
+            	nextPoint = tPath.elementAt(j); 
+            	else{
+            		nextPoint = tPath.elementAt(j+1);
+            	}
+            	Direction dir = calcDirection(prePoint,currentPoint,nextPoint);
+                drawFinalPathCell(currentPoint.getX(), currentPoint.getY(),i+1,dir);               
+            }
+		}		
+	}
+	
+	
+	public void drawOneFinalStepWithLines(Vector<myPoint> tStep, boolean withLines) {
 		for (int j=0; j< tStep.size(); j++){
 			myPoint p = tStep.elementAt(j); 
-			drawFinalPathCell(p.getX(), p.getY(),j+1);	
+			if (withLines){
+				drawFinalPathCell(p.getX(), p.getY(),j+1,Direction.DOWN_LEFT);
+			}
+			else{
+				drawFinalPathCell(p.getX(), p.getY(),j+1,Direction.DOWN_LEFT);
+			}
 		}
 	}
+	
+	private Direction calcDirection(myPoint p, myPoint q, myPoint m) {
+		Direction res = null;
+		float preDeltaX = q.getX()-p.getX();
+		float preDeltaY = q.getY()-p.getY();
+		float postDeltaX = q.getX()-m.getX();
+		float postDeltaY = q.getY()-m.getY();
+		if(preDeltaX==0 && preDeltaY==1 && postDeltaX==0 && postDeltaY==-1 )
+			res= Direction.LEFT_RIGHT;
+		if(preDeltaX==0 && preDeltaY==-1 && postDeltaX==0 && postDeltaY==1 )
+			res= Direction.RIGHT_LEFT;
+		if(preDeltaX==-1 && preDeltaY==0 && postDeltaX==1 && postDeltaY==0 )
+			res= Direction.DOWN_TOP;
+		if(preDeltaX==1 && preDeltaY==0 && postDeltaX==-1 && postDeltaY==0 )
+			res= Direction.TOP_DOWN;
+		if(preDeltaX==1 && preDeltaY==1 && postDeltaX==-1 && postDeltaY==-1 )
+			res= Direction.TOPLEFT_DOWNRIGHT;
+		if(preDeltaX==-1 && preDeltaY==-1 && postDeltaX==1 && postDeltaY==1 )
+			res= Direction.DOWNRIGHT_TOPLEFT;
+		if(preDeltaX==-1 && preDeltaY==1 && postDeltaX==1 && postDeltaY==-1 )
+			res= Direction.DOWNLEFT_TOPRIGHT;
+		if(preDeltaX==1 && preDeltaY==-1 && postDeltaX==-1 && postDeltaY==1 )
+			res= Direction.TOPRIGHT_DOWNLEFT;
+		if(preDeltaX==0 && preDeltaY==1 && postDeltaX==1 && postDeltaY==0 )
+			res= Direction.LEFT_TOP;
+		if(preDeltaX==1 && preDeltaY==0 && postDeltaX==0 && postDeltaY==1 )
+			res= Direction.TOP_LEFT;
+		if(preDeltaX==0 && preDeltaY==1 && postDeltaX==-1 && postDeltaY==0 )
+			res= Direction.LEFT_DOWN;
+		if(preDeltaX==-1 && preDeltaY==0 && postDeltaX==0 && postDeltaY==1 )
+			res= Direction.DOWN_LEFT;
+		if(preDeltaX==1 && preDeltaY==0 && postDeltaX==0 && postDeltaY==-1 )
+			res= Direction.TOP_RIGHT;
+		if(preDeltaX==0 && preDeltaY==-1 && postDeltaX==1 && postDeltaY==0 )
+			res= Direction.RIGHT_TOP;
+		if(preDeltaX==0 && preDeltaY==-1 && postDeltaX==-1 && postDeltaY==0 )
+			res= Direction.RIGHT_DOWN;
+		if(preDeltaX==-1 && preDeltaY==0 && postDeltaX==0 && postDeltaY==-1 )
+			res= Direction.DOWN_RIGHT;
+		
+		return res;
+	}
+	
+	
+	
 	public void drawOneStep(Vector<myPoint> tStep) {
 		for (int j=0; j< tStep.size(); j++){
 			myPoint p = tStep.elementAt(j); 

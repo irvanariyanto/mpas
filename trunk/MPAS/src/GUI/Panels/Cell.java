@@ -12,6 +12,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
+import java.util.Vector;
 
 import EventMechanism.ApplicationEventListener;
 import EventMechanism.ApplicationEventListenerCollection;
@@ -48,7 +49,7 @@ public class Cell extends Component  implements ApplicationEventSource{
 	// fields
 	private myPoint _position;
 	private Status _status;
-	private Direction _direction;
+	private Vector<Direction> _directions;
 	private int _agnetNum;
 	static int _editMode ;
 	public static int _agentSelected;
@@ -57,28 +58,27 @@ public class Cell extends Component  implements ApplicationEventSource{
 	// Constructor
 	public Cell(myPoint point) {
 		this._position = point;	
-		init();
+		this.set_status(Status.Empty);
+		this._agnetNum=0;
+		_editMode = SET_BLOCKS;
+		this._directions = new Vector<Direction>();
+		// Action and mouse listener support
+		this._listeners = new ApplicationEventListenerCollection();
+		enableEvents(AWTEvent.MOUSE_EVENT_MASK);
 	}
 
 	// Constructor
 	public Cell(myPoint p, boolean block) {
 		this._position = p;	
 		this.set_status(Status.Blocked);
-		init();	
-	}
-
-	/**
-	 * initialize the components
-	 */
-	private void init() {
-		this.set_status(Status.Empty);
 		this._agnetNum=0;
 		_editMode = SET_BLOCKS;
-		this._direction = null;
+		this._directions = new Vector<Direction>();
 		// Action and mouse listener support
 		this._listeners = new ApplicationEventListenerCollection();
 		enableEvents(AWTEvent.MOUSE_EVENT_MASK);
 	}
+
 
 	/**
 	 * @return the _position
@@ -111,6 +111,8 @@ public class Cell extends Component  implements ApplicationEventSource{
 	public void set_status(Status status) {
 		if(status == Status.Empty){
 			this._agnetNum=0;
+			if(this._directions!=null)
+				this._directions.removeAllElements();
 		}
 		this._status = status;
 	}
@@ -126,15 +128,15 @@ public class Cell extends Component  implements ApplicationEventSource{
 	 * set the status and the agentNmber
 	 * @param status
 	 */
-	public void set_Direction(Direction dir) {
-		this._direction = dir;
+	public void add_Direction(Direction dir) {
+		this._directions.add(dir);
 	}
 	/**
 	 * set the status and the agentNmber
 	 * @param status
 	 */
-	public void set_Direction(Direction dir, int agentNum) {
-		this._direction = dir;
+	public void add_Direction(Direction dir, int agentNum) {
+		this._directions.add(dir);
 		this._agnetNum = agentNum;
 	}
 	/**
@@ -169,22 +171,20 @@ public class Cell extends Component  implements ApplicationEventSource{
 	}
 
 	@Override
-	public void paint(Graphics g) {	
-		
+	public void paint(Graphics g) {		
 		Dimension size = getSize();
 		Dimension RectSize = new Dimension(size.width -2,size.height -2);		
 		SetColorByStatus(g,this._status);		
 		g.fillRect(0, 0, size.width-1, size.height-1);		
 		g.setColor(Color.black);
-		g.drawRect(0, 0, RectSize.width, RectSize.height );
-		if(this._status == Status.Path && this._direction!=null){
-			drawDircetion(g,this._direction,RectSize);			
+		//g.drawRect(0, 0, RectSize.width, RectSize.height );
+		if(this._status == Status.Path && !this._directions.isEmpty()){
+			drawDircetions(g,this._directions,RectSize);			
 		}
 		if(this._agnetNum != 0){
 			g.setFont(new Font("sansserif", Font.BOLD, 11));
 			g.drawString(Integer.toString(this._agnetNum),5,15);
-		}
-		
+		}		
 	}
 
 	private void SetColorByStatus(Graphics g,Status status) {
@@ -211,34 +211,36 @@ public class Cell extends Component  implements ApplicationEventSource{
 		}		
 	}
 
-	private void drawDircetion(Graphics g, Direction direction,Dimension size) {
-		if (direction==Direction.LEFT_RIGHT || direction==Direction.RIGHT_LEFT ){
-			g.drawLine(0, size.height/2, size.width,size.height/2 );
-		}
-		if (direction==Direction.TOP_DOWN || direction==Direction.DOWN_TOP){
-			g.drawLine(size.width/2, 0, size.width/2,size.height);
-		}
-		if (direction==Direction.TOPLEFT_DOWNRIGHT || direction==Direction.DOWNRIGHT_TOPLEFT){
-			g.drawLine(0, size.height, size.width,0);
-		}
-		if (direction==Direction.DOWNLEFT_TOPRIGHT || direction==Direction.TOPRIGHT_DOWNLEFT){
-			g.drawLine(0, 0, size.width,size.height);
-		}
-		if (direction==Direction.LEFT_TOP || direction==Direction.TOP_LEFT){
-			g.drawLine(0, size.height/2, size.width/2,size.height/2);
-			g.drawLine(size.width/2,size.height/2, size.width/2,0);
-		}
-		if (direction==Direction.LEFT_DOWN || direction==Direction.DOWN_LEFT){
-			g.drawLine(0, size.height/2, size.width/2,size.height/2);
-			g.drawLine(size.width/2,size.height/2, size.width/2,size.height);
-		}
-		if (direction==Direction.TOP_RIGHT || direction==Direction.RIGHT_TOP){
-			g.drawLine(size.width/2, 0, size.width/2,size.height/2);
-			g.drawLine(size.width/2,size.height/2, size.width,size.height/2);
-		}
-		if (direction==Direction.RIGHT_DOWN || direction==Direction.DOWN_RIGHT){
-			g.drawLine(size.width, size.height/2, size.width/2,size.height/2);
-			g.drawLine(size.width/2,size.height/2, size.width/2,size.height);
+	private void drawDircetions(Graphics g, Vector<Direction> directions,Dimension size) {
+		for (Direction direction : directions) {
+			if (direction==Direction.LEFT_RIGHT || direction==Direction.RIGHT_LEFT ){
+				g.drawLine(0, size.height/2, size.width,size.height/2 );
+			}
+			if (direction==Direction.TOP_DOWN || direction==Direction.DOWN_TOP){
+				g.drawLine(size.width/2, 0, size.width/2,size.height);
+			}
+			if (direction==Direction.TOPLEFT_DOWNRIGHT || direction==Direction.DOWNRIGHT_TOPLEFT){
+				g.drawLine(0, 0, size.width,size.height);
+			}
+			if (direction==Direction.DOWNLEFT_TOPRIGHT || direction==Direction.TOPRIGHT_DOWNLEFT){
+				g.drawLine(0, size.height, size.width,0);
+			}
+			if (direction==Direction.LEFT_TOP || direction==Direction.TOP_LEFT){
+				g.drawLine(0, size.height/2, size.width/2,size.height/2);
+				g.drawLine(size.width/2,size.height/2, size.width/2,0);
+			}
+			if (direction==Direction.LEFT_DOWN || direction==Direction.DOWN_LEFT){
+				g.drawLine(0, size.height/2, size.width/2,size.height/2);
+				g.drawLine(size.width/2,size.height/2, size.width/2,size.height);
+			}
+			if (direction==Direction.TOP_RIGHT || direction==Direction.RIGHT_TOP){
+				g.drawLine(size.width/2, 0, size.width/2,size.height/2);
+				g.drawLine(size.width/2,size.height/2, size.width,size.height/2);
+			}
+			if (direction==Direction.RIGHT_DOWN || direction==Direction.DOWN_RIGHT){
+				g.drawLine(size.width, size.height/2, size.width/2,size.height/2);
+				g.drawLine(size.width/2,size.height/2, size.width/2,size.height);
+			}
 		}
 		
 	}
@@ -281,6 +283,8 @@ public class Cell extends Component  implements ApplicationEventSource{
 	public void removeListener(ApplicationEventListener listener) {
 		this._listeners.remove(listener);
 	}
+
+	
 
 	
 	
