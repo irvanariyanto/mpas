@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -18,6 +19,7 @@ import maps.GridMapUtility;
 import maps.Scenario;
 import maps.TileBasedMap;
 
+import GUI.Panels.StatisticsDialog;
 import GUI.Panels.mainPanel;
 import GUI.Utils.ScenarioFileFilter;
 
@@ -30,7 +32,9 @@ public class MainFrame extends JFrame {
 	private JMenuBar _menuBar;
 	private JMenu _FileMenu,_MapMenu, _helpMenu,_EditMenu,_ViewMenu;	
 	private JMenuItem _openMap, _saveMap, _exitItem,_loadScenario,_saveScenario,_ColorsEditor;
+	private JCheckBoxMenuItem _ShowStatsPanel;
 	private mainPanel _mainPanel;
+	private StatisticsDialog _statsPanel;
 	// End of variables declaration
 	
 	
@@ -40,6 +44,8 @@ public class MainFrame extends JFrame {
 	}
 	
 	private void initComponenets() {
+		this._statsPanel = new StatisticsDialog(this);
+		this._statsPanel.setVisible(false);
 		this._menuBar = new JMenuBar();
 		this._FileMenu = new JMenu("File");
 		this._MapMenu = new JMenu("Grid Map");
@@ -63,7 +69,8 @@ public class MainFrame extends JFrame {
 		_saveScenario = new JMenuItem("Save scenario");
 		_MapMenu.add(_loadScenario);
 		_MapMenu.add(_saveScenario);
-		
+		_ShowStatsPanel = new JCheckBoxMenuItem("Statistics panel");
+		_ViewMenu.add(_ShowStatsPanel);
 		_menuBar.add(_helpMenu);
 		
 		this.setJMenuBar(_menuBar);
@@ -106,6 +113,20 @@ public class MainFrame extends JFrame {
 				
 			}
 
+		});
+		_ShowStatsPanel.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if (((JCheckBoxMenuItem)arg0.getSource()).isSelected()){
+					_statsPanel.setVisible(true);
+				}
+				else{
+					_statsPanel.setVisible(false);
+					
+				}
+				
+			}
 		});
 		
 

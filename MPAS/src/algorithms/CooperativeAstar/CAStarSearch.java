@@ -13,7 +13,7 @@ public class CAStarSearch<E> extends PausableSearchAlgorithm<E>{
 
 	private HashMap<TableKeyInterface<E>,Integer> _reservTable;
 	private HeuristicInterface<StateInterface<E>> _heuristic;
-	private AbstractKeyFactoy<E> _factory;
+	private AbstractKeyFactory<E> _factory;
 	
 	public CAStarSearch(HeuristicInterface<E> heuristic){
 		
