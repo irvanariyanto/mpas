@@ -19,6 +19,7 @@ import maps.GridMapUtility;
 import maps.Scenario;
 import maps.TileBasedMap;
 
+import GUI.Panels.ColorsDialog;
 import GUI.Panels.StatisticsDialog;
 import GUI.Panels.mainPanel;
 import GUI.Utils.ScenarioFileFilter;
@@ -35,6 +36,7 @@ public class MainFrame extends JFrame {
 	private JCheckBoxMenuItem _ShowStatsPanel;
 	private mainPanel _mainPanel;
 	private StatisticsDialog _statsPanel;
+	private ColorsDialog _colorsDialog;
 	// End of variables declaration
 	
 	
@@ -44,8 +46,7 @@ public class MainFrame extends JFrame {
 	}
 	
 	private void initComponenets() {
-		this._statsPanel = new StatisticsDialog(this);
-		this._statsPanel.setVisible(false);
+
 		this._menuBar = new JMenuBar();
 		this._FileMenu = new JMenu("File");
 		this._MapMenu = new JMenu("Grid Map");
@@ -114,10 +115,24 @@ public class MainFrame extends JFrame {
 			}
 
 		});
+		_ColorsEditor.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if (_colorsDialog == null){
+					_colorsDialog = new ColorsDialog(MainFrame.this);
+				}
+				_colorsDialog.setVisible(true);
+				
+			}
+		});
 		_ShowStatsPanel.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				if (_statsPanel == null){
+					_statsPanel = new StatisticsDialog(MainFrame.this);
+				}
 				if (((JCheckBoxMenuItem)arg0.getSource()).isSelected()){
 					_statsPanel.setVisible(true);
 				}
@@ -128,7 +143,6 @@ public class MainFrame extends JFrame {
 				
 			}
 		});
-		
 
 	}
 	private void loadMap() {

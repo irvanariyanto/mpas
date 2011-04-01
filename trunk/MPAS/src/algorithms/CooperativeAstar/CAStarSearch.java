@@ -13,7 +13,6 @@ import algorithms.Interfaces.StateInterface;
 public class CAStarSearch<E> extends PausableSearchAlgorithm<E>{
 
 	private HashMap<TableKeyInterface<E>,Integer> _reservTable;
-	private HeuristicInterface<StateInterface<E>> _heuristic;
 	private AbstractKeyFactory<E> _factory;
 	
 	public CAStarSearch(HeuristicInterface<StateInterface<E>> heuristic,AbstractKeyFactory<E> factory){
@@ -67,7 +66,7 @@ public class CAStarSearch<E> extends PausableSearchAlgorithm<E>{
 			int tCost = 0;
 			for (int agentNum = 0 ; agentNum < allpaths.size() ; agentNum++){
 				Vector<StateInterface<E>> singlePath = allpaths.elementAt(agentNum);
-				if (singlePath.size() < step){ // the agent has not finished moving yet
+				if (singlePath.size() > step){ // the agent has not finished moving yet
 					Vector<E> tCoordinates = singlePath.elementAt(step).get_Coordinates();
 					E tCoordinate = tCoordinates.elementAt(0);
 					tCombinedCoords.add(tCoordinate);
@@ -78,12 +77,10 @@ public class CAStarSearch<E> extends PausableSearchAlgorithm<E>{
 					tCombinedCoords.add(tCoordinate);
 				}
 			}
-			//tState = new CAStarState(tCombinedCoords,tHeuristic,tCost);
+			tState = allpaths.elementAt(0).elementAt(0).CombineStates(tCombinedCoords); //TODO ugly solution
+			res.add(tState);
 		}
-		for (int i = 0; i < allpaths.size();i++){
-			
-			
-		}
+
 		return res;
 	}
 	/**

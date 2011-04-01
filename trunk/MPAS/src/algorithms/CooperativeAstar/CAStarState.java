@@ -68,6 +68,13 @@ public class CAStarState implements CAstarStateInterface<myPoint>,Comparable<CAS
 	}
 
 
+	public CAStarState(Vector<myPoint> coordinates) {
+		this._Coordinates = coordinates;
+		this._heuristic = 0;
+		this._cost = 0; 
+		this._map = null;
+		this._reservationTable = null;
+	}
 	public void setReservationTable(HashMap<TableKeyInterface<myPoint>,Integer> map){
 		this._reservationTable = map;
 	}
@@ -219,6 +226,11 @@ public class CAStarState implements CAstarStateInterface<myPoint>,Comparable<CAS
 			}
 			return ans;
 		}
+	}
+	@Override
+	public StateInterface<myPoint> CombineStates(Vector<myPoint> Coordinates) {
+		StateInterface<myPoint> res = new CAStarState(Coordinates);
+		return res;
 	}
 }
 

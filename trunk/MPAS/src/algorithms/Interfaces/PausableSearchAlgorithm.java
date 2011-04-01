@@ -1,5 +1,7 @@
 package algorithms.Interfaces;
 
+import heuristics.HeuristicInterface;
+
 import java.util.Vector;
 
 import EventMechanism.ApplicationEventListener;
@@ -9,6 +11,7 @@ import EventMechanism.ApplicationEventSource;
 public abstract class PausableSearchAlgorithm<E> implements Pausable, SearchInterface<E>,ApplicationEventSource {
 	protected ApplicationEventListenerCollection _listeners;
 	protected boolean _pause;
+	protected HeuristicInterface<StateInterface<E>> _heuristic;
 	public PausableSearchAlgorithm(){
 		this._listeners = new ApplicationEventListenerCollection();
 	}
