@@ -226,6 +226,12 @@ public class myState implements Comparable<myState>,StateInterface<myPoint> {
 		return new myState(newVector, this.getMap());
 	}
 
+	@Override
+	public StateInterface<myPoint> CombineStates(Vector<myPoint> Coordinates) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 
 

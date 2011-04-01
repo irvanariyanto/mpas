@@ -5,6 +5,7 @@ import heuristics.HeuristicInterface;
 import heuristics.ManhattanHeuristic;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.Vector;
 
 
@@ -24,6 +25,10 @@ import EventMechanism.Events.showOpenListStateEvent;
 import algorithms.myPoint;
 import algorithms.Astar.AStarSearch;
 import algorithms.Astar.myState;
+import algorithms.CooperativeAstar.CAStarSearch;
+import algorithms.CooperativeAstar.CAStarState;
+import algorithms.CooperativeAstar.PointKeyFactory;
+import algorithms.CooperativeAstar.TableKeyInterface;
 import algorithms.Interfaces.SearchInterface;
 import algorithms.Interfaces.StateInterface;
 
@@ -38,6 +43,7 @@ public class GridController implements ControllerInterFace<myPoint>,ApplicationE
 	private PathFinderThread _pathfinderThread = null;
 	private Vector<StateInterface<myPoint>> _finalPath;
 	private ApplicationEventListenerCollection _listeners;
+	private String _algorithm;
 	public GridController() {
 		this._listeners = new ApplicationEventListenerCollection();
 	//	this._numOfAgents = 2;
@@ -45,12 +51,10 @@ public class GridController implements ControllerInterFace<myPoint>,ApplicationE
 		this._heuristic = new DiagonalDistanceHeuristic();
 		this._diagonal = false;	
 		this._scenario = null;
+		this._algorithm = "AStar";
 		//this._map = new TiledMapImpl(20, 20, this._diagonal);
 	}
-	public void initAlgorithm(){
-		this._pathFinder = new AStarSearch<myPoint>(this._heuristic);
-		this._pathFinder.addListener(this); 
-	}
+
 	public void setScenario(Scenario s){
 		this._scenario = s;
 		
@@ -64,19 +68,46 @@ public class GridController implements ControllerInterFace<myPoint>,ApplicationE
 	@Override
 	public void findPath(Vector<myPoint> starts,
 			Vector<myPoint> endPoints) {	
-		initAlgorithm();
-		StateInterface<myPoint> start = new myState(starts, this._map);
-		StateInterface<myPoint> goal = new myState(endPoints,this._map);
+		StateInterface<myPoint> start;
+		StateInterface<myPoint> goal; 
+		if (_algorithm.equals("Cooperative A*")){
+			PointKeyFactory factory = new PointKeyFactory();
+			HashMap<TableKeyInterface<myPoint>, Integer> table = new HashMap<TableKeyInterface<myPoint>, Integer>();
+			this._pathFinder = new CAStarSearch<myPoint>(_heuristic,factory,table);
+			start = new CAStarState(starts, _map,table);
+			goal = new CAStarState(endPoints,_map,table);
+			this._pathFinder.addListener(this);
+		}
+		else{
+			start = new myState(starts, this._map);
+			goal = new myState(endPoints,this._map);
+			this._pathFinder = new AStarSearch<myPoint>(this._heuristic);
+			this._pathFinder.addListener(this);
+		}
+
 		_pathfinderThread = new PathFinderThread(start, goal);
 		_pathfinderThread.start();	
 	}
 	public void runAlgorithmWithPause(Vector<myPoint> starts,Vector<myPoint> endPoints){
-		initAlgorithm();
+		StateInterface<myPoint> start;
+		StateInterface<myPoint> goal; 
+		if (_algorithm.equals("Cooperative A*")){
+			PointKeyFactory factory = new PointKeyFactory();
+			HashMap<TableKeyInterface<myPoint>, Integer> table = new HashMap<TableKeyInterface<myPoint>, Integer>();
+			this._pathFinder = new CAStarSearch<myPoint>(_heuristic,factory,table);
+			start = new CAStarState(starts, _map,table);
+			goal = new CAStarState(endPoints,_map,table);
+			this._pathFinder.addListener(this);
+		}
+		else{
+			start = new myState(starts, this._map);
+			goal = new myState(endPoints,this._map);
+			this._pathFinder = new AStarSearch<myPoint>(this._heuristic);
+			this._pathFinder.addListener(this);
+		}
 		this._pathFinder.setPause(true);
-		StateInterface<myPoint> start = new myState(starts, this._map);
-		StateInterface<myPoint> goal = new myState(endPoints,this._map);
-		PathFinderThread t = new PathFinderThread(start, goal);
-		t.start();	
+		_pathfinderThread = new PathFinderThread(start, goal);
+		_pathfinderThread.start();
 	}
 
 	public void setMap(int length){
@@ -104,7 +135,7 @@ public class GridController implements ControllerInterFace<myPoint>,ApplicationE
 	}
 	
 	public void setAlgorithm(String chosen) {
-
+		this._algorithm = chosen;
 	}
 
 	public void setHeuristic(String chosen) {

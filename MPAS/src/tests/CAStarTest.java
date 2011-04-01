@@ -35,7 +35,7 @@ public class CAStarTest {
 		myPoint s1 = new myPoint(4,4);
 		myPoint s2 = new myPoint(3,0);
 		myPoint g1 = new myPoint(1,1);
-		myPoint g2 = new myPoint(0,4);
+		myPoint g2 = new myPoint(0,0);
 		Vector<myPoint> vStart = new Vector<myPoint>();
 		Vector<myPoint> vFinish = new Vector<myPoint>();
 		vStart.add(s1);

@@ -81,6 +81,7 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 		_configPanel = new ConfigurationPanel();
 		_controller = new GridController();
 		_heuristicChosen = this._configPanel.getSettingsPanel().getHeuristic();
+		_algorithmChosen = this._configPanel.getSettingsPanel().getAlgorithm();
 		init_controller();	
 		this._controller.addListener(new ApplicationEventListener() {
 			

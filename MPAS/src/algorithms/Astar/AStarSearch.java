@@ -24,7 +24,6 @@ public class AStarSearch<E> extends PausableSearchAlgorithm<E> {
 
 	private PriorityQueue<StateInterface<E>> _openList;
 	private HashSet<StateInterface<E>> _closedList;
-	private HeuristicInterface<StateInterface<E>> _heuristic;
 	private HashMap<StateInterface<E>,StateInterface<E>> _expaned;
 	
 	public AStarSearch(HeuristicInterface<StateInterface<E>> heuristic){
