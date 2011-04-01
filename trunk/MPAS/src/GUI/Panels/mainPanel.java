@@ -89,13 +89,14 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 				if (event instanceof finalPathEvent){
 					Vector<Vector<myPoint>> path = mainPanel.this._controller.getFinalPath();
 					//true means to draw with lines
-					mainPanel.this._grid.drawFinalPaths(path,false);
+					mainPanel.this._grid.drawFinalPaths(path,true);
 					mainPanel.this.reset();
 				}
 				else if (event instanceof showOpenListStateEvent<?>){
 					mainPanel.this.oldState = ((showOpenListStateEvent<myPoint>)event).getCoordinates();
 					mainPanel.this.getGrid().drawOneStep(mainPanel.this.oldState);
 					mainPanel.this._configPanel.getInfoPanel().writeToTextArea(mainPanel.this.oldState.toString());
+					
 				}
 				
 			}

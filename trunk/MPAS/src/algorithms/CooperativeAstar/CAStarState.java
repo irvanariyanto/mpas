@@ -5,6 +5,7 @@ import java.util.Vector;
 
 
 import maps.MapInterface;
+import maps.TileBasedMap;
 
 import algorithms.myPoint;
 import algorithms.Astar.myState;
@@ -17,19 +18,39 @@ public class CAStarState implements CAstarStateInterface<myPoint>,Comparable<CAS
 	private float _heuristic;
 	private MapInterface<myPoint> _map;
 	private int _t;
-	private HashMap<TableKey,Integer> _reservationTable;
-	/*
-	public CAStarState(Vector<myPoint> coordinates,MapInterface<myPoint> mapInterface,HashMap<TableKey, Integer> reservTable,int t){
+	private HashMap<TableKeyInterface<myPoint>,Integer> _reservationTable;
+	
+	public CAStarState(Vector<myPoint> coordinates,MapInterface<myPoint> mapInterface){
+		this._map = mapInterface;
+		this._Coordinates = coordinates;
+		this._heuristic =  0 ;
+		this._cost = 0;
+		this._parent = null;
+		this._reservationTable = null;
+		_t = 0;
+	}
+	public CAStarState(Vector<myPoint> coordinates, TileBasedMap map,
+			HashMap<TableKeyInterface<myPoint>, Integer> reservationTable) {
+		this._map = map;
+		this._Coordinates = coordinates;
+		this._heuristic =  0 ;
+		this._cost = 0;
+		this._parent = null;
+		this._reservationTable = reservationTable;
+		_t = 0;
+	}
+
+	public CAStarState(Vector<myPoint> coordinates,MapInterface<myPoint> mapInterface,HashMap<TableKeyInterface<myPoint>, Integer> reservTable){
 		this._map = mapInterface;
 		this._Coordinates = coordinates;
 		this._heuristic =  0 ;
 		this._cost = 0;
 		this._parent = null;
 		this._reservationTable = reservTable;
-		_t = t;
-	}*/
+		_t = 0;
+	}
 	public CAStarState(Vector<myPoint> coordinates, MapInterface<myPoint> map,
-			HashMap<TableKey, Integer> reservTable, int t) {
+			HashMap<TableKeyInterface<myPoint>, Integer> reservTable, int t) {
 		this._map = map;
 		this._Coordinates = coordinates;
 		this._heuristic =  0 ;
@@ -37,6 +58,18 @@ public class CAStarState implements CAstarStateInterface<myPoint>,Comparable<CAS
 		this._parent = null;
 		this._reservationTable = reservTable;
 		_t = t;
+	}
+	public CAStarState(Vector<myPoint> tCombinedCoords,int heuristic,int cost) {
+		this._Coordinates = tCombinedCoords;
+		this._map = null;
+		this._reservationTable = null;
+		this._heuristic = heuristic;
+		this._cost = cost;
+	}
+
+
+	public void setReservationTable(HashMap<TableKeyInterface<myPoint>,Integer> map){
+		this._reservationTable = map;
 	}
 	/*
 	public static CAStarState convertState(StateInterface<myPoint> start, int i,HashMap<TableKey, Integer> reservTable){
@@ -121,10 +154,39 @@ public class CAStarState implements CAstarStateInterface<myPoint>,Comparable<CAS
 		return this._map;
 	}
 	@Override
-	public int compareTo(CAStarState o) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int compareTo(CAStarState other) {
+		float f = this.get_f();
+		float of = other.get_f();
+		if (f < of) {
+			return -1;
+		} else if (f > of) {
+			return 1;
+		} else {
+			if (_heuristic < other.get_heuristic()){
+				return -1;
+			}
+			else if(_heuristic > other.get_heuristic()){
+				return 1;
+			}
+			else{
+				return 0;
+			}
+		}
 	}
+	
+	public String toString() {
+		String ans = "";
+		ans += "Current position: <";
+		for (myPoint p : this._Coordinates) {
+			ans += p.toString();
+		}
+		ans += ">";
+		ans += "\nCost: " + this._cost;
+		ans += "\nHeuristic: " + this._heuristic;
+		ans += "\nTime: " + this._t;
+		return ans;
+	}
+	
 	@Override
 	public StateInterface<myPoint> Convert2SingleAgent(int i) {
 			myPoint myLocation = this._Coordinates.elementAt(i);
@@ -132,6 +194,32 @@ public class CAStarState implements CAstarStateInterface<myPoint>,Comparable<CAS
 			newVector.add(myLocation);
 			return new CAStarState(newVector, this.getMap(),_reservationTable,_t);
 		}
+	@Override
+	public int hashCode(){
+		int ans = 0;
+		for (int i = 0 ; i < this._Coordinates.size();i++){
+			myPoint p = this._Coordinates.elementAt(i);
+			ans += p.getX() + p.getY();
+		}
+		return ans;
 	}
+	@Override
+	public boolean equals(Object other) {
+		if (!(other instanceof CAStarState)) {
+			return false;
+		} else {
+			boolean ans = true;
+			CAStarState s = (CAStarState)other;
+			for (int i = 0; i < this._Coordinates.size(); i++) {
+				if (!this._Coordinates.elementAt(i).equals(
+						s.get_Coordinates().elementAt(i))) {
+					ans = false;
+					break;
+				}
+			}
+			return ans;
+		}
+	}
+}
 
 
