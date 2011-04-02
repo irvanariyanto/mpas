@@ -12,7 +12,7 @@ public class ScenarioFileFilter extends FileFilter{
 			return true;
 		String extension = Utils.getExtension(file);
 		if (extension !=null)
-			return extension.equals("xml");
+			return extension.equals("xml") || extension.equals("txt");
 		else{
 			return false;
 		}
@@ -20,6 +20,6 @@ public class ScenarioFileFilter extends FileFilter{
 
 	@Override
 	public String getDescription() {
-		return ".xml";
+		return "*.xml,*.txt";
 	}
 }

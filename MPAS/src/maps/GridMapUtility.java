@@ -1,7 +1,9 @@
 package maps;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.Vector;
 
@@ -20,11 +22,13 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import GUI.Utils.Utils;
+import Utils.MyLogger;
 import algorithms.myPoint;
 
 public class GridMapUtility {
 
-	public static TileBasedMap loadMap(File file) {
+	public static TileBasedMap loadXMLMap(File file) {
 
 		try {
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory
@@ -169,10 +173,10 @@ public class GridMapUtility {
 
 	}
 
-	public static Scenario loadScenario(File file) {
+	public static Scenario loadXMLScenario(File file) {
 		Scenario scenario = null;
 		try {
-			TileBasedMap map = loadMap(file);
+			TileBasedMap map = loadXMLMap(file);
 			Vector<myPoint> starts = new Vector<myPoint>();
 			Vector<myPoint> goals  = new Vector<myPoint>();
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory
@@ -210,7 +214,135 @@ public class GridMapUtility {
 			e.printStackTrace();
 		}
 		finally{
-			return scenario;
+			
 		}
+		return scenario;
+	}
+	
+	public static Scenario loadStandardScenario(File file){
+		Scenario scenario = null;
+		BufferedReader reader = null;
+		try {
+			reader = new BufferedReader(new FileReader(file));
+			String text = null;
+			 
+			// repeat until all lines is read
+			text = reader.readLine();
+			//do something with first line?
+			text = reader.readLine();
+			text = reader.readLine();
+			String[] sizes = text.split(",");
+			int height = Integer.parseInt(sizes[0]);
+			int width = Integer.parseInt(sizes[1]);
+			TileBasedMap map = new TiledMapImpl(width, height, false);
+			for (int i = 0; i < height ; i++){
+				text = reader.readLine();
+				for (int j = 0 ; j < text.length() ;  j++){
+					if (text.charAt(j) == '@'){
+						map.setTile(i, j, TileStatus.blocked);
+					}
+				}
+			}
+			text = reader.readLine();
+			text = reader.readLine();
+			Vector<myPoint> starts = new Vector<myPoint>();
+			Vector<myPoint> ends = new Vector<myPoint>();
+			while ((text = reader.readLine()) != null){
+				String[] args = text.split(",");
+				int gx = Integer.parseInt(args[1]);
+				int gy = Integer.parseInt(args[2]);
+				int sx = Integer.parseInt(args[3]);
+				int sy = Integer.parseInt(args[4]);
+				myPoint s = new myPoint(sx, sy);
+				myPoint g = new myPoint(gx, gy);
+				starts.add(s);
+				ends.add(g);
+			}
+			scenario = new Scenario(map, starts, ends);
+		}
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (reader != null) {
+				reader.close();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+		}
+			
+		}
+		return scenario;
+	}
+	public static TileBasedMap loadStandardMap(File file){
+		TileBasedMap map = null;
+		BufferedReader reader = null;
+		try {
+			reader = new BufferedReader(new FileReader(file));
+			String text = null;
+			 
+			// repeat until all lines is read
+			text = reader.readLine();
+			//do something with first line?
+			text = reader.readLine();
+			text = reader.readLine();
+			String[] sizes = text.split(",");
+			int height = Integer.parseInt(sizes[0]);
+			int width = Integer.parseInt(sizes[1]);
+			map = new TiledMapImpl(width, height, false);
+			for (int i = 0; i < height ; i++){
+				text = reader.readLine();
+				for (int j = 0 ; j < text.length() ;  j++){
+					if (text.charAt(j) == '@'){
+						map.setTile(i, j, TileStatus.blocked);
+					}
+				}
+			}
+		}
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (reader != null) {
+				reader.close();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+		}
+			
+		}
+		return map;
+	}
+
+	public static TileBasedMap loadMap(File file) {
+		TileBasedMap map = null;
+		if (Utils.getExtension(file).equals("xml")){
+			map = loadXMLMap(file);
+		}
+		else if (Utils.getExtension(file).equals("txt")){
+			map = loadStandardMap(file);
+		}
+		else{
+			MyLogger.getInstance().severe("Bad map format accepted.");
+		}
+		return map;
+	}
+
+	public static Scenario loadScenario(File file) {
+		Scenario scenario = null;
+		if (Utils.getExtension(file).equals("xml")){
+			scenario = loadXMLScenario(file);
+		}
+		else if (Utils.getExtension(file).equals("txt")){
+			scenario = loadStandardScenario(file);
+		}
+		else{
+			MyLogger.getInstance().severe("Bad scenario format accepted.");
+		}
+		return scenario;
 	}
 }
