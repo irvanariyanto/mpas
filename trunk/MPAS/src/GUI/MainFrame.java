@@ -154,8 +154,9 @@ public class MainFrame extends JFrame {
 			TileBasedMap map = GridMapUtility.loadMap(tMapFile);
 			this._mainPanel.ChangeGridPanel(map.getHeightInTiles()); 
 			this._mainPanel.get_controller().setMap(map);
-			this._mainPanel.getGrid().drawMap(map);
 			this._mainPanel.getConfiguarationPanel().getSettingsPanel().setGridSizeValue(map.getHeightInTiles());
+			this._mainPanel.getGrid().drawMap(map);
+
 		}
 	}
 	private void saveMap(){
@@ -165,7 +166,9 @@ public class MainFrame extends JFrame {
 	    	File tMapFile = fc.getSelectedFile();
 	  //  	this._mainPanel.get_controller().setMap(this._mainPanel.getGrid().get_height()); //TODO remove later when map is properly initialized
 	    //	this._mainPanel.get_controller().setTile(this._mainPanel.getGrid().get_blockList());
+	    	if (tMapFile !=null){
 	    	GridMapUtility.saveMap(tMapFile, this._mainPanel.get_controller().getMap());
+	    	}
 	}
 	
 
@@ -185,12 +188,13 @@ public class MainFrame extends JFrame {
 	    	if (tFile != null){
 	    		Scenario s = GridMapUtility.loadScenario(tFile);
 				this._mainPanel.ChangeGridPanel(s.getMap().getHeightInTiles()); 
-				this._mainPanel.get_controller().setMap(s.getMap());
+			//	this._mainPanel.get_controller().setMap(s.getMap());
 				int numOfAgents = s.getStartLocations().size();
 				this._mainPanel.get_controller().setNumberOfAgents(numOfAgents);
-				this._mainPanel.getGrid().drawScenario(s);
 				this._mainPanel.getConfiguarationPanel().getSettingsPanel().setGridSizeValue(s.getMap().getHeightInTiles());
 				this._mainPanel.getConfiguarationPanel().getSettingsPanel().setNumOfAgentsValue(numOfAgents);
+				this._mainPanel.getGrid().drawScenario(s);
+				this._mainPanel.get_controller().setMap(s.getMap());
 				
 	    	}
 	}
