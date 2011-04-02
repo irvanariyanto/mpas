@@ -337,6 +337,7 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 	}
 	
 	protected void bFindPathActionPerformed(ActionEvent evt) {
+		this._grid.clearFinalPath();
 		this._configPanel.getInfoPanel().setText("");
 		if (this._grid.checkArguments()) {
 			this._controller.setTile(this._grid.get_blockList());

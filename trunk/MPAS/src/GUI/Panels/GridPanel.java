@@ -465,10 +465,114 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 			res= Direction.RIGHT_DOWN;
 		if(preDeltaX==-1 && preDeltaY==0 && postDeltaX==0 && postDeltaY==-1 )
 			res= Direction.DOWN_RIGHT;
+
+		if(preDeltaX==0 && preDeltaY==0 && postDeltaX==1 && postDeltaY==0 )
+			res= Direction.CENTER_TOP;		
+		if(preDeltaX==1 && preDeltaY==0 && postDeltaX==0 && postDeltaY==0 )
+			res= Direction.TOP_CENTER;		
+		if(preDeltaX==0 && preDeltaY==0 && postDeltaX==-1 && postDeltaY==0 )
+			res= Direction.CENTER_DOWN;
+		if(preDeltaX==-1 && preDeltaY==0 && postDeltaX==0 && postDeltaY==0 )
+			res= Direction.DOWN_CENTER;		
+		if(preDeltaX==0 && preDeltaY==0 && postDeltaX==0 && postDeltaY==-1 )
+			res= Direction.CENTER_RIGHT;
+		if(preDeltaX==0 && preDeltaY==-1 && postDeltaX==0 && postDeltaY==0 )
+			res= Direction.RIGHT_CENTER;		
+		if(preDeltaX==0 && preDeltaY==0 && postDeltaX==0 && postDeltaY==1 )
+			res= Direction.CENTER_LEFT;
+		if(preDeltaX==0 && preDeltaY==1 && postDeltaX==0 && postDeltaY==0 )
+			res= Direction.LEFT_CENTER;			
+		if(preDeltaX==0 && preDeltaY==0 && postDeltaX==1 && postDeltaY==-1 )
+			res= Direction.CENTER_TOPRIGHT;
+		if(preDeltaX==1 && preDeltaY==-1 && postDeltaX==0 && postDeltaY==0 )
+			res= Direction.TOPRIGHT_CENTER;			
+		if(preDeltaX==0 && preDeltaY==0 && postDeltaX==1 && postDeltaY==1 )			
+			res= Direction.CENTER_TOPLEFT;
+		if(preDeltaX==1 && preDeltaY==1 && postDeltaX==0 && postDeltaY==0 )
+			res= Direction.TOPLEFT_CENTER;			
+		if(preDeltaX==0 && preDeltaY==0 && postDeltaX==-1 && postDeltaY==-1 )
+			res= Direction.CENTER_DOWNRIGHT;
+		if(preDeltaX==-1 && preDeltaY==-1 && postDeltaX==0 && postDeltaY==0 )
+			res= Direction.DOWNRIGHT_CENTER;			
+		if(preDeltaX==0 && preDeltaY==0 && postDeltaX==-1 && postDeltaY==1 )
+			res= Direction.CENTER_DOWNLEFT;
+		if(preDeltaX==-1 && preDeltaY==1 && postDeltaX==0 && postDeltaY==0 )
+			res= Direction.DOWNLEFT_CENTER;
+		
+		if(preDeltaX==1 && preDeltaY==0 && postDeltaX==1 && postDeltaY==1 )
+			res= Direction.TOP_TOPLEFT;
+		if(preDeltaX==1 && preDeltaY==1 && postDeltaX==1 && postDeltaY==0 )
+			res= Direction.TOPLEFT_TOP;	
+		if(preDeltaX==1 && preDeltaY==0 && postDeltaX==-1 && postDeltaY==1 )
+			res= Direction.TOP_DOWNLEFT;	
+		if(preDeltaX==-1 && preDeltaY==1 && postDeltaX==1 && postDeltaY==0 )
+			res= Direction.DOWNLEFT_TOP;			
+		if(preDeltaX==1 && preDeltaY==0 && postDeltaX==-1 && postDeltaY==-1 )
+			res= Direction.TOP_DOWNRIGHT;
+		if(preDeltaX==-1 && preDeltaY==-1 && postDeltaX==1 && postDeltaY==0 )
+			res= Direction.DOWNRIGHT_TOP;	
+		if(preDeltaX==1 && preDeltaY==0 && postDeltaX==1 && postDeltaY==-1 )
+			res= Direction.TOP_TOPRIGHT;
+		if(preDeltaX==1 && preDeltaY==-1 && postDeltaX==1 && postDeltaY==0 )
+			res= Direction.TOPRIGHT_TOP;
+		
+		if(preDeltaX==-1 && preDeltaY==0 && postDeltaX==-1 && postDeltaY==1 )
+			res= Direction.DOWN_DOWNLEFT;
+		if(preDeltaX==-1 && preDeltaY==1 && postDeltaX==-1 && postDeltaY==0 )
+			res= Direction.DOWNLEFT_DOWN;		
+		if(preDeltaX==-1 && preDeltaY==0 && postDeltaX==1 && postDeltaY==1 )
+			res= Direction.DOWN_TOPLEFT;
+		if(preDeltaX==1 && preDeltaY==1 && postDeltaX==-1 && postDeltaY==0 )
+			res= Direction.TOPLEFT_DOWN;		
+		if(preDeltaX==-1 && preDeltaY==0 && postDeltaX==1 && postDeltaY==-1 )
+			res= Direction.DOWN_TOPRIGHT;
+		if(preDeltaX==1 && preDeltaY==-1 && postDeltaX==-1 && postDeltaY==0 )
+			res= Direction.TOPRIGHT_DOWN;		
+		if(preDeltaX==-1 && preDeltaY==0 && postDeltaX==-1 && postDeltaY==-1 )
+			res= Direction.DOWN_DOWNRIGHT;
+		if(preDeltaX==-1 && preDeltaY==-1 && postDeltaX==-1 && postDeltaY==0)
+			res= Direction.DOWNRIGHT_DOWN;
+		
+		if(preDeltaX==0 && preDeltaY==1 && postDeltaX==1 && postDeltaY==1 )
+			res= Direction.LEFT_TOPLEFT;
+		if(preDeltaX==1 && preDeltaY==1 && postDeltaX==0 && postDeltaY==1 )
+			res= Direction.TOPLEFT_LEFT;		
+		if(preDeltaX==0 && preDeltaY==1 && postDeltaX==1 && postDeltaY==-1 )
+			res= Direction.LEFT_TOPRIGHT;	
+		if(preDeltaX==1 && preDeltaY==-1 && postDeltaX==0 && postDeltaY==1 )
+			res= Direction.TOPRIGHT_LEFT;			
+		if(preDeltaX==0 && preDeltaY==1 && postDeltaX==-1 && postDeltaY==-1 )
+			res= Direction.LEFT_DOWNRIGHT;	
+		if(preDeltaX==-1 && preDeltaY==-1 && postDeltaX==0 && postDeltaY==1 )
+			res= Direction.DOWNRIGHT_LEFT;	
+		if(preDeltaX==0 && preDeltaY==1 && postDeltaX==-1 && postDeltaY==1 )
+			res= Direction.LEFT_DOWNLEFT;
+		if(preDeltaX==-1 && preDeltaY==1 && postDeltaX==0 && postDeltaY==1 )
+			res= Direction.DOWNLEFT_LEFT;
+		
+		if(preDeltaX==0 && preDeltaY==-1 && postDeltaX==1 && postDeltaY==-1 )
+			res= Direction.RIGHT_TOPRIGHT;
+		if(preDeltaX==1 && preDeltaY==-1 && postDeltaX==0 && postDeltaY==-1 )
+			res= Direction.TOPRIGHT_RIGHT;
+		
+		if(preDeltaX==0 && preDeltaY==-1 && postDeltaX==1 && postDeltaY==1 )
+			res= Direction.RIGHT_TOPLEFT;
+		if(preDeltaX==1 && preDeltaY==1 && postDeltaX==0 && postDeltaY==-1 )
+			res= Direction.TOPLEFT_RIGHT;
+		
+		if(preDeltaX==0 && preDeltaY==-1 && postDeltaX==-1 && postDeltaY==1 )
+			res= Direction.RIGHT_DOWNLEFT;
+		if(preDeltaX==-1 && preDeltaY==1 && postDeltaX==0 && postDeltaY==-1 )
+			res= Direction.DOWNLEFT_RIGHT;	
+		
+		if(preDeltaX==0 && preDeltaY==-1 && postDeltaX==-1 && postDeltaY==-1 )
+			res= Direction.RIGHT_DOWNRIGHT;
+		if(preDeltaX==-1 && preDeltaY==-1 && postDeltaX==0 && postDeltaY==-1 )
+			res= Direction.DOWNRIGHT_RIGHT;
 		
 		return res;
 	}
-	
+
 	
 	
 	public void drawOneStep(Vector<myPoint> tStep) {

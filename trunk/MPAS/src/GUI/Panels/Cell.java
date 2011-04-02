@@ -43,7 +43,19 @@ public class Cell extends Component  implements ApplicationEventSource{
 		LEFT_TOP,TOP_LEFT,
 		LEFT_DOWN,DOWN_LEFT,
 		TOP_RIGHT,RIGHT_TOP,
-		RIGHT_DOWN,DOWN_RIGHT;
+		RIGHT_DOWN,DOWN_RIGHT,
+		CENTER_TOP,CENTER_DOWN,CENTER_LEFT	,CENTER_RIGHT,
+		TOP_CENTER,DOWN_CENTER,LEFT_CENTER	,RIGHT_CENTER,
+		CENTER_TOPLEFT,CENTER_TOPRIGHT,CENTER_DOWNRIGHT, CENTER_DOWNLEFT,
+		TOPLEFT_CENTER,TOPRIGHT_CENTER,DOWNRIGHT_CENTER, DOWNLEFT_CENTER,
+		TOP_TOPLEFT,TOP_DOWNLEFT,TOP_DOWNRIGHT,TOP_TOPRIGHT,
+		TOPLEFT_TOP,DOWNLEFT_TOP,DOWNRIGHT_TOP,TOPRIGHT_TOP,
+		DOWN_DOWNLEFT,DOWN_TOPLEFT,DOWN_TOPRIGHT,DOWN_DOWNRIGHT,
+		DOWNLEFT_DOWN,TOPLEFT_DOWN,TOPRIGHT_DOWN,DOWNRIGHT_DOWN,
+		LEFT_TOPLEFT,LEFT_TOPRIGHT,LEFT_DOWNRIGHT,LEFT_DOWNLEFT,
+		TOPLEFT_LEFT,TOPRIGHT_LEFT,DOWNRIGHT_LEFT,DOWNLEFT_LEFT,
+		RIGHT_TOPRIGHT,RIGHT_TOPLEFT,RIGHT_DOWNLEFT,RIGHT_DOWNRIGHT,
+		TOPRIGHT_RIGHT,TOPLEFT_RIGHT,DOWNLEFT_RIGHT,DOWNRIGHT_RIGHT;
 	}
 
 	// fields
@@ -61,7 +73,8 @@ public class Cell extends Component  implements ApplicationEventSource{
 		this.set_status(Status.Empty);
 		this._agnetNum=0;
 		_editMode = SET_BLOCKS;
-		this._directions = new Vector<Direction>();
+		this._directions = new Vector<Direction>();	
+		//add_Direction(Direction.DOWNLEFT_RIGHT);
 		// Action and mouse listener support
 		this._listeners = new ApplicationEventListenerCollection();
 		enableEvents(AWTEvent.MOUSE_EVENT_MASK);
@@ -74,6 +87,7 @@ public class Cell extends Component  implements ApplicationEventSource{
 		this._agnetNum=0;
 		_editMode = SET_BLOCKS;
 		this._directions = new Vector<Direction>();
+		
 		// Action and mouse listener support
 		this._listeners = new ApplicationEventListenerCollection();
 		enableEvents(AWTEvent.MOUSE_EVENT_MASK);
@@ -241,6 +255,99 @@ public class Cell extends Component  implements ApplicationEventSource{
 				g.drawLine(size.width, size.height/2, size.width/2,size.height/2);
 				g.drawLine(size.width/2,size.height/2, size.width/2,size.height);
 			}
+			if (direction==Direction.CENTER_DOWN || direction==Direction.DOWN_CENTER){
+				g.drawLine(size.width/2,size.height/2, size.width/2,size.height);
+			}
+			if (direction==Direction.CENTER_TOP || direction==Direction.TOP_CENTER){
+				g.drawLine(size.width/2,size.height/2, size.width/2,0);
+			}
+			if (direction==Direction.CENTER_LEFT || direction==Direction.LEFT_CENTER){
+				g.drawLine(size.width/2,size.height/2, 0,size.height/2);
+			}
+			if (direction==Direction.CENTER_RIGHT || direction==Direction.RIGHT_CENTER){
+				g.drawLine(size.width/2,size.height/2, size.width,size.height/2);
+			}
+			if (direction==Direction.CENTER_TOPLEFT || direction==Direction.TOPLEFT_CENTER){
+				g.drawLine(size.width/2,size.height/2, 0,0);
+			}
+			if (direction==Direction.CENTER_TOPRIGHT|| direction==Direction.TOPRIGHT_CENTER){
+				g.drawLine(size.width/2,size.height/2, size.width,0);
+			}
+			if (direction==Direction.CENTER_DOWNLEFT|| direction==Direction.DOWNLEFT_CENTER){
+				g.drawLine(size.width/2,size.height/2, 0, size.height);
+			}
+			if (direction==Direction.CENTER_DOWNRIGHT|| direction==Direction.DOWNRIGHT_CENTER){
+				g.drawLine(size.width/2,size.height/2, size.width, size.height);
+			}
+			
+			if (direction==Direction.TOP_TOPLEFT|| direction==Direction.TOPLEFT_TOP){
+				g.drawLine(size.width/2,0, size.width/2, size.height/2);
+				g.drawLine(size.width/2,size.height/2, 0,0);
+			}
+			if (direction==Direction.TOP_TOPRIGHT|| direction==Direction.TOPRIGHT_TOP){
+				g.drawLine(size.width/2,0, size.width/2, size.height/2);
+				g.drawLine(size.width/2,size.height/2, size.width,0);
+			}
+			if (direction==Direction.TOP_DOWNRIGHT|| direction==Direction.DOWNRIGHT_TOP){
+				g.drawLine(size.width/2,0, size.width/2, size.height/2);
+				g.drawLine(size.width/2,size.height/2, size.width,size.height);
+			}
+			if (direction==Direction.TOP_DOWNLEFT|| direction==Direction.DOWNLEFT_TOP){
+				g.drawLine(size.width/2,0, size.width/2, size.height/2);
+				g.drawLine(size.width/2,size.height/2, 0,size.height);
+			}
+			
+			if (direction==Direction.DOWN_DOWNLEFT|| direction==Direction.DOWNLEFT_DOWN){
+				g.drawLine(size.width/2,size.height, size.width/2, size.height/2);
+				g.drawLine(size.width/2,size.height/2, 0,size.height);
+			}
+			if (direction==Direction.DOWN_DOWNRIGHT|| direction==Direction.DOWNRIGHT_DOWN){
+				g.drawLine(size.width/2,size.height, size.width/2, size.height/2);
+				g.drawLine(size.width/2,size.height/2, size.width,size.height);
+			}
+			if (direction==Direction.DOWN_TOPLEFT|| direction==Direction.TOPLEFT_DOWN){
+				g.drawLine(size.width/2,size.height, size.width/2, size.height/2);
+				g.drawLine(size.width/2,size.height/2, 0,0);
+			}
+			if (direction==Direction.DOWN_TOPRIGHT|| direction==Direction.TOPRIGHT_DOWN){
+				g.drawLine(size.width/2,size.height, size.width/2, size.height/2);
+				g.drawLine(size.width/2,size.height/2, size.width,0);
+			}
+			if (direction==Direction.LEFT_TOPLEFT|| direction==Direction.TOPLEFT_LEFT){
+				g.drawLine(0,size.height, size.width/2, size.height/2);
+				g.drawLine(size.width/2,size.height/2, 0,0);
+			}
+			if (direction==Direction.LEFT_TOPRIGHT|| direction==Direction.TOPRIGHT_LEFT){
+				g.drawLine(0,size.height/2, size.width/2, size.height/2);
+				g.drawLine(size.width/2,size.height/2, size.width,0);
+			}
+			if (direction==Direction.LEFT_DOWNRIGHT|| direction==Direction.DOWNRIGHT_LEFT){
+				g.drawLine(0,size.height, size.width/2, size.height/2);
+				g.drawLine(size.width/2,size.height/2, size.width,size.height);
+			}
+			if (direction==Direction.LEFT_DOWNLEFT|| direction==Direction.DOWNLEFT_LEFT){
+				g.drawLine(0,size.height, size.width/2, size.height/2);
+				g.drawLine(size.width/2,size.height/2, 0,size.height);
+			}
+			if (direction==Direction.RIGHT_TOPRIGHT|| direction==Direction.TOPRIGHT_RIGHT){
+				g.drawLine(size.width,size.height/2, size.width/2, size.height/2);
+				g.drawLine(size.width/2,size.height/2, size.width,0);
+			}
+			if (direction==Direction.RIGHT_TOPLEFT|| direction==Direction.TOPLEFT_RIGHT){
+				g.drawLine(size.width,size.height/2, size.width/2, size.height/2);
+				g.drawLine(size.width/2,size.height/2, 0,0);
+			}
+			if (direction==Direction.RIGHT_DOWNRIGHT|| direction==Direction.RIGHT_DOWNRIGHT){
+				g.drawLine(size.width,size.height/2, size.width/2, size.height/2);
+				g.drawLine(size.width/2,size.height/2, size.width,size.height);
+			}
+			if (direction==Direction.RIGHT_DOWNLEFT|| direction==Direction.DOWNLEFT_RIGHT){
+				g.drawLine(size.width,size.height/2, size.width/2, size.height/2);
+				g.drawLine(size.width/2,size.height/2, 0,size.height);
+			}
+			
+		
+			
 		}
 		
 	}
