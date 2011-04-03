@@ -55,7 +55,9 @@ public class MainFrame extends JFrame {
 		this._MapMenu = new JMenu("Grid Map");
 		this._helpMenu = new JMenu("Help");
 		this._EditMenu = new JMenu("Edit");
-		this._ViewMenu = new JMenu("View");				
+		this._ViewMenu = new JMenu("View");	
+		this._statsPanel = new StatisticsDialog(this);
+		this._statsPanel.setVisible(false);
 		_menuBar.add(_FileMenu);
 		_menuBar.add(_EditMenu);
 		_menuBar.add(_ViewMenu);
@@ -136,7 +138,9 @@ public class MainFrame extends JFrame {
 	}
 	
 	
-	
+	public StatisticsDialog getStatsDialog(){
+		return this._statsPanel;
+	}
 
 	
 

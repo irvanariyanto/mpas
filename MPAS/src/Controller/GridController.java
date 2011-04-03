@@ -178,7 +178,8 @@ public class GridController implements ControllerInterFace<myPoint>,ApplicationE
 		public void run() {
 			Vector<StateInterface<myPoint>> path = GridController.this._pathFinder.findPath(_start, _goal);
 			GridController.this._finalPath = path;
-			GridController.this._listeners.fireEvent(new finalPathEvent(GridController.this));
+			float pathCost = path.elementAt(0).get_cost();
+			GridController.this._listeners.fireEvent(new finalPathEvent(GridController.this,pathCost));
 		}
 		
 	}

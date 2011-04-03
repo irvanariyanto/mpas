@@ -51,12 +51,14 @@ public class GUIController {
 					Vector<Vector<myPoint>> path = GUIController.this._controller.getFinalPath();
 					//true means to draw with lines
 					GUIController.this._main.getMainPanel().getGridPanel().drawFinalPaths(path,true);
+					_main.getStatsDialog().addLine("Final path cost: " + ((finalPathEvent)event).getCost());
 					GUIController.this.reset();
 				}
 				else if (event instanceof showOpenListStateEvent<?>){
 					GUIController.this.oldState = ((showOpenListStateEvent<myPoint>)event).getCoordinates();
 					GUIController.this._main.getMainPanel().getGridPanel().drawOneStep(GUIController.this.oldState);
 					GUIController.this._main.getMainPanel().getConfiguarationPanel().getInfoPanel().writeToTextArea(GUIController.this.oldState.toString());
+					_main.getStatsDialog().addLine(GUIController.this.oldState.toString());
 					
 				}
 				

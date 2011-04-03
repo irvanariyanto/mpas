@@ -54,7 +54,7 @@ public class AStarSearch<E> extends PausableSearchAlgorithm<E> {
 			StateInterface<E> current = this._openList.poll();
 			MyLogger.getInstance().info(current.toString());
 			if (this._pause && current != start){ // in case running in debug mode
-				System.out.println("node is: " + current.toString());				
+				//System.out.println("node is: " + current.toString());				
 				this._listeners.fireEvent(new OpenListChangeEvent<E>(this, current));
 				pause();
 			}
