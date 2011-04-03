@@ -18,9 +18,11 @@ import EventMechanism.ApplicationEvent;
 import EventMechanism.ApplicationEventListener;
 import EventMechanism.ApplicationEventListenerCollection;
 import EventMechanism.ApplicationEventSource;
+import EventMechanism.Events.ClosedListChangeEvent;
 import EventMechanism.Events.OpenListChangeEvent;
+import EventMechanism.Events.StepEvent;
 import EventMechanism.Events.finalPathEvent;
-import EventMechanism.Events.showOpenListStateEvent;
+import EventMechanism.Events.showStepEvent;
 import algorithms.myPoint;
 import algorithms.CooperativeAstar.CAStarSearch;
 import algorithms.CooperativeAstar.CAStarState;
@@ -190,9 +192,15 @@ public class GridController implements ControllerInterFace<myPoint>,ApplicationE
 	
 	@Override
 	public void handle(ApplicationEvent event) {
-		if (event instanceof OpenListChangeEvent){
-			OpenListChangeEvent<myPoint> e = (OpenListChangeEvent<myPoint>)event;
-			this._listeners.fireEvent(new showOpenListStateEvent<myPoint>(this,e.getState().get_Coordinates()));
+		if (event instanceof StepEvent){
+			StepEvent<myPoint> e = (StepEvent<myPoint>)event;
+			this._listeners.fireEvent(new showStepEvent<myPoint>(this,e.getState().get_Coordinates()));
+		}
+		else if (event instanceof OpenListChangeEvent){
+			this._listeners.fireEvent(event);
+		}
+		else if (event instanceof ClosedListChangeEvent){
+			this._listeners.fireEvent(event);
 		}
 
 		

@@ -182,7 +182,7 @@ public class CAStarState implements CAstarStateInterface<myPoint>,Comparable<CAS
 	
 	public String toString() {
 		String ans = "";
-		ans += "Current position: <";
+		ans += "Position: <";
 		for (myPoint p : this._Coordinates) {
 			ans += p.toString();
 		}

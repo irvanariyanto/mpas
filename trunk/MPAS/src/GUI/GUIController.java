@@ -18,8 +18,10 @@ import Controller.GridController;
 import Defaults.defaultsValues;
 import EventMechanism.ApplicationEvent;
 import EventMechanism.ApplicationEventListener;
+import EventMechanism.Events.ClosedListChangeEvent;
+import EventMechanism.Events.OpenListChangeEvent;
 import EventMechanism.Events.finalPathEvent;
-import EventMechanism.Events.showOpenListStateEvent;
+import EventMechanism.Events.showStepEvent;
 import GUI.Panels.Cell;
 import GUI.Utils.ScenarioFileFilter;
 
@@ -54,14 +56,21 @@ public class GUIController {
 					_main.getStatsDialog().addLine("Final path cost: " + ((finalPathEvent)event).getCost());
 					GUIController.this.reset();
 				}
-				else if (event instanceof showOpenListStateEvent<?>){
-					GUIController.this.oldState = ((showOpenListStateEvent<myPoint>)event).getCoordinates();
+				else if (event instanceof showStepEvent<?>){
+					GUIController.this.oldState = ((showStepEvent<myPoint>)event).getCoordinates();
 					GUIController.this._main.getMainPanel().getGridPanel().drawOneStep(GUIController.this.oldState);
 					GUIController.this._main.getMainPanel().getConfiguarationPanel().getInfoPanel().writeToTextArea(GUIController.this.oldState.toString());
-					_main.getStatsDialog().addLine(GUIController.this.oldState.toString());
+					
 					
 				}
-				
+				else if (event instanceof OpenListChangeEvent<?>){
+					OpenListChangeEvent<myPoint> e = (OpenListChangeEvent<myPoint>)event;
+					_main.getStatsDialog().addLine("OpenList:\n" + e.getState().toString()+"\n");
+				}
+				else if (event instanceof ClosedListChangeEvent<?>){
+					ClosedListChangeEvent<myPoint> e = (ClosedListChangeEvent<myPoint>)event;
+					_main.getStatsDialog().addLine("ClosedList:\n" + e.getState().toString() + "\n");
+				}
 			}
 		});
 	}
