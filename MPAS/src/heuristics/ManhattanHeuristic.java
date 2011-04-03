@@ -6,7 +6,6 @@ import java.util.Vector;
 
 
 import algorithms.myPoint;
-import algorithms.Astar.myState;
 import algorithms.Interfaces.StateInterface;
 
 public class ManhattanHeuristic implements HeuristicInterface<StateInterface<myPoint>> {

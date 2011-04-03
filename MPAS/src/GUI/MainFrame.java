@@ -4,25 +4,17 @@ package GUI;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 
 import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-import Utils.MyLogger;
-
-import maps.GridMapUtility;
-import maps.Scenario;
-import maps.TileBasedMap;
-
 import GUI.Panels.ColorsDialog;
 import GUI.Panels.StatisticsDialog;
 import GUI.Panels.mainPanel;
-import GUI.Utils.ScenarioFileFilter;
+
 
 public class MainFrame extends JFrame {
 

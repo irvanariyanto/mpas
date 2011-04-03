@@ -1,10 +1,7 @@
 package EventMechanism.Events;
 
-import java.util.Vector;
-
 import EventMechanism.ApplicationEvent;
 import EventMechanism.ApplicationEventSource;
-import algorithms.myPoint;
 import algorithms.Interfaces.StateInterface;
 
 public class ClosedListChangeEvent<E> extends ApplicationEvent {

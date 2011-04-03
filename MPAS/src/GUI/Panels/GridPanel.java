@@ -1,8 +1,7 @@
 package GUI.Panels;
 
 
-import java.awt.Color;
-import java.awt.Graphics;
+
 import java.awt.GridLayout;
 import java.util.Collections;
 import java.util.Vector;
@@ -16,7 +15,6 @@ import EventMechanism.ApplicationEvent;
 import EventMechanism.ApplicationEventListener;
 import EventMechanism.ApplicationEventListenerCollection;
 import EventMechanism.ApplicationEventSource;
-import GUI.GUIController;
 import GUI.Panels.Cell.Direction;
 import GUI.Panels.Cell.Status;
 
@@ -87,17 +85,19 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	}
 	
 	public Vector<myPoint> get_startsList(){
-        for (int i=0; i< this._starts.length; i++){
-        	if (this._starts[i] != null){
-        		if(!this._startsList.contains(_starts[i])){
-        			this._startsList.add(_starts[i]);
-        		}      		
-        	}
-        }
+		this._startsList.removeAllElements();
+		for (int i=0; i< this._starts.length; i++){
+	        if (this._starts[i] != null){
+	        	if(!this._FinishList.contains(_starts[i])){
+	        		this._startsList.add(_starts[i]);
+	        	}
+	        }
+		}
 		return this._startsList;
 	}
 	
 	public Vector<myPoint> get_FinishList(){
+		this._FinishList.removeAllElements();
 		for (int i=0; i< this._finishes.length; i++){
         	if (this._finishes[i] != null){
         		if(!this._FinishList.contains(_finishes[i])){
@@ -244,7 +244,6 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	}
 	
 	public void clearFinalPath() {
-		clearOpenList();
 		if (_finalPaths != null){
 			for(Vector<myPoint> state: _finalPaths){
 				for(myPoint p: state){

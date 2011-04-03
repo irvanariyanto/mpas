@@ -6,9 +6,9 @@ import java.util.HashMap;
 import java.util.Vector;
 
 import Utils.MyLogger;
-import algorithms.Astar.AStarSearch;
 import algorithms.Interfaces.PausableSearchAlgorithm;
 import algorithms.Interfaces.StateInterface;
+import algorithms.Astar.AStarSearch;
 
 public class CAStarSearch<E> extends PausableSearchAlgorithm<E>{
 

@@ -3,10 +3,8 @@ package Utils;
 
 import java.io.IOException;
 import java.util.logging.FileHandler;
-import java.util.logging.Formatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 /**
  * this class based on the Singlton design pattern, This design pattern
  * ensures that only one instance of the TapuachLogger class is instantiated.
