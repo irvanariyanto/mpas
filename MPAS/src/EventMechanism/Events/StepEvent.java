@@ -4,9 +4,10 @@ import EventMechanism.ApplicationEvent;
 import EventMechanism.ApplicationEventSource;
 import algorithms.Interfaces.StateInterface;
 
-public class OpenListChangeEvent<E> extends ApplicationEvent {
+
+public class StepEvent<E> extends ApplicationEvent {
 	private StateInterface<E> _state;
-	public OpenListChangeEvent(ApplicationEventSource source,StateInterface<E> current) {
+	public StepEvent(ApplicationEventSource source,StateInterface<E> current) {
 		super(source);
 		this._state = current;
 	}
@@ -15,11 +16,9 @@ public class OpenListChangeEvent<E> extends ApplicationEvent {
 	public String getDescription() {
 		return "OpenListChangeEvent";
 	}
-	
+
+
 	public StateInterface<E> getState(){
-		
 		return this._state;
 	}
-
-
 }

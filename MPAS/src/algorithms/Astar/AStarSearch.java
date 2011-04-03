@@ -15,6 +15,7 @@ import algorithms.Interfaces.StateInterface;
 
 import EventMechanism.Events.ClosedListChangeEvent;
 import EventMechanism.Events.OpenListChangeEvent;
+import EventMechanism.Events.StepEvent;
 
 public class AStarSearch<E> extends PausableSearchAlgorithm<E> {
 
@@ -51,7 +52,7 @@ public class AStarSearch<E> extends PausableSearchAlgorithm<E> {
 			MyLogger.getInstance().info(current.toString());
 			if (this._pause && current != start){ // in case running in debug mode
 				//System.out.println("node is: " + current.toString());				
-				this._listeners.fireEvent(new OpenListChangeEvent<E>(this, current));
+				this._listeners.fireEvent(new StepEvent<E>(this, current));
 				pause();
 			}
 			if (current.equals(goal)){
@@ -69,7 +70,7 @@ public class AStarSearch<E> extends PausableSearchAlgorithm<E> {
 				neighbor.set_parent(current);
 				if (!this._openList.contains(neighbor)){
 					this._openList.add(neighbor);
-			//		this._listeners.fireEvent(new OpenListChangeEvent<E>(this,neighbor)); // notifying the Controller
+					this._listeners.fireEvent(new OpenListChangeEvent<E>(this,neighbor)); // notifying the Controller
 					tentativeIsBetter = true;
 				}
 				else if(tentativeCost < this._expaned.get(neighbor).get_cost()){
