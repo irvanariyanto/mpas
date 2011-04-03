@@ -1,5 +1,8 @@
 package GUI.Panels;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -13,6 +16,7 @@ import javax.swing.event.ChangeListener;
 import Utils.MyLogger;
 
 import Defaults.defaultsValues;
+import GUI.GUIController;
 
 
 public class ControlPanel extends JPanel {
@@ -26,22 +30,17 @@ public class ControlPanel extends JPanel {
 	private JToggleButton _tbAutoStepMode;
 	private JSlider _sAutoStepMode;
 	private JLabel _lSec;
+	private GUIController _guiController;
 	
 	// End of variables declaration
 
 	/**
 	 * Constructor
+	 * @param controller 
 	 */
-	public ControlPanel() {
+	public ControlPanel(GUIController controller) {
 		super();
-		initComponents();
-
-	}
-
-	/**
-	 * initialize all the swing Components
-	 */
-	private void initComponents() {
+		this._guiController= controller;
 		this.setBorder(BorderFactory.createTitledBorder("Control"));
 		_bFindPath = new JButton("Find Path");
 		_bStop = new JButton("Stop");
@@ -52,7 +51,13 @@ public class ControlPanel extends JPanel {
 		_sAutoStepMode.setPaintTicks(true);
 		_sAutoStepMode.setMajorTickSpacing(5);
 	    _lSec = new JLabel(_sAutoStepMode.getValue() * 100 + " msec");
+		initComponents();
+	}
 
+	/**
+	 * initialize all the swing Components
+	 */
+	private void initComponents() {
 		GroupLayout layout = new GroupLayout(this);
 		this.setLayout(layout);
 		layout.setAutoCreateGaps(true);
@@ -85,6 +90,46 @@ public class ControlPanel extends JPanel {
 	                            .addComponent(_bClearPath))
 	    );
 		
+		_bFindPath.addActionListener(new  ActionListener() {
+	    	 public void actionPerformed( ActionEvent evt) {
+	    		 _guiController.bFindPathActionPerformed(evt);
+	         }
+	     });
+       _bClearPath.addActionListener(new  ActionListener() {
+	    	 public void actionPerformed( ActionEvent evt) {
+	    		 _guiController.bClearPathActionPerformed(evt);
+	         }
+	     });
+       
+       _bStep.addActionListener(new ActionListener() {			
+       		public void actionPerformed(ActionEvent evt) {
+       			_guiController.bStepActionPerformed(evt);				
+       		}
+		});
+       _bStop.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				_guiController.stop();				
+			}
+		});
+       
+       _tbAutoStepMode.addActionListener(new ActionListener() {			
+			public void actionPerformed(ActionEvent e) {				
+				if (!_tbAutoStepMode.isSelected()){
+					_guiController.AutoStepActionPerformed();	
+				}
+			}
+		});
+       
+       _sAutoStepMode.addChangeListener(new ChangeListener() {
+			//TODO remove duplicate listeners
+			public void stateChanged(ChangeEvent e) {
+				JSlider slider = (JSlider) e.getSource();
+				int value = slider.getValue();
+			    setAutoStepLabel(value *100 + " msec");
+			    _guiController.sAutoStepModeActionPerformed();
+			}
+		});
+		
 		//added to mainPanel
 		/*
 		_sAutoStepMode.addChangeListener(new ChangeListener(){
@@ -101,26 +146,13 @@ public class ControlPanel extends JPanel {
 		return this._tbAutoStepMode;
 	}
 
-	public JButton getbFindPath() {
-		return this._bFindPath;
-	}
+
 	public JButton getStepButton(){
 		return this._bStep;
 	}
-
-	public JButton getbClearPath() {
-		return this._bClearPath;
-	}
-
-	public JButton getStopButton() {
-		return this._bStop;
-	}
+	
 	public int getAutoStepValue(){
 		return this._sAutoStepMode.getValue();
-	}
-
-	public JSlider getAutoStepSlider() {
-		return this._sAutoStepMode;
 	}
 
 	public void setAutoStepLabel(String string) {

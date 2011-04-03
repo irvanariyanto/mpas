@@ -6,6 +6,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import GUI.GUIController;
+
 public class InfoPanel extends JPanel {
 
 
@@ -14,13 +16,16 @@ public class InfoPanel extends JPanel {
     private javax.swing.JLabel _lOpenList;
     private javax.swing.JScrollPane _scrollPane;
     private javax.swing.JTextArea _tOpenList;
+    private GUIController _guiController;
     // End of variables declaration
     
     /**
 	 * Constructor
+     * @param controller 
 	 */
-	public InfoPanel() {
+	public InfoPanel(GUIController controller) {
 		super();
+		this._guiController=controller;
 		initComponents();
 
 	}
@@ -41,7 +46,8 @@ public class InfoPanel extends JPanel {
 	}
 	
 	public void writeToTextArea(String text){
-		this._tOpenList.append(text + "\n");
+		String tstr = this._tOpenList.getText();
+		this._tOpenList.setText(text +"\n"+ tstr);
 	}
 
 	public void setText(String string) {

@@ -7,17 +7,18 @@ public class AutoStepsThread extends Thread{
 
 	private int _interval;
 	private boolean _finished;
-	private mainPanel _mainpanel;
-	public AutoStepsThread(int interval,mainPanel mainPanel){
+	private GUIController _guiController;
+	
+	public AutoStepsThread(int interval,GUIController guiController){
 		this._interval = interval;
-		this._mainpanel = mainPanel;
+		this._guiController = guiController;
 		this._finished = false;
 	}
 
 	@Override
 	public void run() {
 		while (!_finished){
-			_mainpanel.performStep();
+			_guiController.performStep();
 			try {
 				Thread.sleep(_interval);
 			} catch (InterruptedException e) {
