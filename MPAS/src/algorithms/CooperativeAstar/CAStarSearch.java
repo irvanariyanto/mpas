@@ -44,7 +44,9 @@ public class CAStarSearch<E> extends PausableSearchAlgorithm<E>{
 				_AStarSearch.addListener(listener);
 			}
 			Vector<StateInterface<E>> singlePath = _AStarSearch.findPath(agentStart, agentGoal);//run A* for agent i and return path
-			this.pause();
+			if (this._pause){
+				this.pause();
+			}
 			if (singlePath == null){
 				MyLogger.getInstance().severe("One of the Agents could not find a path!!");
 				//break;
