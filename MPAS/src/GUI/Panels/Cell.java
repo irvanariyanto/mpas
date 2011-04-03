@@ -74,7 +74,6 @@ public class Cell extends Component  implements ApplicationEventSource{
 		this._agnetNum=0;
 		_editMode = SET_BLOCKS;
 		this._directions = new Vector<Direction>();	
-		//add_Direction(Direction.DOWNLEFT_RIGHT);
 		// Action and mouse listener support
 		this._listeners = new ApplicationEventListenerCollection();
 		enableEvents(AWTEvent.MOUSE_EVENT_MASK);
@@ -322,7 +321,7 @@ public class Cell extends Component  implements ApplicationEventSource{
 				g.drawLine(size.width/2,size.height/2, size.width,0);
 			}
 			if (direction==Direction.LEFT_DOWNRIGHT|| direction==Direction.DOWNRIGHT_LEFT){
-				g.drawLine(0,size.height, size.width/2, size.height/2);
+				g.drawLine(0,size.height/2, size.width/2, size.height/2);
 				g.drawLine(size.width/2,size.height/2, size.width,size.height);
 			}
 			if (direction==Direction.LEFT_DOWNLEFT|| direction==Direction.DOWNLEFT_LEFT){
