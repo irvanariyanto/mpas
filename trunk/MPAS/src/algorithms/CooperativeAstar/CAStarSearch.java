@@ -5,6 +5,7 @@ import heuristics.HeuristicInterface;
 import java.util.HashMap;
 import java.util.Vector;
 
+import EventMechanism.ApplicationEventListener;
 import Utils.MyLogger;
 import algorithms.Interfaces.PausableSearchAlgorithm;
 import algorithms.Interfaces.StateInterface;
@@ -14,6 +15,7 @@ public class CAStarSearch<E> extends PausableSearchAlgorithm<E>{
 
 	private HashMap<TableKeyInterface<E>,Integer> _reservTable;
 	private AbstractKeyFactory<E> _factory;
+	private AStarSearch<E> _AStarSearch;
 	
 	public CAStarSearch(HeuristicInterface<StateInterface<E>> heuristic,AbstractKeyFactory<E> factory){
 		this._heuristic = heuristic;
@@ -37,8 +39,11 @@ public class CAStarSearch<E> extends PausableSearchAlgorithm<E>{
 			agentStartVector.add(agentLocation);
 			StateInterface<E> agentStart = start.Convert2SingleAgent(i);//Create start state for agent i
 			StateInterface<E> agentGoal = goal.Convert2SingleAgent(i);//create goal state for agent i
-			AStarSearch<E> aStar = new AStarSearch<E>(_heuristic, this._pause);
-			Vector<StateInterface<E>> singlePath = aStar.findPath(agentStart, agentGoal);//run A* for agent i and return path
+			_AStarSearch = new AStarSearch<E>(_heuristic, this._pause);
+			for (ApplicationEventListener listener : this._listeners){
+				_AStarSearch.addListener(listener);
+			}
+			Vector<StateInterface<E>> singlePath = _AStarSearch.findPath(agentStart, agentGoal);//run A* for agent i and return path
 			if (singlePath == null){
 				MyLogger.getInstance().severe("One of the Agents could not find a path!!");
 				//break;
@@ -109,5 +114,11 @@ public class CAStarSearch<E> extends PausableSearchAlgorithm<E>{
 		}
 		
 	}
-
+	@Override
+	public void resume(){
+		if (_AStarSearch!= null){
+			_AStarSearch.resume();
+		}
+		super.resume();
+	}
 }
