@@ -206,6 +206,13 @@ public class Cell extends Component  implements ApplicationEventSource{
 		if(this._status == Status.Path && !this._directions.isEmpty()){
 			drawDircetions(g,this._directions,RectSize);			
 		}
+		if(this._status == Status.Start && !this._directions.isEmpty()){
+			drawDircetions(g,this._directions,RectSize);			
+		}
+		if(this._status == Status.Finish && !this._directions.isEmpty()){
+			drawDircetions(g,this._directions,RectSize);			
+		}
+		
 		if(this._agnetNum != 0){
 			g.setFont(new Font("sansserif", Font.BOLD, 11));
 			g.drawString(Integer.toString(this._agnetNum),5,15);
@@ -357,9 +364,11 @@ public class Cell extends Component  implements ApplicationEventSource{
 				g.drawLine(size.width/2,size.height/2, 0,size.height);
 			}
 			
-		
-			
 		}
+		
+	}
+	public void clearDirections() {
+		this._directions.removeAllElements();
 		
 	}
 
@@ -401,6 +410,8 @@ public class Cell extends Component  implements ApplicationEventSource{
 	public void removeListener(ApplicationEventListener listener) {
 		this._listeners.remove(listener);
 	}
+
+	
 
 	
 
