@@ -66,6 +66,7 @@ public class Cell extends Component  implements ApplicationEventSource{
 	static int _editMode ;
 	public static int _agentSelected;
 	private ApplicationEventListenerCollection _listeners;
+	private boolean _withGridLine = false;
 
 	// Constructor
 	public Cell(myPoint point) {
@@ -182,6 +183,15 @@ public class Cell extends Component  implements ApplicationEventSource{
 		this._agnetNum = agentNum;
 		
 	}
+	
+	public boolean getWithGridLine(){
+		return this._withGridLine;
+	}
+	
+	public void setWithGridLine(boolean bool){
+		this._withGridLine = bool;
+		repaint();
+	}
 
 	@Override
 	public void paint(Graphics g) {		
@@ -190,7 +200,9 @@ public class Cell extends Component  implements ApplicationEventSource{
 		SetColorByStatus(g,this._status);		
 		g.fillRect(0, 0, size.width-1, size.height-1);		
 		g.setColor(Color.black);
-		//g.drawRect(0, 0, RectSize.width, RectSize.height );
+		if (this._withGridLine ){
+			g.drawRect(0, 0, RectSize.width, RectSize.height );
+		}
 		if(this._status == Status.Path && !this._directions.isEmpty()){
 			drawDircetions(g,this._directions,RectSize);			
 		}

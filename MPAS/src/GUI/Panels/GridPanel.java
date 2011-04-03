@@ -633,6 +633,14 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 		}
 	}
 	
+	public void setWithGridLines(boolean b) {
+		for (int i = 0; i < get_height(); i++) {
+			for (int j = 0; j < get_width(); j++) {
+				this._grid[i][j].setWithGridLine(b);
+			}
+		}	
+	}
+	
 
 
 	@Override
@@ -660,6 +668,8 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 		}
 
 	}
+
+	
 
 	
 
