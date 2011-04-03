@@ -37,23 +37,25 @@ public class MainFrame extends JFrame {
 	private mainPanel _mainPanel;
 	private StatisticsDialog _statsPanel;
 	private ColorsDialog _colorsDialog;
+	private GUIController _guiController;
 	// End of variables declaration
 	
 	
-	public MainFrame(String title) {
+	public MainFrame(String title,GUIController guiController) {
 		super(title);
+		this._guiController = guiController;
 		initComponenets();
 	}
 	
 	private void initComponenets() {
-
+		this._mainPanel = new mainPanel(_guiController);
+		
 		this._menuBar = new JMenuBar();
 		this._FileMenu = new JMenu("File");
 		this._MapMenu = new JMenu("Grid Map");
 		this._helpMenu = new JMenu("Help");
 		this._EditMenu = new JMenu("Edit");
-		this._ViewMenu = new JMenu("View");
-		this._mainPanel = new mainPanel();		
+		this._ViewMenu = new JMenu("View");				
 		_menuBar.add(_FileMenu);
 		_menuBar.add(_EditMenu);
 		_menuBar.add(_ViewMenu);
@@ -76,59 +78,41 @@ public class MainFrame extends JFrame {
 		
 		this.setJMenuBar(_menuBar);
 		this.add(_mainPanel);
-		_exitItem.addActionListener(new ActionListener() {
-			
-			@Override
+		
+		_exitItem.addActionListener(new ActionListener() {		
 			public void actionPerformed(ActionEvent e) {
-				MainFrame.this.dispose();
-				
+				MainFrame.this.dispose();		
 			}
 		});
 		_openMap.addActionListener(new ActionListener() {	
-			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				loadMap();			
+				_guiController.loadMap();			
 			}
 		});
 		_saveMap.addActionListener(new ActionListener() {
-			
-			@Override
 			public void actionPerformed(ActionEvent e) {
-				saveMap();
-				
+				_guiController.saveMap();	
 			}
 		});
 		_loadScenario.addActionListener(new ActionListener() {
-			
-			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				loadScenario();
-				
+				_guiController.loadScenario();		
 			}
 		});
 		_saveScenario.addActionListener(new ActionListener() {
-			
-			@Override
 			public void actionPerformed(ActionEvent e) {
-				saveScenario();
-				
+				_guiController.saveScenario();		
 			}
-
 		});
 		_ColorsEditor.addActionListener(new ActionListener() {
-			
-			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (_colorsDialog == null){
 					_colorsDialog = new ColorsDialog(MainFrame.this);
 				}
-				_colorsDialog.setVisible(true);
-				
+				_colorsDialog.setVisible(true);	
 			}
 		});
 		_ShowStatsPanel.addActionListener(new ActionListener() {
-			
-			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (_statsPanel == null){
 					_statsPanel = new StatisticsDialog(MainFrame.this);
@@ -145,57 +129,16 @@ public class MainFrame extends JFrame {
 		});
 
 	}
-	private void loadMap() {
-		JFileChooser fc = new JFileChooser();
-    	fc.addChoosableFileFilter(new ScenarioFileFilter());
-    	fc.showOpenDialog(this);
-    	File tMapFile = fc.getSelectedFile();
-		if (tMapFile != null){
-			TileBasedMap map = GridMapUtility.loadMap(tMapFile);
-			this._mainPanel.ChangeGridPanel(map.getHeightInTiles()); 
-			this._mainPanel.get_controller().setMap(map);
-			this._mainPanel.getConfiguarationPanel().getSettingsPanel().setGridSizeValue(map.getHeightInTiles());
-			this._mainPanel.getGrid().drawMap(map);
-
-		}
-	}
-	private void saveMap(){
-		JFileChooser fc = new JFileChooser();
-	    	fc.addChoosableFileFilter(new ScenarioFileFilter());
-	    	fc.showSaveDialog(this);
-	    	File tMapFile = fc.getSelectedFile();
-	  //  	this._mainPanel.get_controller().setMap(this._mainPanel.getGrid().get_height()); //TODO remove later when map is properly initialized
-	    //	this._mainPanel.get_controller().setTile(this._mainPanel.getGrid().get_blockList());
-	    	if (tMapFile !=null){
-	    	GridMapUtility.saveMap(tMapFile, this._mainPanel.get_controller().getMap());
-	    	}
+	
+	
+	public mainPanel getMainPanel() {
+		return this._mainPanel;
 	}
 	
+	
+	
 
-	private void saveScenario() {
-		JFileChooser fc = new JFileChooser();
-    	fc.addChoosableFileFilter(new ScenarioFileFilter());
-    	fc.showSaveDialog(this);
-    	File tFile = fc.getSelectedFile();
-		Scenario s = new Scenario(this._mainPanel.get_controller().getMap(),this._mainPanel.getGrid().get_startsList(),this._mainPanel.getGrid().get_FinishList());
-		GridMapUtility.saveSecnario(s, tFile);
-	}
-	private void loadScenario(){
-		JFileChooser fc = new JFileChooser();
-	    	fc.addChoosableFileFilter(new ScenarioFileFilter());
-	    	fc.showOpenDialog(this);
-	    	File tFile = fc.getSelectedFile();
-	    	if (tFile != null){
-	    		Scenario s = GridMapUtility.loadScenario(tFile);
-				this._mainPanel.ChangeGridPanel(s.getMap().getHeightInTiles()); 
-			//	this._mainPanel.get_controller().setMap(s.getMap());
-				int numOfAgents = s.getStartLocations().size();
-				this._mainPanel.get_controller().setNumberOfAgents(numOfAgents);
-				this._mainPanel.getConfiguarationPanel().getSettingsPanel().setGridSizeValue(s.getMap().getHeightInTiles());
-				this._mainPanel.getConfiguarationPanel().getSettingsPanel().setNumOfAgentsValue(numOfAgents);
-				this._mainPanel.getGrid().drawScenario(s);
-				this._mainPanel.get_controller().setMap(s.getMap());
-				
-	    	}
-	}
+	
+
+	
 }

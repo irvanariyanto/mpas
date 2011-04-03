@@ -2,11 +2,15 @@ package GUI.Panels;
 
 
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import Defaults.defaultsValues;
+import GUI.GUIController;
 
 public class SettingsPanel extends JPanel  {
 
@@ -39,13 +43,16 @@ public class SettingsPanel extends JPanel  {
 	private JSlider _sGridSize;	
 	private JSeparator _separator1;
 	private JSeparator _separator2;
+	private GUIController _guiController;
 	
 	// End of variables declaration
 	/**
 	 * Constructor
+	 * @param controller 
 	 */
-	public SettingsPanel() {
+	public SettingsPanel(GUIController controller) {
 		super();
+		this._guiController = controller;
 		initComponents();
 	}
 
@@ -119,8 +126,80 @@ public class SettingsPanel extends JPanel  {
 			}			
 		});
 		
- 	
+		_cAlgorithm.addActionListener(new  ActionListener() {
+	    	 public void actionPerformed( ActionEvent evt) {
+	    		 _guiController.cAlgorithmActionPerformed(evt);
+	         }
+	     });
+		
+		_cHeuristic.addActionListener(new  ActionListener() {
+	    	 public void actionPerformed( ActionEvent evt) {
+	    		 _guiController.cHeuristicActionPerformed(evt);
+	         }
+	     });
+		
+		_cDirections.addActionListener(new  ActionListener() {
+	    	 public void actionPerformed( ActionEvent evt) {
+	    		 _guiController.cDirectionsActionPerformed(evt);
+	         }
+	     });
+		
+		_sNumOfAgents.addChangeListener(new ChangeListener(){
+			public void stateChanged(ChangeEvent evt) {
+				_guiController.sNumOfAgentsActionPerformed(evt);
+				
+			}
+	     });
+		
+		_sGridSize.addChangeListener(new ChangeListener(){
+			public void stateChanged(ChangeEvent evt) {
+				_guiController.sGridSizeActionPerformed(evt);			
+			}
+	     });
+		_rSetBlock.addActionListener(new  ActionListener() {
+	    	 public void actionPerformed( ActionEvent evt) {
+	    		 _guiController.rBlockActionPerformed(evt);
+	    	 }
+	     });
+		_rSetStart.addActionListener(new  ActionListener() {
+           public void actionPerformed( ActionEvent evt) {
+        	   _guiController.rStartActionPerformed(evt);
+           }
+       });
+		_rSetFinish.addActionListener(new  ActionListener() {
+           public void actionPerformed( ActionEvent evt) {
+        	   _guiController.rEndActionPerformed(evt);
+           }
+       });
+		
+		_cAgents.addActionListener(new  ActionListener() {
+            public void actionPerformed( ActionEvent evt) {
+            	_guiController.AgentComboBoxActionPerformed(evt);
+            }
+        });
+		
+		_bGeneratePositions.addActionListener(new  ActionListener() {
+            public void actionPerformed( ActionEvent evt) {
+            	_guiController.bGeneratePositionsActionPerformed(evt);
+            }
+        });	
+        _bClearPositions.addActionListener(new  ActionListener() {
+            public void actionPerformed( ActionEvent evt) {
+            	_guiController.bClearPositionsActionPerformed(evt);
+            }
+        });	
         
+        _bRandomMap.addActionListener(new  ActionListener() {
+            public void actionPerformed( ActionEvent evt) {
+            	_guiController.bRandomMapActionPerformed(evt);
+            }
+        });	
+        _bClearMap.addActionListener(new  ActionListener() {
+            public void actionPerformed( ActionEvent evt) {
+            	_guiController.bClearMapActionPerformed(evt);
+            }
+        });	
+		  
 		//setting the layout
 		GroupLayout layout = new GroupLayout(this);
 		this.setLayout(layout);
@@ -246,50 +325,9 @@ public class SettingsPanel extends JPanel  {
 	    }
   
 
-    /**
-     * returns the GeneratePositions button
-     * @return GeneratePositions button component
-     */
-    public JButton getbGeneratePositions() {
-    	return this._bGeneratePositions;
-	}
-    /**
-     * returns the ClearPositions button
-     * @return ClearPositions button component
-     */
-    public JButton getbClearPositions(){
-    	return this._bClearPositions;
-    }
     
-    public JButton getbRandomMap() {
-		return this._bRandomMap;
-	}
+  
     
-    public JButton getbClearMap() {
-		return this._bClearMap;
-	}
-    
-    /**
-     * returns the RadioButton block
-     * @return block RadioButton component
-     */
-    public JRadioButton getRBlock(){
-    	return this._rSetBlock;
-    }
-    /**
-     * returns the RadioButton setStart
-     * @return start RadioButton component
-     */
-    public JRadioButton getRStart(){
-    	return this._rSetStart;
-    }
-    /**
-     * returns the RadioButton setFinish
-     * @return finish RadioButton component
-     */
-    public JRadioButton getRFinish(){
-    	return this._rSetFinish;
-    }
     
     /**
      * returns the Agent comboBox 
@@ -298,24 +336,7 @@ public class SettingsPanel extends JPanel  {
     public JComboBox getcAgents(){
     	return this._cAgents;
     }
-    
-    public JComboBox getcAlgorithm(){
-    	return this._cAlgorithm;
-    }
-    public JComboBox getcHeuristic(){
-    	return this._cHeuristic;
-    }
-    public JComboBox getcDirections(){
-    	return this._cDirections;
-    }
-    
-    public JSlider getsNumOfAgents(){
-    	return this._sNumOfAgents;
-    }
-    
-    public JSlider getsGridSize(){
-    	return this._sGridSize;
-    }
+   
     
     
     /**
@@ -355,13 +376,7 @@ public class SettingsPanel extends JPanel  {
 		return this._sNumOfAgents.getValue();
 	}
 	
-	/**
-	 * return the agent
-	 * @return agent's number
-	 */
-	public int getAgentSelectedNumber() {
-		return this._cAgents.getSelectedIndex();		 
-	}
+	
 	/**
 	 * return the grid size
 	 * @return grid size

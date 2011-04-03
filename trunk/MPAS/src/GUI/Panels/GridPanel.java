@@ -16,6 +16,7 @@ import EventMechanism.ApplicationEvent;
 import EventMechanism.ApplicationEventListener;
 import EventMechanism.ApplicationEventListenerCollection;
 import EventMechanism.ApplicationEventSource;
+import GUI.GUIController;
 import GUI.Panels.Cell.Direction;
 import GUI.Panels.Cell.Status;
 
@@ -47,6 +48,7 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	}
 	/**
 	 * Constructor
+	 * @param controller 
 	 */
 	public GridPanel( int size) {		
 		super();
@@ -238,9 +240,11 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 		clearBlocks(map);
 		clearPositions();
 		clearFinalPath();
+		clearOpenList();
 	}
 	
 	public void clearFinalPath() {
+		clearOpenList();
 		if (_finalPaths != null){
 			for(Vector<myPoint> state: _finalPaths){
 				for(myPoint p: state){
@@ -250,6 +254,17 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 			this._finalPaths.removeAllElements();	
 		}
 		repaint();		
+	}
+	
+	public void clearOpenList() {
+		for(int i=0; i<this._height; i++){
+			for(int j=0; j<this._width; j++){
+				if(this._grid[i][j].get_status()==Status.inOpenList){
+					this._grid[i][j].set_status(Status.Empty);
+				}
+			}
+		}
+		
 	}
 	
 	public void LoadPositions(){
@@ -646,6 +661,8 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 		}
 
 	}
+
+	
 
 	
 
