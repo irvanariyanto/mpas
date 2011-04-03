@@ -227,8 +227,9 @@ public class CAStarState implements CAstarStateInterface<myPoint>,Comparable<CAS
 		}
 	}
 	@Override
-	public StateInterface<myPoint> CombineStates(Vector<myPoint> Coordinates) {
+	public StateInterface<myPoint> CombineStates(Vector<myPoint> Coordinates,float pathCost) {
 		StateInterface<myPoint> res = new CAStarState(Coordinates);
+		res.set_cost(pathCost);
 		return res;
 	}
 }

@@ -66,6 +66,10 @@ public class CAStarSearch<E> extends PausableSearchAlgorithm<E>{
 	private Vector<StateInterface<E>> combinePaths(
 			Vector<Vector<StateInterface<E>>> allpaths) {
 		Vector<StateInterface<E>> res = new Vector<StateInterface<E>>();
+		float pathCost = 0;
+		for (int i = 0 ; i < allpaths.size();i++){
+			pathCost += allpaths.elementAt(i).elementAt(0).get_cost();
+		}
 		int  pathLength = getLongestPath(allpaths);
 		for (int step = 0; step < pathLength ;step++){
 			StateInterface<E> tState;
@@ -85,7 +89,7 @@ public class CAStarSearch<E> extends PausableSearchAlgorithm<E>{
 					tCombinedCoords.add(tCoordinate);
 				}
 			}
-			tState = allpaths.elementAt(0).elementAt(0).CombineStates(tCombinedCoords); //TODO ugly solution
+			tState = allpaths.elementAt(0).elementAt(0).CombineStates(tCombinedCoords,pathCost); //TODO ugly solution
 			res.add(tState);
 		}
 
