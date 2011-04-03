@@ -25,7 +25,7 @@ public class MainFrame extends JFrame {
 	private JMenuBar _menuBar;
 	private JMenu _FileMenu,_MapMenu, _helpMenu,_EditMenu,_ViewMenu;	
 	private JMenuItem _openMap, _saveMap, _exitItem,_loadScenario,_saveScenario,_ColorsEditor;
-	private JCheckBoxMenuItem _ShowStatsPanel;
+	private JCheckBoxMenuItem _ShowStatsPanel,_ShowGridLine,_ShowPathTrace;
 	private mainPanel _mainPanel;
 	private StatisticsDialog _statsPanel;
 	private ColorsDialog _colorsDialog;
@@ -67,7 +67,11 @@ public class MainFrame extends JFrame {
 		_MapMenu.add(_loadScenario);
 		_MapMenu.add(_saveScenario);
 		_ShowStatsPanel = new JCheckBoxMenuItem("Statistics panel");
+		_ShowGridLine = new JCheckBoxMenuItem("Show Grid Line");
+		_ShowPathTrace = new JCheckBoxMenuItem("Show Path Trace");
 		_ViewMenu.add(_ShowStatsPanel);
+		_ViewMenu.add(_ShowGridLine);
+		_ViewMenu.add(_ShowPathTrace);
 		_menuBar.add(_helpMenu);
 		
 		this.setJMenuBar(_menuBar);
@@ -115,13 +119,30 @@ public class MainFrame extends JFrame {
 					_statsPanel.setVisible(true);
 				}
 				else{
-					_statsPanel.setVisible(false);
-					
+					_statsPanel.setVisible(false);				
 				}
-				
 			}
 		});
-
+		_ShowPathTrace.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (((JCheckBoxMenuItem)arg0.getSource()).isSelected()){
+					_guiController.withPathTrace(true);
+				}
+				else{
+					_guiController.withPathTrace(false);			
+				} 
+			}
+		});
+		_ShowGridLine.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (((JCheckBoxMenuItem)arg0.getSource()).isSelected()){
+					_guiController.withGridLines(true);
+				}
+				else{
+					_guiController.withGridLines(false);			
+				} 
+			}
+		});
 	}
 	
 	

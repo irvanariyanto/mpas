@@ -74,13 +74,6 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 	}
 	
     
-    
-   
-	
-	
-   
-	
-	
    
  
 

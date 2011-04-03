@@ -37,6 +37,7 @@ public class GUIController {
 	private AutoStepsThread _stepThread;	
 	private Vector<myPoint> oldState; //TODO make it better later	
 	private boolean _firstStep;//for running in step mode
+	private boolean _withPathTrace = false;
 	
 	public GUIController(){
 		_controller = new GridController();
@@ -49,7 +50,7 @@ public class GUIController {
 				if (event instanceof finalPathEvent){
 					Vector<Vector<myPoint>> path = GUIController.this._controller.getFinalPath();
 					//true means to draw with lines
-					GUIController.this._main.getMainPanel().getGridPanel().drawFinalPaths(path,true);
+					GUIController.this._main.getMainPanel().getGridPanel().drawFinalPaths(path,_withPathTrace);
 					_main.getStatsDialog().addLine("Final path cost: " + ((finalPathEvent)event).getCost());
 					GUIController.this.reset();
 				}
@@ -90,6 +91,7 @@ public class GUIController {
 		_heuristicChosen = this._main.getMainPanel().getConfiguarationPanel().getSettingsPanel().getHeuristic();
 		init_controller(_algorithmChosen,_heuristicChosen,_directionChosen,_numberOfAgents,_gridSize);		
 	}
+	
 	
 	public void cDirectionsActionPerformed(ActionEvent evt) {
 		_directionChosen = this._main.getMainPanel().getConfiguarationPanel().getSettingsPanel().getDirection();
@@ -307,6 +309,15 @@ public class GUIController {
 		this._controller.setDirection(dir);
 		this._controller.setNumberOfAgents (numOfAgents);
 		this._controller.setMapSize (gridSize);		
+	}
+	
+	public void withPathTrace(boolean with){
+		this._withPathTrace = with;
+	}
+
+	public void withGridLines(boolean b) {
+		this._main.getMainPanel().getGridPanel().setWithGridLines(b);
+		
 	}
 
 
