@@ -9,14 +9,10 @@ import java.util.PriorityQueue;
 import java.util.Vector;
 
 import Utils.MyLogger;
-import algorithms.Interfaces.Pausable;
 import algorithms.Interfaces.PausableSearchAlgorithm;
-import algorithms.Interfaces.SearchInterface;
 import algorithms.Interfaces.StateInterface;
 
-import EventMechanism.ApplicationEventListener;
-import EventMechanism.ApplicationEventListenerCollection;
-import EventMechanism.ApplicationEventSource;
+
 import EventMechanism.Events.ClosedListChangeEvent;
 import EventMechanism.Events.OpenListChangeEvent;
 

@@ -4,12 +4,11 @@ import heuristics.DiagonalDistanceHeuristic;
 import heuristics.HeuristicInterface;
 import heuristics.ManhattanHeuristic;
 
-import java.io.File;
+
 import java.util.HashMap;
 import java.util.Vector;
 
 
-import maps.GridMapUtility;
 import maps.Scenario;
 import maps.TileBasedMap;
 import maps.TileStatus;
@@ -23,14 +22,14 @@ import EventMechanism.Events.OpenListChangeEvent;
 import EventMechanism.Events.finalPathEvent;
 import EventMechanism.Events.showOpenListStateEvent;
 import algorithms.myPoint;
-import algorithms.Astar.AStarSearch;
-import algorithms.Astar.myState;
 import algorithms.CooperativeAstar.CAStarSearch;
 import algorithms.CooperativeAstar.CAStarState;
 import algorithms.CooperativeAstar.PointKeyFactory;
 import algorithms.CooperativeAstar.TableKeyInterface;
 import algorithms.Interfaces.SearchInterface;
 import algorithms.Interfaces.StateInterface;
+import algorithms.Astar.AStarSearch;
+import algorithms.Astar.myState;
 
 public class GridController implements ControllerInterFace<myPoint>,ApplicationEventListener,ApplicationEventSource{
 	

@@ -1,6 +1,5 @@
 package GUI;
 
-import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.Vector;
@@ -139,8 +138,10 @@ public class GUIController {
 	
 	public void bGeneratePositionsActionPerformed(ActionEvent evt) {
 		this._main.getMainPanel().getGridPanel().clearFinalPath();	
-		this._main.getMainPanel().getGridPanel().GeneratePositions();		
-	}
+		this._main.getMainPanel().getGridPanel().clearOpenList();
+		this._main.getMainPanel().getGridPanel().GeneratePositions();
+		this._main.getMainPanel().getConfiguarationPanel().getInfoPanel().setText("");
+		}
 	
 	public void bClearPositionsActionPerformed(ActionEvent evt) {
 		this._main.getMainPanel().getGridPanel().clearPositions();
@@ -159,7 +160,7 @@ public class GUIController {
 	
 	public void bFindPathActionPerformed(ActionEvent evt) {
 		this._main.getMainPanel().getGridPanel().clearFinalPath();
-		this._main.getMainPanel().getGridPanel().clearOpenList();
+		//this._main.getMainPanel().getGridPanel().clearOpenList();
 		this._main.getMainPanel().getConfiguarationPanel().getInfoPanel().setText("");
 		if (this._main.getMainPanel().getGridPanel().checkArguments()) {
 			this._controller.setTile(this._main.getMainPanel().getGridPanel().get_blockList());

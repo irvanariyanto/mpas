@@ -3,7 +3,6 @@ package algorithms.Interfaces;
 import java.util.Vector;
 
 import maps.MapInterface;
-import algorithms.myPoint;
 
 public interface StateInterface<E> {
 	public float get_f();

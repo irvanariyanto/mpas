@@ -3,11 +3,9 @@ package GUI;
 import java.awt.Dimension;
 import javax.swing.JFrame;
 
-public class testNewMain {
+public class Main {
 	
-	private MainFrame _mainFrame=null;
-	private GUIController _guiController=null;
-
+	
 	/**
 	 * @param args
 	 */
@@ -15,8 +13,7 @@ public class testNewMain {
 		GUIController _guiController = new GUIController();
 		MainFrame main = new MainFrame("MPAS - Multi-agent Pathfinding Algorithms Simulator v1.1",_guiController);		
 		_guiController.initGuiController(main);
-		
-		
+
 		main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		main.setSize(new Dimension(890,750));
 		main.setResizable(true);

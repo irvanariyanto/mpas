@@ -13,9 +13,6 @@ import javax.swing.JToggleButton;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import Utils.MyLogger;
-
-import Defaults.defaultsValues;
 import GUI.GUIController;
 
 

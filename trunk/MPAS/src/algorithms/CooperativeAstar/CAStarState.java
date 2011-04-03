@@ -8,7 +8,6 @@ import maps.MapInterface;
 import maps.TileBasedMap;
 
 import algorithms.myPoint;
-import algorithms.Astar.myState;
 import algorithms.Interfaces.StateInterface;
 
 public class CAStarState implements CAstarStateInterface<myPoint>,Comparable<CAStarState> {

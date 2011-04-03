@@ -1,7 +1,5 @@
 package GUI;
 
-import Controller.GridController;
-import GUI.Panels.mainPanel;
 
 public class AutoStepsThread extends Thread{
 

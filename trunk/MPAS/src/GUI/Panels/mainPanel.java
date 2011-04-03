@@ -2,37 +2,17 @@ package GUI.Panels;
 
 import java.awt.BorderLayout;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Vector;
 
-import javax.swing.AbstractButton;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
+
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JSlider;
-import javax.swing.SwingUtilities;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
-import algorithms.myPoint;
-
-
-import Controller.GridController;
 import Defaults.defaultsValues;
 import EventMechanism.ApplicationEvent;
 import EventMechanism.ApplicationEventListener;
 import EventMechanism.ApplicationEventListenerCollection;
 import EventMechanism.ApplicationEventSource;
-import EventMechanism.Events.OpenListChangeEvent;
 import EventMechanism.Events.SetBlockCellEvent;
 import EventMechanism.Events.SetFinishCellEvent;
 import EventMechanism.Events.SetStartCellEvent;
-import EventMechanism.Events.finalPathEvent;
-import EventMechanism.Events.showOpenListStateEvent;
-import GUI.AutoStepsThread;
 import GUI.GUIController;
 
 
