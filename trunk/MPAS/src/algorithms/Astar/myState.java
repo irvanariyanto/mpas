@@ -219,7 +219,7 @@ public class myState implements Comparable<myState>,StateInterface<myPoint> {
 	}
 
 	@Override
-	public StateInterface<myPoint> CombineStates(Vector<myPoint> Coordinates) {
+	public StateInterface<myPoint> CombineStates(Vector<myPoint> Coordinates,float pathCost) {
 		// TODO Auto-generated method stub
 		return null;
 	}

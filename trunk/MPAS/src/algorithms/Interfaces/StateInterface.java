@@ -17,5 +17,5 @@ public interface StateInterface<E> {
 	public float get_heuristic();
 	public MapInterface<E> getMap();
 	public StateInterface<E> Convert2SingleAgent(int i);
-	public StateInterface<E> CombineStates(Vector<E> Coordinates);
+	public StateInterface<E> CombineStates(Vector<E> Coordinates, float pathCost);
 }
