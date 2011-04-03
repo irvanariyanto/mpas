@@ -85,10 +85,9 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	}
 	
 	public Vector<myPoint> get_startsList(){
-		this._startsList.removeAllElements();
 		for (int i=0; i< this._starts.length; i++){
 	        if (this._starts[i] != null){
-	        	if(!this._FinishList.contains(_starts[i])){
+	        	if(!this._startsList.contains(_starts[i])){
 	        		this._startsList.add(_starts[i]);
 	        	}
 	        }
@@ -97,7 +96,6 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	}
 	
 	public Vector<myPoint> get_FinishList(){
-		this._FinishList.removeAllElements();
 		for (int i=0; i< this._finishes.length; i++){
         	if (this._finishes[i] != null){
         		if(!this._FinishList.contains(_finishes[i])){
@@ -247,7 +245,14 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 		if (_finalPaths != null){
 			for(Vector<myPoint> state: _finalPaths){
 				for(myPoint p: state){
-					this._grid[p.getX()][p.getY()].set_status(GUI.Panels.Cell.Status.Empty);
+					if (this._grid[p.getX()][p.getY()].get_status() != Status.Start &&
+						this._grid[p.getX()][p.getY()].get_status() != Status.Finish){
+						this._grid[p.getX()][p.getY()].set_status(GUI.Panels.Cell.Status.Empty);
+					}
+					else{
+						this._grid[p.getX()][p.getY()].clearDirections();
+					}
+												
 				}
 			}
 			this._finalPaths.removeAllElements();	
@@ -301,7 +306,6 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	
 	public void GeneratePositions() {
 		clearPositions();
-		clearFinalPath();
 		if ((_height*_width - _blockList.size())/2 >=  NUM_OF_AGENT){
 			//generate starting points
 			int agentConter = 1;
@@ -354,18 +358,24 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	
 
 	public void drawFinalPathCell(int x, int y) {
-		this._grid[x][y].set_status(Status.Path);
+		if(this._grid[x][y].get_status() != Status.Start && this._grid[x][y].get_status() != Status.Finish ){
+			this._grid[x][y].set_status(Status.Path);
+		}
 		repaint();
 	}
 
 	public void drawFinalPathCell(int x, int y, int agent) {
-		this._grid[x][y].set_status(Status.Path);
+		if(this._grid[x][y].get_status() != Status.Start && this._grid[x][y].get_status() != Status.Finish ){
+			this._grid[x][y].set_status(Status.Path);
+		}
 		this._grid[x][y].set_agent(agent);
 		repaint();
 	}
 	
 	public void drawFinalPathCell(int x, int y, int agent, Direction direction) {
-		this._grid[x][y].set_status(Status.Path);
+		if(this._grid[x][y].get_status() != Status.Start && this._grid[x][y].get_status() != Status.Finish ){
+			this._grid[x][y].set_status(Status.Path);
+		}
 		this._grid[x][y].set_agent(agent);
 		this._grid[x][y].add_Direction(direction);
 		repaint();
@@ -379,6 +389,7 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 		else{
 			drawFinalPaths(_finalPaths);
 		}
+		 repaint();
 	}
 	
 	public void drawFinalPaths(Vector<Vector<myPoint>> finalPath) {
@@ -389,6 +400,7 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
                         drawFinalPathCell(p.getX(), p.getY(),i+1);               
                 }
         }
+        repaint();
 	}
 	
 	

@@ -51,7 +51,6 @@ public class GUIController {
 			public void handle(ApplicationEvent event) {
 				if (event instanceof finalPathEvent){
 					Vector<Vector<myPoint>> path = GUIController.this._controller.getFinalPath();
-					//true means to draw with lines
 					GUIController.this._main.getMainPanel().getGridPanel().drawFinalPaths(path,_withPathTrace);
 					_main.getStatsDialog().addLine("Final path cost: " + ((finalPathEvent)event).getCost());
 					GUIController.this.reset();
@@ -148,6 +147,7 @@ public class GUIController {
 	}
 	
 	public void bGeneratePositionsActionPerformed(ActionEvent evt) {
+		this._main.getMainPanel().getGridPanel().clearPositions();
 		this._main.getMainPanel().getGridPanel().clearFinalPath();	
 		this._main.getMainPanel().getGridPanel().clearOpenList();
 		this._main.getMainPanel().getGridPanel().GeneratePositions();
@@ -171,7 +171,7 @@ public class GUIController {
 	
 	public void bFindPathActionPerformed(ActionEvent evt) {
 		this._main.getMainPanel().getGridPanel().clearFinalPath();
-		//this._main.getMainPanel().getGridPanel().clearOpenList();
+		this._main.getMainPanel().getGridPanel().clearOpenList();
 		this._main.getMainPanel().getConfiguarationPanel().getInfoPanel().setText("");
 		if (this._main.getMainPanel().getGridPanel().checkArguments()) {
 			this._controller.setTile(this._main.getMainPanel().getGridPanel().get_blockList());

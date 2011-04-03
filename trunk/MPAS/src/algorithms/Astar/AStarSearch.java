@@ -91,6 +91,8 @@ public class AStarSearch<E> extends PausableSearchAlgorithm<E> {
 				path.add(current);
 				current = current.get_parent();
 			}
+			//Liron added
+			path.add(initialState);
 
 		}
 		return path;

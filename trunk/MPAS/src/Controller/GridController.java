@@ -238,7 +238,6 @@ public class GridController implements ControllerInterFace<myPoint>,ApplicationE
 				res.elementAt(j).add(tCoordinates.elementAt(j));
 			}
 		}
-		
 		return res;
 	}
 	public Vector<Vector<myPoint>> getFinalPath(){
