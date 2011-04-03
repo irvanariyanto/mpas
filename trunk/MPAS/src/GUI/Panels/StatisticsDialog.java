@@ -68,14 +68,13 @@ public class StatisticsDialog extends JDialog{
         contentPane.add(_statsPanel, BorderLayout.CENTER);
         contentPane.add(_buttonsPane, BorderLayout.PAGE_END);
     //    this._editorScrollPane.add(_editorPane);
-        _editorPane.setText("Amitdsfdsdfs dsff  dgs\nds  dssdg");
         _editorPane.setEditable(false);
         _editorPane.setVisible(true);
 
 	}
 	public synchronized void addLine(String line){
 		String text = this._editorPane.getText();
-		this._editorPane.setText(text + "\n" + line);
+		this._editorPane.setText(line + "\n" + text);
 	}
 	public synchronized void clearText(){
 		_editorPane.setText("");
