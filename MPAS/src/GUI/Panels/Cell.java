@@ -8,11 +8,17 @@ import java.awt.AWTEvent;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Insets;
+import java.awt.Toolkit;
 
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.util.Vector;
+
+import javax.swing.ImageIcon;
 
 import EventMechanism.ApplicationEventListener;
 import EventMechanism.ApplicationEventListenerCollection;
@@ -193,12 +199,16 @@ public class Cell extends Component  implements ApplicationEventSource{
 		repaint();
 	}
 
+	 
+	
 	@Override
 	public void paint(Graphics g) {		
 		Dimension size = getSize();
-		Dimension RectSize = new Dimension(size.width -2,size.height -2);		
+		Dimension RectSize = new Dimension(size.width -2,size.height -2);
+		Image carImage=Toolkit.getDefaultToolkit().getImage("Icons/car_white.png");
+		Image flagImage=Toolkit.getDefaultToolkit().getImage("Icons/flag.png");
 		SetColorByStatus(g,this._status);		
-		g.fillRect(0, 0, size.width-1, size.height-1);		
+		g.fillRect(0, 0, size.width-1, size.height-1);
 		g.setColor(Color.black);
 		if (this._withGridLine ){
 			g.drawRect(0, 0, RectSize.width, RectSize.height );
@@ -212,22 +222,28 @@ public class Cell extends Component  implements ApplicationEventSource{
 		if(this._status == Status.Finish && !this._directions.isEmpty()){
 			drawDircetions(g,this._directions,RectSize);			
 		}
-		
+		if(this._status == Status.Start ){
+			g.drawImage(carImage, 2,2, RectSize.width, RectSize.height, this);			
+		}
+		if(this._status == Status.Finish ){
+			g.drawImage(flagImage, 5,10, RectSize.width, RectSize.height, this);			
+		}
+
 		if(this._agnetNum != 0){
 			g.setFont(new Font("sansserif", Font.BOLD, 11));
-			g.drawString(Integer.toString(this._agnetNum),5,15);
-		}		
+			g.drawString(Integer.toString(this._agnetNum),5,10);
+		}
 	}
 
 	private void SetColorByStatus(Graphics g,Status status) {
 		if (status == Status.Empty) {
 			g.setColor(Color.white);
 		}
-		if (status == Status.Start) {
+		if (status == Status.Start) {			
 			g.setColor(Color.green);
 		}
 		if (status == Status.Finish) {
-			g.setColor(Color.red);
+			g.setColor(Color.white);
 		}
 		if (status == Status.Blocked) {
 			g.setColor(Color.black);
