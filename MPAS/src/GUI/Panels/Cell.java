@@ -20,6 +20,9 @@ import java.util.Vector;
 
 import javax.swing.ImageIcon;
 
+import org.pushingpixels.trident.Timeline;
+import org.pushingpixels.trident.swing.SwingRepaintTimeline;
+
 import EventMechanism.ApplicationEventListener;
 import EventMechanism.ApplicationEventListenerCollection;
 import EventMechanism.ApplicationEventSource;
@@ -73,9 +76,23 @@ public class Cell extends Component  implements ApplicationEventSource{
 	public static int _agentSelected;
 	private ApplicationEventListenerCollection _listeners;
 	private boolean _withGridLine = false;
-
+	
+	//openlist+closed list animation
+	private Timeline _timeline;
+	private SwingRepaintTimeline _repaintTimeline;
+	public static final int TIMER = 2500;
+	public Color _backgroundColor;
+	private boolean isAnimating;
+	public void setBackgroundColor(Color color){
+		this._backgroundColor = color;
+		this._repaintTimeline.forceRepaintOnNextPulse();
+	}
+	public Color getBackgroundColor(){
+		return this._backgroundColor;
+	}
+	
 	// Constructor
-	public Cell(myPoint point) {
+	public Cell(myPoint point,SwingRepaintTimeline repaintTimeline) {
 		this._position = point;	
 		this.set_status(Status.Empty);
 		this._agnetNum=0;
@@ -84,6 +101,13 @@ public class Cell extends Component  implements ApplicationEventSource{
 		// Action and mouse listener support
 		this._listeners = new ApplicationEventListenerCollection();
 		enableEvents(AWTEvent.MOUSE_EVENT_MASK);
+		
+		this._backgroundColor = Color.white;
+		this._timeline = new Timeline(this);
+		this._timeline.setDuration(TIMER);
+		this._timeline.addPropertyToInterpolate("_backgroundColor",Color.yellow,Color.white);
+		this._repaintTimeline = repaintTimeline;
+		this.isAnimating = false;
 	}
 
 	// Constructor
@@ -98,7 +122,18 @@ public class Cell extends Component  implements ApplicationEventSource{
 		this._listeners = new ApplicationEventListenerCollection();
 		enableEvents(AWTEvent.MOUSE_EVENT_MASK);
 	}
-
+	
+	
+	//animation addon
+	public void doAnimation(boolean isAnimating){
+		if (this.isAnimating == isAnimating){
+			return;
+		}
+		this.isAnimating = isAnimating;
+		if (this.isAnimating){
+			this._repaintTimeline.replay();
+		}
+	}
 
 	/**
 	 * @return the _position

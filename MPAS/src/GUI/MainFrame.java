@@ -25,7 +25,7 @@ public class MainFrame extends JFrame {
 	private JMenuBar _menuBar;
 	private JMenu _FileMenu,_MapMenu, _helpMenu,_EditMenu,_ViewMenu;	
 	private JMenuItem _openMap, _saveMap, _exitItem,_loadScenario,_saveScenario,_ColorsEditor;
-	private JCheckBoxMenuItem _ShowStatsPanel,_ShowGridLine,_ShowPathTrace;
+	private JCheckBoxMenuItem _ShowStatsPanel,_ShowGridLine,_ShowPathTrace,_writeStatistics,_animation;
 	private mainPanel _mainPanel;
 	private StatisticsDialog _statsPanel;
 	private ColorsDialog _colorsDialog;
@@ -69,9 +69,13 @@ public class MainFrame extends JFrame {
 		_ShowStatsPanel = new JCheckBoxMenuItem("Statistics panel");
 		_ShowGridLine = new JCheckBoxMenuItem("Show Grid Line");
 		_ShowPathTrace = new JCheckBoxMenuItem("Show Path Trace");
+		_writeStatistics = new JCheckBoxMenuItem("Write statistics");
+		_animation = new JCheckBoxMenuItem("Open/Closed list animation");
 		_ViewMenu.add(_ShowStatsPanel);
 		_ViewMenu.add(_ShowGridLine);
 		_ViewMenu.add(_ShowPathTrace);
+		_ViewMenu.add(_writeStatistics);
+		_ViewMenu.add(_animation);
 		_menuBar.add(_helpMenu);
 		
 		this.setJMenuBar(_menuBar);
@@ -131,6 +135,21 @@ public class MainFrame extends JFrame {
 				else{
 					_guiController.withPathTrace(false);			
 				} 
+			}
+		});
+		_writeStatistics.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				_guiController.setWriteStats(((JCheckBoxMenuItem)e.getSource()).isSelected());
+			}
+		});
+		_animation.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				_guiController.setAnimation(((JCheckBoxMenuItem)e.getSource()).isSelected());
+				
 			}
 		});
 		_ShowGridLine.addActionListener(new ActionListener() {

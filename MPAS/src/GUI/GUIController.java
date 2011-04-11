@@ -40,7 +40,8 @@ public class GUIController {
 	private Vector<myPoint> oldState; //TODO make it better later	
 	private boolean _firstStep;//for running in step mode
 	private boolean _withPathTrace = false;
-	
+	private boolean _writeStatistics = false;
+	private boolean _animation = false;
 	public GUIController(){
 		_controller = new GridController();
 		_firstStep = true;	
@@ -52,7 +53,9 @@ public class GUIController {
 				if (event instanceof finalPathEvent){
 					Vector<Vector<myPoint>> path = GUIController.this._controller.getFinalPath();
 					GUIController.this._main.getMainPanel().getGridPanel().drawFinalPaths(path,_withPathTrace);
-					_main.getStatsDialog().addLine("Final path cost: " + ((finalPathEvent)event).getCost());
+					if (_writeStatistics){
+						_main.getStatsDialog().addLine("\nFinal path cost: " + ((finalPathEvent)event).getCost());
+					}
 					GUIController.this.reset();
 				}
 				else if (event instanceof showStepEvent<?>){
@@ -64,11 +67,22 @@ public class GUIController {
 				}
 				else if (event instanceof OpenListChangeEvent<?>){
 					OpenListChangeEvent<myPoint> e = (OpenListChangeEvent<myPoint>)event;
-					_main.getStatsDialog().addLine("OpenList:\n" + e.getState().toString()+"\n");
+					if (_writeStatistics){
+						_main.getStatsDialog().addLine("Added to openList:\t" + e.getState().toString()+"\n");
+					}
+					if (_animation){
+						Vector<myPoint> v = e.getState().get_Coordinates();
+						for (int i = 0; i < v.size() ;i++){
+							myPoint p = v.elementAt(i);
+							_main.getMainPanel().getGridPanel().animateCell(p.getX(), p.getY());
+						}
+					}
 				}
 				else if (event instanceof ClosedListChangeEvent<?>){
 					ClosedListChangeEvent<myPoint> e = (ClosedListChangeEvent<myPoint>)event;
-					_main.getStatsDialog().addLine("ClosedList:\n" + e.getState().toString() + "\n");
+					if (_writeStatistics){
+						_main.getStatsDialog().addLine("Added to closedList:\t" + e.getState().toString() + "\n");
+					}
 				}
 			}
 		});
@@ -328,7 +342,21 @@ public class GUIController {
 		this._main.getMainPanel().getGridPanel().setWithGridLines(b);
 		
 	}
+	
+	public boolean getWriteStats(){
+		return this._writeStatistics;
+	}
+	public void setWriteStats(boolean writeStats){
+		this._writeStatistics = writeStats;
+	}
 
+	public void setAnimation(boolean selected) {
+		this._animation = selected;
+		
+	}
+	public boolean getAnimation(){
+		return this._animation;
+	}
 
 	
 
