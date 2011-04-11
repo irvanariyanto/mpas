@@ -13,6 +13,7 @@ import algorithms.Interfaces.PausableSearchAlgorithm;
 import algorithms.Interfaces.StateInterface;
 
 
+import Defaults.defaultsValues;
 import EventMechanism.Events.ClosedListChangeEvent;
 import EventMechanism.Events.OpenListChangeEvent;
 import EventMechanism.Events.StepEvent;
@@ -49,7 +50,9 @@ public class AStarSearch<E> extends PausableSearchAlgorithm<E> {
 		while (!this._openList.isEmpty()){
 			boolean tentativeIsBetter = false;
 			StateInterface<E> current = this._openList.poll();
-			MyLogger.getInstance().info(current.toString());
+			if (defaultsValues.DEBUG){
+				MyLogger.getInstance().info(current.toString());
+			}
 			if (this._pause && current != start){ // in case running in debug mode
 				//System.out.println("node is: " + current.toString());				
 				this._listeners.fireEvent(new StepEvent<E>(this, current));

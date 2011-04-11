@@ -138,8 +138,8 @@ public class myState implements Comparable<myState>,StateInterface<myPoint> {
 			ans += p.toString();
 		}
 		ans += ">";
-		ans += "\nCost: " + this._cost;
-		ans += "\nHeuristic: " + this._heuristic;
+		ans += "\tCost: " + this._cost;
+		ans += "\tHeuristic: " + this._heuristic;
 		return ans;
 	}
 

@@ -7,6 +7,9 @@ import java.util.Collections;
 import java.util.Vector;
 import javax.swing.JPanel;
 
+import org.pushingpixels.trident.Timeline.RepeatBehavior;
+import org.pushingpixels.trident.swing.SwingRepaintTimeline;
+
 
 import maps.Scenario;
 import maps.TileBasedMap;
@@ -38,6 +41,9 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	private Vector<Vector<myPoint>> _finalPaths;
 	// End of variables declaration
 	
+	//animation addition
+	SwingRepaintTimeline _repaintTimeline;
+	
 	public void setStarts(Vector<myPoint> starts){
 		this._startsList = starts;
 	}
@@ -50,6 +56,9 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	 */
 	public GridPanel( int size) {		
 		super();
+		_repaintTimeline = new SwingRepaintTimeline(this);
+		_repaintTimeline.setAutoRepaintMode(false);
+		_repaintTimeline.playLoop(RepeatBehavior.LOOP);
 		_width= size;
 		_height = size;
 		_grid = new Cell[get_width()][get_height()];
@@ -59,7 +68,7 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 		setLayout(new GridLayout(get_width(), get_height()));
 		for (int i = 0; i < get_height(); i++) {
 			for (int j = 0; j < get_width(); j++) {
-				this._grid[i][j] = new Cell(new myPoint(i, j));
+				this._grid[i][j] = new Cell(new myPoint(i, j),_repaintTimeline); //TODO initialize the repaintTimeLine
 				this._grid[i][j].addListener(new GridListener());
 				add(this._grid[i][j]);
 			}
@@ -681,8 +690,10 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 
 	}
 
-	
-
+	//animation addon
+	public void animateCell(int row,int column){
+		this._grid[row][column].doAnimation(true);
+	}
 	
 
 	
