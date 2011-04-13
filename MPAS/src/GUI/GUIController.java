@@ -83,6 +83,13 @@ public class GUIController {
 					if (_writeStatistics){
 						_main.getStatsDialog().addLine("Added to closedList:\t" + e.getState().toString() + "\n");
 					}
+					if (_animation){
+						Vector<myPoint> v = e.getState().get_Coordinates();
+						for (int i = 0; i < v.size() ;i++){
+							myPoint p = v.elementAt(i);
+							_main.getMainPanel().getGridPanel().animateCell(p.getX(), p.getY());
+						}
+					}
 				}
 			}
 		});

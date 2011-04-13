@@ -3,6 +3,8 @@ package GUI.Panels;
 
 
 import java.awt.GridLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.util.Collections;
 import java.util.Vector;
 import javax.swing.JPanel;
@@ -58,7 +60,7 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 		super();
 		_repaintTimeline = new SwingRepaintTimeline(this);
 		_repaintTimeline.setAutoRepaintMode(false);
-		_repaintTimeline.playLoop(RepeatBehavior.LOOP);
+
 		_width= size;
 		_height = size;
 		_grid = new Cell[get_width()][get_height()];
@@ -73,7 +75,9 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 				add(this._grid[i][j]);
 			}
 		}
+		_repaintTimeline.playLoop(RepeatBehavior.LOOP);
 		this._listeners = new ApplicationEventListenerCollection();
+		
 	}
 
 	
@@ -693,6 +697,7 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	//animation addon
 	public void animateCell(int row,int column){
 		this._grid[row][column].doAnimation(true);
+		this._grid[row][column].doAnimation(false);
 	}
 	
 
