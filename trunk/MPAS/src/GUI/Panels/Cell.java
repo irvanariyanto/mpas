@@ -81,14 +81,15 @@ public class Cell extends Component  implements ApplicationEventSource{
 	private Timeline _timeline;
 	private SwingRepaintTimeline _repaintTimeline;
 	public static final int TIMER = 2500;
-	public Color _backgroundColor;
+	public Color backgroundColor;
 	private boolean isAnimating;
+	
 	public void setBackgroundColor(Color color){
-		this._backgroundColor = color;
+		this.backgroundColor = color;
 		this._repaintTimeline.forceRepaintOnNextPulse();
 	}
 	public Color getBackgroundColor(){
-		return this._backgroundColor;
+		return this.backgroundColor;
 	}
 	
 	// Constructor
@@ -102,10 +103,10 @@ public class Cell extends Component  implements ApplicationEventSource{
 		this._listeners = new ApplicationEventListenerCollection();
 		enableEvents(AWTEvent.MOUSE_EVENT_MASK);
 		
-		this._backgroundColor = Color.white;
+		this.backgroundColor = Color.white;
 		this._timeline = new Timeline(this);
 		this._timeline.setDuration(TIMER);
-		this._timeline.addPropertyToInterpolate("_backgroundColor",Color.yellow,Color.white);
+		this._timeline.addPropertyToInterpolate("backgroundColor",Color.blue,Color.white);
 		this._repaintTimeline = repaintTimeline;
 		this.isAnimating = false;
 	}
@@ -131,7 +132,7 @@ public class Cell extends Component  implements ApplicationEventSource{
 		}
 		this.isAnimating = isAnimating;
 		if (this.isAnimating){
-			this._repaintTimeline.replay();
+			this._timeline.replay();
 		}
 	}
 
@@ -268,6 +269,14 @@ public class Cell extends Component  implements ApplicationEventSource{
 			g.setFont(new Font("sansserif", Font.BOLD, 11));
 			g.drawString(Integer.toString(this._agnetNum),5,10);
 		}
+		//amit's additions
+		Color backgr = this.getBackgroundColor();
+
+		if (!Color.white.equals(backgr)) {
+			g.setColor(backgr);
+			g.fillRect(0, 0, size.width-1, size.height-1);
+		}
+		//amit's edition ends
 	}
 
 	private void SetColorByStatus(Graphics g,Status status) {
