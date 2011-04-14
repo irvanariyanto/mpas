@@ -51,9 +51,9 @@ public class ColorManager {
 			for (int i = 0 ; i < tList.getLength(); i++){
 				Element tElement = (Element)tList.item(i);
 				if (tElement.getAttribute("Name").equals(elementName)){
-					float r = Float.parseFloat(tElement.getAttribute("r"));
-					float g = Float.parseFloat(tElement.getAttribute("g"));
-					float b = Float.parseFloat(tElement.getAttribute("b"));
+					int r = Integer.parseInt(tElement.getAttribute("r"));
+					int g = Integer.parseInt(tElement.getAttribute("g"));
+					int b = Integer.parseInt(tElement.getAttribute("b"));
 					color = new Color(r,g,b);	
 					break;
 				}
@@ -86,10 +86,10 @@ public class ColorManager {
 	public static void setColor(String elementName,Color color){
 		try {
 			File file = new File("Colors.xml");
-			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-			// root elements
-			Document doc = docBuilder.newDocument();
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+			Document doc = dBuilder.parse(file);
+			doc.getDocumentElement().normalize();
 			NodeList tList = doc.getElementsByTagName("Element");
 			Element root = doc.getDocumentElement();
 			boolean exist = false;
@@ -128,8 +128,51 @@ public class ColorManager {
 		} catch (TransformerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
+	/**
+	 * returns all of the color configuration in the format of Object[][]
+	 * used for creating the table model for the colors editor dialog.
+	 */
+	public static Object[][] createDataModelFromFile(){
+		Object[][] dataModel = null;
+		try{
+			File file = new File("Colors.xml");
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+			Document doc = dBuilder.parse(file);
+			doc.getDocumentElement().normalize();
+			NodeList tList = doc.getElementsByTagName("Element");
+			dataModel = new Object[tList.getLength()][];
+			for (int i = 0 ; i < tList.getLength(); i++){
+				Element tElement = (Element)tList.item(i);
+				String tName = tElement.getAttribute("Name");
+				int r = Integer.parseInt(tElement.getAttribute("r"));
+				int g = Integer.parseInt(tElement.getAttribute("g"));
+				int b = Integer.parseInt(tElement.getAttribute("b"));
+				Color tColor = new Color(r,g,b);
+				Object[] tItem = {tName,tColor};
+				dataModel[i] = tItem;
+			}
+		}
+		catch (ParserConfigurationException e){
+			// TODO Auto-generated catch block
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return dataModel;
+	}
+	
 	/**
 	 * generates a random color
 	 * @return a randomized color.
