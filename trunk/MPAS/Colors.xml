@@ -1,3 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><Colors>
-<Element Name="Agent1" b="204" g="51" r="255"/>
+<Element Name="agent1" b="255" g="102" r="102"/>
+<Element Name="agent2" b="55" g="122" r="45"/>
+<Element Name="agent3" b="113" g="236" r="247"/>
+<Element Name="agent4" b="62" g="62" r="208"/>
+<Element Name="agent5" b="84" g="237" r="147"/>
+<Element Name="agent6" b="134" g="23" r="0"/>
+<Element Name="agent7" b="250" g="255" r="131"/>
+<Element Name="agent8" b="187" g="77" r="135"/>
+<Element Name="agent9" b="167" g="190" r="27"/>
+<Element Name="agent10" b="204" g="51" r="255"/>
+<Element Name="fadingAnimation" b="102" g="102" r="255"/>
 </Colors>
