@@ -11,9 +11,11 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+import EventMechanism.Events.OpenListChangeEvent;
 import GUI.Panels.ColorsDialog;
 import GUI.Panels.StatisticsDialog;
 import GUI.Panels.mainPanel;
+import GUI.Panels.ListsDialog.OpenClosedListDialog;
 
 
 public class MainFrame extends JFrame {
@@ -25,9 +27,10 @@ public class MainFrame extends JFrame {
 	private JMenuBar _menuBar;
 	private JMenu _FileMenu,_MapMenu, _helpMenu,_EditMenu,_ViewMenu;	
 	private JMenuItem _openMap, _saveMap, _exitItem,_loadScenario,_saveScenario,_ColorsEditor;
-	private JCheckBoxMenuItem _ShowStatsPanel,_ShowGridLine,_ShowPathTrace,_writeStatistics,_animation;
+	private JCheckBoxMenuItem _ShowStatsPanel,_ShowGridLine,_ShowPathTrace,_writeStatistics,_animation,_showListsStat;
 	private mainPanel _mainPanel;
 	private StatisticsDialog _statsPanel;
+	private OpenClosedListDialog _ListsPanel;
 	private ColorsDialog _colorsDialog;
 	private GUIController _guiController;
 	// End of variables declaration
@@ -50,6 +53,8 @@ public class MainFrame extends JFrame {
 		this._ViewMenu = new JMenu("View");	
 		this._statsPanel = new StatisticsDialog(this);
 		this._statsPanel.setVisible(false);
+		this._ListsPanel = new OpenClosedListDialog(this);
+		this._ListsPanel.setVisible(false);
 		_menuBar.add(_FileMenu);
 		_menuBar.add(_EditMenu);
 		_menuBar.add(_ViewMenu);
@@ -70,12 +75,14 @@ public class MainFrame extends JFrame {
 		_ShowGridLine = new JCheckBoxMenuItem("Show Grid Line");
 		_ShowPathTrace = new JCheckBoxMenuItem("Show Path Trace");
 		_writeStatistics = new JCheckBoxMenuItem("Write statistics");
+		_showListsStat = new JCheckBoxMenuItem("show Lists statistics");
 		_animation = new JCheckBoxMenuItem("Open/Closed list animation");
 		_ViewMenu.add(_ShowStatsPanel);
 		_ViewMenu.add(_ShowGridLine);
 		_ViewMenu.add(_ShowPathTrace);
 		_ViewMenu.add(_writeStatistics);
 		_ViewMenu.add(_animation);
+		_ViewMenu.add(_showListsStat);
 		_menuBar.add(_helpMenu);
 		
 		this.setJMenuBar(_menuBar);
@@ -124,6 +131,20 @@ public class MainFrame extends JFrame {
 				}
 				else{
 					_statsPanel.setVisible(false);				
+				}
+			}
+		});
+		
+		_showListsStat.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (_ListsPanel == null){
+					_ListsPanel = new OpenClosedListDialog(MainFrame.this);
+				}
+				if (((JCheckBoxMenuItem)arg0.getSource()).isSelected()){
+					_ListsPanel.setVisible(true);
+				}
+				else{
+					_ListsPanel.setVisible(false);				
 				}
 			}
 		});
