@@ -40,7 +40,7 @@ public class SettingsPanel extends JPanel  {
 	private JRadioButton _rSetStart;
 	private JSlider _sNumOfAgents;
 	private JSlider _sDensity;
-	private JSlider _sGridSize;	
+	private JSlider _sGridSize;
 	private JSeparator _separator1;
 	private JSeparator _separator2;
 	private GUIController _guiController;
@@ -88,6 +88,9 @@ public class SettingsPanel extends JPanel  {
 		_lDensity = new JLabel("Density:");
 		_sDensity = new JSlider(0,100);
 		_lDensityNumber = new JLabel(defaultsValues.Density + " %");
+		
+		
+
 
 		_cAlgorithm.setModel(new DefaultComboBoxModel(new String[] { "A-Star","Cooperative A*" }));
 		_cHeuristic.setModel(new DefaultComboBoxModel(new String[] { "Manhattan " ,"DiagonalDistance"}));

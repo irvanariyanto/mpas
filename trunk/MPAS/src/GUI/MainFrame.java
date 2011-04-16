@@ -149,7 +149,6 @@ public class MainFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				_guiController.setAnimation(((JCheckBoxMenuItem)e.getSource()).isSelected());
-				
 			}
 		});
 		_ShowGridLine.addActionListener(new ActionListener() {
