@@ -13,6 +13,7 @@ import javax.swing.JToggleButton;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import Defaults.defaultsValues;
 import GUI.GUIController;
 
 
@@ -28,6 +29,8 @@ public class ControlPanel extends JPanel {
 	private JSlider _sAutoStepMode;
 	private JLabel _lSec;
 	private GUIController _guiController;
+	private JSlider _sAnimationSpeed;
+    private JLabel _lAnimationSpeed;
 	
 	// End of variables declaration
 
@@ -47,14 +50,19 @@ public class ControlPanel extends JPanel {
 		_sAutoStepMode = new JSlider(1,30,1);
 		_sAutoStepMode.setPaintTicks(true);
 		_sAutoStepMode.setMajorTickSpacing(5);
-	    _lSec = new JLabel(_sAutoStepMode.getValue() * 100 + " msec");
+		_lSec = new JLabel(_sAutoStepMode.getValue() * 100 + " msec");
+		_sAnimationSpeed = new JSlider(1,30,1);
+		_sAnimationSpeed.setPaintTicks(true);
+		_sAnimationSpeed.setMajorTickSpacing(5);
+		_lAnimationSpeed = new JLabel(_sAutoStepMode.getValue()*100 + " msec");
+	    
 		initComponents();
 	}
 
 	/**
 	 * initialize all the swing Components
 	 */
-	private void initComponents() {
+	public void initComponents() {
 		GroupLayout layout = new GroupLayout(this);
 		this.setLayout(layout);
 		layout.setAutoCreateGaps(true);
@@ -63,29 +71,33 @@ public class ControlPanel extends JPanel {
 	            layout.createParallelGroup()
 	            .addGroup(layout.createSequentialGroup()
 	                .addGroup(layout.createParallelGroup()
-	                    .addComponent(_bFindPath)
+	                	.addGroup(layout.createSequentialGroup()
+	    	                        .addComponent(_bFindPath)
+	    	                        .addComponent(_sAnimationSpeed)
+	    	                        .addComponent(_lAnimationSpeed))
 	                    .addComponent(_bStop)
 	                    .addGroup(layout.createSequentialGroup()
 	                        .addComponent(_bStep)
 	                        .addComponent(_tbAutoStepMode)
 	                        .addComponent(_sAutoStepMode, GroupLayout.PREFERRED_SIZE, 88, GroupLayout.PREFERRED_SIZE)
 	                        .addComponent(_lSec))
-	                        .addComponent(_bClearPath)))
-	    );
+	                     .addComponent(_bClearPath))));
 		layout.setVerticalGroup(
 				layout.createParallelGroup()
 	            .addGroup(layout.createSequentialGroup()
 	                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
 	                    .addComponent(_lSec)
 	                    .addGroup(layout.createSequentialGroup()
-	                        .addComponent(_bFindPath)
+	                    	.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+	    	                            .addComponent(_bFindPath)
+	    	                            .addComponent(_sAnimationSpeed)
+	    	                            .addComponent(_lAnimationSpeed))
 	                        .addComponent(_bStop)
 	                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
 	                            .addComponent(_bStep)
 	                            .addComponent(_sAutoStepMode, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 	                            .addComponent(_tbAutoStepMode))))
-	                            .addComponent(_bClearPath))
-	    );
+	                        .addComponent(_bClearPath)));
 		
 		_bFindPath.addActionListener(new  ActionListener() {
 	    	 public void actionPerformed( ActionEvent evt) {
@@ -126,19 +138,24 @@ public class ControlPanel extends JPanel {
 			    _guiController.sAutoStepModeActionPerformed();
 			}
 		});
-		
-		//added to mainPanel
-		/*
-		_sAutoStepMode.addChangeListener(new ChangeListener(){
+       
+       _sAnimationSpeed.addChangeListener(new ChangeListener() {
+			//TODO remove duplicate listeners
 			public void stateChanged(ChangeEvent e) {
 				JSlider slider = (JSlider) e.getSource();
 				int value = slider.getValue();
-			    _lSec.setText(value + " Sec");
-			}			
+			    setAnimationSpeedLabel(value *100 + " msec");
+			    _guiController.sAnimationSpeedActionPerformed();
+			}
 		});
-		*/
+
 	    }
 	
+	public void setAnimationSpeedLabel(String string) {
+		this._lAnimationSpeed.setText(string);
+		
+	}
+
 	public JToggleButton getAutoButton(){
 		return this._tbAutoStepMode;
 	}

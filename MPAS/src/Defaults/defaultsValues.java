@@ -7,4 +7,5 @@ public class defaultsValues {
 	public static int NumberOfAgents = 2;
 	public static int Density = 10;
 	public static boolean DEBUG = false;
+	public static int AnimationSpeed = 100; 
 }

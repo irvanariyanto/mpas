@@ -234,6 +234,11 @@ public class GUIController {
 		
 	}
 	
+	public void sAnimationSpeedActionPerformed() {
+		// TODO Auto-generated method stub
+		
+	}
+	
 
 	
 	protected void reset() {
@@ -364,6 +369,8 @@ public class GUIController {
 	public boolean getAnimation(){
 		return this._animation;
 	}
+
+	
 
 	
 
