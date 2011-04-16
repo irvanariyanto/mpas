@@ -2,6 +2,7 @@ package GUI.Panels;
 
 
 
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
@@ -22,6 +23,7 @@ import EventMechanism.ApplicationEventListenerCollection;
 import EventMechanism.ApplicationEventSource;
 import GUI.Panels.Cell.Direction;
 import GUI.Panels.Cell.Status;
+import GUI.Utils.ColorManager;
 
 import algorithms.myPoint;
 
@@ -617,6 +619,7 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	public void drawOneStep(Vector<myPoint> tStep) {
 		for (int j=0; j< tStep.size(); j++){
 			myPoint p = tStep.elementAt(j); 
+			Color tColor = ColorManager.getColor("agent" + (j + 1));
 			drawOpenListCell(p.getX(), p.getY(), j+1);	
 		}
 	}
