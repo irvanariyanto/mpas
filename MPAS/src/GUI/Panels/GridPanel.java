@@ -619,7 +619,6 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	public void drawOneStep(Vector<myPoint> tStep) {
 		for (int j=0; j< tStep.size(); j++){
 			myPoint p = tStep.elementAt(j); 
-			Color tColor = ColorManager.getColor("agent" + (j + 1));
 			drawOpenListCell(p.getX(), p.getY(), j+1);	
 		}
 	}
