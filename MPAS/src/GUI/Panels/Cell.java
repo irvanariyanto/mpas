@@ -29,6 +29,7 @@ import EventMechanism.ApplicationEventSource;
 import EventMechanism.Events.SetBlockCellEvent;
 import EventMechanism.Events.SetFinishCellEvent;
 import EventMechanism.Events.SetStartCellEvent;
+import GUI.Utils.ColorManager;
 import algorithms.myPoint;
 
 /**
@@ -307,7 +308,9 @@ public class Cell extends Component  implements ApplicationEventSource{
 			g.setColor(Color.darkGray);
 		}
 		if (status == Status.Path ) {
-			g.setColor(Color.yellow);			
+			//g.setColor(Color.yellow);
+			Color tColor = ColorManager.getColor("agent" + _agnetNum);
+			g.setColor(tColor);
 		}		
 	}
 
