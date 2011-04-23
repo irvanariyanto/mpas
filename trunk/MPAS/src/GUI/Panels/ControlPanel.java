@@ -54,7 +54,7 @@ public class ControlPanel extends JPanel {
 		_sAnimationSpeed = new JSlider(1,30,1);
 		_sAnimationSpeed.setPaintTicks(true);
 		_sAnimationSpeed.setMajorTickSpacing(5);
-		_lAnimationSpeed = new JLabel(_sAutoStepMode.getValue()*100 + " msec");
+		_lAnimationSpeed = new JLabel(_sAutoStepMode.getValue()*1000 + " msec");
 	    
 		initComponents();
 	}
@@ -144,8 +144,8 @@ public class ControlPanel extends JPanel {
 			public void stateChanged(ChangeEvent e) {
 				JSlider slider = (JSlider) e.getSource();
 				int value = slider.getValue();
-			    setAnimationSpeedLabel(value *100 + " msec");
-			    _guiController.sAnimationSpeedActionPerformed();
+			    setAnimationSpeedLabel(value *1000 + " msec");
+			    _guiController.sAnimationSpeedActionPerformed(value * 1000);
 			}
 		});
 
