@@ -23,6 +23,7 @@ import EventMechanism.Events.OpenListChangeEvent;
 import EventMechanism.Events.finalPathEvent;
 import EventMechanism.Events.showStepEvent;
 import GUI.Panels.Cell;
+import GUI.Utils.ColorManager;
 import GUI.Utils.ScenarioFileFilter;
 
 public class GUIController {
@@ -74,7 +75,7 @@ public class GUIController {
 						Vector<myPoint> v = e.getState().get_Coordinates();
 						for (int i = 0; i < v.size() ;i++){
 							myPoint p = v.elementAt(i);
-							_main.getMainPanel().getGridPanel().animateCell(p.getX(), p.getY());
+							_main.getMainPanel().getGridPanel().animateCell(p.getX(), p.getY(),ColorManager.getColor("agent" + (i+1)));
 						}
 					}
 				}
@@ -87,7 +88,7 @@ public class GUIController {
 						Vector<myPoint> v = e.getState().get_Coordinates();
 						for (int i = 0; i < v.size() ;i++){
 							myPoint p = v.elementAt(i);
-							_main.getMainPanel().getGridPanel().animateCell(p.getX(), p.getY());
+							_main.getMainPanel().getGridPanel().animateCell(p.getX(), p.getY(),ColorManager.getColor("agent" + (i+1)));
 						}
 					}
 				}

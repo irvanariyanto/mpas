@@ -82,6 +82,7 @@ public class Cell extends Component  implements ApplicationEventSource{
 	private Timeline _timeline;
 	private SwingRepaintTimeline _repaintTimeline;
 	public static final int TIMER = 2500;
+	private int _timer;
 	public Color backgroundColor;
 	private boolean isAnimating;
 	
@@ -103,16 +104,19 @@ public class Cell extends Component  implements ApplicationEventSource{
 		// Action and mouse listener support
 		this._listeners = new ApplicationEventListenerCollection();
 		enableEvents(AWTEvent.MOUSE_EVENT_MASK);
-		
+		this._timer = TIMER;
 		this.backgroundColor = Color.white;
 		this._timeline = new Timeline(this);
-		this._timeline.setDuration(TIMER);
+		this._timeline.setDuration(_timer);
 		this._timeline.addPropertyToInterpolate("backgroundColor",Color.blue,Color.white);
 		this._repaintTimeline = repaintTimeline;
 		this.isAnimating = false;
 	}
+	public void addColorProperty(Color c){
+		this._timeline.addPropertyToInterpolate("backgroundColor", c,Color.white);
+	}
 	public void setAnimationTimer(int time){
-		this._timeline.setDuration(time);
+		this._timer = time;
 	}
 	// Constructor
 	public Cell(myPoint p, boolean block) {
@@ -127,7 +131,7 @@ public class Cell extends Component  implements ApplicationEventSource{
 		enableEvents(AWTEvent.MOUSE_EVENT_MASK);
 	}
 	
-	
+	/*
 	//animation addon
 	public void doAnimation(boolean isAnimating){
 		if (this.isAnimating == isAnimating){
@@ -135,6 +139,21 @@ public class Cell extends Component  implements ApplicationEventSource{
 		}
 		this.isAnimating = isAnimating;
 		if (this.isAnimating){
+			this._timeline.replay();
+		}
+	}
+	*/
+	public void doAnimation(boolean isAnimating,Color color){
+		if (this.isAnimating == isAnimating){
+			return;
+		}
+		this.isAnimating = isAnimating;
+		if (this.isAnimating){
+			this._timeline.cancel();
+			this._timeline = new Timeline(this);
+			this._timeline.setDuration(_timer);
+			this._timeline.addPropertyToInterpolate("backgroundColor",color,Color.white);
+		//	this.isAnimating = false;
 			this._timeline.replay();
 		}
 	}
