@@ -697,9 +697,9 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	}
 
 	//animation addon
-	public void animateCell(int row,int column){
-		this._grid[row][column].doAnimation(true);
-		this._grid[row][column].doAnimation(false);
+	public void animateCell(int row,int column,Color color){
+		this._grid[row][column].doAnimation(true,color);
+		this._grid[row][column].doAnimation(false,color);
 	}
 	public void setAnimationTimer(int time) {
 		for (Cell[] tArray:_grid){
