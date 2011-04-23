@@ -124,10 +124,12 @@ public class OpenClosedListDialog  extends JDialog {
 
 	
 
-	protected void ClearTables() {
+	public void ClearTables() {
 		//clear the current state table model
-		_currentStatemodel.removeRow(0);
-		_currentStatemodel.fireTableDataChanged();
+		if(!_currentStatemodel.getDataVector().isEmpty()){
+			_currentStatemodel.removeRow(0);
+			_currentStatemodel.fireTableDataChanged();
+		}
 		//clear the open List table model
 		int openListSize = _OpenListmodel.getRowCount();
 		for(int i=0; i<openListSize;i++){

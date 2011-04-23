@@ -695,6 +695,19 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 		}
 
 	}
+	/**
+	 * return true is path is found, false otherwise
+	 * @return
+	 */
+	public boolean isFinalPathFound() {
+		boolean ans = false;
+		if(_finalPaths != null){
+			ans = true;
+		}
+		
+		return ans;
+		
+	}
 
 	//animation addon
 	public void animateCell(int row,int column,Color color){
