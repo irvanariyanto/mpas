@@ -107,7 +107,7 @@ public class Cell extends Component  implements ApplicationEventSource{
 		this.backgroundColor = Color.white;
 		this._timeline = new Timeline(this);
 		this._timeline.setDuration(TIMER);
-		this._timeline.addPropertyToInterpolate("backgroundColor",ColorManager.getColor("fadingAnimation"),Color.white);
+		this._timeline.addPropertyToInterpolate("backgroundColor",Color.blue,Color.white);
 		this._repaintTimeline = repaintTimeline;
 		this.isAnimating = false;
 	}
