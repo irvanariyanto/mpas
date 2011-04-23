@@ -42,6 +42,7 @@ public class GUIController {
 	private boolean _firstStep;//for running in step mode
 	private boolean _withPathTrace = false;
 	private boolean _writeStatistics = false;
+	private boolean _writeToTables = true;
 	private boolean _animation = false;
 	public GUIController(){
 		_controller = new GridController();
@@ -62,14 +63,15 @@ public class GUIController {
 				else if (event instanceof showStepEvent<?>){
 					GUIController.this.oldState = ((showStepEvent<myPoint>)event).getCoordinates();
 					GUIController.this._main.getMainPanel().getGridPanel().drawOneStep(GUIController.this.oldState);
-					GUIController.this._main.getMainPanel().getConfiguarationPanel().getInfoPanel().writeToTextArea(GUIController.this.oldState.toString());
-					
-					
+					GUIController.this._main.getMainPanel().getConfiguarationPanel().getInfoPanel().writeToTextArea(GUIController.this.oldState.toString());	
 				}
 				else if (event instanceof OpenListChangeEvent<?>){
 					OpenListChangeEvent<myPoint> e = (OpenListChangeEvent<myPoint>)event;
 					if (_writeStatistics){
 						_main.getStatsDialog().addLine("Added to openList:\t" + e.getState().toString()+"\n");
+					}
+					if (_writeToTables){
+						_main.getTablesDialog().addToOpenList(e.getState().get_Coordinates(),e.getState().get_cost(), e.getState().get_heuristic(), e.getState().get_f());
 					}
 					if (_animation){
 						Vector<myPoint> v = e.getState().get_Coordinates();
@@ -83,6 +85,10 @@ public class GUIController {
 					ClosedListChangeEvent<myPoint> e = (ClosedListChangeEvent<myPoint>)event;
 					if (_writeStatistics){
 						_main.getStatsDialog().addLine("Added to closedList:\t" + e.getState().toString() + "\n");
+					}
+					if (_writeToTables){
+						_main.getTablesDialog().addToClosedList(e.getState().get_Coordinates(),e.getState().get_cost(), e.getState().get_heuristic(), e.getState().get_f());
+						_main.getTablesDialog().currentStateChange(e.getState().get_Coordinates(),e.getState().get_cost(), e.getState().get_heuristic(), e.getState().get_f());
 					}
 					if (_animation){
 						Vector<myPoint> v = e.getState().get_Coordinates();
@@ -369,6 +375,11 @@ public class GUIController {
 	}
 	public boolean getAnimation(){
 		return this._animation;
+	}
+
+	public void setWriteToTablePanel(boolean selected) {
+		this._writeToTables = selected;
+		
 	}
 
 	

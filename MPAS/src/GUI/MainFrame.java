@@ -27,7 +27,7 @@ public class MainFrame extends JFrame {
 	private JMenuBar _menuBar;
 	private JMenu _FileMenu,_MapMenu, _helpMenu,_EditMenu,_ViewMenu;	
 	private JMenuItem _openMap, _saveMap, _exitItem,_loadScenario,_saveScenario,_ColorsEditor;
-	private JCheckBoxMenuItem _ShowStatsPanel,_ShowGridLine,_ShowPathTrace,_writeStatistics,_animation,_showListsStat;
+	private JCheckBoxMenuItem _ShowStatsPanel,_ShowGridLine,_ShowPathTrace,_writeStatistics,_animation,_showListsStat,_WriteToListsStat;
 	private mainPanel _mainPanel;
 	private StatisticsDialog _statsPanel;
 	private OpenClosedListDialog _ListsPanel;
@@ -77,12 +77,15 @@ public class MainFrame extends JFrame {
 		_writeStatistics = new JCheckBoxMenuItem("Write statistics");
 		_showListsStat = new JCheckBoxMenuItem("show Lists statistics");
 		_animation = new JCheckBoxMenuItem("Open/Closed list animation");
-		_ViewMenu.add(_ShowStatsPanel);
+		_WriteToListsStat = new JCheckBoxMenuItem("Write To Tables");
 		_ViewMenu.add(_ShowGridLine);
 		_ViewMenu.add(_ShowPathTrace);
 		_ViewMenu.add(_writeStatistics);
-		_ViewMenu.add(_animation);
+		_ViewMenu.add(_WriteToListsStat);
+		_ViewMenu.add(_ShowStatsPanel);
 		_ViewMenu.add(_showListsStat);
+		_ViewMenu.add(_animation);
+
 		_menuBar.add(_helpMenu);
 		
 		this.setJMenuBar(_menuBar);
@@ -165,6 +168,14 @@ public class MainFrame extends JFrame {
 				_guiController.setWriteStats(((JCheckBoxMenuItem)e.getSource()).isSelected());
 			}
 		});
+		
+		_WriteToListsStat.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				_guiController.setWriteToTablePanel(((JCheckBoxMenuItem)e.getSource()).isSelected());
+			}
+		});
 		_animation.addActionListener(new ActionListener() {
 			
 			@Override
@@ -192,6 +203,10 @@ public class MainFrame extends JFrame {
 	
 	public StatisticsDialog getStatsDialog(){
 		return this._statsPanel;
+	}
+	
+	public OpenClosedListDialog getTablesDialog(){
+		return this._ListsPanel;
 	}
 
 	
