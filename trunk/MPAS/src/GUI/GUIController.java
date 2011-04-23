@@ -209,6 +209,9 @@ public class GUIController {
 		this._main.getMainPanel().getGridPanel().clearFinalPath();
 		this._main.getMainPanel().getGridPanel().clearOpenList();
 		this._main.getMainPanel().getConfiguarationPanel().getInfoPanel().setText("");
+		if(this._main.getMainPanel().getGridPanel().isFinalPathFound()){
+			this._main.getTablesDialog().ClearTables();
+		}
 		if (this._main.getMainPanel().getGridPanel().checkArguments()) {
 			this._controller.setTile(this._main.getMainPanel().getGridPanel().get_blockList());
 			this._controller.findPath(this._main.getMainPanel().getGridPanel().get_startsList(),this._main.getMainPanel().getGridPanel().get_FinishList());
