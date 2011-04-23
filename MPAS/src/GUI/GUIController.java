@@ -234,8 +234,8 @@ public class GUIController {
 		
 	}
 	
-	public void sAnimationSpeedActionPerformed() {
-		// TODO Auto-generated method stub
+	public void sAnimationSpeedActionPerformed(int time) {
+		_main.getMainPanel().getGridPanel().setAnimationTimer(time);
 		
 	}
 	

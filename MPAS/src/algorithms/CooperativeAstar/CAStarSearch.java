@@ -79,17 +79,23 @@ public class CAStarSearch<E> extends PausableSearchAlgorithm<E>{
 			for (int agentNum = 0 ; agentNum < allpaths.size() ; agentNum++){
 				Vector<StateInterface<E>> singlePath = allpaths.elementAt(agentNum);
 				if (singlePath.size() > step){ // the agent has not finished moving yet
-					Vector<E> tCoordinates = singlePath.elementAt(step).get_Coordinates();
+					StateInterface<E> tStepState = singlePath.elementAt(step); 
+					Vector<E> tCoordinates = tStepState.get_Coordinates();
 					E tCoordinate = tCoordinates.elementAt(0);
+					tHeuristic += tStepState.get_heuristic();
+					tCost+= tStepState.get_cost();
 					tCombinedCoords.add(tCoordinate);
 				}
 				else{ //pad with last step
-					Vector<E> tCoordinates = singlePath.elementAt(singlePath.size() - 1).get_Coordinates();
+					StateInterface<E> tStepState = singlePath.elementAt(0); // 0 or size -1 
+					Vector<E> tCoordinates = tStepState.get_Coordinates();
 					E tCoordinate = tCoordinates.elementAt(0);
+					tHeuristic += tStepState.get_heuristic();
+					tCost+= tStepState.get_cost();
 					tCombinedCoords.add(tCoordinate);
 				}
 			}
-			tState = allpaths.elementAt(0).elementAt(0).CombineStates(tCombinedCoords,pathCost); //TODO ugly solution
+			tState = allpaths.elementAt(0).elementAt(0).CombineStates(tCombinedCoords,tCost,tHeuristic); //TODO ugly solution
 			res.add(tState);
 		}
 

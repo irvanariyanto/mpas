@@ -111,7 +111,9 @@ public class Cell extends Component  implements ApplicationEventSource{
 		this._repaintTimeline = repaintTimeline;
 		this.isAnimating = false;
 	}
-
+	public void setAnimationTimer(int time){
+		this._timeline.setDuration(time);
+	}
 	// Constructor
 	public Cell(myPoint p, boolean block) {
 		this._position = p;	

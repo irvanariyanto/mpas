@@ -6,6 +6,6 @@ public class defaultsValues {
 	public static int GridSize = 15;
 	public static int NumberOfAgents = 2;
 	public static int Density = 10;
-	public static boolean DEBUG = false;
+	public static boolean DEBUG = true;
 	public static int AnimationSpeed = 100; 
 }
