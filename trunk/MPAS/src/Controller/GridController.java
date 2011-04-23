@@ -22,6 +22,7 @@ import EventMechanism.Events.ClosedListChangeEvent;
 import EventMechanism.Events.OpenListChangeEvent;
 import EventMechanism.Events.StepEvent;
 import EventMechanism.Events.finalPathEvent;
+import EventMechanism.Events.removeFromOpenListEvent;
 import EventMechanism.Events.showStepEvent;
 import algorithms.myPoint;
 import algorithms.CooperativeAstar.CAStarSearch;
@@ -200,6 +201,9 @@ public class GridController implements ControllerInterFace<myPoint>,ApplicationE
 			this._listeners.fireEvent(event);
 		}
 		else if (event instanceof ClosedListChangeEvent){
+			this._listeners.fireEvent(event);
+		}
+		else if (event instanceof removeFromOpenListEvent){
 			this._listeners.fireEvent(event);
 		}
 

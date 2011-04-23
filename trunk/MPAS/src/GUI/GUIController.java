@@ -21,6 +21,7 @@ import EventMechanism.ApplicationEventListener;
 import EventMechanism.Events.ClosedListChangeEvent;
 import EventMechanism.Events.OpenListChangeEvent;
 import EventMechanism.Events.finalPathEvent;
+import EventMechanism.Events.removeFromOpenListEvent;
 import EventMechanism.Events.showStepEvent;
 import GUI.Panels.Cell;
 import GUI.Utils.ColorManager;
@@ -80,7 +81,7 @@ public class GUIController {
 							_main.getMainPanel().getGridPanel().animateCell(p.getX(), p.getY(),ColorManager.getColor("agent" + (i+1)));
 						}
 					}
-				}
+				}			
 				else if (event instanceof ClosedListChangeEvent<?>){
 					ClosedListChangeEvent<myPoint> e = (ClosedListChangeEvent<myPoint>)event;
 					if (_writeStatistics){
@@ -88,7 +89,7 @@ public class GUIController {
 					}
 					if (_writeToTables){
 						_main.getTablesDialog().addToClosedList(e.getState().get_Coordinates(),e.getState().get_cost(), e.getState().get_heuristic(), e.getState().get_f());
-						_main.getTablesDialog().currentStateChange(e.getState().get_Coordinates(),e.getState().get_cost(), e.getState().get_heuristic(), e.getState().get_f());
+						
 					}
 					if (_animation){
 						Vector<myPoint> v = e.getState().get_Coordinates();
@@ -96,6 +97,13 @@ public class GUIController {
 							myPoint p = v.elementAt(i);
 							_main.getMainPanel().getGridPanel().animateCell(p.getX(), p.getY(),ColorManager.getColor("agent" + (i+1)));
 						}
+					}
+				}
+				else if (event instanceof removeFromOpenListEvent<?>){
+					removeFromOpenListEvent<myPoint> e = (removeFromOpenListEvent<myPoint>)event;
+					if (_writeToTables){
+						_main.getTablesDialog().currentStateChange(e.getState().get_Coordinates(),e.getState().get_cost(), e.getState().get_heuristic(), e.getState().get_f());
+						_main.getTablesDialog().removeFromOpenList(e.getState().get_Coordinates(),e.getState().get_cost(), e.getState().get_heuristic(), e.getState().get_f());
 					}
 				}
 			}

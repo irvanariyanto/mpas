@@ -17,6 +17,7 @@ import Defaults.defaultsValues;
 import EventMechanism.Events.ClosedListChangeEvent;
 import EventMechanism.Events.OpenListChangeEvent;
 import EventMechanism.Events.StepEvent;
+import EventMechanism.Events.removeFromOpenListEvent;
 
 public class AStarSearch<E> extends PausableSearchAlgorithm<E> {
 
@@ -50,6 +51,7 @@ public class AStarSearch<E> extends PausableSearchAlgorithm<E> {
 		while (!this._openList.isEmpty()){
 			boolean tentativeIsBetter = false;
 			StateInterface<E> current = this._openList.poll();
+			this._listeners.fireEvent(new removeFromOpenListEvent<E>(this,current)); // notifying the Controller
 			if (defaultsValues.DEBUG){
 				MyLogger.getInstance().info(current.toString());
 			}

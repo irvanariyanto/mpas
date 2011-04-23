@@ -42,9 +42,10 @@ public class OpenClosedListDialog  extends JDialog {
 	private JButton _bClear;
 	private String columnsHeaders[] = {"State Number","Coordinates","g","h","f"};
 	private String currentStateHeaders[] = {"Coordinates","g","h","f"};
-	DefaultTableModel _currentStatemodel; 
-	DefaultTableModel _OpenListmodel; 
-	DefaultTableModel _closedListmodel; 
+	private DefaultTableModel _currentStatemodel; 
+	private DefaultTableModel _OpenListmodel; 
+	private DefaultTableModel _closedListmodel; 
+	private int openListCounter ,closedListCounter;
 	
 	public OpenClosedListDialog(JFrame parent){
 		super(parent);
@@ -58,6 +59,8 @@ public class OpenClosedListDialog  extends JDialog {
         _lOpenList = new JLabel("Open List");
         _lClosedList = new JLabel("Closed List");
         _bClear = new JButton("Clear");
+        openListCounter = 0;
+        closedListCounter = 0;
         
         _OpenListmodel = new DefaultTableModel(null,columnsHeaders){
         	private static final long serialVersionUID = 1L;
@@ -69,6 +72,7 @@ public class OpenClosedListDialog  extends JDialog {
         _openListtable.setPreferredScrollableViewportSize(new Dimension(500, 100));
         _openListtable.setFillsViewportHeight(true);
         _openListScrollPane = new JScrollPane(_openListtable);
+        //_openListtable.setAutoCreateRowSorter(true);
 
         _closedListmodel = new DefaultTableModel(null,columnsHeaders){
 			private static final long serialVersionUID = 1L;
@@ -123,38 +127,96 @@ public class OpenClosedListDialog  extends JDialog {
 	protected void ClearTables() {
 		//clear the current state table model
 		_currentStatemodel.removeRow(0);
+		_currentStatemodel.fireTableDataChanged();
 		//clear the open List table model
 		int openListSize = _OpenListmodel.getRowCount();
 		for(int i=0; i<openListSize;i++){
 			_OpenListmodel.removeRow(0);
+			_OpenListmodel.fireTableDataChanged();
 		}
 		int ClosedListSize = _closedListmodel.getRowCount();
 		for(int i=0; i<ClosedListSize;i++){
 			_closedListmodel.removeRow(0);
+			_closedListmodel.fireTableDataChanged();
 		}
+		closedListCounter = 0;
+		openListCounter = 0;
 		
 
 	}
 
 
 
+	/**
+	 * add the parameters into the table
+	 * @param coor
+	 * @param g
+	 * @param h
+	 * @param f
+	 */
 	public void addToOpenList(Vector<myPoint> coor, float g, float h, float f){
-		_OpenListmodel.insertRow(0,new Object[]{_OpenListmodel.getRowCount(),coor,g,h,f});
+		_OpenListmodel.insertRow(0,new Object[]{openListCounter,coor,g,h,f});
+		_OpenListmodel.fireTableDataChanged();
+		openListCounter++;
 	}
 	
+	/**
+	 * add the parameters into the table
+	 * @param coor
+	 * @param g
+	 * @param h
+	 * @param f
+	 */
 	public void addToClosedList(Vector<myPoint> coor, float g, float h, float f){
-		_closedListmodel.insertRow(0,new Object[]{_closedListmodel.getRowCount(),coor,g,h,f});
+		_closedListmodel.insertRow(0,new Object[]{closedListCounter,coor,g,h,f});
+		_closedListmodel.fireTableDataChanged();
+		closedListCounter++;
 	}
 	
+	/**
+	 * add the parameters into the table
+	 * @param coor
+	 * @param g
+	 * @param h
+	 * @param f
+	 */
 	public void currentStateChange(Vector<myPoint> coor, float g, float h, float f){
 		if (_currentStatemodel.getDataVector().isEmpty()){
 			_currentStatemodel.insertRow(0,new Object[]{coor,g,h,f});
+			
 		}
 		else{
 			_currentStatemodel.removeRow(0);
 			_currentStatemodel.insertRow(0,new Object[]{coor,g,h,f});			
 		}
+		_currentStatemodel.fireTableDataChanged();
+	}
+
+
+
+	/**
+	 * remove from the table
+	 * @param get_Coordinates
+	 * @param get_cost
+	 * @param get_heuristic
+	 * @param get_f
+	 */
+	public void removeFromOpenList(Vector<myPoint> coordinates,
+			float g, float h, float f) {
+		for (int row = 0; row< _OpenListmodel.getRowCount();row++){
+			@SuppressWarnings("unchecked")
+			Vector<myPoint> tCoordinates = (Vector<myPoint>) _OpenListmodel.getValueAt(row, 1);
+			if(tCoordinates.equals(coordinates)){
+				_OpenListmodel.removeRow(row);
+				_OpenListmodel.fireTableDataChanged();
+				//System.out.println("remove cordinate" + tCoordinates.toString() + "row" + row);
+				break;
+			}
 			
+		}
+		
+		
+		
 		
 	}
 	
