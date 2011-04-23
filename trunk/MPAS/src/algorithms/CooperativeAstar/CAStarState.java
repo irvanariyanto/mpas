@@ -182,14 +182,13 @@ public class CAStarState implements CAstarStateInterface<myPoint>,Comparable<CAS
 	
 	public String toString() {
 		String ans = "";
-		ans += "Position: <";
+		ans += "Cost: " + this._cost;
+		ans += "\tHeuristic: " + this._heuristic;
+		ans += "\tPosition: <";
 		for (myPoint p : this._Coordinates) {
 			ans += p.toString();
 		}
 		ans += ">";
-		ans += "\nCost: " + this._cost;
-		ans += "\nHeuristic: " + this._heuristic;
-		ans += "\nTime: " + this._t;
 		return ans;
 	}
 	

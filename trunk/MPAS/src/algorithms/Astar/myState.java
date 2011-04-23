@@ -133,13 +133,13 @@ public class myState implements Comparable<myState>,StateInterface<myPoint> {
 
 	public String toString() {
 		String ans = "";
-		ans += "Position: <";
+		ans += "Cost: " + this._cost;
+		ans += "\tHeuristic: " + this._heuristic;
+		ans += "\tPosition: <";
 		for (myPoint p : this._Coordinates) {
 			ans += p.toString();
 		}
 		ans += ">";
-		ans += "\tCost: " + this._cost;
-		ans += "\tHeuristic: " + this._heuristic;
 		return ans;
 	}
 
