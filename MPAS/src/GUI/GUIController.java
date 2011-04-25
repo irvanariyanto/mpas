@@ -45,6 +45,7 @@ public class GUIController {
 	private boolean _writeStatistics = false;
 	private boolean _writeToTables = true;
 	private boolean _animation = false;
+	private boolean _animatedPath = false;
 	public GUIController(){
 		_controller = new GridController();
 		_firstStep = true;	
@@ -55,7 +56,12 @@ public class GUIController {
 			public void handle(ApplicationEvent event) {
 				if (event instanceof finalPathEvent){
 					Vector<Vector<myPoint>> path = GUIController.this._controller.getFinalPath();
-					GUIController.this._main.getMainPanel().getGridPanel().drawFinalPaths(path,_withPathTrace);
+					if(!_animatedPath){
+						GUIController.this._main.getMainPanel().getGridPanel().drawFinalPaths(path,_withPathTrace);
+					}
+					else{//final Path animation;
+						GUIController.this._main.getMainPanel().getGridPanel().setFinalPath(path);
+					}
 					if (_writeStatistics){
 						_main.getStatsDialog().addLine("\nFinal path cost: " + ((finalPathEvent)event).getCost());
 					}
@@ -253,7 +259,36 @@ public class GUIController {
 	}
 	
 	public void sAnimationSpeedActionPerformed(int time) {
-		_main.getMainPanel().getGridPanel().setAnimationTimer(time);
+		_main.getMainPanel().getGridPanel().setAnimationTimer(time);	
+	}
+	
+	public void bFirstActionPerformed(ActionEvent evt) {
+			_main.getMainPanel().getGridPanel().drawFirstFinalStep();		
+		
+	}
+
+	public void bPreviousActionPerformed(ActionEvent evt) {
+		_main.getMainPanel().getGridPanel().drawPreviousFinalStep();
+		
+	}
+
+	public void bPlayActionPerformed(ActionEvent evt) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void bNextActionPerformed(ActionEvent evt) {
+		_main.getMainPanel().getGridPanel().drawNextFinalStep();
+		
+	}
+	
+	public void bLastActionPerformed(ActionEvent evt) {
+		_main.getMainPanel().getGridPanel().drawLastFinalStep();
+		
+	}
+
+	public void bPauseActionPerformed(ActionEvent evt) {
+		// TODO Auto-generated method stub
 		
 	}
 	
@@ -268,7 +303,6 @@ public class GUIController {
 		
 	}
 	
-	//TODO move to gui controller
 	public void performStep(){
 		if (this._firstStep){
 			System.out.println(this._controller.getMap().toString());
@@ -393,13 +427,14 @@ public class GUIController {
 		
 	}
 
-	
+	public void withAnimatedPath(boolean selected) {
+		this._animatedPath  = selected;
+		
+	}
 
 	
 
-
 	
-
 	
 	
     
