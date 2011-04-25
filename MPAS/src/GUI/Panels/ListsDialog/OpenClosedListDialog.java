@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Vector;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -30,9 +31,6 @@ public class OpenClosedListDialog  extends JDialog {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel _mainPanel;
-	private JLabel _lcurrentState;
-	private JLabel _lOpenList;
-	private JLabel _lClosedList;
 	private JTable _currentState;
 	private JTable _openListtable;
 	private JTable _closedListtable;
@@ -55,9 +53,6 @@ public class OpenClosedListDialog  extends JDialog {
         this.setVisible(true);
         this.setSize(new Dimension(600,300));
         _mainPanel = new JPanel(new GridLayout(0,1));
-        _lcurrentState = new JLabel("Current State");
-        _lOpenList = new JLabel("Open List");
-        _lClosedList = new JLabel("Closed List");
         _bClear = new JButton("Clear");
         openListCounter = 0;
         closedListCounter = 0;
@@ -72,7 +67,7 @@ public class OpenClosedListDialog  extends JDialog {
         _openListtable.setPreferredScrollableViewportSize(new Dimension(500, 100));
         _openListtable.setFillsViewportHeight(true);
         _openListScrollPane = new JScrollPane(_openListtable);
-        //_openListtable.setAutoCreateRowSorter(true);
+        _openListScrollPane.setBorder(BorderFactory.createTitledBorder("Open List"));
 
         _closedListmodel = new DefaultTableModel(null,columnsHeaders){
 			private static final long serialVersionUID = 1L;
@@ -84,6 +79,7 @@ public class OpenClosedListDialog  extends JDialog {
         _closedListtable.setPreferredScrollableViewportSize(new Dimension(500, 100));
         _closedListtable.setFillsViewportHeight(true);
         _closedListScrollPane = new JScrollPane(_closedListtable);
+        _closedListScrollPane.setBorder(BorderFactory.createTitledBorder("Closed List"));
         
         _currentStatemodel = new DefaultTableModel(null,currentStateHeaders){
         	private static final long serialVersionUID = 1L;
@@ -95,23 +91,18 @@ public class OpenClosedListDialog  extends JDialog {
         _currentState.setPreferredScrollableViewportSize(new Dimension(500, 25));
         _currentState.setFillsViewportHeight(true);
         _currentStateScrollPane = new JScrollPane(_currentState);
+        _currentStateScrollPane.setBorder(BorderFactory.createTitledBorder("Current State"));
 
               
 
         //Add the scroll pane to this panel.
         _mainPanel.setLayout(new BoxLayout(_mainPanel, BoxLayout.Y_AXIS));
-        _lcurrentState.setAlignmentX(Component.LEFT_ALIGNMENT);
         _currentStateScrollPane.setAlignmentX(Component.LEFT_ALIGNMENT);
-        _lOpenList.setAlignmentX(Component.LEFT_ALIGNMENT);
         _openListScrollPane.setAlignmentX(Component.LEFT_ALIGNMENT);
-        _lClosedList.setAlignmentX(Component.LEFT_ALIGNMENT);
         _closedListScrollPane.setAlignmentX(Component.LEFT_ALIGNMENT);
         _bClear.setAlignmentX(Component.LEFT_ALIGNMENT);
-        _mainPanel.add(_lcurrentState);
         _mainPanel.add(_currentStateScrollPane);
-        _mainPanel.add(_lOpenList);
         _mainPanel.add(_openListScrollPane);
-        _mainPanel.add(_lClosedList);
         _mainPanel.add(_closedListScrollPane);
         _mainPanel.add(_bClear);
         this.add(_mainPanel);
