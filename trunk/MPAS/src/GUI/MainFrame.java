@@ -27,7 +27,7 @@ public class MainFrame extends JFrame {
 	private JMenuBar _menuBar;
 	private JMenu _FileMenu,_MapMenu, _helpMenu,_EditMenu,_ViewMenu;	
 	private JMenuItem _openMap, _saveMap, _exitItem,_loadScenario,_saveScenario,_ColorsEditor;
-	private JCheckBoxMenuItem _ShowStatsPanel,_ShowGridLine,_ShowPathTrace,_writeStatistics,_animation,_showListsStat,_WriteToListsStat;
+	private JCheckBoxMenuItem _ShowStatsPanel,_ShowGridLine,_ShowPathTrace,_writeStatistics,_animation,_showListsStat,_WriteToListsStat,_withAnimatedPath;
 	private mainPanel _mainPanel;
 	private StatisticsDialog _statsPanel;
 	private OpenClosedListDialog _ListsPanel;
@@ -78,6 +78,7 @@ public class MainFrame extends JFrame {
 		_showListsStat = new JCheckBoxMenuItem("show Lists statistics");
 		_animation = new JCheckBoxMenuItem("Open/Closed list animation");
 		_WriteToListsStat = new JCheckBoxMenuItem("Write To Tables");
+		_withAnimatedPath = new  JCheckBoxMenuItem("Animated Path");
 		_ViewMenu.add(_ShowGridLine);
 		_ViewMenu.add(_ShowPathTrace);
 		_ViewMenu.add(_writeStatistics);
@@ -85,6 +86,7 @@ public class MainFrame extends JFrame {
 		_ViewMenu.add(_ShowStatsPanel);
 		_ViewMenu.add(_showListsStat);
 		_ViewMenu.add(_animation);
+		_ViewMenu.add(_withAnimatedPath);
 
 		_menuBar.add(_helpMenu);
 		
@@ -181,6 +183,13 @@ public class MainFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				_guiController.setAnimation(((JCheckBoxMenuItem)e.getSource()).isSelected());
+			}
+		});
+		_withAnimatedPath.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				_guiController.withAnimatedPath(((JCheckBoxMenuItem)e.getSource()).isSelected());
 			}
 		});
 		_ShowGridLine.addActionListener(new ActionListener() {

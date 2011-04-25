@@ -43,6 +43,7 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	private Vector<myPoint> _FinishList;
 	private Vector<myPoint> _blockList;
 	private Vector<Vector<myPoint>> _finalPaths;
+	private int _finalPathStep = 0;
 	// End of variables declaration
 	
 	//animation addition
@@ -131,6 +132,16 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	
 	public void setAgentNumber(int selected) {
 		Cell._agentSelected = selected;
+		
+	}
+	
+	public void setFinalPath(Vector<Vector<myPoint>> finalPath) {
+		_finalPaths = finalPath;	
+		_finalPathStep=0;
+	}
+	
+	public Vector<Vector<myPoint>>  getFinalPath() {
+		return _finalPaths ;
 		
 	}
 	
@@ -407,6 +418,9 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 		 repaint();
 	}
 	
+	
+	
+	
 	public void drawFinalPaths(Vector<Vector<myPoint>> finalPath) {
         for (int i = 0; i < finalPath.size(); i++) {
                 Vector<myPoint> tPath = finalPath.elementAt(i);
@@ -429,6 +443,71 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 				drawFinalPathCell(p.getX(), p.getY(),j+1);
 			}
 		}
+	}
+	
+	public void drawOneFinalStep(int step) {
+		if(_finalPaths!=null && !_finalPaths.isEmpty()){
+			for(int i=0;i<_finalPaths.size();i++){
+				Vector<myPoint> tAgentPath = _finalPaths.elementAt(i);
+				myPoint p = tAgentPath.elementAt(step);
+				drawFinalPathCell(p.getX(), p.getY(),i+1);
+			}
+		}
+		 repaint();	
+	}
+	public void clearOneFinalStep(int step) {
+		if(_finalPaths!=null && !_finalPaths.isEmpty()){
+			for(int i=0;i<_finalPaths.size();i++){
+				Vector<myPoint> tAgentPath = _finalPaths.elementAt(i);
+				myPoint p = tAgentPath.elementAt(step);
+				if(this._grid[p.getX()][p.getY()].get_status() != Status.Finish && 
+						this._grid[p.getX()][p.getY()].get_status() != Status.Start ){
+					this._grid[p.getX()][p.getY()].set_status(Status.Empty);
+				}
+			}
+		}
+		repaint();	
+	}
+	
+	public void drawFirstFinalStep() {		
+		for(int i=0; i<_finalPaths.elementAt(0).size(); i++){
+			if(i!=_finalPaths.elementAt(0).size()-1){
+				clearOneFinalStep(i);
+			}
+		}
+		drawOneFinalStep(_finalPaths.elementAt(0).size()-1);
+	}
+	
+	public void drawPreviousFinalStep() {
+		int tSize = _finalPaths.elementAt(0).size();
+		if(_finalPathStep > 1){
+			_finalPathStep --;
+			drawOneFinalStep(tSize-_finalPathStep);
+			if(_finalPathStep != 0 ){
+				clearOneFinalStep(tSize-_finalPathStep-1);
+			}
+		}	
+		
+	}
+	public void drawNextFinalStep() {
+		int tSize = _finalPaths.elementAt(0).size();
+		if(_finalPathStep < tSize){
+			_finalPathStep ++;
+			drawOneFinalStep(tSize-_finalPathStep);
+			if(_finalPathStep != 1 ){
+				clearOneFinalStep(tSize-_finalPathStep+1);
+			}
+		}	
+	}
+	
+	public void drawLastFinalStep() {
+		for(int i=0; i<_finalPaths.elementAt(0).size(); i++){
+			if(i!=0){
+				clearOneFinalStep(i);
+			}
+		}
+		drawOneFinalStep(0);
+		
 	}
 	
 	public void drawFinalPathsWithLines(Vector<Vector<myPoint>> finalPath){
@@ -722,6 +801,9 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 		}
 		
 	}
+	
+	
+	
 	
 
 	
