@@ -178,8 +178,7 @@ public class MainFrame extends JFrame {
 				_guiController.setWriteToTablePanel(((JCheckBoxMenuItem)e.getSource()).isSelected());
 			}
 		});
-		_animation.addActionListener(new ActionListener() {
-			
+		_animation.addActionListener(new ActionListener() {	
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				_guiController.setAnimation(((JCheckBoxMenuItem)e.getSource()).isSelected());
@@ -190,6 +189,7 @@ public class MainFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				_guiController.withAnimatedPath(((JCheckBoxMenuItem)e.getSource()).isSelected());
+				_guiController.openAnimationDiaglog();
 			}
 		});
 		_ShowGridLine.addActionListener(new ActionListener() {
