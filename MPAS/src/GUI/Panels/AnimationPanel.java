@@ -15,7 +15,7 @@ import javax.swing.event.ChangeListener;
 
 import GUI.GUIController;
 
-public class AminationPanel extends JPanel {
+public class AnimationPanel extends JPanel {
 
 	// Variables declaration 
 	private static final long serialVersionUID = 1L;
@@ -43,7 +43,7 @@ public class AminationPanel extends JPanel {
 	 * Constructor
 	 * @param controller 
 	 */
-	public AminationPanel(GUIController controller){
+	public AnimationPanel(GUIController controller){
 		super();
 		this._guiController= controller;
 		this.setBorder(BorderFactory.createTitledBorder("Animation Panel"));
@@ -127,6 +127,11 @@ public class AminationPanel extends JPanel {
 	
 	public void setSpeedLabel(String string) {
 		this._lSpeed.setText(string);		
+	}
+
+
+	public int getAnimationSpeedValue() {
+		return this._sAnimationSpeed.getValue();
 	}
 
 }

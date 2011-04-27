@@ -13,7 +13,6 @@ public class ConfigurationPanel extends JPanel {
 	private SettingsPanel _setPanel;
 	private ControlPanel _controlPanel;
 	private InfoPanel _infoPanel;
-	private AminationPanel _aminationPanel;
 	private GUIController _guiController;
 	// End of variables declaration
 	
@@ -35,16 +34,13 @@ public class ConfigurationPanel extends JPanel {
 		_setPanel = new SettingsPanel(_guiController);
 		_controlPanel = new ControlPanel(_guiController);
 		_infoPanel = new InfoPanel(_guiController);
-		_aminationPanel = new AminationPanel(_guiController);
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		_setPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
 		_controlPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
 		_infoPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
-		_aminationPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
 		
 		this.add(_setPanel);
 		this.add(_controlPanel);
-		this.add(_aminationPanel);
 		//this.add(_infoPanel);
 	}
 	
@@ -60,9 +56,6 @@ public class ConfigurationPanel extends JPanel {
 		return this._infoPanel;
 	}
 	
-	public AminationPanel getAminationPanel(){
-		return this._aminationPanel;
-	}
 
 	
 }//end of class ConfigurationPanel

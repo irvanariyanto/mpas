@@ -23,6 +23,7 @@ import EventMechanism.Events.OpenListChangeEvent;
 import EventMechanism.Events.finalPathEvent;
 import EventMechanism.Events.removeFromOpenListEvent;
 import EventMechanism.Events.showStepEvent;
+import GUI.Panels.AnimationDialog;
 import GUI.Panels.Cell;
 import GUI.Utils.ColorManager;
 import GUI.Utils.ScenarioFileFilter;
@@ -38,7 +39,8 @@ public class GUIController {
 	private boolean _directionChosen; // 1 = 8D, 0 = 4D
 	private int _numberOfAgents;
 	private int _gridSize ;	
-	private AutoStepsThread _stepThread;	
+	private AutoStepsThread _stepThread;
+	private FinalPathThread _finalAnimationThread;
 	private Vector<myPoint> oldState; //TODO make it better later	
 	private boolean _firstStep;//for running in step mode
 	private boolean _withPathTrace = false;
@@ -46,6 +48,7 @@ public class GUIController {
 	private boolean _writeToTables = true;
 	private boolean _animation = false;
 	private boolean _animatedPath = false;
+	AnimationDialog _animationDialog;
 	public GUIController(){
 		_controller = new GridController();
 		_firstStep = true;	
@@ -273,8 +276,8 @@ public class GUIController {
 	}
 
 	public void bPlayActionPerformed(ActionEvent evt) {
-		// TODO Auto-generated method stub
-		
+		_finalAnimationThread = new FinalPathThread(this._animationDialog.getAnimationSpeedValue()*100,this);
+		_finalAnimationThread.start();		
 	}
 
 	public void bNextActionPerformed(ActionEvent evt) {
@@ -288,7 +291,7 @@ public class GUIController {
 	}
 
 	public void bPauseActionPerformed(ActionEvent evt) {
-		// TODO Auto-generated method stub
+		_finalAnimationThread.setFinished(true);
 		
 	}
 	
@@ -322,7 +325,11 @@ public class GUIController {
 		if (this._controller.getAlgorithmThread() != null){
 			this._controller.getAlgorithmThread().stop();
 		}
+	}
 	
+	public void preformFinalPathStep() {
+		this._main.getMainPanel().getGridPanel().drawNextFinalStep();
+		
 	}
 
 	
@@ -381,6 +388,19 @@ public class GUIController {
 	    	}
 	}
 	
+	public void openAnimationDiaglog() {
+		_animationDialog= new AnimationDialog(this._main,this);
+		_animationDialog.setVisible(true);
+	}
+	
+	public int getAnimationSpeedValue(){
+		int ans = -1;
+		if(this._animationDialog!=null){
+			ans = this._animationDialog.getAnimationSpeedValue();
+		}
+		return ans;
+	}
+	
 	
 	public void init_controller(){
 		this._controller.setAlgorithm(_algorithmChosen);
@@ -431,6 +451,10 @@ public class GUIController {
 		this._animatedPath  = selected;
 		
 	}
+
+
+
+	
 
 	
 
