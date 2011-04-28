@@ -801,6 +801,16 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 		}
 		
 	}
+	/**
+	 * stops the animation once the stop button was pressed or a path has been found
+	 */
+	public void stopAnimations(){
+		for (Cell[] tArray : _grid){
+			for (Cell c : tArray){
+				c.stopAnimation();
+			}
+		}
+	}
 	
 	
 	

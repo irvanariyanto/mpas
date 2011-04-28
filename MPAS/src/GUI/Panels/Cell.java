@@ -504,6 +504,16 @@ public class Cell extends Component  implements ApplicationEventSource{
 	public void removeListener(ApplicationEventListener listener) {
 		this._listeners.remove(listener);
 	}
+	
+	/** 
+	 * stops the cell animation
+	 */
+	public void stopAnimation() {
+		this.backgroundColor = Color.white;
+		this._timeline.end();
+
+		
+	}
 
 	
 

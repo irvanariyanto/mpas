@@ -325,6 +325,7 @@ public class GUIController {
 		if (this._controller.getAlgorithmThread() != null){
 			this._controller.getAlgorithmThread().stop();
 		}
+		_main.getMainPanel().getGridPanel().stopAnimations();
 	}
 	
 	public void preformFinalPathStep() {
