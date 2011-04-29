@@ -52,7 +52,11 @@ public class myPoint {
          * @see Object#equals(Object)
          */
         public boolean equals(Object other) {
-                        return (((myPoint)other).x == x) && (((myPoint)other).y == y);
+        	boolean ans = false;
+        	if(other !=null){ //liron added
+        		ans= (((myPoint)other).x == x) && (((myPoint)other).y == y);
+        	}
+        	return ans;
         }
         public String toString(){
                 return "(" + this.x + "," + this.y + ")";
