@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Vector;
 import javax.swing.JPanel;
@@ -39,8 +40,8 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	private ApplicationEventListenerCollection _listeners;
 	private myPoint[] _starts = new myPoint[NUM_OF_AGENT];
 	private myPoint[] _finishes = new myPoint[NUM_OF_AGENT];
-	private Vector<myPoint> _startsList;
-	private Vector<myPoint> _FinishList;
+	//private Vector<myPoint> _startsList;
+	//private Vector<myPoint> _FinishList;
 	private Vector<myPoint> _blockList;
 	private Vector<Vector<myPoint>> _finalPaths;
 	private int _finalPathStep = 0;
@@ -50,10 +51,14 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	SwingRepaintTimeline _repaintTimeline;
 	
 	public void setStarts(Vector<myPoint> starts){
-		this._startsList = starts;
+		for(int i=0; i< starts.size(); i++){
+			_starts[i] = starts.elementAt(i);
+		}
 	}
 	public void setFinishes(Vector<myPoint> finishes){
-		this._FinishList = finishes;
+		for(int i=0; i< finishes.size(); i++){
+			_finishes[i] = finishes.elementAt(i);
+		}
 	}
 	/**
 	 * Constructor
@@ -67,8 +72,6 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 		_width= size;
 		_height = size;
 		_grid = new Cell[get_width()][get_height()];
-		_startsList = new Vector<myPoint>();
-		_FinishList = new Vector<myPoint>();
 		_blockList = new Vector<myPoint>();
 		setLayout(new GridLayout(get_width(), get_height()));
 		for (int i = 0; i < get_height(); i++) {
@@ -101,25 +104,13 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	}
 	
 	public Vector<myPoint> get_startsList(){
-		for (int i=0; i< this._starts.length; i++){
-	        if (this._starts[i] != null){
-	        	if(!this._startsList.contains(_starts[i])){
-	        		this._startsList.add(_starts[i]);
-	        	}
-	        }
-		}
-		return this._startsList;
+		Vector<myPoint> v = new Vector<myPoint>(Arrays.asList(_starts));
+		return v;
 	}
 	
 	public Vector<myPoint> get_FinishList(){
-		for (int i=0; i< this._finishes.length; i++){
-        	if (this._finishes[i] != null){
-        		if(!this._FinishList.contains(_finishes[i])){
-        		this._FinishList.add(_finishes[i]);
-        		}
-        	}
-        }
-		return this._FinishList;
+		Vector<myPoint> v = new Vector<myPoint>(Arrays.asList(_finishes));
+		return v;
 	}
 	
 	public Vector<myPoint> get_blockList(){
@@ -162,8 +153,8 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	}
 	//TODO maybe needs more stuff
 	public void drawScenario(Scenario s){
-		this._startsList = s.getStartLocations();
-		this._FinishList = s.getGoalLocations();
+		setStarts(s.getStartLocations());
+		setFinishes(s.getGoalLocations());
 		drawMap(s.getMap());
 		int numOfAgents = s.getStartLocations().size();
 		setNUM_OF_AGENT(numOfAgents);
@@ -231,17 +222,46 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 		return ans;
 	}
 
+	public boolean startsIsEmpty(){
+		boolean ans = false;
+		int counter = 0;
+		for(int i=0;i<_starts.length;i++){
+			if(_starts[i]==null){
+				counter++;
+			}
+		}
+		if(counter == _starts.length){
+			ans=true;
+		}
+		return ans;		
+	}
+	
+	public boolean finishesIsEmpty(){
+		boolean ans = false;
+		int counter = 0;
+		for(int i=0;i<_finishes.length;i++){
+			if(_finishes[i]==null){
+				counter++;
+			}
+		}
+		if(counter == _finishes.length){
+			ans=true;
+		}
+		return ans;		
+	}
 	public void clearPositions() {
-		Vector<myPoint> startList = this.get_startsList();
-		Vector<myPoint> finishList = this.get_FinishList();	
-		for(myPoint p: startList){
-			this._grid[p.getX()][p.getY()].set_status(GUI.Panels.Cell.Status.Empty);
+		if(!startsIsEmpty()){
+			for(int i=0;i<_starts.length;i++){
+				myPoint p = _starts[i];
+				this._grid[p.getX()][p.getY()].set_status(GUI.Panels.Cell.Status.Empty);
+			}
 		}
-		this._startsList.removeAllElements();
-		for(myPoint p: finishList){
-			 this._grid[p.getX()][p.getY()].set_status(GUI.Panels.Cell.Status.Empty);
+		if(!finishesIsEmpty()){
+			for(int i=0;i<_finishes.length;i++){
+				myPoint p = _finishes[i];
+				this._grid[p.getX()][p.getY()].set_status(GUI.Panels.Cell.Status.Empty);
+			}
 		}
-		this._FinishList.removeAllElements();
 		_starts = new myPoint[NUM_OF_AGENT];
 		_finishes = new myPoint[NUM_OF_AGENT];
 		repaint();
