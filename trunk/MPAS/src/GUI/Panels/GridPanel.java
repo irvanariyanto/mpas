@@ -292,7 +292,8 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 			for(Vector<myPoint> state: _finalPaths){
 				for(myPoint p: state){
 					if (this._grid[p.getX()][p.getY()].get_status() != Status.Start &&
-						this._grid[p.getX()][p.getY()].get_status() != Status.Finish){
+						this._grid[p.getX()][p.getY()].get_status() != Status.Finish &&
+						this._grid[p.getX()][p.getY()].get_status() != Status.Blocked){
 						this._grid[p.getX()][p.getY()].set_status(GUI.Panels.Cell.Status.Empty);
 					}
 					else{
