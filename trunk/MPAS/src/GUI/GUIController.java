@@ -369,6 +369,7 @@ public class GUIController {
 	}
 	
 	public void stop(){
+		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(true);
 		reset();
 		if (this._controller.getAlgorithmThread() != null){
 			this._controller.getAlgorithmThread().stop();
