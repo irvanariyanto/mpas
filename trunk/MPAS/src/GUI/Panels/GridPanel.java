@@ -199,12 +199,31 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 		if (this.get_blockList().contains(p)) {
 			this._grid[p.getX()][p.getY()].set_status(GUI.Panels.Cell.Status.Empty);			
 			this.get_blockList().remove(p);
-		} else {
+		} else if(this.get_startsList().contains(p)){
+			for(int i=0;i<_starts.length; i++){
+				if(_starts[i].equals(p)){
+					_starts[i]=null;
+				}
+			}
+			this.get_blockList().add(p);
+			this._grid[p.getX()][p.getY()].set_status(GUI.Panels.Cell.Status.Blocked);
+		}
+		else if(this.get_FinishList().contains(p)){
+			for(int i=0;i<_finishes.length; i++){
+				if(_finishes[i].equals(p)){
+					_finishes[i]=null;
+				}
+			}
+			this.get_blockList().add(p);
+			this._grid[p.getX()][p.getY()].set_status(GUI.Panels.Cell.Status.Blocked);
+		}
+		else{
 			this.get_blockList().add(p);
 			this._grid[p.getX()][p.getY()].set_status(GUI.Panels.Cell.Status.Blocked);			
 		}
 		repaint();		
 	}
+	
 	//amit
 	public void setBlockedCell(int row,int column){
 		setBlockCell(new myPoint(row,column));
@@ -253,13 +272,17 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 		if(!startsIsEmpty()){
 			for(int i=0;i<_starts.length;i++){
 				myPoint p = _starts[i];
-				this._grid[p.getX()][p.getY()].set_status(GUI.Panels.Cell.Status.Empty);
+					if(p != null){
+						this._grid[p.getX()][p.getY()].set_status(GUI.Panels.Cell.Status.Empty);
+					}
 			}
 		}
 		if(!finishesIsEmpty()){
 			for(int i=0;i<_finishes.length;i++){
 				myPoint p = _finishes[i];
-				this._grid[p.getX()][p.getY()].set_status(GUI.Panels.Cell.Status.Empty);
+				if(p != null){
+					this._grid[p.getX()][p.getY()].set_status(GUI.Panels.Cell.Status.Empty);
+				}
 			}
 		}
 		_starts = new myPoint[NUM_OF_AGENT];
@@ -497,6 +520,7 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 			}
 		}
 		drawOneFinalStep(_finalPaths.elementAt(0).size()-1);
+		_finalPathStep = 0 ;
 	}
 	
 	public void drawPreviousFinalStep() {
@@ -511,14 +535,16 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 		
 	}
 	public void drawNextFinalStep() {
-		int tSize = _finalPaths.elementAt(0).size();
-		if(_finalPathStep < tSize){
-			_finalPathStep ++;
-			drawOneFinalStep(tSize-_finalPathStep);
-			if(_finalPathStep != 1 ){
-				clearOneFinalStep(tSize-_finalPathStep+1);
+		if(_finalPaths!=null){
+			int tSize = _finalPaths.elementAt(0).size();
+			if(_finalPathStep < tSize){
+				_finalPathStep ++;
+				drawOneFinalStep(tSize-_finalPathStep);
+				if(_finalPathStep != 1 ){
+					clearOneFinalStep(tSize-_finalPathStep+1);
+				}
 			}
-		}	
+		}
 	}
 	
 	public void drawLastFinalStep() {
@@ -528,7 +554,7 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 			}
 		}
 		drawOneFinalStep(0);
-		
+		_finalPathStep = _finalPaths.elementAt(0).size() ;		
 	}
 	
 	public void drawFinalPathsWithLines(Vector<Vector<myPoint>> finalPath){
