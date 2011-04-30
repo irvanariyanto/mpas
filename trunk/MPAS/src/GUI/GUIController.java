@@ -70,6 +70,9 @@ public class GUIController {
 						_main.getStatsDialog().addLine("\nFinal path cost: " + ((finalPathEvent)event).getCost());
 					}
 					GUIController.this._main.getMainPanel().getConfiguarationPanel().getInfoPanel().setFinalCost(finalCost);
+					GUIController.this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(true);
+					GUIController.this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(true);
+					GUIController.this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStopButton(false);
 					GUIController.this.reset();
 				}
 				else if (event instanceof showStepEvent<?>){
@@ -139,21 +142,29 @@ public class GUIController {
 	
 	public void cAlgorithmActionPerformed(ActionEvent evt) {
 		_algorithmChosen = this._main.getMainPanel().getConfiguarationPanel().getSettingsPanel().getAlgorithm();
+		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(true);
+		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(false);
 		init_controller(_algorithmChosen,_heuristicChosen,_directionChosen,_numberOfAgents,_gridSize);
 	}
 	
 	public void cHeuristicActionPerformed(ActionEvent evt) {
+		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(true);
+		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(false);
 		_heuristicChosen = this._main.getMainPanel().getConfiguarationPanel().getSettingsPanel().getHeuristic();
 		init_controller(_algorithmChosen,_heuristicChosen,_directionChosen,_numberOfAgents,_gridSize);		
 	}
 	
 	
 	public void cDirectionsActionPerformed(ActionEvent evt) {
+		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(true);
+		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(false);
 		_directionChosen = this._main.getMainPanel().getConfiguarationPanel().getSettingsPanel().getDirection();
 		init_controller(_algorithmChosen,_heuristicChosen,_directionChosen,_numberOfAgents,_gridSize);	
 	}
 	
 	public void sNumOfAgentsActionPerformed(ChangeEvent evt) {
+		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(true);
+		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(false);
 		_numberOfAgents = this._main.getMainPanel().getConfiguarationPanel().getSettingsPanel().getNumberOfAgents();
 		ChangeComboBoxSize(_numberOfAgents);
 		this._main.getMainPanel().getGridPanel().setNUM_OF_AGENT(_numberOfAgents);
@@ -162,6 +173,8 @@ public class GUIController {
 		
 	}
 	public void sGridSizeActionPerformed(ChangeEvent evt) {
+		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(true);
+		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(false);
 		this._main.getMainPanel().getGridPanel().clearBlocks(this._controller.getMap());
 		this._main.getMainPanel().getGridPanel().clearPositions();
 		this._main.getMainPanel().getConfiguarationPanel().getInfoPanel().clearFinalCost();
@@ -200,6 +213,8 @@ public class GUIController {
 		this._main.getMainPanel().getGridPanel().clearFinalPath();	
 		this._main.getMainPanel().getGridPanel().clearOpenList();
 		this._main.getMainPanel().getGridPanel().GeneratePositions();
+		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(true);
+		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(false);
 		//this._main.getMainPanel().getConfiguarationPanel().getInfoPanel().setText("");
 		}
 	
@@ -207,9 +222,13 @@ public class GUIController {
 		this._main.getMainPanel().getGridPanel().clearPositions();
 		this._main.getMainPanel().getConfiguarationPanel().getInfoPanel().clearFinalCost();
 		this._main.getMainPanel().getGridPanel().clearFinalPath();
+		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(true);
+		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(false);
 	}
 	
 	public void bRandomMapActionPerformed(ActionEvent evt) {
+		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(true);
+		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(false);
 		this._main.getMainPanel().getConfiguarationPanel().getInfoPanel().clearFinalCost();
 		this._main.getMainPanel().getGridPanel().clearFinalPath();
 		this._main.getMainPanel().getGridPanel().createRandomBlocks(this._main.getMainPanel().getConfiguarationPanel().getSettingsPanel().getsDensityValue(), this._controller.getMap());
@@ -219,41 +238,61 @@ public class GUIController {
 	public void bClearMapActionPerformed(ActionEvent evt) {
 		this._main.getMainPanel().getGridPanel().clearAll(this._controller.getMap());
 		this._main.getMainPanel().getConfiguarationPanel().getInfoPanel().clearFinalCost();
+		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(true);
+		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(false);
 		
 	}
 	
 	public void bFindPathActionPerformed(ActionEvent evt) {
-		this._main.getMainPanel().getGridPanel().clearFinalPath();
+		this._main.getMainPanel().getGridPanel().clearFinalPath();	
 		this._main.getMainPanel().getGridPanel().clearOpenList();
+		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(false);
+		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(false);
 		//this._main.getMainPanel().getConfiguarationPanel().getInfoPanel().setText("");
 		if(this._main.getMainPanel().getGridPanel().isFinalPathFound()){
 			this._main.getTablesDialog().ClearTables();
+			//this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(true);
 		}
 		if (this._main.getMainPanel().getGridPanel().checkArguments()) {
 			this._controller.setTile(this._main.getMainPanel().getGridPanel().get_blockList());
 			this._controller.findPath(this._main.getMainPanel().getGridPanel().get_startsList(),this._main.getMainPanel().getGridPanel().get_FinishList());
+			this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStopButton(true);
 		} else {
+			this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(true);
+			this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(false);
 			JOptionPane.showMessageDialog(this._main.getMainPanel(),
 					"You havn't entered all the parameters, please try again",
 					"Missing Argumets", JOptionPane.ERROR_MESSAGE);
 		}
+		
 	}	
 		
 	public void bClearPathActionPerformed(ActionEvent evt) {
 		this._main.getMainPanel().getGridPanel().clearFinalPath();
 		this._main.getMainPanel().getConfiguarationPanel().getInfoPanel().clearFinalCost();
 		this._main.getMainPanel().getGridPanel().LoadPositions();
+		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(true);
+		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(false);
 		
 	}
 	
 	public void bStepActionPerformed(ActionEvent evt) {
-		if (this._main.getMainPanel().getConfiguarationPanel().getControlPanel().getAutoButton().isSelected()){
-			_stepThread = new AutoStepsThread(this._main.getMainPanel().getConfiguarationPanel().getControlPanel().getAutoStepValue()*100,this);
-			_stepThread.start();
-			this._main.getMainPanel().getConfiguarationPanel().getControlPanel().getStepButton().setEnabled(false);
+		if(this._main.getMainPanel().getGridPanel().checkArguments()){
+			if (this._main.getMainPanel().getConfiguarationPanel().getControlPanel().getAutoButton().isSelected()){
+				_stepThread = new AutoStepsThread(this._main.getMainPanel().getConfiguarationPanel().getControlPanel().getAutoStepValue()*100,this);
+				_stepThread.start();
+				this._main.getMainPanel().getConfiguarationPanel().getControlPanel().getStepButton().setEnabled(false);
+			}
+			else{
+				performStep();
+			}
 		}
 		else{
-			performStep();
+			this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(true);
+			this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(false);
+			JOptionPane.showMessageDialog(this._main.getMainPanel(),
+					"You havn't entered all the parameters, please try again",
+					"Missing Argumets", JOptionPane.ERROR_MESSAGE);
 		}
 	
 	}
@@ -357,6 +396,7 @@ public class GUIController {
 			this._main.getMainPanel().getGridPanel().drawMap(map);
 
 		}
+		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(true);
 	}
 	public void saveMap(){
 		JFileChooser fc = new JFileChooser();
@@ -396,6 +436,7 @@ public class GUIController {
 				this._controller.setMap(s.getMap());
 				
 	    	}
+	    	this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(true);
 	}
 	
 	public void openAnimationDiaglog() {
