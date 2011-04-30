@@ -59,6 +59,7 @@ public class GUIController {
 			public void handle(ApplicationEvent event) {
 				if (event instanceof finalPathEvent){
 					Vector<Vector<myPoint>> path = GUIController.this._controller.getFinalPath();
+					float finalCost = ((finalPathEvent)event).getCost();
 					if(!_animatedPath){
 						GUIController.this._main.getMainPanel().getGridPanel().drawFinalPaths(path,_withPathTrace);
 					}
@@ -68,12 +69,13 @@ public class GUIController {
 					if (_writeStatistics){
 						_main.getStatsDialog().addLine("\nFinal path cost: " + ((finalPathEvent)event).getCost());
 					}
+					GUIController.this._main.getMainPanel().getConfiguarationPanel().getInfoPanel().setFinalCost(finalCost);
 					GUIController.this.reset();
 				}
 				else if (event instanceof showStepEvent<?>){
 					GUIController.this.oldState = ((showStepEvent<myPoint>)event).getCoordinates();
 					GUIController.this._main.getMainPanel().getGridPanel().drawOneStep(GUIController.this.oldState);
-					GUIController.this._main.getMainPanel().getConfiguarationPanel().getInfoPanel().writeToTextArea(GUIController.this.oldState.toString());	
+					//GUIController.this._main.getMainPanel().getConfiguarationPanel().getInfoPanel().writeToTextArea(GUIController.this.oldState.toString());	
 				}
 				else if (event instanceof OpenListChangeEvent<?>){
 					OpenListChangeEvent<myPoint> e = (OpenListChangeEvent<myPoint>)event;
@@ -162,6 +164,7 @@ public class GUIController {
 	public void sGridSizeActionPerformed(ChangeEvent evt) {
 		this._main.getMainPanel().getGridPanel().clearBlocks(this._controller.getMap());
 		this._main.getMainPanel().getGridPanel().clearPositions();
+		this._main.getMainPanel().getConfiguarationPanel().getInfoPanel().clearFinalCost();
 		_gridSize = this._main.getMainPanel().getConfiguarationPanel().getSettingsPanel().getGridSize();
 		this._main.getMainPanel().ChangeGridPanel(_gridSize);	
 		init_controller(_algorithmChosen,_heuristicChosen,_directionChosen,_numberOfAgents,_gridSize);
@@ -192,32 +195,37 @@ public class GUIController {
 	}
 	
 	public void bGeneratePositionsActionPerformed(ActionEvent evt) {
+		this._main.getMainPanel().getConfiguarationPanel().getInfoPanel().clearFinalCost();
 		this._main.getMainPanel().getGridPanel().clearPositions();
 		this._main.getMainPanel().getGridPanel().clearFinalPath();	
 		this._main.getMainPanel().getGridPanel().clearOpenList();
 		this._main.getMainPanel().getGridPanel().GeneratePositions();
-		this._main.getMainPanel().getConfiguarationPanel().getInfoPanel().setText("");
+		//this._main.getMainPanel().getConfiguarationPanel().getInfoPanel().setText("");
 		}
 	
 	public void bClearPositionsActionPerformed(ActionEvent evt) {
 		this._main.getMainPanel().getGridPanel().clearPositions();
+		this._main.getMainPanel().getConfiguarationPanel().getInfoPanel().clearFinalCost();
 		this._main.getMainPanel().getGridPanel().clearFinalPath();
 	}
 	
 	public void bRandomMapActionPerformed(ActionEvent evt) {
+		this._main.getMainPanel().getConfiguarationPanel().getInfoPanel().clearFinalCost();
+		this._main.getMainPanel().getGridPanel().clearFinalPath();
 		this._main.getMainPanel().getGridPanel().createRandomBlocks(this._main.getMainPanel().getConfiguarationPanel().getSettingsPanel().getsDensityValue(), this._controller.getMap());
 		
 	}
 	
 	public void bClearMapActionPerformed(ActionEvent evt) {
 		this._main.getMainPanel().getGridPanel().clearAll(this._controller.getMap());
+		this._main.getMainPanel().getConfiguarationPanel().getInfoPanel().clearFinalCost();
 		
 	}
 	
 	public void bFindPathActionPerformed(ActionEvent evt) {
 		this._main.getMainPanel().getGridPanel().clearFinalPath();
 		this._main.getMainPanel().getGridPanel().clearOpenList();
-		this._main.getMainPanel().getConfiguarationPanel().getInfoPanel().setText("");
+		//this._main.getMainPanel().getConfiguarationPanel().getInfoPanel().setText("");
 		if(this._main.getMainPanel().getGridPanel().isFinalPathFound()){
 			this._main.getTablesDialog().ClearTables();
 		}
@@ -233,6 +241,7 @@ public class GUIController {
 		
 	public void bClearPathActionPerformed(ActionEvent evt) {
 		this._main.getMainPanel().getGridPanel().clearFinalPath();
+		this._main.getMainPanel().getConfiguarationPanel().getInfoPanel().clearFinalCost();
 		this._main.getMainPanel().getGridPanel().LoadPositions();
 		
 	}

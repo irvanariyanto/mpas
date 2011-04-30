@@ -1,6 +1,10 @@
 package GUI.Panels;
 
+import java.awt.Component;
+import java.awt.Font;
+
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -13,9 +17,12 @@ public class InfoPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	// Variables declaration 
-    private javax.swing.JLabel _lOpenList;
-    private javax.swing.JScrollPane _scrollPane;
-    private javax.swing.JTextArea _tOpenList;
+    private JLabel _lFinalPathCost;
+    private JLabel _lCost;
+    private Font _font;
+    private JPanel _mainPanel;
+    //private JScrollPane _scrollPane;
+    //private JTextArea _tOpenList;
     private GUIController _guiController;
     // End of variables declaration
     
@@ -27,31 +34,31 @@ public class InfoPanel extends JPanel {
 		super();
 		this._guiController=controller;
 		initComponents();
-
 	}
 
 	/**
 	 * initialize all the swing Components
 	 */
 	private void initComponents() {
-		this.setBorder(BorderFactory.createTitledBorder("Information"));
-		_scrollPane = new JScrollPane();
-		_tOpenList = new JTextArea(5,20);
-		_tOpenList.setEditable(false);
-	    _lOpenList = new JLabel("Open List:");
-	    _scrollPane.setViewportView(_tOpenList);
-	    this.add(_lOpenList);
-	    this.add(_scrollPane);
-
+		_mainPanel = new JPanel();	
+		_lFinalPathCost = new JLabel("Final Cost:");
+		_lCost = new JLabel("");
+		_font = new Font("Serif", Font.PLAIN, 30);
+		_lFinalPathCost.setFont(_font);
+		_lCost.setFont(_font);
+		_mainPanel.add(_lFinalPathCost);
+		_mainPanel.add(_lCost);
+		_mainPanel.setBorder(BorderFactory.createTitledBorder("Information"));
+		this.add(_mainPanel);
 	}
 	
-	public void writeToTextArea(String text){
-		String tstr = this._tOpenList.getText();
-		this._tOpenList.setText(text +"\n"+ tstr);
+	public void setFinalCost(float finalCost){
+		_lCost.setText(Float.toString(finalCost));
 	}
-
-	public void setText(String string) {
-		this._tOpenList.setText(string);
-		
+	
+	public void clearFinalCost(){
+		_lCost.setText("");
 	}
+	
+	
 }
