@@ -44,9 +44,11 @@ public class ControlPanel extends JPanel {
 		this.setBorder(BorderFactory.createTitledBorder("Control"));
 		_bFindPath = new JButton("Find Path");
 		_bStop = new JButton("Stop");
+		_bStop.setEnabled(false);
 		_bStep = new JButton("Step");
 		_tbAutoStepMode = new JToggleButton("Auto");
 		_bClearPath = new JButton("Clear Path");
+		_bClearPath.setEnabled(false);
 		_sAutoStepMode = new JSlider(1,30,1);
 		_sAutoStepMode.setPaintTicks(true);
 		_sAutoStepMode.setMajorTickSpacing(5);
@@ -171,6 +173,19 @@ public class ControlPanel extends JPanel {
 
 	public void setAutoStepLabel(String string) {
 		this._lSec.setText(string);
+		
+	}
+
+	public void enableFindPathButton(boolean b) {
+		this._bFindPath.setEnabled(b);	
+	}
+	
+	public void enableStopButton(boolean b) {
+		this._bStop.setEnabled(b);
+		
+	}
+	public void enableClearPathButton(boolean b) {
+		this._bClearPath.setEnabled(b);
 		
 	}
 }
