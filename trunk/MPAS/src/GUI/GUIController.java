@@ -45,7 +45,7 @@ public class GUIController {
 	private boolean _firstStep;//for running in step mode
 	private boolean _withPathTrace = false;
 	private boolean _writeStatistics = false;
-	private boolean _writeToTables = true;
+	private boolean _writeToTables = false;
 	private boolean _animation = false;
 	private boolean _animatedPath = false;
 	AnimationDialog _animationDialog;
@@ -314,7 +314,7 @@ public class GUIController {
 	}
 	
 	public void bFirstActionPerformed(ActionEvent evt) {
-			_main.getMainPanel().getGridPanel().drawFirstFinalStep();		
+		_main.getMainPanel().getGridPanel().drawFirstFinalStep();		
 		
 	}
 
@@ -325,7 +325,9 @@ public class GUIController {
 
 	public void bPlayActionPerformed(ActionEvent evt) {
 		_finalAnimationThread = new FinalPathThread(this._animationDialog.getAnimationSpeedValue()*100,this);
-		_finalAnimationThread.start();		
+		_finalAnimationThread.start();	
+		//_main.getMainPanel().getGridPanel().setFinalPathStep (0);
+		
 	}
 
 	public void bNextActionPerformed(ActionEvent evt) {
@@ -441,8 +443,12 @@ public class GUIController {
 	}
 	
 	public void openAnimationDiaglog() {
-		_animationDialog= new AnimationDialog(this._main,this);
+		if (_animationDialog ==null){
+			_animationDialog= new AnimationDialog(this._main,this);
+			_animationDialog.setVisible(true);
+		}
 		_animationDialog.setVisible(true);
+	
 	}
 	
 	public int getAnimationSpeedValue(){
