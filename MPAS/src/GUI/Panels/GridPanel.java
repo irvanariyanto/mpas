@@ -544,6 +544,9 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 					clearOneFinalStep(tSize-_finalPathStep+1);
 				}
 			}
+			else{
+				_finalPathStep = 0;
+			}
 		}
 	}
 	
@@ -859,6 +862,9 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 		}
 	}
 	
+	public void setFinalPathStep(int i){
+		this._finalPathStep = i;
+	}
 	
 	
 	

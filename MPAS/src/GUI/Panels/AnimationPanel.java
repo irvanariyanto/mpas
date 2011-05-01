@@ -78,6 +78,7 @@ public class AnimationPanel extends JPanel {
 		_bFirst.addActionListener(new  ActionListener() {
 	    	 public void actionPerformed( ActionEvent evt) {
 	    		 _guiController.bFirstActionPerformed(evt);
+	    		 
 	         }
 	     });
 		_bPrevious.addActionListener(new  ActionListener() {

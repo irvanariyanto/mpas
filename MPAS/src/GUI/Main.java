@@ -11,7 +11,7 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		GUIController _guiController = new GUIController();
-		MainFrame main = new MainFrame("MPAS - Multi-agent Pathfinding Algorithms Simulator v1.1",_guiController);		
+		MainFrame main = new MainFrame("MPAS - Multi-agent Pathfinding Algorithms Simulator v1.3",_guiController);		
 		_guiController.initGuiController(main);
 
 		main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
