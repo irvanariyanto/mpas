@@ -55,7 +55,7 @@ public class ColorTableModel extends AbstractTableModel {
 
         data[row][col] = value;
         if (col == 1){
-            ColorManager.setColor((String)data[row][0], (Color)value);
+            ColorManager.getInstance().setColor((String)data[row][0], (Color)value);
         }
 
         fireTableCellUpdated(row, col);

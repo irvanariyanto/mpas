@@ -323,16 +323,16 @@ public class Cell extends Component  implements ApplicationEventSource{
 			g.setColor(Color.black);
 		}
 		if (status == Status.inOpenList) {
-			Color tColor = ColorManager.getColor("agent" + _agnetNum);
+			Color tColor = ColorManager.getInstance().getColor("agent" + _agnetNum);
 			g.setColor(tColor);
 		}
 		if (status == Status.inClosedList) {
-			Color tColor = ColorManager.getColor("agent" + _agnetNum);
+			Color tColor = ColorManager.getInstance().getColor("agent" + _agnetNum);
 			g.setColor(tColor);
 		}
 		if (status == Status.Path ) {
 			//g.setColor(Color.yellow);
-			Color tColor = ColorManager.getColor("agent" + _agnetNum);
+			Color tColor = ColorManager.getInstance().getColor("agent" + _agnetNum);
 			g.setColor(tColor);
 		}		
 	}
