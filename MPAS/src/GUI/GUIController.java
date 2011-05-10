@@ -92,7 +92,7 @@ public class GUIController {
 						Vector<myPoint> v = e.getState().get_Coordinates();
 						for (int i = 0; i < v.size() ;i++){
 							myPoint p = v.elementAt(i);
-							_main.getMainPanel().getGridPanel().animateCell(p.getX(), p.getY(),ColorManager.getColor("agent" + (i+1)));
+							_main.getMainPanel().getGridPanel().animateCell(p.getX(), p.getY(),ColorManager.getInstance().getColor("agent" + (i+1)));
 						}
 					}
 				}			
@@ -109,7 +109,7 @@ public class GUIController {
 						Vector<myPoint> v = e.getState().get_Coordinates();
 						for (int i = 0; i < v.size() ;i++){
 							myPoint p = v.elementAt(i);
-							_main.getMainPanel().getGridPanel().animateCell(p.getX(), p.getY(),ColorManager.getColor("agent" + (i+1)));
+							_main.getMainPanel().getGridPanel().animateCell(p.getX(), p.getY(),ColorManager.getInstance().getColor("agent" + (i+1)));
 						}
 					}
 				}
