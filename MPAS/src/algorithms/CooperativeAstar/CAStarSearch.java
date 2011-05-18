@@ -78,16 +78,17 @@ public class CAStarSearch<E> extends PausableSearchAlgorithm<E>{
 			int tCost = 0;
 			for (int agentNum = 0 ; agentNum < allpaths.size() ; agentNum++){
 				Vector<StateInterface<E>> singlePath = allpaths.elementAt(agentNum);
-				if (singlePath.size() > step){ // the agent has not finished moving yet
-					StateInterface<E> tStepState = singlePath.elementAt(step); 
+				int diff = pathLength - singlePath.size();
+				if (step < diff){
+					StateInterface<E> tStepState = singlePath.elementAt(0);
 					Vector<E> tCoordinates = tStepState.get_Coordinates();
 					E tCoordinate = tCoordinates.elementAt(0);
 					tHeuristic += tStepState.get_heuristic();
 					tCost+= tStepState.get_cost();
 					tCombinedCoords.add(tCoordinate);
 				}
-				else{ //pad with last step
-					StateInterface<E> tStepState = singlePath.elementAt(0); // 0 or size -1 
+				else{
+					StateInterface<E> tStepState = singlePath.elementAt(step - diff); 
 					Vector<E> tCoordinates = tStepState.get_Coordinates();
 					E tCoordinate = tCoordinates.elementAt(0);
 					tHeuristic += tStepState.get_heuristic();
