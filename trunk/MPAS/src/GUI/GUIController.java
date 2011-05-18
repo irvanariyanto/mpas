@@ -281,11 +281,12 @@ public class GUIController {
 			if (this._main.getMainPanel().getConfiguarationPanel().getControlPanel().getAutoButton().isSelected()){
 				_stepThread = new AutoStepsThread(this._main.getMainPanel().getConfiguarationPanel().getControlPanel().getAutoStepValue()*100,this);
 				_stepThread.start();
-				this._main.getMainPanel().getConfiguarationPanel().getControlPanel().getStepButton().setEnabled(false);
+				this._main.getMainPanel().getConfiguarationPanel().getControlPanel().getStepButton().setEnabled(false);				
 			}
 			else{
 				performStep();
 			}
+			this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStopButton(true);	
 		}
 		else{
 			this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(true);
@@ -377,6 +378,8 @@ public class GUIController {
 			this._controller.getAlgorithmThread().stop();
 		}
 		_main.getMainPanel().getGridPanel().stopAnimations();
+		this._main.getMainPanel().getGridPanel().clearOpenList();
+		this._main.getMainPanel().getGridPanel().LoadPositions();
 	}
 	
 	public void preformFinalPathStep() {

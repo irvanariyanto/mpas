@@ -71,11 +71,11 @@ public class MainFrame extends JFrame {
 		_saveScenario = new JMenuItem("Save scenario");
 		_MapMenu.add(_loadScenario);
 		_MapMenu.add(_saveScenario);
-		_ShowStatsPanel = new JCheckBoxMenuItem("Statistics panel");
+		_ShowStatsPanel = new JCheckBoxMenuItem("Show log panel");
 		_ShowGridLine = new JCheckBoxMenuItem("Show Grid Line");
 		_ShowPathTrace = new JCheckBoxMenuItem("Show Path Trace");
-		_writeStatistics = new JCheckBoxMenuItem("Write statistics");
-		_showListsStat = new JCheckBoxMenuItem("show Lists statistics");
+		_writeStatistics = new JCheckBoxMenuItem("Write to log");
+		_showListsStat = new JCheckBoxMenuItem("Show tables");
 		_animation = new JCheckBoxMenuItem("Open/Closed list animation");
 		_WriteToListsStat = new JCheckBoxMenuItem("Write To Tables");
 		_withAnimatedPath = new  JCheckBoxMenuItem("Animated Path");
