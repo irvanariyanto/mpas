@@ -311,7 +311,7 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	}
 	
 	public void clearFinalPath() {
-		if (_finalPaths != null){
+		if (_finalPaths != null && !_finalPaths.isEmpty()){ 
 			for(Vector<myPoint> state: _finalPaths){
 				for(myPoint p: state){
 					if (this._grid[p.getX()][p.getY()].get_status() != Status.Start &&
@@ -338,7 +338,7 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 				}
 			}
 		}
-		
+		repaint();
 	}
 	
 	public void LoadPositions(){
