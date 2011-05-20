@@ -1,4 +1,4 @@
-package GUI.Panels.ListsDialog;
+package GUI.Panels;
 
 import java.awt.Component;
 import java.awt.Dimension;
