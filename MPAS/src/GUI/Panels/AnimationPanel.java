@@ -7,6 +7,7 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
@@ -20,22 +21,19 @@ public class AnimationPanel extends JPanel {
 	// Variables declaration 
 	private static final long serialVersionUID = 1L;
 	private GUIController _guiController;
-	private JButton _bFirst;
 	private JButton _bPrevious;
 	private JButton _bPlay;
 	private JButton _bNext;
-	private JButton _bLast;
 	private JButton _bPause;
 	private JSlider _sAnimationSpeed;
 	private JLabel _lSpeed;
-	private ImageIcon _iFirst = new ImageIcon("Icons/Animation/first.png","First");
 	private ImageIcon _iPrevious = new ImageIcon("Icons/Animation/previous.png","Previous");
 	private ImageIcon _iPlay = new ImageIcon("Icons/Animation/play.png","Play");
 	private ImageIcon _iNext = new ImageIcon("Icons/Animation/next.png","Next");
-	private ImageIcon _iLast = new ImageIcon("Icons/Animation/last.png","Last");
 	private ImageIcon _iPause = new ImageIcon("Icons/Animation/pause.png","Pause");
 	private JPanel _playerPanel;
 	private JPanel _speedPanel;
+	private JCheckBoxMenuItem _withAnimation;
 
 	// End of variables declaration
 	
@@ -47,16 +45,12 @@ public class AnimationPanel extends JPanel {
 		super();
 		this._guiController= controller;
 		this.setBorder(BorderFactory.createTitledBorder("Animation Panel"));
-		_bFirst = new JButton(_iFirst);
-		_bFirst.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
 		_bPrevious = new JButton(_iPrevious);
 		_bPrevious.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
 		_bPlay = new JButton(_iPlay);
 		_bPlay.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
 		_bNext = new JButton(_iNext);
 		_bNext.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
-		_bLast = new JButton(_iLast);
-		_bLast.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
 		_bPause = new JButton(_iPause);
 		_bPause.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
 		_playerPanel = new JPanel();
@@ -66,6 +60,8 @@ public class AnimationPanel extends JPanel {
 		_sAnimationSpeed.setMajorTickSpacing(5);
 		_lSpeed = new JLabel(_sAnimationSpeed.getValue() * 100 + " msec");
 		_speedPanel.setBorder(BorderFactory.createTitledBorder("Animation Speed"));
+		
+		_withAnimation = new JCheckBoxMenuItem("Run with Animation");
 		_sAnimationSpeed.addChangeListener(new ChangeListener() {
 			//TODO remove duplicate listeners
 			public void stateChanged(ChangeEvent e) {
@@ -75,10 +71,10 @@ public class AnimationPanel extends JPanel {
 			    //_guiController.sAnimationSpeedActionPerformed();
 			}
 		});
-		_bFirst.addActionListener(new  ActionListener() {
+		
+		_withAnimation.addActionListener(new  ActionListener() {
 	    	 public void actionPerformed( ActionEvent evt) {
-	    		 _guiController.bFirstActionPerformed(evt);
-	    		 
+	    		 _guiController.withAnimatedPath(((JCheckBoxMenuItem)evt.getSource()).isSelected());
 	         }
 	     });
 		_bPrevious.addActionListener(new  ActionListener() {
@@ -96,11 +92,7 @@ public class AnimationPanel extends JPanel {
 	    		 _guiController.bNextActionPerformed(evt);
 	         }
 	     });
-		_bLast.addActionListener(new  ActionListener() {
-	    	 public void actionPerformed( ActionEvent evt) {
-	    		 _guiController.bLastActionPerformed(evt);
-	         }
-	     });
+		
 		_bPause.addActionListener(new  ActionListener() {
 	    	 public void actionPerformed( ActionEvent evt) {
 	    		 _guiController.bPauseActionPerformed(evt);
@@ -113,16 +105,15 @@ public class AnimationPanel extends JPanel {
 	
 	private void initComponents() {
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-		_playerPanel.add(_bFirst);
 		_playerPanel.add(_bPrevious);
 		_playerPanel.add(_bPlay);
 		_playerPanel.add(_bNext);
-		_playerPanel.add(_bLast);
 		_playerPanel.add(_bPause);
 		_speedPanel.add(_sAnimationSpeed);
 		_speedPanel.add(_lSpeed);
 		this.add(_playerPanel);
 		this.add(_speedPanel);
+		this.add(_withAnimation);
 		
 	}
 	

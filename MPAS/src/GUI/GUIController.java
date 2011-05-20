@@ -315,12 +315,7 @@ public class GUIController {
 		_main.getMainPanel().getGridPanel().setAnimationTimer(time);	
 	}
 	
-	public void bFirstActionPerformed(ActionEvent evt) {
-		_main.getMainPanel().getGridPanel().drawFirstFinalStep();		
-		
-	}
-
-	public void bPreviousActionPerformed(ActionEvent evt) {
+		public void bPreviousActionPerformed(ActionEvent evt) {
 		_main.getMainPanel().getGridPanel().drawPreviousFinalStep();
 		
 	}
@@ -337,11 +332,6 @@ public class GUIController {
 		
 	}
 	
-	public void bLastActionPerformed(ActionEvent evt) {
-		_main.getMainPanel().getGridPanel().drawLastFinalStep();
-		
-	}
-
 	public void bPauseActionPerformed(ActionEvent evt) {
 		_finalAnimationThread.setFinished(true);
 		
