@@ -13,9 +13,9 @@ import javax.swing.JMenuItem;
 
 import EventMechanism.Events.OpenListChangeEvent;
 import GUI.Panels.ColorsDialog;
+import GUI.Panels.OpenClosedListDialog;
 import GUI.Panels.StatisticsDialog;
 import GUI.Panels.mainPanel;
-import GUI.Panels.ListsDialog.OpenClosedListDialog;
 
 
 public class MainFrame extends JFrame {

@@ -165,6 +165,7 @@ public class GUIController {
 	public void sNumOfAgentsActionPerformed(ChangeEvent evt) {
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(true);
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(false);
+		this._main.getMainPanel().getGridPanel().clearPositions();
 		_numberOfAgents = this._main.getMainPanel().getConfiguarationPanel().getSettingsPanel().getNumberOfAgents();
 		ChangeComboBoxSize(_numberOfAgents);
 		this._main.getMainPanel().getGridPanel().setNUM_OF_AGENT(_numberOfAgents);
