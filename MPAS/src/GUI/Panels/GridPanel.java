@@ -495,6 +495,7 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 				Vector<myPoint> tAgentPath = _finalPaths.elementAt(i);
 				myPoint p = tAgentPath.elementAt(step);
 				drawFinalPathCell(p.getX(), p.getY(),i+1);
+				_grid[p.getX()][p.getY()].setAnimationwithIcon(true);
 			}
 		}
 		 repaint();	
