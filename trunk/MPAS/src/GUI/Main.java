@@ -15,7 +15,7 @@ public class Main {
 		_guiController.initGuiController(main);
 
 		main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		main.setSize(new Dimension(890,750));
+		main.setSize(new Dimension(980,790));
 		main.setResizable(true);
 		main.setVisible(true);
 

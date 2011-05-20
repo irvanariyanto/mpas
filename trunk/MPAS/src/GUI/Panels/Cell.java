@@ -85,6 +85,7 @@ public class Cell extends Component  implements ApplicationEventSource{
 	private int _timer;
 	public Color backgroundColor;
 	private boolean isAnimating;
+	private boolean _animationwithIcon = false;
 	
 	public void setBackgroundColor(Color color){
 		this.backgroundColor = color;
@@ -256,6 +257,17 @@ public class Cell extends Component  implements ApplicationEventSource{
 		this._withGridLine = bool;
 		repaint();
 	}
+	
+	public void setAnimationwithIcon(boolean bool){
+		this._animationwithIcon = bool;
+		repaint();
+	}
+	
+	public boolean getAnimationwithIcon(){
+		return this._animationwithIcon;
+	}
+	
+	
 
 	 
 	
@@ -265,7 +277,6 @@ public class Cell extends Component  implements ApplicationEventSource{
 		Dimension RectSize = new Dimension(size.width -2,size.height -2);
 		Image carImage=Toolkit.getDefaultToolkit().getImage("Icons/car_white.png");
 		Image flagImage=Toolkit.getDefaultToolkit().getImage("Icons/flag.png");
-		//Image finishflagImage=Toolkit.getDefaultToolkit().getImage("Icons/finishFlag1.png");
 		SetColorByStatus(g,this._status);		
 		g.fillRect(0, 0, size.width-1, size.height-1);
 		g.setColor(Color.black);
@@ -282,19 +293,23 @@ public class Cell extends Component  implements ApplicationEventSource{
 			drawDircetions(g,this._directions,RectSize);			
 		}
 		if(this._status == Status.Start ){
-			if(RectSize.width > 30 && RectSize.height > 30){
+			if(RectSize.width > 20 && RectSize.height > 20){
+				g.drawImage(carImage, 2,2, RectSize.width, RectSize.height, this);			
+			}
+		}
+		if(this._status == Status.Path && _animationwithIcon  ){
+			if(RectSize.width > 20 && RectSize.height > 20){
 				g.drawImage(carImage, 2,2, RectSize.width, RectSize.height, this);			
 			}
 		}
 		if(this._status == Status.Finish ){
-			if(RectSize.width > 30 && RectSize.height > 30){
+			if(RectSize.width > 20 && RectSize.height > 20){
 				g.setColor(Color.white);
 				g.fillRect(0, 0, size.width-1, size.height-1);
 				g.setColor(Color.black);
 				g.drawImage(flagImage, 5,10, RectSize.width, RectSize.height, this);	
 			}
 		}
-
 		if(this._agnetNum != 0){
 			g.setFont(new Font("sansserif", Font.BOLD, 11));
 			g.drawString(Integer.toString(this._agnetNum),5,10);
