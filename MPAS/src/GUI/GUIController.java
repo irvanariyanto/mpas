@@ -315,13 +315,18 @@ public class GUIController {
 		_main.getMainPanel().getGridPanel().setAnimationTimer(time);	
 	}
 	
-		public void bPreviousActionPerformed(ActionEvent evt) {
+	public void sFinalAnimationSpeedActionPerformed(int value) {
+		this._finalAnimationThread.setInterval(value);
+		
+	}
+	
+	public void bPreviousActionPerformed(ActionEvent evt) {
 		_main.getMainPanel().getGridPanel().drawPreviousFinalStep();
 		
 	}
 
 	public void bPlayActionPerformed(ActionEvent evt) {
-		_finalAnimationThread = new FinalPathThread(this._animationDialog.getAnimationSpeedValue()*100,this);
+		_finalAnimationThread = new FinalPathThread(this._animationDialog.getAnimationSpeedValue()*10,this);
 		_finalAnimationThread.start();	
 		//_main.getMainPanel().getGridPanel().setFinalPathStep (0);
 		
@@ -503,6 +508,8 @@ public class GUIController {
 		this._animatedPath  = selected;
 		
 	}
+
+	
 
 
 
