@@ -30,7 +30,7 @@ public class StatisticsDialog extends JDialog{
 	public StatisticsDialog(JFrame parent){
 		super(parent);
 		this.setTitle("Statistics");
-		this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+		this.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
         this.pack();
         this.setVisible(true);
         this.setSize(new Dimension(600,400));
