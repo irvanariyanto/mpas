@@ -502,16 +502,30 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	}
 	public void clearOneFinalStep(int step) {
 		if(_finalPaths!=null && !_finalPaths.isEmpty()){
+			Vector<myPoint> prevStep = getFinalStep(step-1);
 			for(int i=0;i<_finalPaths.size();i++){
 				Vector<myPoint> tAgentPath = _finalPaths.elementAt(i);
 				myPoint p = tAgentPath.elementAt(step);
 				if(this._grid[p.getX()][p.getY()].get_status() != Status.Finish && 
-						this._grid[p.getX()][p.getY()].get_status() != Status.Start ){
+						this._grid[p.getX()][p.getY()].get_status() != Status.Start &&
+						!prevStep.contains(p)){
 					this._grid[p.getX()][p.getY()].set_status(Status.Empty);
 				}
 			}
 		}
 		repaint();	
+	}
+	
+	private Vector<myPoint> getFinalStep(int step){
+		Vector<myPoint> res = new Vector<myPoint>();
+		if(_finalPaths!=null && !_finalPaths.isEmpty()){
+			for(int i=0;i<_finalPaths.size();i++){
+				Vector<myPoint> tAgentPath = _finalPaths.elementAt(i);
+				myPoint p = tAgentPath.elementAt(step);
+				res.add(p);
+			}
+		}
+		return res;
 	}
 	
 	public void drawFirstFinalStep() {		
@@ -794,6 +808,14 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 		for (int i = 0; i < get_height(); i++) {
 			for (int j = 0; j < get_width(); j++) {
 				this._grid[i][j].setWithGridLine(b);
+			}
+		}	
+	}
+	
+	public void setAnimationwithIcon(boolean b) {
+		for (int i = 0; i < get_height(); i++) {
+			for (int j = 0; j < get_width(); j++) {
+				this._grid[i][j].setAnimationwithIcon(b);
 			}
 		}	
 	}

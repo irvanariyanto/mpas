@@ -166,6 +166,7 @@ public class GUIController {
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(true);
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(false);
 		this._main.getMainPanel().getGridPanel().clearPositions();
+		this._main.getMainPanel().getGridPanel().clearFinalPath();
 		_numberOfAgents = this._main.getMainPanel().getConfiguarationPanel().getSettingsPanel().getNumberOfAgents();
 		ChangeComboBoxSize(_numberOfAgents);
 		this._main.getMainPanel().getGridPanel().setNUM_OF_AGENT(_numberOfAgents);
@@ -247,11 +248,13 @@ public class GUIController {
 	public void bFindPathActionPerformed(ActionEvent evt) {
 		this._main.getMainPanel().getGridPanel().clearFinalPath();	
 		this._main.getMainPanel().getGridPanel().clearOpenList();
+		this._main.getMainPanel().getGridPanel().setAnimationwithIcon(false);
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(false);
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(false);
 		//this._main.getMainPanel().getConfiguarationPanel().getInfoPanel().setText("");
 		if(this._main.getMainPanel().getGridPanel().isFinalPathFound()){
 			this._main.getTablesDialog().ClearTables();
+			_finalAnimationThread = null;
 			//this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(true);
 		}
 		if (this._main.getMainPanel().getGridPanel().checkArguments()) {
@@ -326,8 +329,13 @@ public class GUIController {
 	}
 
 	public void bPlayActionPerformed(ActionEvent evt) {
-		_finalAnimationThread = new FinalPathThread(this._animationDialog.getAnimationSpeedValue()*10,this);
-		_finalAnimationThread.start();	
+		if(_finalAnimationThread == null){
+			_finalAnimationThread = new FinalPathThread(this._animationDialog.getAnimationSpeedValue()*10,this);
+			_finalAnimationThread.start();			
+		}
+
+
+			
 		//_main.getMainPanel().getGridPanel().setFinalPathStep (0);
 		
 	}
@@ -339,6 +347,7 @@ public class GUIController {
 	
 	public void bPauseActionPerformed(ActionEvent evt) {
 		_finalAnimationThread.setFinished(true);
+
 		
 	}
 	
