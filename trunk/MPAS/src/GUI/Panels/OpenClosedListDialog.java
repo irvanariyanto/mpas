@@ -48,7 +48,7 @@ public class OpenClosedListDialog  extends JDialog {
 	public OpenClosedListDialog(JFrame parent){
 		super(parent);
 		this.setTitle("Open and Closed Lists");
-		this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+		this.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
         this.pack();
         this.setVisible(true);
         this.setSize(new Dimension(600,300));

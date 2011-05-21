@@ -4,6 +4,8 @@ package GUI;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
@@ -92,7 +94,7 @@ public class MainFrame extends JFrame {
 		
 		this.setJMenuBar(_menuBar);
 		this.add(_mainPanel);
-		
+
 		_exitItem.addActionListener(new ActionListener() {		
 			public void actionPerformed(ActionEvent e) {
 				MainFrame.this.dispose();		
