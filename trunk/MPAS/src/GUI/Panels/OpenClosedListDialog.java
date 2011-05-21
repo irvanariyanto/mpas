@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Comparator;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
@@ -20,8 +21,10 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import algorithms.myPoint;
+import algorithms.Astar.myState;
 import algorithms.Interfaces.StateInterface;
 
 public class OpenClosedListDialog  extends JDialog {
@@ -63,9 +66,10 @@ public class OpenClosedListDialog  extends JDialog {
         		return false;
         	}
         };  
-        _openListtable = new JTable(_OpenListmodel);
+        _openListtable = new JTable(_OpenListmodel);        
         _openListtable.setPreferredScrollableViewportSize(new Dimension(500, 100));
         _openListtable.setFillsViewportHeight(true);
+        _openListtable.setAutoCreateRowSorter(true);
         _openListScrollPane = new JScrollPane(_openListtable);
         _openListScrollPane.setBorder(BorderFactory.createTitledBorder("Open List"));
 
@@ -208,10 +212,9 @@ public class OpenClosedListDialog  extends JDialog {
 			
 		}
 		
-		
-		
-		
 	}
 	
 
 }
+
+
