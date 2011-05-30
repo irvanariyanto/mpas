@@ -5,6 +5,7 @@
 package GUI.Panels;
 
 import java.awt.AWTEvent;
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -16,6 +17,7 @@ import java.awt.Toolkit;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.util.Vector;
 
 import javax.swing.ImageIcon;
@@ -275,8 +277,8 @@ public class Cell extends Component  implements ApplicationEventSource{
 	public void paint(Graphics g) {		
 		Dimension size = getSize();
 		Dimension RectSize = new Dimension(size.width -2,size.height -2);
-		Image carImage=Toolkit.getDefaultToolkit().getImage("Icons/car_white.png");
-		Image flagImage=Toolkit.getDefaultToolkit().getImage("Icons/flag.png");
+		//Image carImage=Toolkit.getDefaultToolkit().getImage("Icons/car_white.png");
+		//Image flagImage=Toolkit.getDefaultToolkit().getImage("Icons/flag.png");
 		SetColorByStatus(g,this._status);		
 		g.fillRect(0, 0, size.width-1, size.height-1);
 		g.setColor(Color.black);
@@ -294,20 +296,23 @@ public class Cell extends Component  implements ApplicationEventSource{
 		}
 		if(this._status == Status.Start ){
 			if(RectSize.width > 20 && RectSize.height > 20){
+				BufferedImage carImage = loadImage("Icons/newCar.png");
+				tint(carImage, Color.white, ColorManager.getInstance().getColor("agent" + _agnetNum));
 				g.drawImage(carImage, 2,2, RectSize.width, RectSize.height, this);			
 			}
 		}
 		if(this._status == Status.Path && _animationwithIcon  ){
 			if(RectSize.width > 20 && RectSize.height > 20){
-				g.drawImage(carImage, 2,2, RectSize.width, RectSize.height, this);			
+				BufferedImage carImage = loadImage("Icons/newCar.png");
+				tint(carImage, Color.white, ColorManager.getInstance().getColor("agent" + _agnetNum));
+				g.drawImage(carImage, 2,2, RectSize.width, RectSize.height, this);				
 			}
 		}
 		if(this._status == Status.Finish ){
 			if(RectSize.width > 20 && RectSize.height > 20){
-				g.setColor(Color.white);
-				g.fillRect(0, 0, size.width-1, size.height-1);
-				g.setColor(Color.black);
-				g.drawImage(flagImage, 5,10, RectSize.width, RectSize.height, this);	
+				BufferedImage flagImage = loadImage("Icons/finishFlag1.png");
+				tint(flagImage, Color.white, ColorManager.getInstance().getColor("agent" + _agnetNum));
+				g.drawImage(flagImage, 5,5, RectSize.width, RectSize.height, this);		
 			}
 		}
 		if(this._agnetNum != 0){
@@ -329,10 +334,12 @@ public class Cell extends Component  implements ApplicationEventSource{
 			g.setColor(Color.white);
 		}
 		if (status == Status.Start) {			
-			g.setColor(Color.green);
+			//g.setColor(Color.green);
+			g.setColor(Color.white);
 		}
 		if (status == Status.Finish) {
-			g.setColor(Color.red);
+			//g.setColor(Color.red);
+			g.setColor(Color.white);
 		}
 		if (status == Status.Blocked) {
 			g.setColor(Color.black);
@@ -346,9 +353,13 @@ public class Cell extends Component  implements ApplicationEventSource{
 			g.setColor(tColor);
 		}
 		if (status == Status.Path ) {
-			//g.setColor(Color.yellow);
+			if(_animationwithIcon){
+				g.setColor(Color.white);
+			}
+			else{
 			Color tColor = ColorManager.getInstance().getColor("agent" + _agnetNum);
 			g.setColor(tColor);
+			}
 		}		
 	}
 
@@ -531,6 +542,55 @@ public class Cell extends Component  implements ApplicationEventSource{
 	}
 
 	
+	 public static BufferedImage loadImage(String url) {
+	        ImageIcon icon = new ImageIcon(url);
+	        Image image = icon.getImage();
+
+	        // Create empty BufferedImage, sized to Image
+	        BufferedImage buffImage = 
+	          new BufferedImage(
+	            image.getWidth(null), 
+	            image.getHeight(null), 
+	            BufferedImage.TYPE_INT_ARGB);
+
+	        // Draw Image into BufferedImage
+	        Graphics g = buffImage.getGraphics();
+	        g.drawImage(image, 0, 0, null);
+	        return buffImage;
+	    }
+	    
+	    public static void tint(BufferedImage img,Color oldColor,Color newColor) {
+	        for (int x = 0; x < img.getWidth(); x++) {
+	            for (int y = 0; y < img.getHeight(); y++) {
+	                // do something with the color :) (change the hue, saturation and/or brightness)
+	                // float[] hsb = new float[3];
+	                // Color.RGBtoHSB(color.getRed(), old.getGreen(), old.getBlue(), hsb);
+
+	                // or just call brighter to just tint it
+	                if(img.getRGB(x, y) == oldColor.getRGB()){
+	                	img.setRGB(x, y, newColor.getRGB());
+	                }
+	                
+	            }
+	        }
+	    }
+	    
+	    public static BufferedImage makeColorTransparent(String ref, Color color) {  
+	        BufferedImage image = loadImage(ref);  
+	        BufferedImage dimg = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);  
+	        Graphics2D g = dimg.createGraphics();  
+	        g.setComposite(AlphaComposite.Src);  
+	        g.drawImage(image, null, 0, 0);  
+	        g.dispose();  
+	        for(int i = 0; i < dimg.getHeight(); i++) {  
+	            for(int j = 0; j < dimg.getWidth(); j++) {  
+	                if(dimg.getRGB(j, i) == color.getRGB()) {  
+	                	dimg.setRGB(j, i, 0x123456); 
+	                } 
+	            }  
+	        }  
+	        return dimg;  
+	    }  
 
 	
 
