@@ -15,6 +15,7 @@ import maps.TileBasedMap;
 import algorithms.myPoint;
 
 import Controller.GridController;
+import Defaults.Enums.Status;
 import Defaults.defaultsValues;
 import EventMechanism.ApplicationEvent;
 import EventMechanism.ApplicationEventListener;
@@ -73,6 +74,7 @@ public class GUIController {
 					GUIController.this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(true);
 					GUIController.this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(true);
 					GUIController.this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStopButton(false);
+					GUIController.this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStepButton(false);
 					GUIController.this.reset();
 				}
 				else if (event instanceof showStepEvent<?>){
@@ -243,6 +245,7 @@ public class GUIController {
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(true);
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(false);
 		
+		
 	}
 	
 	public void bFindPathActionPerformed(ActionEvent evt) {
@@ -273,10 +276,12 @@ public class GUIController {
 		
 	public void bClearPathActionPerformed(ActionEvent evt) {
 		this._main.getMainPanel().getGridPanel().clearFinalPath();
+		this._main.getMainPanel().getGridPanel().clearOpenList();
 		this._main.getMainPanel().getConfiguarationPanel().getInfoPanel().clearFinalCost();
 		this._main.getMainPanel().getGridPanel().LoadPositions();
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(true);
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(false);
+		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStepButton(true);
 		
 	}
 	
@@ -358,7 +363,7 @@ public class GUIController {
 			_stepThread.stop();
 		}
 		_firstStep = true;
-		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().getStepButton().setEnabled(true);
+		//this._main.getMainPanel().getConfiguarationPanel().getControlPanel().getStepButton().setEnabled(true);
 		
 	}
 	
@@ -370,7 +375,7 @@ public class GUIController {
 		}
 		else{
 			if (oldState != null){
-				this._main.getMainPanel().getGridPanel().setEmptyStep(oldState);
+				this._main.getMainPanel().getGridPanel().removeStatus(oldState, Status.inOpenList);
 			}
 			this._controller.resumeAlgorithm();
 		}
@@ -378,6 +383,8 @@ public class GUIController {
 	
 	public void stop(){
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(true);
+		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(true);
+
 		reset();
 		if (this._controller.getAlgorithmThread() != null){
 			this._controller.getAlgorithmThread().stop();
