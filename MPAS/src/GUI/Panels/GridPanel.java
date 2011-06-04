@@ -18,12 +18,13 @@ import org.pushingpixels.trident.swing.SwingRepaintTimeline;
 import maps.Scenario;
 import maps.TileBasedMap;
 import maps.TileStatus;
+import Defaults.Enums.Direction;
+import Defaults.Enums.Status;
+import Defaults.defaultsValues;
 import EventMechanism.ApplicationEvent;
 import EventMechanism.ApplicationEventListener;
 import EventMechanism.ApplicationEventListenerCollection;
 import EventMechanism.ApplicationEventSource;
-import GUI.Panels.Cell.Direction;
-import GUI.Panels.Cell.Status;
 import GUI.Utils.ColorManager;
 
 import algorithms.myPoint;
@@ -32,7 +33,7 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	
 
 	private static final long serialVersionUID = 1L;
-	public static int NUM_OF_AGENT = 2;
+	public static int NUM_OF_AGENT = defaultsValues.NumberOfAgents;
 	// // Variables declaration 
 	private int _width;
 	private int _height;
@@ -40,8 +41,6 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	private ApplicationEventListenerCollection _listeners;
 	private myPoint[] _starts = new myPoint[NUM_OF_AGENT];
 	private myPoint[] _finishes = new myPoint[NUM_OF_AGENT];
-	//private Vector<myPoint> _startsList;
-	//private Vector<myPoint> _FinishList;
 	private Vector<myPoint> _blockList;
 	private Vector<Vector<myPoint>> _finalPaths;
 	private int _finalPathStep = 0;
@@ -172,11 +171,11 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	public void setStartCell(myPoint p,int agentNumber) {
 		if (this._starts[agentNumber-1] == null) {
 			this._starts[agentNumber-1] = p;
-			this._grid[p.getX()][p.getY()].set_status(GUI.Panels.Cell.Status.Start,agentNumber);
+			this._grid[p.getX()][p.getY()].addTileStatus(Status.Start,agentNumber);
 		} else {
-			this._grid[this._starts[agentNumber-1].getX()][this._starts[agentNumber-1].getY()].set_status(GUI.Panels.Cell.Status.Empty);
+			this._grid[this._starts[agentNumber-1].getX()][this._starts[agentNumber-1].getY()].addTileStatus(Status.Empty);
 			this._starts[agentNumber-1] = p;
-			this._grid[p.getX()][p.getY()].set_status(GUI.Panels.Cell.Status.Start,agentNumber);
+			this._grid[p.getX()][p.getY()].addTileStatus(Status.Start,agentNumber);
 		}
 		repaint();
 	}
@@ -186,40 +185,44 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	public void setFinishCell(myPoint p, int agentNumber) {
 		if (this._finishes[agentNumber-1] == null) {
 			this._finishes[agentNumber-1] = p;
-			this._grid[p.getX()][p.getY()].set_status(GUI.Panels.Cell.Status.Finish,agentNumber);
+			this._grid[p.getX()][p.getY()].addTileStatus(Status.Finish,agentNumber);
 		} else {
-			this._grid[this._finishes[agentNumber-1].getX()][this._finishes[agentNumber-1].getY()].set_status(GUI.Panels.Cell.Status.Empty);
+			this._grid[this._finishes[agentNumber-1].getX()][this._finishes[agentNumber-1].getY()].addTileStatus(Status.Empty);
 			this._finishes[agentNumber-1] = p;
-			this._grid[p.getX()][p.getY()].set_status(GUI.Panels.Cell.Status.Finish,agentNumber);
+			this._grid[p.getX()][p.getY()].addTileStatus(Status.Finish,agentNumber);
 		}
 		repaint();
 	}
 	
 	public void setBlockCell(myPoint p) {
 		if (this.get_blockList().contains(p)) {
-			this._grid[p.getX()][p.getY()].set_status(GUI.Panels.Cell.Status.Empty);			
+			this._grid[p.getX()][p.getY()].addTileStatus(Status.Empty);			
 			this.get_blockList().remove(p);
 		} else if(this.get_startsList().contains(p)){
 			for(int i=0;i<_starts.length; i++){
-				if(_starts[i].equals(p)){
-					_starts[i]=null;
+				if(_starts[i]!= null){
+					if(_starts[i].equals(p)){
+						_starts[i]=null;
+					}
 				}
 			}
 			this.get_blockList().add(p);
-			this._grid[p.getX()][p.getY()].set_status(GUI.Panels.Cell.Status.Blocked);
+			this._grid[p.getX()][p.getY()].addTileStatus(Status.Blocked);
 		}
 		else if(this.get_FinishList().contains(p)){
 			for(int i=0;i<_finishes.length; i++){
-				if(_finishes[i].equals(p)){
-					_finishes[i]=null;
+				if(_finishes[i]!= null){
+					if(_finishes[i].equals(p)){					
+						_finishes[i]=null;
+					}
 				}
 			}
 			this.get_blockList().add(p);
-			this._grid[p.getX()][p.getY()].set_status(GUI.Panels.Cell.Status.Blocked);
+			this._grid[p.getX()][p.getY()].addTileStatus(Status.Blocked);
 		}
 		else{
 			this.get_blockList().add(p);
-			this._grid[p.getX()][p.getY()].set_status(GUI.Panels.Cell.Status.Blocked);			
+			this._grid[p.getX()][p.getY()].addTileStatus(Status.Blocked);			
 		}
 		repaint();		
 	}
@@ -273,7 +276,7 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 			for(int i=0;i<_starts.length;i++){
 				myPoint p = _starts[i];
 					if(p != null){
-						this._grid[p.getX()][p.getY()].set_status(GUI.Panels.Cell.Status.Empty);
+						this._grid[p.getX()][p.getY()].addTileStatus(Status.Empty);
 					}
 			}
 		}
@@ -281,7 +284,7 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 			for(int i=0;i<_finishes.length;i++){
 				myPoint p = _finishes[i];
 				if(p != null){
-					this._grid[p.getX()][p.getY()].set_status(GUI.Panels.Cell.Status.Empty);
+					this._grid[p.getX()][p.getY()].addTileStatus(Status.Empty);
 				}
 			}
 		}
@@ -295,7 +298,7 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 			Vector<myPoint> Block = this.get_blockList();
 			for(myPoint p: Block){
 				if(p==null) continue;
-				else this._grid[p.getX()][p.getY()].set_status(GUI.Panels.Cell.Status.Empty);
+				else this._grid[p.getX()][p.getY()].addTileStatus(Status.Empty);
 				map.setTile(p.getX(), p.getY(), TileStatus.free);
 			}
 			this._blockList.removeAllElements();
@@ -314,15 +317,10 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 		if (_finalPaths != null && !_finalPaths.isEmpty()){ 
 			for(Vector<myPoint> state: _finalPaths){
 				for(myPoint p: state){
-					if (this._grid[p.getX()][p.getY()].get_status() != Status.Start &&
-						this._grid[p.getX()][p.getY()].get_status() != Status.Finish &&
-						this._grid[p.getX()][p.getY()].get_status() != Status.Blocked){
-						this._grid[p.getX()][p.getY()].set_status(GUI.Panels.Cell.Status.Empty);
+					int size = this._grid[p.getX()][p.getY()].getTileStatuses().size();
+					if (this._grid[p.getX()][p.getY()].getTileStatusAt(size-1).equals(Status.Path)){
+						this._grid[p.getX()][p.getY()].removeTileStatusAt(size-1);	
 					}
-					else{
-						this._grid[p.getX()][p.getY()].clearDirections();
-					}
-												
 				}
 			}
 			this._finalPaths.removeAllElements();	
@@ -333,8 +331,8 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	public void clearOpenList() {
 		for(int i=0; i<this._height; i++){
 			for(int j=0; j<this._width; j++){
-				if(this._grid[i][j].get_status()==Status.inOpenList){
-					this._grid[i][j].set_status(Status.Empty);
+				if(this._grid[i][j].getTileStatusAt(0)==Status.inOpenList){
+					this._grid[i][j].addTileStatus(Status.Empty);
 				}
 			}
 		}
@@ -428,26 +426,25 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	
 
 	public void drawFinalPathCell(int x, int y) {
-		if(this._grid[x][y].get_status() != Status.Start && this._grid[x][y].get_status() != Status.Finish ){
-			this._grid[x][y].set_status(Status.Path);
-		}
+		//if(this._grid[x][y].getTileStatusAt(0) != Status.Start && this._grid[x][y].getTileStatusAt(0) != Status.Finish ){
+			this._grid[x][y].addTileStatus(Status.Path);
+		//}
 		repaint();
 	}
 
 	public void drawFinalPathCell(int x, int y, int agent) {
-		if(this._grid[x][y].get_status() != Status.Start && this._grid[x][y].get_status() != Status.Finish ){
-			this._grid[x][y].set_status(Status.Path);
-		}
-		this._grid[x][y].set_agent(agent);
+		//if(this._grid[x][y].getTileStatusAt(0) != Status.Start && this._grid[x][y].getTileStatusAt(0) != Status.Finish ){
+			this._grid[x][y].addTileStatus(Status.Path,agent);
+		//}
 		repaint();
 	}
 	
 	public void drawFinalPathCell(int x, int y, int agent, Direction direction) {
-		if(this._grid[x][y].get_status() != Status.Start && this._grid[x][y].get_status() != Status.Finish ){
-			this._grid[x][y].set_status(Status.Path);
-		}
-		this._grid[x][y].set_agent(agent);
-		this._grid[x][y].add_Direction(direction);
+		//if(this._grid[x][y].getTileStatusAt(0) != Status.Start && this._grid[x][y].getTileStatusAt(0) != Status.Finish ){
+			this._grid[x][y].addTileStatus(Status.Path,agent,direction);
+		//}
+		//this._grid[x][y].set_agent(agent);
+		//this._grid[x][y].add_Direction(direction);
 		repaint();
 	}
 	
@@ -506,10 +503,11 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 			for(int i=0;i<_finalPaths.size();i++){
 				Vector<myPoint> tAgentPath = _finalPaths.elementAt(i);
 				myPoint p = tAgentPath.elementAt(step);
-				if(this._grid[p.getX()][p.getY()].get_status() != Status.Finish && 
-						this._grid[p.getX()][p.getY()].get_status() != Status.Start &&
+				if(this._grid[p.getX()][p.getY()].getTileStatusAt(0) != Status.Finish && 
+						this._grid[p.getX()][p.getY()].getTileStatusAt(0) != Status.Start &&
 						!prevStep.contains(p)){
-					this._grid[p.getX()][p.getY()].set_status(Status.Empty);
+					this._grid[p.getX()][p.getY()].removeTileStatus(Status.Path);
+					this._grid[p.getX()][p.getY()].removeTileStatus(Status.Start);
 				}
 			}
 		}
@@ -555,7 +553,7 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 			if(_finalPathStep < tSize){
 				_finalPathStep ++;
 				drawOneFinalStep(tSize-_finalPathStep);
-				if(_finalPathStep != 1 ){
+				if(_finalPathStep != 1){
 					clearOneFinalStep(tSize-_finalPathStep+1);
 				}
 			}
@@ -771,19 +769,18 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	public void setEmptyStep(Vector<myPoint> tStep) {
 		for (int j=0; j< tStep.size(); j++){
 			myPoint p = tStep.elementAt(j); 
-			this._grid[p.getX()][p.getY()].set_status(Status.Empty);
+			this._grid[p.getX()][p.getY()].addTileStatus(Status.Empty);
 		}
 		
 	}
 	
 	public void drawOpenListCell(int x, int y) {
-		this._grid[x][y].set_status(Status.inOpenList);
+		this._grid[x][y].addTileStatus(Status.inOpenList);
 		repaint();
 	}
 	
 	public void drawOpenListCell(int x, int y, int agent) {
-		this._grid[x][y].set_status(Status.inOpenList);
-		this._grid[x][y].set_agent(agent);
+		this._grid[x][y].addTileStatus(Status.inOpenList,agent);
 		repaint();
 	}
 
@@ -794,7 +791,7 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	}
 	
 	public void drawClosedListCell(int x, int y) {
-		this._grid[x][y].set_status(Status.inClosedList);
+		this._grid[x][y].addTileStatus(Status.inClosedList);
 		repaint();
 	}
 
