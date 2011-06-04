@@ -69,7 +69,7 @@ public class SettingsPanel extends JPanel  {
 		_cDirections = new JComboBox();
 		_lNumOfAgents = new JLabel("Number of Agents:");
 		_sNumOfAgents = new JSlider(1,100);
-		_lNumber = new JLabel("2");
+		_lNumber = new JLabel(Integer.toString(defaultsValues.NumberOfAgents));
 		_lGridSize = new JLabel("Grid Size :");
 		_sGridSize = new JSlider(3, 100);
 		_lSize = new JLabel(defaultsValues.GridSize + " * " +  defaultsValues.GridSize);
@@ -95,7 +95,11 @@ public class SettingsPanel extends JPanel  {
 		_cAlgorithm.setModel(new DefaultComboBoxModel(new String[] { "A-Star","Cooperative A*" }));
 		_cHeuristic.setModel(new DefaultComboBoxModel(new String[] { "Manhattan " ,"DiagonalDistance"}));
 		_cDirections.setModel(new DefaultComboBoxModel(new String[] {"4 Directions", "8 Directions" }));
-		_cAgents.setModel(new DefaultComboBoxModel(new String[] { "1","2" }));
+		String[] arr = new String[defaultsValues.NumberOfAgents];
+		for(int i=0; i< defaultsValues.NumberOfAgents; i++){			
+			arr[i] = Integer.toString(i+1);
+		}
+		_cAgents.setModel(new DefaultComboBoxModel(arr));
 		_sNumOfAgents.setValue(defaultsValues.NumberOfAgents );
 		_sGridSize.setValue(defaultsValues.GridSize);
 		_sDensity.setValue(defaultsValues.Density );
