@@ -24,6 +24,7 @@ import java.util.Vector;
 import javax.swing.ImageIcon;
 
 import org.pushingpixels.trident.Timeline;
+import org.pushingpixels.trident.Timeline.RepeatBehavior;
 import org.pushingpixels.trident.swing.SwingRepaintTimeline;
 
 import Defaults.Enums.Direction;
@@ -78,8 +79,7 @@ public class Cell extends Component implements ApplicationEventSource {
 		this.backgroundColor = Color.white;
 		this._timeline = new Timeline(this);
 		this._timeline.setDuration(_timer);
-		this._timeline.addPropertyToInterpolate("backgroundColor", Color.blue,
-				Color.white);
+		this._timeline.addPropertyToInterpolate("backgroundColor", Color.blue,Color.white);
 		this._repaintTimeline = repaintTimeline;
 		this.isAnimating = false;
 	}
@@ -105,8 +105,7 @@ public class Cell extends Component implements ApplicationEventSource {
 	}
 
 	public void addColorProperty(Color c) {
-		this._timeline.addPropertyToInterpolate("backgroundColor", c,
-				Color.white);
+		this._timeline.addPropertyToInterpolate("backgroundColor", c,Color.white);
 	}
 
 	public void setAnimationTimer(int time) {
@@ -114,9 +113,16 @@ public class Cell extends Component implements ApplicationEventSource {
 	}
 
 	/*
-	 * //animation addon public void doAnimation(boolean isAnimating){ if
-	 * (this.isAnimating == isAnimating){ return; } this.isAnimating =
-	 * isAnimating; if (this.isAnimating){ this._timeline.replay(); } }
+	 * //animation addon 
+	 * public void doAnimation(boolean isAnimating){ 
+	 * if (this.isAnimating == isAnimating){ 
+	 * 		return; 
+	 * } 
+	 * this.isAnimating =isAnimating; 
+	 * if (this.isAnimating){ 
+	 * 		this._timeline.replay(); 
+	 * } 
+	 * }
 	 */
 	public void doAnimation(boolean isAnimating, Color color) {
 		if (this.isAnimating == isAnimating) {
@@ -127,8 +133,7 @@ public class Cell extends Component implements ApplicationEventSource {
 			this._timeline.cancel();
 			this._timeline = new Timeline(this);
 			this._timeline.setDuration(_timer);
-			this._timeline.addPropertyToInterpolate("backgroundColor", color,
-					Color.white);
+			this._timeline.addPropertyToInterpolate("backgroundColor", color,Color.white);
 			// this.isAnimating = false;
 			this._timeline.replay();
 		}
@@ -288,6 +293,9 @@ public class Cell extends Component implements ApplicationEventSource {
 				if (tStatus.getStatus() == Status.Path){
 					g.fillRect(0, 0, size.width - 1, size.height - 1);
 				}
+				if (tStatus.getStatus() == Status.inOpenList || tStatus.getStatus() == Status.inClosedList){
+					g.fillRect(0, 0, size.width - 1, size.height - 1);
+				}
 				g.setColor(Color.black);
 				if (this._withGridLine) {
 					g.drawRect(0, 0, RectSize.width, RectSize.height);
@@ -348,13 +356,14 @@ public class Cell extends Component implements ApplicationEventSource {
 					g.drawString(Integer.toString(tStatus.getAgnetNum()), 5, 10);
 				}
 				// amit's additions
+				
 				Color backgr = this.getBackgroundColor();
 				if (!Color.white.equals(backgr)) {
+					g2d.setComposite(oldComp);
 					g2d.setColor(backgr);
 					g2d.fillRect(0, 0, size.width - 1, size.height - 1);
 				}
 				// amit's edition ends
-				//g2d.setComposite(oldComp);
 			}
 		}
 	}
@@ -411,6 +420,7 @@ public class Cell extends Component implements ApplicationEventSource {
 				g.setColor(tColor);
 			}
 		}
+
 	}
 
 	private void drawDircetions(Graphics g, Direction direction, Dimension size) {

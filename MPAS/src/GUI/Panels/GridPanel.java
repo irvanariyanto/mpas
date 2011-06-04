@@ -331,8 +331,11 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	public void clearOpenList() {
 		for(int i=0; i<this._height; i++){
 			for(int j=0; j<this._width; j++){
-				if(this._grid[i][j].getTileStatusAt(0)==Status.inOpenList){
-					this._grid[i][j].addTileStatus(Status.Empty);
+				for(int k=0; k < this._grid[i][j].getTileStatuses().size(); k++){
+					if(this._grid[i][j].getTileStatusAt(k)==Status.inOpenList || this._grid[i][j].getTileStatusAt(k)==Status.inClosedList){
+						this._grid[i][j].removeTileStatus(Status.inOpenList);
+						this._grid[i][j].removeTileStatus(Status.inClosedList);
+					}
 				}
 			}
 		}
@@ -512,6 +515,15 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 			}
 		}
 		repaint();	
+	}
+	
+	public void removeTileStatus(Vector<myPoint> oldState, Status status) {
+		for(int i=0; i< oldState.size(); i++){
+			myPoint p = oldState.elementAt(i);
+			this._grid[p.getX()][p.getY()].removeTileStatus(status);
+		}
+		repaint();	
+		
 	}
 	
 	private Vector<myPoint> getFinalStep(int step){
@@ -770,6 +782,12 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 		for (int j=0; j< tStep.size(); j++){
 			myPoint p = tStep.elementAt(j); 
 			this._grid[p.getX()][p.getY()].addTileStatus(Status.Empty);
+		}	
+	}
+	public void removeStatus(Vector<myPoint> tStep,Status status ) {
+		for (int j=0; j< tStep.size(); j++){
+			myPoint p = tStep.elementAt(j); 
+			this._grid[p.getX()][p.getY()].removeTileStatus(status);
 		}
 		
 	}
@@ -863,6 +881,7 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 		this._grid[row][column].doAnimation(true,color);
 		this._grid[row][column].doAnimation(false,color);
 	}
+	
 	public void setAnimationTimer(int time) {
 		for (Cell[] tArray:_grid){
 			for(Cell c:tArray){
@@ -885,6 +904,7 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	public void setFinalPathStep(int i){
 		this._finalPathStep = i;
 	}
+	
 	
 	
 	

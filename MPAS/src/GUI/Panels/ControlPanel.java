@@ -188,4 +188,9 @@ public class ControlPanel extends JPanel {
 		this._bClearPath.setEnabled(b);
 		
 	}
+
+	public void enableStepButton(boolean b) {
+		this._bStep.setEnabled(b);
+		
+	}
 }
