@@ -45,6 +45,7 @@ public class Cell extends Component implements ApplicationEventSource {
 
 	private static final long serialVersionUID = 1L;
 	public static final int SET_BLOCKS = 0, SET_START = 1, SET_FINISH = 2;
+	public static final int MINIMUM_SIZE = 20;
 
 	// fields
 	private myPoint _position;
@@ -302,10 +303,14 @@ public class Cell extends Component implements ApplicationEventSource {
 				}
 				if (tStatus.getStatus() == Status.Start) {
 					g2d.setComposite(oldComp);
-					if (RectSize.width > 20 && RectSize.height > 20) {
+					if (RectSize.width > MINIMUM_SIZE && RectSize.height > MINIMUM_SIZE) {
 						BufferedImage carImage = loadImage("Icons/newCar.png");
 						tint(carImage, Color.white, ColorManager.getInstance().getColor("agent" + tStatus.getAgnetNum()));
 						g.drawImage(carImage, 2, 2, RectSize.width,RectSize.height, this);
+					}
+					else{
+						g2d.setColor(Color.green);
+						g2d.fillRect(0, 0, size.width - 1, size.height - 1);
 					}
 				}
 				if (tStatus.getStatus()== Status.Path && _animationwithIcon ) {
@@ -313,7 +318,7 @@ public class Cell extends Component implements ApplicationEventSource {
 						g2d.setComposite(oldComp);
 						g.setColor(Color.white);
 						g.fillRect(0, 0, size.width - 1, size.height - 1);		
-						if (RectSize.width > 20 && RectSize.height > 20) {
+						if (RectSize.width > MINIMUM_SIZE && RectSize.height > MINIMUM_SIZE) {
 							BufferedImage carImage = loadImage("Icons/newCar.png");
 							tint(carImage, Color.white, ColorManager.getInstance().getColor("agent" + tStatus.getAgnetNum()));
 							g.drawImage(carImage, 2, 2, RectSize.width,RectSize.height, this);
@@ -326,14 +331,19 @@ public class Cell extends Component implements ApplicationEventSource {
 						g.setColor(Color.white);
 						g.fillRect(0, 0, size.width - 1, size.height - 1);
 					}*/
-					if (RectSize.width > 20 && RectSize.height > 20) {
+					if (RectSize.width > MINIMUM_SIZE && RectSize.height > MINIMUM_SIZE) {
 						BufferedImage flagImage = loadImage("Icons/finishFlag1.png");
 						tint(flagImage, Color.white, ColorManager.getInstance().getColor("agent" + tStatus.getAgnetNum()));
 						g.drawImage(flagImage, 5, 5, RectSize.width,RectSize.height, this);
 					}
+					else{
+						g2d.setColor(Color.red);
+						g2d.fillRect(0, 0, size.width - 1, size.height - 1);
+					}
 				}
 				if (tStatus.getAgnetNum() != 0 ) {
 					g2d.setComposite(oldComp);
+					g2d.setColor(Color.black);
 					g.setFont(new Font("sansserif", Font.BOLD, 11));
 					g.drawString(Integer.toString(tStatus.getAgnetNum()), 5, 10);
 				}
@@ -344,7 +354,7 @@ public class Cell extends Component implements ApplicationEventSource {
 					g2d.fillRect(0, 0, size.width - 1, size.height - 1);
 				}
 				// amit's edition ends
-				g2d.setComposite(oldComp);
+				//g2d.setComposite(oldComp);
 			}
 		}
 	}
