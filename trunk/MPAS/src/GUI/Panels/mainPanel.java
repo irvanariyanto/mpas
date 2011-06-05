@@ -5,6 +5,8 @@ import java.awt.BorderLayout;
 
 
 import javax.swing.JPanel;
+
+import maps.TileStatus;
 import Defaults.defaultsValues;
 import EventMechanism.ApplicationEvent;
 import EventMechanism.ApplicationEventListener;
@@ -84,7 +86,12 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 			if (event instanceof SetBlockCellEvent) {
 				SetBlockCellEvent blockEvent = (SetBlockCellEvent)event;
 				mainPanel.this._grid.setBlockCell(blockEvent.getPosition());
-				mainPanel.this._guiController.getController().setTile(blockEvent.getPosition());
+				if(mainPanel.this._grid.get_blockList().contains(blockEvent.getPosition())){
+					mainPanel.this._guiController.getController().setTile(blockEvent.getPosition());
+				}
+				else{
+					mainPanel.this._guiController.getController().setTile( blockEvent.getPosition(),TileStatus.free);
+				}
 			}
 			if (event instanceof SetStartCellEvent) {
 				SetStartCellEvent startEvent = (SetStartCellEvent)event;

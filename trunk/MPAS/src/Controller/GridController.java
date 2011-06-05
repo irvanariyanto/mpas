@@ -131,6 +131,12 @@ public class GridController implements ControllerInterFace<myPoint>,ApplicationE
 			this._map.setTile(blockedTile.getX(), blockedTile.getY(), TileStatus.blocked);
 	}
 	
+	//Liron addition
+	public void setTile(myPoint blockedTile, TileStatus status) {
+			this._map.setTile(blockedTile.getX(), blockedTile.getY(), status);
+	}
+	
+	
 	@Override
 	public Vector<StateInterface<myPoint>> getPath() {
 		return this._finalPath;
