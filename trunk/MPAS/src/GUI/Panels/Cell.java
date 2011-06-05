@@ -335,10 +335,6 @@ public class Cell extends Component implements ApplicationEventSource {
 				}
 				if (tStatus.getStatus()== Status.Finish ) {
 					g2d.setComposite(oldComp);
-					/*if(_animationwithIcon){
-						g.setColor(Color.white);
-						g.fillRect(0, 0, size.width - 1, size.height - 1);
-					}*/
 					if (RectSize.width > MINIMUM_SIZE && RectSize.height > MINIMUM_SIZE) {
 						BufferedImage flagImage = loadImage("Icons/finishFlag1.png");
 						tint(flagImage, Color.white, ColorManager.getInstance().getColor("agent" + tStatus.getAgnetNum()));
