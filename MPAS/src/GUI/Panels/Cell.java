@@ -355,17 +355,19 @@ public class Cell extends Component implements ApplicationEventSource {
 					g.setFont(new Font("sansserif", Font.BOLD, 11));
 					g.drawString(Integer.toString(tStatus.getAgnetNum()), 5, 10);
 				}
-				// amit's additions
 				
-				Color backgr = this.getBackgroundColor();
-				if (!Color.white.equals(backgr)) {
-					g2d.setComposite(oldComp);
-					g2d.setColor(backgr);
-					g2d.fillRect(0, 0, size.width - 1, size.height - 1);
-				}
-				// amit's edition ends
-			}
+				
+				
+			}//end of for
+			
+		}//end of else
+		// amit's additions
+		Color backgr = this.getBackgroundColor();
+		if (!Color.white.equals(backgr)) {
+			g2d.setColor(backgr);
+			g2d.fillRect(0, 0, size.width - 1, size.height - 1);
 		}
+		// amit's edition ends
 	}
 	
 	private boolean isStatusesContains( Status status, int agnet){

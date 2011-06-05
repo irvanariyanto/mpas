@@ -375,7 +375,9 @@ public class GUIController {
 		}
 		else{
 			if (oldState != null){
-				this._main.getMainPanel().getGridPanel().removeStatus(oldState, Status.inOpenList);
+				if(!_animation){
+					this._main.getMainPanel().getGridPanel().removeStatus(oldState, Status.inOpenList);
+				}
 			}
 			this._controller.resumeAlgorithm();
 		}
