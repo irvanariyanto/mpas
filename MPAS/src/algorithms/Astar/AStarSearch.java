@@ -82,7 +82,10 @@ public class AStarSearch<E> extends PausableSearchAlgorithm<E> {
 					tentativeIsBetter = true;
 				}
 				if (tentativeIsBetter){
-					this._expaned.put(neighbor, neighbor);	
+					this._expaned.put(neighbor, neighbor);
+					// new addition
+					this._openList.remove(neighbor);
+					this._openList.add(neighbor);
 				}		
 			}
 			
