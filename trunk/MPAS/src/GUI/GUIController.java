@@ -185,7 +185,7 @@ public class GUIController {
 		_gridSize = this._main.getMainPanel().getConfiguarationPanel().getSettingsPanel().getGridSize();
 		this._main.getMainPanel().ChangeGridPanel(_gridSize);	
 		init_controller(_algorithmChosen,_heuristicChosen,_directionChosen,_numberOfAgents,_gridSize);
-		
+		Runtime.getRuntime().gc();
 	}
 	
 	public void rEndActionPerformed(ActionEvent evt) {
