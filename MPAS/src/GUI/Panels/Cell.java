@@ -247,6 +247,7 @@ public class Cell extends Component implements ApplicationEventSource {
 
 	public boolean getWithGridLine() {
 		return this._withGridLine;
+
 	}
 
 	public void setWithGridLine(boolean bool) {
@@ -275,11 +276,10 @@ public class Cell extends Component implements ApplicationEventSource {
 
 		//float alpha = calculateAlpha();
 		float alpha = 0.4f;
-		Composite alphaComp = AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, alpha);
-		
+		Composite alphaComp = AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, alpha);	
 		if(this._tileStatuses.size()== 1 && (this._tileStatuses.elementAt(0).getStatus()==Status.Empty) || this._tileStatuses.elementAt(0).getStatus()==Status.Blocked){
 			SetColorByStatus(g, this._tileStatuses.elementAt(0));
-			g.fillRect(0, 0, size.width - 1, size.height - 1);		
+			g.fillRect(0, 0, size.width - 1, size.height - 1);			
 		}
 		else{
 			for (int i = this._tileStatuses.size()-1; i > 0; i--) {
@@ -295,11 +295,7 @@ public class Cell extends Component implements ApplicationEventSource {
 				}
 				if (tStatus.getStatus() == Status.inOpenList || tStatus.getStatus() == Status.inClosedList){
 					g.fillRect(0, 0, size.width - 1, size.height - 1);
-				}
-				g.setColor(Color.black);
-				if (this._withGridLine) {
-					g.drawRect(0, 0, RectSize.width, RectSize.height);
-				}
+				}				
 				if (tStatus.getStatus() == Status.Path && tStatus.getDirection() != null) {
 					drawDircetions(g, tStatus.getDirection(), RectSize);
 				}
@@ -357,6 +353,12 @@ public class Cell extends Component implements ApplicationEventSource {
 			}//end of for
 			
 		}//end of else
+		
+		if (this._withGridLine) {
+			g2d.setComposite(oldComp);
+			g.setColor(Color.black);
+			g.drawRect(0, 0, RectSize.width, RectSize.height);
+		}
 		// amit's additions
 		Color backgr = this.getBackgroundColor();
 		if (!Color.white.equals(backgr)) {

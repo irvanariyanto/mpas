@@ -196,12 +196,7 @@ public class MainFrame extends JFrame {
 		});
 		_ShowGridLine.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (((JCheckBoxMenuItem)arg0.getSource()).isSelected()){
-					_guiController.withGridLines(true);
-				}
-				else{
-					_guiController.withGridLines(false);			
-				} 
+					_guiController.withGridLines(((JCheckBoxMenuItem)arg0.getSource()).isSelected());
 			}
 		});
 	}
