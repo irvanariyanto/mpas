@@ -539,28 +539,32 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	}
 	
 	public void drawFirstFinalStep() {		
-		for(int i=0; i<_finalPaths.elementAt(0).size(); i++){
-			if(i!=_finalPaths.elementAt(0).size()-1){
-				clearOneFinalStep(i);
+		if(_finalPaths!=null && !_finalPaths.isEmpty()){
+			for(int i=0; i<_finalPaths.elementAt(0).size(); i++){
+				if(i!=_finalPaths.elementAt(0).size()-1){
+					clearOneFinalStep(i);
+				}
 			}
+			drawOneFinalStep(_finalPaths.elementAt(0).size()-1);
+			_finalPathStep = 0 ;
 		}
-		drawOneFinalStep(_finalPaths.elementAt(0).size()-1);
-		_finalPathStep = 0 ;
 	}
 	
 	public void drawPreviousFinalStep() {
-		int tSize = _finalPaths.elementAt(0).size();
-		if(_finalPathStep > 1){
-			_finalPathStep --;
-			drawOneFinalStep(tSize-_finalPathStep);
-			if(_finalPathStep != 0 ){
-				clearOneFinalStep(tSize-_finalPathStep-1);
-			}
-		}	
+		if(_finalPaths!=null && !_finalPaths.isEmpty()){
+			int tSize = _finalPaths.elementAt(0).size();
+			if(_finalPathStep > 1){
+				_finalPathStep --;
+				drawOneFinalStep(tSize-_finalPathStep);
+				if(_finalPathStep != 0 ){
+					clearOneFinalStep(tSize-_finalPathStep-1);
+				}
+			}	
+		}
 		
 	}
 	public void drawNextFinalStep() {
-		if(_finalPaths!=null){
+		if(_finalPaths!=null && !_finalPaths.isEmpty()){
 			int tSize = _finalPaths.elementAt(0).size();
 			if(_finalPathStep < tSize){
 				_finalPathStep ++;
@@ -576,37 +580,41 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	}
 	
 	public void drawLastFinalStep() {
-		for(int i=0; i<_finalPaths.elementAt(0).size(); i++){
-			if(i!=0){
-				clearOneFinalStep(i);
+		if(_finalPaths!=null && !_finalPaths.isEmpty()){
+			for(int i=0; i<_finalPaths.elementAt(0).size(); i++){
+				if(i!=0){
+					clearOneFinalStep(i);
+				}
 			}
+			drawOneFinalStep(0);
+			_finalPathStep = _finalPaths.elementAt(0).size() ;		
 		}
-		drawOneFinalStep(0);
-		_finalPathStep = _finalPaths.elementAt(0).size() ;		
 	}
 	
 	public void drawFinalPathsWithLines(Vector<Vector<myPoint>> finalPath){
-		for (int i = 0; i < finalPath.size(); i++) {
-			Vector<myPoint> tPath = finalPath.elementAt(i);
-			Collections.reverse(tPath);
-			myPoint prePoint,currentPoint,nextPoint;
-            for (int j=0; j < tPath.size(); j++){  
-            	if(j==0){
-            		prePoint = tPath.elementAt(0);  
-            	}
-            	else{
-            		prePoint = tPath.elementAt(j-1);	
-            	}            	  
-            	currentPoint = tPath.elementAt(j);
-            	if(j==tPath.size()-1)
-            	nextPoint = tPath.elementAt(j); 
-            	else{
-            		nextPoint = tPath.elementAt(j+1);
-            	}
-            	Direction dir = calcDirection(prePoint,currentPoint,nextPoint);
-                drawFinalPathCell(currentPoint.getX(), currentPoint.getY(),i+1,dir);               
-            }
-		}		
+		if(finalPath!=null && !finalPath.isEmpty()){
+			for (int i = 0; i < finalPath.size(); i++) {
+				Vector<myPoint> tPath = finalPath.elementAt(i);
+				Collections.reverse(tPath);
+				myPoint prePoint,currentPoint,nextPoint;
+	            for (int j=0; j < tPath.size(); j++){  
+	            	if(j==0){
+	            		prePoint = tPath.elementAt(0);  
+	            	}
+	            	else{
+	            		prePoint = tPath.elementAt(j-1);	
+	            	}            	  
+	            	currentPoint = tPath.elementAt(j);
+	            	if(j==tPath.size()-1)
+	            	nextPoint = tPath.elementAt(j); 
+	            	else{
+	            		nextPoint = tPath.elementAt(j+1);
+	            	}
+	            	Direction dir = calcDirection(prePoint,currentPoint,nextPoint);
+	                drawFinalPathCell(currentPoint.getX(), currentPoint.getY(),i+1,dir);               
+	            }
+			}	
+		}
 	}
 	
 	

@@ -297,12 +297,18 @@ public class Cell extends Component implements ApplicationEventSource {
 					g.fillRect(0, 0, size.width - 1, size.height - 1);
 				}				
 				if (tStatus.getStatus() == Status.Path && tStatus.getDirection() != null) {
+					g2d.setComposite(oldComp);
+					g.setColor(Color.black);
 					drawDircetions(g, tStatus.getDirection(), RectSize);
 				}
 				if (tStatus.getStatus()== Status.Start && tStatus.getDirection() != null) {
+					g2d.setComposite(oldComp);
+					g.setColor(Color.black);
 					drawDircetions(g, tStatus.getDirection(), RectSize);
 				}
 				if (tStatus.getStatus() == Status.Finish && tStatus.getDirection() != null) {
+					g2d.setComposite(oldComp);
+					g.setColor(Color.black);
 					drawDircetions(g, tStatus.getDirection(), RectSize);
 				}
 				if (tStatus.getStatus() == Status.Start) {
@@ -347,9 +353,6 @@ public class Cell extends Component implements ApplicationEventSource {
 					g.setFont(new Font("sansserif", Font.BOLD, 11));
 					g.drawString(Integer.toString(tStatus.getAgnetNum()), 5, 10);
 				}
-				
-				
-				
 			}//end of for
 			
 		}//end of else
