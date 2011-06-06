@@ -80,6 +80,10 @@ public class GUIController {
 					GUIController.this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(true);
 					GUIController.this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStopButton(false);
 					GUIController.this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStepButton(false);
+					//_animationDialog.getAnimationPanel().enableCheckBox(false);
+					if(_animationDialog!=null && !_animationDialog.getAnimationPanel().getAnimationCheckBox().isSelected()){
+						_animationDialog.getAnimationPanel().enablePanel(false);
+					}
 					GUIController.this.reset();
 				}
 				else if (event instanceof PathNotFoundEvent){
@@ -286,6 +290,7 @@ public class GUIController {
 		if(this._main.getMainPanel().getGridPanel().isFinalPathFound()){
 			this._main.getTablesDialog().ClearTables();
 			_finalAnimationThread = null;
+			_animationDialog.getAnimationPanel().enableCheckBox(false);
 			//this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(true);
 		}
 		if (this._main.getMainPanel().getGridPanel().checkArguments()) {
@@ -311,7 +316,10 @@ public class GUIController {
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(true);
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(false);
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStepButton(true);
-		
+		//_animationDialog.getAnimationPanel().enableCheckBox(true);
+		if(_animationDialog!=null){
+			_animationDialog.getAnimationPanel().enablePanel(true);
+		}		
 	}
 	
 	public void bStepActionPerformed(ActionEvent evt) {

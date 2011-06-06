@@ -26,5 +26,9 @@ public class AnimationDialog extends JDialog{
 	public int getAnimationSpeedValue() {
 		return this._animationPanel.getAnimationSpeedValue();
 	}
+	
+	public AnimationPanel getAnimationPanel() {
+		return this._animationPanel;
+	}
 
 }

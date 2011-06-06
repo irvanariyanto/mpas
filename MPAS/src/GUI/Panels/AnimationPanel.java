@@ -126,5 +126,23 @@ public class AnimationPanel extends JPanel {
 	public int getAnimationSpeedValue() {
 		return this._sAnimationSpeed.getValue();
 	}
+	
+	public void enableCheckBox(boolean bool) {
+		this._withAnimation.setEnabled(bool);		
+	}
+	
+	public void enablePanel(boolean bool) {
+		this._bPrevious.setEnabled(bool);	
+		this._bPlay.setEnabled(bool);	
+		this._bNext.setEnabled(bool);	
+		this._bPause.setEnabled(bool);	
+		this._sAnimationSpeed.setEnabled(bool);	
+		this._withAnimation.setEnabled(bool);	
+	}
+
+
+	public JCheckBoxMenuItem getAnimationCheckBox() {
+		return this._withAnimation;
+	}
 
 }
