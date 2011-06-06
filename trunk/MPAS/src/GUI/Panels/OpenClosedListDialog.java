@@ -40,7 +40,6 @@ public class OpenClosedListDialog  extends JDialog {
 	private JScrollPane _openListScrollPane;
 	private JScrollPane _closedListScrollPane;
 	private JScrollPane _currentStateScrollPane;
-	private JButton _bClear;
 	private String columnsHeaders[] = {"State Number","Coordinates","g","h","f"};
 	private String currentStateHeaders[] = {"Coordinates","g","h","f"};
 	private DefaultTableModel _currentStatemodel; 
@@ -56,7 +55,6 @@ public class OpenClosedListDialog  extends JDialog {
         this.setVisible(true);
         this.setSize(new Dimension(600,300));
         _mainPanel = new JPanel(new GridLayout(0,1));
-        _bClear = new JButton("Clear");
         openListCounter = 0;
         closedListCounter = 0;
         
@@ -104,17 +102,10 @@ public class OpenClosedListDialog  extends JDialog {
         _currentStateScrollPane.setAlignmentX(Component.LEFT_ALIGNMENT);
         _openListScrollPane.setAlignmentX(Component.LEFT_ALIGNMENT);
         _closedListScrollPane.setAlignmentX(Component.LEFT_ALIGNMENT);
-        _bClear.setAlignmentX(Component.LEFT_ALIGNMENT);
         _mainPanel.add(_currentStateScrollPane);
         _mainPanel.add(_openListScrollPane);
         _mainPanel.add(_closedListScrollPane);
-        _mainPanel.add(_bClear);
         this.add(_mainPanel);
-        _bClear.addActionListener(new  ActionListener() {
-	    	 public void actionPerformed( ActionEvent evt) {
-	    		 ClearTables();
-	         }
-	     });
 	}
 
 	
