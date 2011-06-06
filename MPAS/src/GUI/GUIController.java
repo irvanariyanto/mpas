@@ -452,7 +452,9 @@ public class GUIController {
     	fc.showSaveDialog(this._main);
     	File tFile = fc.getSelectedFile();
 		Scenario s = new Scenario(this._controller.getMap(),this._main.getMainPanel().getGridPanel().get_startsList(),this._main.getMainPanel().getGridPanel().get_FinishList());
-		GridMapUtility.saveSecnario(s, tFile);
+		if (tFile != null){
+			GridMapUtility.saveSecnario(s, tFile);
+		}
 	}
 	public void loadScenario(){
 		JFileChooser fc = new JFileChooser();
