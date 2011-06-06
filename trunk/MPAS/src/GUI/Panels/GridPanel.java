@@ -913,7 +913,19 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 		this._finalPathStep = i;
 	}
 	
-	
+	/** 
+	 * sets the grid according to editable
+	 * false - the grid cannot be edit.
+	 * true - the grid can be edit.
+	 * @param editable
+	 */
+	public void setEditMode(boolean editable){
+		for (Cell[] arr : _grid){
+			for (Cell c : arr){
+				c.setEnabled(editable);
+			}
+		}
+	}
 	
 	
 

@@ -635,7 +635,7 @@ public class Cell extends Component implements ApplicationEventSource {
 
 	public void processMouseEvent(MouseEvent event) {
 		super.processMouseEvent(event);
-		if (event.getID() == MouseEvent.MOUSE_PRESSED) {
+		if (event.getID() == MouseEvent.MOUSE_PRESSED && this.isEnabled()) {
 			myPoint p = getPointFromSource(event);
 			if (_editMode == SET_BLOCKS) {
 				this._listeners.fireEvent(new SetBlockCellEvent(this, p));
@@ -677,9 +677,10 @@ public class Cell extends Component implements ApplicationEventSource {
 	/**
 	 * stops the cell animation
 	 */
-	public void stopAnimation() {
-		this.backgroundColor = Color.white;
+	public synchronized void stopAnimation() {
 		this._timeline.end();
+		this.backgroundColor = Color.white;
+
 
 	}
 
