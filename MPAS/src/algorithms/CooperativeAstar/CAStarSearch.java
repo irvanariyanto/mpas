@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Vector;
 
 import EventMechanism.ApplicationEventListener;
+import EventMechanism.Events.SingleAgentSearchEvent;
 import Utils.MyLogger;
 import algorithms.Interfaces.PausableSearchAlgorithm;
 import algorithms.Interfaces.StateInterface;
@@ -43,6 +44,7 @@ public class CAStarSearch<E> extends PausableSearchAlgorithm<E>{
 			for (ApplicationEventListener listener : this._listeners){
 				_AStarSearch.addListener(listener);
 			}
+			this._listeners.fireEvent(new SingleAgentSearchEvent(this,i+1));
 			Vector<StateInterface<E>> singlePath = _AStarSearch.findPath(agentStart, agentGoal);//run A* for agent i and return path
 			if (this._pause){
 				this.pause();
