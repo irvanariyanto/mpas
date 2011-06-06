@@ -65,12 +65,12 @@ public class GUIController {
 				if (event instanceof finalPathEvent){
 					Vector<Vector<myPoint>> path = GUIController.this._controller.getFinalPath();
 					float finalCost = ((finalPathEvent)event).getCost();
-					//if(!_animatedPath){
+					if(!_animatedPath){
 						GUIController.this._main.getMainPanel().getGridPanel().drawFinalPaths(path,_withPathTrace);
-					//}
-				//	else{//final Path animation;
+					}
+					else{//final Path animation;
 						GUIController.this._main.getMainPanel().getGridPanel().setFinalPath(path);
-				//	}
+					}
 					
 					if (_writeStatistics){
 						_main.getStatsDialog().addLine("\nFinal path cost: " + ((finalPathEvent)event).getCost());
