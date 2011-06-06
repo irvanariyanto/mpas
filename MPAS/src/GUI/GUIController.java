@@ -21,6 +21,7 @@ import EventMechanism.ApplicationEvent;
 import EventMechanism.ApplicationEventListener;
 import EventMechanism.Events.ClosedListChangeEvent;
 import EventMechanism.Events.OpenListChangeEvent;
+import EventMechanism.Events.PathNotFoundEvent;
 import EventMechanism.Events.SingleAgentSearchEvent;
 import EventMechanism.Events.finalPathEvent;
 import EventMechanism.Events.removeFromOpenListEvent;
@@ -79,6 +80,16 @@ public class GUIController {
 					GUIController.this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStopButton(false);
 					GUIController.this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStepButton(false);
 					GUIController.this.reset();
+				}
+				else if (event instanceof PathNotFoundEvent){
+					GUIController.this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(true);
+					GUIController.this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(true);
+					GUIController.this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStopButton(false);
+					GUIController.this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStepButton(false);
+					GUIController.this.reset();
+					JOptionPane.showMessageDialog(_main.getMainPanel(),
+							"Path was not found.",
+							"Path not found", JOptionPane.INFORMATION_MESSAGE);
 				}
 				else if (event instanceof showStepEvent<?>){
 					GUIController.this.oldState = ((showStepEvent<myPoint>)event).getCoordinates();

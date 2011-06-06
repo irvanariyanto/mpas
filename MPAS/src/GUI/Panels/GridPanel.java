@@ -75,7 +75,7 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 		setLayout(new GridLayout(get_width(), get_height()));
 		for (int i = 0; i < get_height(); i++) {
 			for (int j = 0; j < get_width(); j++) {
-				this._grid[i][j] = new Cell(new myPoint(i, j),_repaintTimeline); //TODO initialize the repaintTimeLine
+				this._grid[i][j] = new Cell(new myPoint(i, j),_repaintTimeline); 
 				this._grid[i][j].addListener(new GridListener());
 				add(this._grid[i][j]);
 			}

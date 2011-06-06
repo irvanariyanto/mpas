@@ -20,6 +20,7 @@ import EventMechanism.ApplicationEventListenerCollection;
 import EventMechanism.ApplicationEventSource;
 import EventMechanism.Events.ClosedListChangeEvent;
 import EventMechanism.Events.OpenListChangeEvent;
+import EventMechanism.Events.PathNotFoundEvent;
 import EventMechanism.Events.SingleAgentSearchEvent;
 import EventMechanism.Events.StepEvent;
 import EventMechanism.Events.finalPathEvent;
@@ -187,8 +188,13 @@ public class GridController implements ControllerInterFace<myPoint>,ApplicationE
 		public void run() {
 			Vector<StateInterface<myPoint>> path = GridController.this._pathFinder.findPath(_start, _goal);
 			GridController.this._finalPath = path;
-			float pathCost = path.elementAt(0).get_cost();
-			GridController.this._listeners.fireEvent(new finalPathEvent(GridController.this,pathCost));
+			if (path!=null){
+				float pathCost = path.elementAt(0).get_cost();
+				GridController.this._listeners.fireEvent(new finalPathEvent(GridController.this,pathCost));
+			}
+			else{
+				GridController.this._listeners.fireEvent(new PathNotFoundEvent(GridController.this));
+			}
 		}
 		
 	}

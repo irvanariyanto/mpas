@@ -20,7 +20,7 @@ public class AutoStepsThread extends Thread{
 			try {
 				Thread.sleep(_interval);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 		}
