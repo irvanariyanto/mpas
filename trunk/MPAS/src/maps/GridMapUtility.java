@@ -63,13 +63,10 @@ public class GridMapUtility {
 		} catch (FileNotFoundException e) {
 
 		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SAXException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -109,10 +106,8 @@ public class GridMapUtility {
 			pce.printStackTrace();
 
 		} catch (TransformerConfigurationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (TransformerException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -163,11 +158,9 @@ public class GridMapUtility {
 		} catch (ParserConfigurationException pce) {
 			pce.printStackTrace();
 
-		} catch (TransformerConfigurationException e) {
-			// TODO Auto-generated catch block
+		} catch (TransformerConfigurationException e) {	
 			e.printStackTrace();
 		} catch (TransformerException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -204,13 +197,10 @@ public class GridMapUtility {
 		} catch (FileNotFoundException e) {
 
 		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SAXException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		finally{

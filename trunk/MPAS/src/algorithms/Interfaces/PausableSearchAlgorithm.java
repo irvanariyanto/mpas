@@ -35,7 +35,6 @@ public abstract class PausableSearchAlgorithm<E> implements Pausable, SearchInte
 		try {
 			this.wait();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
