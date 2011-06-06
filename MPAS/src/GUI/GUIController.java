@@ -369,7 +369,7 @@ public class GUIController {
 	
 	public void performStep(){
 		if (this._firstStep){
-			System.out.println(this._controller.getMap().toString());
+			this._main.getTablesDialog().ClearTables();
 			this._controller.runAlgorithmWithPause(this._main.getMainPanel().getGridPanel().get_startsList(),this._main.getMainPanel().getGridPanel().get_FinishList());
 			_firstStep = false;
 		}
