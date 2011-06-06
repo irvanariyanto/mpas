@@ -20,6 +20,7 @@ import EventMechanism.ApplicationEventListenerCollection;
 import EventMechanism.ApplicationEventSource;
 import EventMechanism.Events.ClosedListChangeEvent;
 import EventMechanism.Events.OpenListChangeEvent;
+import EventMechanism.Events.SingleAgentSearchEvent;
 import EventMechanism.Events.StepEvent;
 import EventMechanism.Events.finalPathEvent;
 import EventMechanism.Events.removeFromOpenListEvent;
@@ -210,6 +211,9 @@ public class GridController implements ControllerInterFace<myPoint>,ApplicationE
 			this._listeners.fireEvent(event);
 		}
 		else if (event instanceof removeFromOpenListEvent){
+			this._listeners.fireEvent(event);
+		}
+		else if (event instanceof SingleAgentSearchEvent){
 			this._listeners.fireEvent(event);
 		}
 

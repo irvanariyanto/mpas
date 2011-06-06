@@ -21,6 +21,7 @@ import EventMechanism.ApplicationEvent;
 import EventMechanism.ApplicationEventListener;
 import EventMechanism.Events.ClosedListChangeEvent;
 import EventMechanism.Events.OpenListChangeEvent;
+import EventMechanism.Events.SingleAgentSearchEvent;
 import EventMechanism.Events.finalPathEvent;
 import EventMechanism.Events.removeFromOpenListEvent;
 import EventMechanism.Events.showStepEvent;
@@ -49,11 +50,13 @@ public class GUIController {
 	private boolean _writeToTables = false;
 	private boolean _animation = false;
 	private boolean _animatedPath = false;
+	private int _agentNum; //used for color selection for each single A* run inside the CA* algorithm
 	AnimationDialog _animationDialog;
 	public GUIController(){
 		_controller = new GridController();
 		_firstStep = true;	
 		_gridSize = defaultsValues.GridSize;
+		this._agentNum = 1;
 		this._controller.addListener(new ApplicationEventListener() {
 			
 			@Override
@@ -94,10 +97,17 @@ public class GUIController {
 						Vector<myPoint> v = e.getState().get_Coordinates();
 						for (int i = 0; i < v.size() ;i++){
 							myPoint p = v.elementAt(i);
-							_main.getMainPanel().getGridPanel().animateCell(p.getX(), p.getY(),ColorManager.getInstance().getColor("agent" + (i+1)));
+							String currentAgent = "agent" + (i+1);
+							if (v.size() == 1){
+								currentAgent = "agent" + _agentNum;
+							}
+							_main.getMainPanel().getGridPanel().animateCell(p.getX(), p.getY(),ColorManager.getInstance().getColor(currentAgent));
 						}
 					}
-				}			
+				}	
+				else if (event instanceof SingleAgentSearchEvent){
+					_agentNum = ((SingleAgentSearchEvent)event).getAgentNum();
+				}
 				else if (event instanceof ClosedListChangeEvent<?>){
 					ClosedListChangeEvent<myPoint> e = (ClosedListChangeEvent<myPoint>)event;
 					if (_writeStatistics){
@@ -111,7 +121,11 @@ public class GUIController {
 						Vector<myPoint> v = e.getState().get_Coordinates();
 						for (int i = 0; i < v.size() ;i++){
 							myPoint p = v.elementAt(i);
-							_main.getMainPanel().getGridPanel().animateCell(p.getX(), p.getY(),ColorManager.getInstance().getColor("agent" + (i+1)));
+							String currentAgent = "agent" + (i+1);
+							if (v.size() == 1){
+								currentAgent = "agent" + _agentNum;
+							}
+							_main.getMainPanel().getGridPanel().animateCell(p.getX(), p.getY(),ColorManager.getInstance().getColor(currentAgent));
 						}
 					}
 				}
