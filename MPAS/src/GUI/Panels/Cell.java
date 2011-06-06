@@ -347,16 +347,16 @@ public class Cell extends Component implements ApplicationEventSource {
 						g2d.fillRect(0, 0, size.width - 1, size.height - 1);
 					}
 				}
-				if (tStatus.getAgnetNum() != 0 ) {
-					g2d.setComposite(oldComp);
-					g2d.setColor(Color.black);
-					g.setFont(new Font("sansserif", Font.BOLD, 11));
-					g.drawString(Integer.toString(tStatus.getAgnetNum()), 5, 10);
-				}
+				
 			}//end of for
 			
 		}//end of else
-		
+		if (this._tileStatuses.elementAt(this._tileStatuses.size()-1).getAgnetNum() != 0 ) {
+			g2d.setComposite(oldComp);
+			g2d.setColor(Color.black);
+			g.setFont(new Font("sansserif", Font.BOLD, 11));
+			g.drawString(Integer.toString(this._tileStatuses.elementAt(this._tileStatuses.size()-1).getAgnetNum()), 5, 10);
+		}
 		if (this._withGridLine) {
 			g2d.setComposite(oldComp);
 			g.setColor(Color.black);
