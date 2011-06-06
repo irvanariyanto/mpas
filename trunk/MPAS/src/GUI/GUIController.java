@@ -63,7 +63,6 @@ public class GUIController {
 			@Override
 			public void handle(ApplicationEvent event) {
 				if (event instanceof finalPathEvent){
-					//_main.getMainPanel().getGridPanel().stopAnimations();
 					Vector<Vector<myPoint>> path = GUIController.this._controller.getFinalPath();
 					float finalCost = ((finalPathEvent)event).getCost();
 					if(!_animatedPath){
@@ -80,7 +79,7 @@ public class GUIController {
 					GUIController.this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(true);
 					GUIController.this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(true);
 					GUIController.this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStopButton(false);
-					GUIController.this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStepButton(true);
+					GUIController.this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStepButton(false);
 					//_animationDialog.getAnimationPanel().enableCheckBox(false);
 					if(_animationDialog!=null && !_animationDialog.getAnimationPanel().getAnimationCheckBox().isSelected()){
 						_animationDialog.getAnimationPanel().enablePanel(false);
@@ -88,12 +87,10 @@ public class GUIController {
 					GUIController.this.reset();
 				}
 				else if (event instanceof PathNotFoundEvent){
-					//_main.getMainPanel().getGridPanel().stopAnimations();
-					_main.getMainPanel().getGridPanel().setEditMode(true);
 					GUIController.this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(true);
 					GUIController.this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(true);
 					GUIController.this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStopButton(false);
-					GUIController.this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStepButton(true);
+					GUIController.this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStepButton(false);
 					GUIController.this.reset();
 					JOptionPane.showMessageDialog(_main.getMainPanel(),
 							"Path was not found.",
@@ -257,7 +254,6 @@ public class GUIController {
 	
 	public void bClearPositionsActionPerformed(ActionEvent evt) {
 		this._main.getMainPanel().getGridPanel().clearPositions();
-		this._main.getMainPanel().getGridPanel().setEditMode(true);
 		this._main.getTablesDialog().ClearTables();
 		this._main.getMainPanel().getConfiguarationPanel().getInfoPanel().clearFinalCost();
 		this._main.getMainPanel().getGridPanel().clearFinalPath();
@@ -276,7 +272,6 @@ public class GUIController {
 	
 	public void bClearMapActionPerformed(ActionEvent evt) {
 		this._main.getTablesDialog().ClearTables();
-		this._main.getMainPanel().getGridPanel().setEditMode(true);
 		this._main.getMainPanel().getGridPanel().clearAll(this._controller.getMap());
 		this._main.getMainPanel().getConfiguarationPanel().getInfoPanel().clearFinalCost();
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(true);
@@ -295,11 +290,12 @@ public class GUIController {
 		if(this._main.getMainPanel().getGridPanel().isFinalPathFound()){
 			this._main.getTablesDialog().ClearTables();
 			_finalAnimationThread = null;
+			if(_animationDialog!= null){
 			_animationDialog.getAnimationPanel().enableCheckBox(false);
+			}
 			//this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(true);
 		}
 		if (this._main.getMainPanel().getGridPanel().checkArguments()) {
-			this._main.getMainPanel().getGridPanel().setEditMode(false);
 			this._controller.setTile(this._main.getMainPanel().getGridPanel().get_blockList());
 			this._controller.findPath(this._main.getMainPanel().getGridPanel().get_startsList(),this._main.getMainPanel().getGridPanel().get_FinishList());
 			this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStopButton(true);
@@ -314,7 +310,6 @@ public class GUIController {
 	}	
 		
 	public void bClearPathActionPerformed(ActionEvent evt) {
-		this._main.getMainPanel().getGridPanel().setEditMode(true);
 		this._main.getMainPanel().getGridPanel().clearFinalPath();
 		this._main.getMainPanel().getGridPanel().clearOpenList();
 		this._main.getTablesDialog().ClearTables();
@@ -332,7 +327,6 @@ public class GUIController {
 	public void bStepActionPerformed(ActionEvent evt) {
 		if(this._main.getMainPanel().getGridPanel().checkArguments()){
 			if (this._main.getMainPanel().getConfiguarationPanel().getControlPanel().getAutoButton().isSelected()){
-				this._main.getMainPanel().getGridPanel().setEditMode(false); // disables the grid
 				_stepThread = new AutoStepsThread(this._main.getMainPanel().getConfiguarationPanel().getControlPanel().getAutoStepValue()*100,this);
 				_stepThread.start();
 				this._main.getMainPanel().getConfiguarationPanel().getControlPanel().getStepButton().setEnabled(false);				
@@ -396,7 +390,9 @@ public class GUIController {
 	}
 	
 	public void bPauseActionPerformed(ActionEvent evt) {
-		_finalAnimationThread.setFinished(true);
+		if(_finalAnimationThread!=null){
+			_finalAnimationThread.setFinished(true);
+		}
 
 		
 	}
@@ -415,7 +411,6 @@ public class GUIController {
 	public void performStep(){
 		if (this._firstStep){
 			this._main.getTablesDialog().ClearTables();
-			this._main.getMainPanel().getGridPanel().setEditMode(false);
 			this._controller.runAlgorithmWithPause(this._main.getMainPanel().getGridPanel().get_startsList(),this._main.getMainPanel().getGridPanel().get_FinishList());
 			_firstStep = false;
 		}
@@ -428,7 +423,6 @@ public class GUIController {
 	}
 	
 	public void stop(){
-		this._main.getMainPanel().getGridPanel().setEditMode(true);
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(true);
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(true);
 
