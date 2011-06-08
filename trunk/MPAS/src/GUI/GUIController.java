@@ -65,7 +65,7 @@ public class GUIController {
 				if (event instanceof finalPathEvent){
 					Vector<Vector<myPoint>> path = GUIController.this._controller.getFinalPath();
 					float finalCost = ((finalPathEvent)event).getCost();
-					GUIController.this.setStatusText("Path is found");
+					GUIController.this.setStatusText("Path is found");		
 					if(!_animatedPath){
 						GUIController.this._main.getMainPanel().getGridPanel().drawFinalPaths(path,_withPathTrace);
 					}
@@ -82,7 +82,7 @@ public class GUIController {
 					GUIController.this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStopButton(false);
 					GUIController.this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStepButton(false);
 					//_animationDialog.getAnimationPanel().enableCheckBox(false);
-					if(_animationDialog!=null && !_animationDialog.getAnimationPanel().getAnimationCheckBox().isSelected()){
+					if(_animationDialog!=null && !_animationDialog.getAnimationPanel().getIsSelectedCheckBox()){
 						_animationDialog.getAnimationPanel().enablePanel(false);
 					}
 					GUIController.this.reset();
@@ -320,11 +320,13 @@ public class GUIController {
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(true);
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(false);
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStepButton(true);
-		//_animationDialog.getAnimationPanel().enableCheckBox(true);
 		if(_animationDialog!=null){
 			_animationDialog.getAnimationPanel().enablePanel(true);
+			_animationDialog.getAnimationPanel().setAnimationCheckBox(false);						
 		}
-		GUIController.this.setStatusText(" ");
+		this._animatedPath = false;
+		_finalAnimationThread = null;
+		this.setStatusText(" ");
 	}
 	
 	public void bStepActionPerformed(ActionEvent evt) {
@@ -377,7 +379,7 @@ public class GUIController {
 	}
 
 	public void bPlayActionPerformed(ActionEvent evt) {
-		if(_finalAnimationThread == null){
+		if(_finalAnimationThread == null && _animatedPath){
 			_finalAnimationThread = new FinalPathThread(this._animationDialog.getAnimationSpeedValue()*10,this);
 			_finalAnimationThread.start();			
 		}
