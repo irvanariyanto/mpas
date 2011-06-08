@@ -108,8 +108,8 @@ public class CAStarState implements CAstarStateInterface<myPoint>,Comparable<CAS
 		TableKey spotbefore = new TableKey(move.getX(),move.getY(),this._t);
 		TableKey mySpotafter = new TableKey(myPosition.getX(), myPosition.getY(), this._t + 1);
 		return !_reservationTable.containsKey(spotafter) &&
-				!_reservationTable.containsKey(spotbefore) ||  
-							(!_reservationTable.containsKey(mySpotafter) || _reservationTable.get(mySpotafter) != _reservationTable.get(spotbefore));
+				(!_reservationTable.containsKey(spotbefore) ||  
+							(!_reservationTable.containsKey(mySpotafter) || _reservationTable.get(mySpotafter) != _reservationTable.get(spotbefore)));
 		
 		
 	}
