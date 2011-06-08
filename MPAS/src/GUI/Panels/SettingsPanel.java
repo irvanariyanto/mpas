@@ -121,7 +121,10 @@ public class SettingsPanel extends JPanel  {
 			public void stateChanged(ChangeEvent e) {
 				JSlider slider = (JSlider) e.getSource();
 				int value = slider.getValue();
-			    _lSize.setText(value + " * "+value);				
+			    _lSize.setText(value + " * "+value);
+			    if (!_sGridSize.getValueIsAdjusting()){
+			    	_guiController.sGridSizeActionPerformed(e);
+			    }
 			}			
 		});
 		
@@ -158,11 +161,6 @@ public class SettingsPanel extends JPanel  {
 			}
 	     });
 		
-		_sGridSize.addChangeListener(new ChangeListener(){
-			public void stateChanged(ChangeEvent evt) {
-				_guiController.sGridSizeActionPerformed(evt);			
-			}
-	     });
 		_rSetBlock.addActionListener(new  ActionListener() {
 	    	 public void actionPerformed( ActionEvent evt) {
 	    		 _guiController.rBlockActionPerformed(evt);
