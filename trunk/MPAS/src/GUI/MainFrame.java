@@ -2,6 +2,7 @@ package GUI;
 
 
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -9,9 +10,11 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.border.EtchedBorder;
 
 import EventMechanism.Events.OpenListChangeEvent;
 import GUI.Panels.ColorsDialog;
@@ -35,6 +38,7 @@ public class MainFrame extends JFrame {
 	private OpenClosedListDialog _ListsPanel;
 	private ColorsDialog _colorsDialog;
 	private GUIController _guiController;
+	private final JLabel status = new JLabel("Status Frame 1.0");
 	// End of variables declaration
 	
 	
@@ -94,6 +98,9 @@ public class MainFrame extends JFrame {
 		
 		this.setJMenuBar(_menuBar);
 		this.add(_mainPanel);
+		
+		 status.setBorder(new EtchedBorder());
+	     this.add(status, BorderLayout.SOUTH);
 
 		_exitItem.addActionListener(new ActionListener() {		
 			public void actionPerformed(ActionEvent e) {
@@ -214,6 +221,10 @@ public class MainFrame extends JFrame {
 	public OpenClosedListDialog getTablesDialog(){
 		return this._ListsPanel;
 	}
+	
+	 public void setStatusText(String s) {
+		 status.setText(s);
+	 }
 
 	
 

@@ -65,6 +65,7 @@ public class GUIController {
 				if (event instanceof finalPathEvent){
 					Vector<Vector<myPoint>> path = GUIController.this._controller.getFinalPath();
 					float finalCost = ((finalPathEvent)event).getCost();
+					GUIController.this.setStatusText("Path is found");
 					if(!_animatedPath){
 						GUIController.this._main.getMainPanel().getGridPanel().drawFinalPaths(path,_withPathTrace);
 					}
@@ -321,7 +322,8 @@ public class GUIController {
 		//_animationDialog.getAnimationPanel().enableCheckBox(true);
 		if(_animationDialog!=null){
 			_animationDialog.getAnimationPanel().enablePanel(true);
-		}		
+		}
+		GUIController.this.setStatusText(" ");
 	}
 	
 	public void bStepActionPerformed(ActionEvent evt) {
@@ -566,6 +568,10 @@ public class GUIController {
 		this._animatedPath  = selected;
 		
 	}
+	
+	public void setStatusText(String s) {
+		 this._main.setStatusText(s);
+	 }
 
 	
 
