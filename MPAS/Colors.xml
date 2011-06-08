@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><Colors>
-<Element Name="agent1" b="0" g="0" r="255"/>
-<Element Name="agent2" b="255" g="0" r="0"/>
-<Element Name="agent3" b="113" g="236" r="247"/>
-<Element Name="agent4" b="51" g="255" r="0"/>
-<Element Name="agent5" b="255" g="0" r="255"/>
-<Element Name="agent6" b="134" g="23" r="0"/>
-<Element Name="agent7" b="250" g="255" r="131"/>
-<Element Name="agent8" b="187" g="77" r="135"/>
-<Element Name="agent9" b="167" g="190" r="27"/>
-<Element Name="agent10" b="204" g="51" r="255"/>
+<Element Name="agent1" b="255" g="0" r="0"/>
+<Element Name="agent2" b="51" g="0" r="255"/>
+<Element Name="agent3" b="0" g="255" r="0"/>
+<Element Name="agent4" b="0" g="255" r="255"/>
+<Element Name="agent5" b="255" g="0" r="153"/>
+<Element Name="agent6" b="204" g="255" r="51"/>
+<Element Name="agent7" b="204" g="0" r="255"/>
+<Element Name="agent8" b="0" g="51" r="153"/>
+<Element Name="agent9" b="0" g="153" r="51"/>
+<Element Name="agent10" b="0" g="102" r="255"/>
 <Element Name="agent11" b="34" g="7" r="48"/>
 <Element Name="agent12" b="8" g="29" r="5"/>
 <Element Name="agent13" b="27" g="185" r="169"/>

@@ -377,9 +377,7 @@ public class GUIController {
 			_finalAnimationThread = new FinalPathThread(this._animationDialog.getAnimationSpeedValue()*10,this);
 			_finalAnimationThread.start();			
 		}
-
-
-			
+					
 		//_main.getMainPanel().getGridPanel().setFinalPathStep (0);
 		
 	}
@@ -392,6 +390,7 @@ public class GUIController {
 	public void bPauseActionPerformed(ActionEvent evt) {
 		if(_finalAnimationThread!=null){
 			_finalAnimationThread.setFinished(true);
+			_finalAnimationThread=null;
 		}
 
 		
