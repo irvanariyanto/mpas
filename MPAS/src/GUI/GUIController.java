@@ -256,8 +256,9 @@ public class GUIController {
 	public void bClearPositionsActionPerformed(ActionEvent evt) {
 		this._main.getMainPanel().getGridPanel().clearPositions();
 		this._main.getTablesDialog().ClearTables();
-		this._main.getMainPanel().getConfiguarationPanel().getInfoPanel().clearFinalCost();
+		this._main.getMainPanel().getGridPanel().clearOpenList();
 		this._main.getMainPanel().getGridPanel().clearFinalPath();
+		this._main.getMainPanel().getConfiguarationPanel().getInfoPanel().clearFinalCost();
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(true);
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(false);
 	}
