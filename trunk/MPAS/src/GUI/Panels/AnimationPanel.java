@@ -58,7 +58,7 @@ public class AnimationPanel extends JPanel {
 		_sAnimationSpeed = new JSlider(1,30,1);
 		_sAnimationSpeed.setPaintTicks(true);
 		_sAnimationSpeed.setMajorTickSpacing(5);
-		_sAnimationSpeed.setValue(10);
+		_sAnimationSpeed.setValue(15);
 		_lSpeed = new JLabel(_sAnimationSpeed.getValue() * 100 + " msec");
 		_speedPanel.setBorder(BorderFactory.createTitledBorder("Animation Speed"));
 		
