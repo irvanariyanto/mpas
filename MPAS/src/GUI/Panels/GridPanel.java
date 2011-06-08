@@ -173,7 +173,7 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 			this._starts[agentNumber-1] = p;
 			this._grid[p.getX()][p.getY()].addTileStatus(Status.Start,agentNumber);
 		} else {
-			this._grid[this._starts[agentNumber-1].getX()][this._starts[agentNumber-1].getY()].addTileStatus(Status.Empty);
+			this._grid[this._starts[agentNumber-1].getX()][this._starts[agentNumber-1].getY()].removeTileStatus(Status.Start);
 			this._starts[agentNumber-1] = p;
 			this._grid[p.getX()][p.getY()].addTileStatus(Status.Start,agentNumber);
 		}
@@ -187,7 +187,7 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 			this._finishes[agentNumber-1] = p;
 			this._grid[p.getX()][p.getY()].addTileStatus(Status.Finish,agentNumber);
 		} else {
-			this._grid[this._finishes[agentNumber-1].getX()][this._finishes[agentNumber-1].getY()].addTileStatus(Status.Empty);
+			this._grid[this._finishes[agentNumber-1].getX()][this._finishes[agentNumber-1].getY()].removeTileStatus(Status.Finish);
 			this._finishes[agentNumber-1] = p;
 			this._grid[p.getX()][p.getY()].addTileStatus(Status.Finish,agentNumber);
 		}
@@ -315,12 +315,14 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	
 	public void clearFinalPath() {
 		if (_finalPaths != null && !_finalPaths.isEmpty()){ 
-			for(Vector<myPoint> state: _finalPaths){
-				for(myPoint p: state){
-					int size = this._grid[p.getX()][p.getY()].getTileStatuses().size();
-					if (this._grid[p.getX()][p.getY()].getTileStatusAt(size-1).equals(Status.Path)){
-						this._grid[p.getX()][p.getY()].removeTileStatusAt(size-1);	
-					}
+			for(Vector<myPoint> tAgentPath: _finalPaths){
+
+				for(myPoint p: tAgentPath){
+					//int size = this._grid[p.getX()][p.getY()].getTileStatuses().size();
+					this._grid[p.getX()][p.getY()].removeTileStatus(Status.Path);
+					/*if (this._grid[p.getX()][p.getY()].getTileStatusAt(size-1).equals(Status.Path)){
+						this._grid[p.getX()][p.getY()].removeTileStatus(Status.Path);	
+					}*/
 				}
 			}
 			this._finalPaths.removeAllElements();	
@@ -331,12 +333,13 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	public void clearOpenList() {
 		for(int i=0; i<this._height; i++){
 			for(int j=0; j<this._width; j++){
-				for(int k=0; k < this._grid[i][j].getTileStatuses().size(); k++){
+				this._grid[i][j].removeTileStatus(Status.inOpenList);
+				this._grid[i][j].removeTileStatus(Status.inClosedList);
+				/*for(int k=0; k < this._grid[i][j].getTileStatuses().size(); k++){
 					if(this._grid[i][j].getTileStatusAt(k)==Status.inOpenList || this._grid[i][j].getTileStatusAt(k)==Status.inClosedList){
-						this._grid[i][j].removeTileStatus(Status.inOpenList);
-						this._grid[i][j].removeTileStatus(Status.inClosedList);
+						
 					}
-				}
+				}*/
 			}
 		}
 		repaint();
