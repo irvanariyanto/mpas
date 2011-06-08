@@ -366,8 +366,9 @@ public class GUIController {
 	}
 	
 	public void sFinalAnimationSpeedActionPerformed(int value) {
-		this._finalAnimationThread.setInterval(value);
-		
+		if(this._finalAnimationThread!=null){
+			this._finalAnimationThread.setInterval(value);
+		}		
 	}
 	
 	public void bPreviousActionPerformed(ActionEvent evt) {
