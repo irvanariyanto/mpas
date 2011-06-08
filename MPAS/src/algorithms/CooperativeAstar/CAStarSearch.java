@@ -32,6 +32,8 @@ public class CAStarSearch<E> extends PausableSearchAlgorithm<E>{
 	@Override
 	public Vector<StateInterface<E>> findPath(StateInterface<E> start,
 			StateInterface<E> goal) {
+		Vector<StateInterface<E>> finalPath = null;
+		boolean pathExists = true;
 		int numberOfAgents = start.get_Coordinates().size();
 		Vector<Vector<StateInterface<E>>> allpaths = new Vector<Vector<StateInterface<E>>>();
 		for (int i = 0 ; i < numberOfAgents; i++){
@@ -51,6 +53,7 @@ public class CAStarSearch<E> extends PausableSearchAlgorithm<E>{
 			}
 			if (singlePath == null){
 				MyLogger.getInstance().severe("One of the Agents could not find a path!!");
+				pathExists = false;
 				//break;
 			}
 			else{
@@ -63,7 +66,10 @@ public class CAStarSearch<E> extends PausableSearchAlgorithm<E>{
 		}
 		
 		//unite paths
-		return combinePaths(allpaths);
+		if (pathExists){
+			finalPath = combinePaths(allpaths);
+		}
+		return finalPath;
 	}
 	private Vector<StateInterface<E>> combinePaths(
 			Vector<Vector<StateInterface<E>>> allpaths) {
