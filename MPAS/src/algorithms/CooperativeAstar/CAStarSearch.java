@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Vector;
 
 import EventMechanism.ApplicationEventListener;
+import EventMechanism.Events.ReservationTableUpdateEvent;
 import EventMechanism.Events.SingleAgentSearchEvent;
 import Utils.MyLogger;
 import algorithms.Interfaces.PausableSearchAlgorithm;
@@ -58,6 +59,7 @@ public class CAStarSearch<E> extends PausableSearchAlgorithm<E>{
 			}
 			else{
 				updateTable(singlePath,i);
+				this._listeners.fireEvent(new ReservationTableUpdateEvent(this,this._reservTable));
 				allpaths.add(singlePath);
 			}
 			

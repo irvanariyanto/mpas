@@ -26,14 +26,18 @@ public class TableKey implements TableKeyInterface<myPoint> {
 			return (this._x == other.getX() && this._y == other.getY() && this._t == other.getT());
 		}
 	}
-	private int getY() {
+	public int getY() {
 		return this._y;
 	}
-	private int getT() {
+	public int getT() {
 		return this._t;
 	}
-	private int getX() {
+	public int getX() {
 		return this._x;
+	}
+	@Override
+	public myPoint getCoordinates() {
+		return new myPoint(_x,_y);
 	}
 	
 }
