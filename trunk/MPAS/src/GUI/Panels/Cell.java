@@ -360,15 +360,15 @@ public class Cell extends Component implements ApplicationEventSource {
 		if (this._withGridLine) {
 			g2d.setComposite(oldComp);
 			g.setColor(Color.black);
-			g.drawRect(0, 0, RectSize.width, RectSize.height);
+			g.drawRect(0,0, RectSize.width, RectSize.height);
 		}
 		// amit's additions
 		Color backgr = this.getBackgroundColor();
 		if (!Color.white.equals(backgr)) {
 			g2d.setColor(backgr);
 			g2d.fillRect(0, 0, size.width - 1, size.height - 1);
-			int StartAgnet = isStatusesContains(Status.Start);
 			
+			int StartAgnet = isStatusesContains(Status.Start);
 			if(StartAgnet!= -1){
 				g2d.setComposite(oldComp);
 				if (RectSize.width > MINIMUM_SIZE && RectSize.height > MINIMUM_SIZE) {
@@ -378,7 +378,7 @@ public class Cell extends Component implements ApplicationEventSource {
 				}
 				else{
 					g2d.setColor(Color.green);
-					g2d.fillRect(0, 0, size.width - 1, size.height - 1);
+					g2d.fillRect(0,0, size.width - 1, size.height - 1);
 				}
 			}//end of ifelse
 			int FinishAgnet = isStatusesContains(Status.Finish);

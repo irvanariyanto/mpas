@@ -501,6 +501,9 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 		 repaint();	
 	}
 	public void clearOneFinalStep(int step) {
+		if(step==0){
+			step=1;
+		}
 		if(_finalPaths!=null && !_finalPaths.isEmpty()){
 			Vector<myPoint> prevStep = getFinalStep(step-1);
 			for(int i=0;i<_finalPaths.size();i++){
@@ -559,7 +562,10 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 				if(_finalPathStep != 0 ){
 					clearOneFinalStep(tSize-_finalPathStep-1);
 				}
-			}	
+			}
+			else{
+				System.out.println("First Step");
+			}
 		}
 		
 	}
