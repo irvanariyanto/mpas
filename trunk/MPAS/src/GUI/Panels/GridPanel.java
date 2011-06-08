@@ -169,13 +169,18 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	 * @param y
 	 */
 	public void setStartCell(myPoint p,int agentNumber) {
-		if (this._starts[agentNumber-1] == null) {
-			this._starts[agentNumber-1] = p;
-			this._grid[p.getX()][p.getY()].addTileStatus(Status.Start,agentNumber);
+		if (this._starts[agentNumber-1] == null ){
+			if(!this.get_startsList().contains(p)){
+				this._starts[agentNumber-1] = p;
+				this._grid[p.getX()][p.getY()].addTileStatus(Status.Start,agentNumber);
+			}
 		} else {
-			this._grid[this._starts[agentNumber-1].getX()][this._starts[agentNumber-1].getY()].removeTileStatus(Status.Start);
-			this._starts[agentNumber-1] = p;
-			this._grid[p.getX()][p.getY()].addTileStatus(Status.Start,agentNumber);
+			
+			if(!this.get_startsList().contains(p)){
+				this._grid[this._starts[agentNumber-1].getX()][this._starts[agentNumber-1].getY()].removeTileStatus(Status.Start);
+				this._starts[agentNumber-1] = p;				
+				this._grid[p.getX()][p.getY()].addTileStatus(Status.Start,agentNumber);
+			}
 		}
 		repaint();
 	}
@@ -184,12 +189,16 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 
 	public void setFinishCell(myPoint p, int agentNumber) {
 		if (this._finishes[agentNumber-1] == null) {
-			this._finishes[agentNumber-1] = p;
-			this._grid[p.getX()][p.getY()].addTileStatus(Status.Finish,agentNumber);
+			if(!this.get_FinishList().contains(p)){
+				this._finishes[agentNumber-1] = p;
+				this._grid[p.getX()][p.getY()].addTileStatus(Status.Finish,agentNumber);
+			}
 		} else {
-			this._grid[this._finishes[agentNumber-1].getX()][this._finishes[agentNumber-1].getY()].removeTileStatus(Status.Finish);
-			this._finishes[agentNumber-1] = p;
-			this._grid[p.getX()][p.getY()].addTileStatus(Status.Finish,agentNumber);
+			if(!this.get_FinishList().contains(p)){
+				this._grid[this._finishes[agentNumber-1].getX()][this._finishes[agentNumber-1].getY()].removeTileStatus(Status.Finish);
+				this._finishes[agentNumber-1] = p;
+				this._grid[p.getX()][p.getY()].addTileStatus(Status.Finish,agentNumber);
+			}
 		}
 		repaint();
 	}
