@@ -211,10 +211,11 @@ public class Cell extends Component implements ApplicationEventSource {
 		this._tileStatuses.removeElementAt(i);
 	}
 
-	public void removeTileStatus(Status status) {
+	public void removeTileStatus(Status status) {		
 		for (int i=0; i<this._tileStatuses.size(); i++){
 			if (this._tileStatuses.elementAt(i).getStatus() == status){
 				removeTileStatusAt(i);
+				i--;
 			}
 		}
 		repaint();

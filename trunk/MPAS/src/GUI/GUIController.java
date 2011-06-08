@@ -316,7 +316,7 @@ public class GUIController {
 		this._main.getMainPanel().getGridPanel().clearOpenList();
 		this._main.getTablesDialog().ClearTables();
 		this._main.getMainPanel().getConfiguarationPanel().getInfoPanel().clearFinalCost();
-		this._main.getMainPanel().getGridPanel().LoadPositions();
+		//this._main.getMainPanel().getGridPanel().LoadPositions();
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(true);
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(false);
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStepButton(true);
