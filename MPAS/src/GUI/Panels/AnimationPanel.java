@@ -68,8 +68,10 @@ public class AnimationPanel extends JPanel {
 			public void stateChanged(ChangeEvent e) {
 				JSlider slider = (JSlider) e.getSource();
 				int value = slider.getValue();
-			    setSpeedLabel(value *100 + " msec");
-			    _guiController.sFinalAnimationSpeedActionPerformed(value*10);
+			    setSpeedLabel(value *100 + " msec");		    
+			    if (!_sAnimationSpeed.getValueIsAdjusting()){
+			    	_guiController.sFinalAnimationSpeedActionPerformed(value*10);
+			    }
 			}
 		});
 		
@@ -141,8 +143,15 @@ public class AnimationPanel extends JPanel {
 	}
 
 
-	public JCheckBoxMenuItem getAnimationCheckBox() {
-		return this._withAnimation;
+	public void setAnimationCheckBox(boolean b) {
+		this._withAnimation.setSelected(b);
+		this._guiController.withAnimatedPath(b);
 	}
+
+
+	public boolean getIsSelectedCheckBox() {
+		return this._withAnimation.isSelected();
+	}
+
 
 }

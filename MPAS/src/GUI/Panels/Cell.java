@@ -338,6 +338,7 @@ public class Cell extends Component implements ApplicationEventSource {
 						g2d.setColor(Color.green);
 						g2d.fillRect(0, 0, size.width - 1, size.height - 1);
 					}
+					g2d.setComposite(oldComp);
 					
 				}
 				if (tStatus.getStatus()== Status.Path && _animationwithIcon ) {
