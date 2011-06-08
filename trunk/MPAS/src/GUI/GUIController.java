@@ -425,6 +425,7 @@ public class GUIController {
 	}
 	
 	public void stop(){
+		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStopButton(false);
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(true);
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(true);
 
