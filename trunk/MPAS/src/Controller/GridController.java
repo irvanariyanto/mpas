@@ -21,6 +21,7 @@ import EventMechanism.ApplicationEventSource;
 import EventMechanism.Events.ClosedListChangeEvent;
 import EventMechanism.Events.OpenListChangeEvent;
 import EventMechanism.Events.PathNotFoundEvent;
+import EventMechanism.Events.ReservationTableUpdateEvent;
 import EventMechanism.Events.SingleAgentSearchEvent;
 import EventMechanism.Events.StepEvent;
 import EventMechanism.Events.finalPathEvent;
@@ -222,7 +223,9 @@ public class GridController implements ControllerInterFace<myPoint>,ApplicationE
 		else if (event instanceof SingleAgentSearchEvent){
 			this._listeners.fireEvent(event);
 		}
-
+		else if (event instanceof ReservationTableUpdateEvent<?>){
+			this._listeners.fireEvent(event);
+		}
 		
 	}
 	@Override

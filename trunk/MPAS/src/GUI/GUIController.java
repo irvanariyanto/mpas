@@ -2,6 +2,10 @@ package GUI;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 import java.util.Vector;
 
 import javax.swing.JFileChooser;
@@ -13,6 +17,7 @@ import maps.Scenario;
 import maps.TileBasedMap;
 
 import algorithms.myPoint;
+import algorithms.CooperativeAstar.TableKeyInterface;
 
 import Controller.GridController;
 import Defaults.Enums.Status;
@@ -22,6 +27,7 @@ import EventMechanism.ApplicationEventListener;
 import EventMechanism.Events.ClosedListChangeEvent;
 import EventMechanism.Events.OpenListChangeEvent;
 import EventMechanism.Events.PathNotFoundEvent;
+import EventMechanism.Events.ReservationTableUpdateEvent;
 import EventMechanism.Events.SingleAgentSearchEvent;
 import EventMechanism.Events.finalPathEvent;
 import EventMechanism.Events.removeFromOpenListEvent;
@@ -99,7 +105,7 @@ public class GUIController {
 				}
 				else if (event instanceof showStepEvent<?>){
 					GUIController.this.oldState = ((showStepEvent<myPoint>)event).getCoordinates();
-					GUIController.this._main.getMainPanel().getGridPanel().drawOneStep(GUIController.this.oldState);
+					GUIController.this._main.getMainPanel().getGridPanel().drawOneStep(GUIController.this.oldState,_agentNum);
 					//GUIController.this._main.getMainPanel().getConfiguarationPanel().getInfoPanel().writeToTextArea(GUIController.this.oldState.toString());	
 				}
 				else if (event instanceof OpenListChangeEvent<?>){
@@ -124,6 +130,20 @@ public class GUIController {
 				}	
 				else if (event instanceof SingleAgentSearchEvent){
 					_agentNum = ((SingleAgentSearchEvent)event).getAgentNum();
+				}
+				else if (event instanceof ReservationTableUpdateEvent<?>){
+					if (_writeStatistics){
+						HashMap<TableKeyInterface<myPoint>,Integer> reservationTable = ((ReservationTableUpdateEvent<myPoint>)event).getReservationTable();
+					    Iterator it = reservationTable.entrySet().iterator();
+
+					    while (it.hasNext()) { //TODO fix ugly code to more generic one later
+					        Map.Entry pairs = (Map.Entry)it.next();
+					        myPoint coordinates = ((TableKeyInterface<myPoint>) pairs.getKey()).getCoordinates();
+					        int time = ((TableKeyInterface<myPoint>) pairs.getKey()).getT();
+					        _main.getStatsDialog().addLine("X: " + coordinates.getX() + "\tY: " + coordinates.getY() + "\tT: " + time  + "\tAgent: " +  pairs.getValue());
+					    }
+					    _main.getStatsDialog().addLine("Reservation Table updated:\n\n");
+					}
 				}
 				else if (event instanceof ClosedListChangeEvent<?>){
 					ClosedListChangeEvent<myPoint> e = (ClosedListChangeEvent<myPoint>)event;
