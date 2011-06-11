@@ -12,8 +12,6 @@ import javax.swing.JSlider;
 import javax.swing.JToggleButton;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
-import Defaults.defaultsValues;
 import GUI.GUIController;
 
 

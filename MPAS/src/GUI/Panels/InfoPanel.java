@@ -1,14 +1,11 @@
 package GUI.Panels;
 
-import java.awt.Component;
+
 import java.awt.Font;
 
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 
 import GUI.GUIController;
 

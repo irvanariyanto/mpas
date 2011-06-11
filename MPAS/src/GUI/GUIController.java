@@ -5,7 +5,6 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 import java.util.Vector;
 
 import javax.swing.JFileChooser;
@@ -32,7 +31,6 @@ import EventMechanism.Events.SingleAgentSearchEvent;
 import EventMechanism.Events.finalPathEvent;
 import EventMechanism.Events.removeFromOpenListEvent;
 import EventMechanism.Events.showStepEvent;
-import GUI.Panels.AnimationDialog;
 import GUI.Panels.Cell;
 import GUI.Utils.ColorManager;
 import GUI.Utils.ScenarioFileFilter;

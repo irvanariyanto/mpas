@@ -5,9 +5,6 @@ package GUI;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -15,8 +12,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.border.EtchedBorder;
-
-import EventMechanism.Events.OpenListChangeEvent;
 import GUI.Panels.ColorsDialog;
 import GUI.Panels.OpenClosedListDialog;
 import GUI.Panels.StatisticsDialog;
