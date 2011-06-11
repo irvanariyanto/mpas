@@ -58,7 +58,7 @@ public class GUIController {
 	private boolean _animation = false;
 	private boolean _animatedPath = false;
 	private int _agentNum; //used for color selection for each single A* run inside the CA* algorithm
-	AnimationDialog _animationDialog;
+	//AnimationDialog _animationDialog;
 	public GUIController(){
 		_controller = new GridController();
 		_firstStep = true;	
@@ -88,8 +88,8 @@ public class GUIController {
 					GUIController.this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStopButton(false);
 					GUIController.this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStepButton(false);
 					//_animationDialog.getAnimationPanel().enableCheckBox(false);
-					if(_animationDialog!=null && !_animationDialog.getAnimationPanel().getIsSelectedCheckBox()){
-						_animationDialog.getAnimationPanel().enablePanel(false);
+					if(!GUIController.this._main.getMainPanel().getConfiguarationPanel().getAnimationPanel().getIsSelectedCheckBox()){
+						GUIController.this._main.getMainPanel().getConfiguarationPanel().getAnimationPanel().enablePanel(false);
 					}
 					GUIController.this.reset();
 				}
@@ -312,9 +312,7 @@ public class GUIController {
 		if(this._main.getMainPanel().getGridPanel().isFinalPathFound()){
 			this._main.getTablesDialog().ClearTables();
 			_finalAnimationThread = null;
-			if(_animationDialog!= null){
-			_animationDialog.getAnimationPanel().enableCheckBox(false);
-			}
+			this._main.getMainPanel().getConfiguarationPanel().getAnimationPanel().enableCheckBox(false);
 			//this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(true);
 		}
 		if (this._main.getMainPanel().getGridPanel().checkArguments()) {
@@ -340,10 +338,8 @@ public class GUIController {
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(true);
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(false);
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStepButton(true);
-		if(_animationDialog!=null){
-			_animationDialog.getAnimationPanel().enablePanel(true);
-			_animationDialog.getAnimationPanel().setAnimationCheckBox(false);						
-		}
+		GUIController.this._main.getMainPanel().getConfiguarationPanel().getAnimationPanel().enablePanel(true);
+		GUIController.this._main.getMainPanel().getConfiguarationPanel().getAnimationPanel().setAnimationCheckBox(false);						
 		this._animatedPath = false;
 		_finalAnimationThread = null;
 		this.setStatusText(" ");
@@ -400,7 +396,7 @@ public class GUIController {
 
 	public void bPlayActionPerformed(ActionEvent evt) {
 		if(_finalAnimationThread == null && _animatedPath){
-			_finalAnimationThread = new FinalPathThread(this._animationDialog.getAnimationSpeedValue()*10,this);
+			_finalAnimationThread = new FinalPathThread(this._main.getMainPanel().getConfiguarationPanel().getAnimationPanel().getAnimationSpeedValue()*10,this);
 			_finalAnimationThread.start();			
 		}
 					
@@ -526,21 +522,17 @@ public class GUIController {
 	    	this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(true);
 	}
 	
-	public void openAnimationDiaglog() {
+	/*public void openAnimationDiaglog() {
 		if (_animationDialog ==null){
 			_animationDialog= new AnimationDialog(this._main,this);
 			_animationDialog.setVisible(true);
 		}
 		_animationDialog.setVisible(true);
 	
-	}
+	}*/
 	
 	public int getAnimationSpeedValue(){
-		int ans = -1;
-		if(this._animationDialog!=null){
-			ans = this._animationDialog.getAnimationSpeedValue();
-		}
-		return ans;
+		return this._main.getMainPanel().getConfiguarationPanel().getAnimationPanel().getAnimationSpeedValue();
 	}
 	
 	
