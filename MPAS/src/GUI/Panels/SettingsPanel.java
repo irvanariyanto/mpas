@@ -414,7 +414,22 @@ public class SettingsPanel extends JPanel  {
 	}
 
 
-
+	public void enableSettingsPanel(boolean enable){
+		this._bClearMap.setEnabled(enable);
+		this._bClearPositions.setEnabled(enable);
+		this._bGeneratePositions.setEnabled(enable);
+		this._bRandomMap.setEnabled(enable);
+		this._cAgents.setEnabled(enable);
+		this._cAlgorithm.setEnabled(enable);
+		this._cDirections.setEnabled(enable);
+		this._cHeuristic.setEnabled(enable);
+		this._rSetBlock.setEnabled(enable);
+		this._rSetFinish.setEnabled(enable);
+		this._rSetStart.setEnabled(enable);
+		this._sDensity.setEnabled(enable);
+		this._sGridSize.setEnabled(enable);
+		this._sNumOfAgents.setEnabled(enable);
+	}
 
 	
 

@@ -67,6 +67,7 @@ public class GUIController {
 			@Override
 			public void handle(ApplicationEvent event) {
 				if (event instanceof finalPathEvent){
+					_main.getMainPanel().getConfiguarationPanel().getSettingsPanel().enableSettingsPanel(true);
 					Vector<Vector<myPoint>> path = GUIController.this._controller.getFinalPath();
 					float finalCost = ((finalPathEvent)event).getCost();
 					GUIController.this.setStatusText("Path is found");		
@@ -92,6 +93,7 @@ public class GUIController {
 					GUIController.this.reset();
 				}
 				else if (event instanceof PathNotFoundEvent){
+					_main.getMainPanel().getConfiguarationPanel().getSettingsPanel().enableSettingsPanel(true);
 					GUIController.this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(true);
 					GUIController.this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(true);
 					GUIController.this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStopButton(false);
@@ -301,6 +303,7 @@ public class GUIController {
 	}
 	
 	public void bFindPathActionPerformed(ActionEvent evt) {
+		
 		this._main.getMainPanel().getGridPanel().clearFinalPath();	
 		this._main.getMainPanel().getGridPanel().clearOpenList();
 		this._main.getMainPanel().getGridPanel().setAnimationwithIcon(false);
@@ -314,6 +317,7 @@ public class GUIController {
 			//this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(true);
 		}
 		if (this._main.getMainPanel().getGridPanel().checkArguments()) {
+			this._main.getMainPanel().getConfiguarationPanel().getSettingsPanel().enableSettingsPanel(false);
 			this._controller.setTile(this._main.getMainPanel().getGridPanel().get_blockList());
 			this._controller.findPath(this._main.getMainPanel().getGridPanel().get_startsList(),this._main.getMainPanel().getGridPanel().get_FinishList());
 			this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStopButton(true);
@@ -354,6 +358,7 @@ public class GUIController {
 				performStep();
 			}
 			this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStopButton(true);	
+			this._main.getMainPanel().getConfiguarationPanel().getSettingsPanel().enableSettingsPanel(false);
 		}
 		else{
 			this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(true);
@@ -442,6 +447,7 @@ public class GUIController {
 	}
 	
 	public void stop(){
+		this._main.getMainPanel().getConfiguarationPanel().getSettingsPanel().enableSettingsPanel(true);
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStopButton(false);
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(true);
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(true);
