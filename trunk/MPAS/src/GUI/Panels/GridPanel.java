@@ -4,8 +4,6 @@ package GUI.Panels;
 
 import java.awt.Color;
 import java.awt.GridLayout;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Vector;
@@ -25,7 +23,7 @@ import EventMechanism.ApplicationEvent;
 import EventMechanism.ApplicationEventListener;
 import EventMechanism.ApplicationEventListenerCollection;
 import EventMechanism.ApplicationEventSource;
-import GUI.Utils.ColorManager;
+
 
 import algorithms.myPoint;
 

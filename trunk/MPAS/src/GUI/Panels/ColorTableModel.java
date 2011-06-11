@@ -7,7 +7,11 @@ import javax.swing.table.AbstractTableModel;
 import GUI.Utils.ColorManager;
 
 public class ColorTableModel extends AbstractTableModel {
-    private String[] columnNames = {"Element",
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2213926686479567499L;
+	private String[] columnNames = {"Element",
                                     "Color"};
     private Object[][] data;
 

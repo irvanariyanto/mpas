@@ -2,7 +2,6 @@ package maps;
 
 import java.util.Vector;
 
-import algorithms.myPoint;
 
 public interface MapInterface<T> {
 
