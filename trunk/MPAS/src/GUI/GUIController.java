@@ -408,7 +408,7 @@ public class GUIController {
 			_finalAnimationThread = new FinalPathThread(this._main.getMainPanel().getConfiguarationPanel().getAnimationPanel().getAnimationSpeedValue()*10,this);
 			_finalAnimationThread.start();			
 		}
-					
+		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(false);			
 		//_main.getMainPanel().getGridPanel().setFinalPathStep (0);
 		
 	}
@@ -423,6 +423,7 @@ public class GUIController {
 			_finalAnimationThread.setFinished(true);
 			_finalAnimationThread=null;
 		}
+		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(true);			
 
 		
 	}
