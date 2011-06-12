@@ -27,10 +27,10 @@ public class AnimationPanel extends JPanel {
 	private JButton _bPause;
 	private JSlider _sAnimationSpeed;
 	private JLabel _lSpeed;
-	private ImageIcon _iPrevious = new ImageIcon("Icons/Animation/previous.png","Previous");
-	private ImageIcon _iPlay = new ImageIcon("Icons/Animation/play.png","Play");
-	private ImageIcon _iNext = new ImageIcon("Icons/Animation/next.png","Next");
-	private ImageIcon _iPause = new ImageIcon("Icons/Animation/pause.png","Pause");
+	private ImageIcon _iPrevious = new ImageIcon(this.getClass().getResource("/resources/icons/AnimationIcons/previous.png"),"Previous");
+	private ImageIcon _iPlay = new ImageIcon(this.getClass().getResource("/resources/icons/AnimationIcons/play.png"),"Play");
+	private ImageIcon _iNext = new ImageIcon(this.getClass().getResource("/resources/icons/AnimationIcons/next.png"),"Next");
+	private ImageIcon _iPause = new ImageIcon(this.getClass().getResource("/resources/icons/AnimationIcons/pause.png"),"Pause");
 	private JPanel _playerPanel;
 	private JPanel _speedPanel;
 	private JCheckBoxMenuItem _withAnimation;

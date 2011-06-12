@@ -62,6 +62,8 @@ public class Cell extends Component implements ApplicationEventSource {
 	public Color backgroundColor;
 	private boolean isAnimating;
 	private boolean _animationwithIcon = false;
+	private String CarPath = "/resources/icons/car2.png";
+	private String FlagPath = "/resources/icons/finishFlag1.png";
 
 	// Constructor
 	public Cell(myPoint point, SwingRepaintTimeline repaintTimeline) {
@@ -327,7 +329,7 @@ public class Cell extends Component implements ApplicationEventSource {
 						g2d.setComposite(alphaComp);
 					}
 					if (RectSize.width > MINIMUM_SIZE && RectSize.height > MINIMUM_SIZE) {
-						BufferedImage carImage = loadImage("Icons/newCar.png");
+						BufferedImage carImage = loadImage(CarPath);
 						tint(carImage, Color.white, ColorManager.getInstance().getColor("agent" + tStatus.getAgnetNum()));
 						g.drawImage(carImage, 2, 2, RectSize.width,RectSize.height, this);
 					}
@@ -344,7 +346,7 @@ public class Cell extends Component implements ApplicationEventSource {
 						g.setColor(Color.white);
 						g.fillRect(0, 0, size.width - 1, size.height - 1);		
 						if (RectSize.width > MINIMUM_SIZE && RectSize.height > MINIMUM_SIZE) {
-							BufferedImage carImage = loadImage("Icons/newCar.png");
+							BufferedImage carImage = loadImage(CarPath);
 							tint(carImage, Color.white, ColorManager.getInstance().getColor("agent" + tStatus.getAgnetNum()));
 							g.drawImage(carImage, 2, 2, RectSize.width,RectSize.height, this);
 						}
@@ -353,7 +355,7 @@ public class Cell extends Component implements ApplicationEventSource {
 				if (tStatus.getStatus()== Status.Finish ) {
 					g2d.setComposite(oldComp);
 					if (RectSize.width > MINIMUM_SIZE && RectSize.height > MINIMUM_SIZE) {
-						BufferedImage flagImage = loadImage("Icons/finishFlag1.png");
+						BufferedImage flagImage = loadImage(FlagPath);
 						tint(flagImage, Color.white, ColorManager.getInstance().getColor("agent" + tStatus.getAgnetNum()));
 						g.drawImage(flagImage, 5, 5, RectSize.width,RectSize.height, this);
 					}
@@ -387,7 +389,7 @@ public class Cell extends Component implements ApplicationEventSource {
 			if(StartAgnet!= -1){
 				g2d.setComposite(oldComp);
 				if (RectSize.width > MINIMUM_SIZE && RectSize.height > MINIMUM_SIZE) {
-					BufferedImage carImage = loadImage("Icons/newCar.png");
+					BufferedImage carImage = loadImage(CarPath);
 					tint(carImage, Color.white, ColorManager.getInstance().getColor("agent" + StartAgnet));
 					g.drawImage(carImage, 2, 2, RectSize.width,RectSize.height, this);
 				}
@@ -400,7 +402,7 @@ public class Cell extends Component implements ApplicationEventSource {
 			if(FinishAgnet!= -1){
 				g2d.setComposite(oldComp);
 				if (RectSize.width > MINIMUM_SIZE && RectSize.height > MINIMUM_SIZE) {
-					BufferedImage flagImage = loadImage("Icons/finishFlag1.png");
+					BufferedImage flagImage = loadImage(FlagPath);
 					tint(flagImage, Color.white, ColorManager.getInstance().getColor("agent" +FinishAgnet));
 					g.drawImage(flagImage, 5, 5, RectSize.width,RectSize.height, this);
 				}
@@ -699,8 +701,8 @@ public class Cell extends Component implements ApplicationEventSource {
 
 	}
 
-	public static BufferedImage loadImage(String url) {
-		ImageIcon icon = new ImageIcon(url);
+	public BufferedImage loadImage(String url) {
+		ImageIcon icon = new ImageIcon(this.getClass().getResource(url));
 		Image image = icon.getImage();
 
 		// Create empty BufferedImage, sized to Image
@@ -731,7 +733,7 @@ public class Cell extends Component implements ApplicationEventSource {
 		}
 	}
 
-	public static BufferedImage makeColorTransparent(String ref, Color color) {
+	public BufferedImage makeColorTransparent(String ref, Color color) {
 		BufferedImage image = loadImage(ref);
 		BufferedImage dimg = new BufferedImage(image.getWidth(),
 				image.getHeight(), BufferedImage.TYPE_INT_ARGB);

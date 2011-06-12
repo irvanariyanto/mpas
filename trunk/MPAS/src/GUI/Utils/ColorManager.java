@@ -45,7 +45,7 @@ public class ColorManager {
 		Color defaultColor = Color.GRAY;
 		Color color = null;
 		try {
-			File file = new File("Colors.xml");
+			File file = new File("src/resources/Colors.xml");
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory
 					.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -100,7 +100,7 @@ public class ColorManager {
 		Color defaultColor = Color.GRAY;
 		Color color = null;
 		try {
-			File file = new File("Colors.xml");
+			File file = new File("src/resources/Colors.xml");
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory
 					.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -152,7 +152,7 @@ public class ColorManager {
 	 */
 	public static void setColorInFile(String elementName, Color color) {
 		try {
-			File file = new File("Colors.xml");
+			File file = new File("src/resources/Colors.xml");
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory
 					.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -207,7 +207,7 @@ public class ColorManager {
 	public static Object[][] createDataModelFromFile() {
 		Object[][] dataModel = null;
 		try {
-			File file = new File("Colors.xml");
+			File file = new File("src/resources/Colors.xml");
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory
 					.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
