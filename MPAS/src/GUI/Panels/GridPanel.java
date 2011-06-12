@@ -168,13 +168,13 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	 */
 	public void setStartCell(myPoint p,int agentNumber) {
 		if (this._starts[agentNumber-1] == null ){
-			if(!this.get_startsList().contains(p)){
+			if(!this.get_startsList().contains(p) && (!this.get_blockList().contains(p))){
 				this._starts[agentNumber-1] = p;
 				this._grid[p.getX()][p.getY()].addTileStatus(Status.Start,agentNumber);
 			}
 		} else {
 			
-			if(!this.get_startsList().contains(p)){
+			if(!this.get_startsList().contains(p) && (!this.get_blockList().contains(p))){
 				this._grid[this._starts[agentNumber-1].getX()][this._starts[agentNumber-1].getY()].removeTileStatus(Status.Start);
 				this._starts[agentNumber-1] = p;				
 				this._grid[p.getX()][p.getY()].addTileStatus(Status.Start,agentNumber);
@@ -187,12 +187,12 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 
 	public void setFinishCell(myPoint p, int agentNumber) {
 		if (this._finishes[agentNumber-1] == null) {
-			if(!this.get_FinishList().contains(p)){
+			if(!this.get_FinishList().contains(p) && (!this.get_blockList().contains(p))){
 				this._finishes[agentNumber-1] = p;
 				this._grid[p.getX()][p.getY()].addTileStatus(Status.Finish,agentNumber);
 			}
 		} else {
-			if(!this.get_FinishList().contains(p)){
+			if(!this.get_FinishList().contains(p) && (!this.get_blockList().contains(p))){
 				this._grid[this._finishes[agentNumber-1].getX()][this._finishes[agentNumber-1].getY()].removeTileStatus(Status.Finish);
 				this._finishes[agentNumber-1] = p;
 				this._grid[p.getX()][p.getY()].addTileStatus(Status.Finish,agentNumber);
