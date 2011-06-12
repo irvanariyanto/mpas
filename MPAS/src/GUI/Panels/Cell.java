@@ -350,6 +350,10 @@ public class Cell extends Component implements ApplicationEventSource {
 							tint(carImage, Color.white, ColorManager.getInstance().getColor("agent" + tStatus.getAgnetNum()));
 							g.drawImage(carImage, 2, 2, RectSize.width,RectSize.height, this);
 						}
+						else{
+							g2d.setColor(Color.green);
+							g2d.fillRect(0, 0, size.width - 1, size.height - 1);
+						}
 					}
 				}
 				if (tStatus.getStatus()== Status.Finish ) {
