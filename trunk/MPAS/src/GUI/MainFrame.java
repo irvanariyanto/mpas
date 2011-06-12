@@ -33,7 +33,7 @@ public class MainFrame extends JFrame {
 	private OpenClosedListDialog _ListsPanel;
 	private ColorsDialog _colorsDialog;
 	private GUIController _guiController;
-	private final JLabel status = new JLabel("Status Frame 1.0");
+	private final JLabel status = new JLabel(" ");
 	// End of variables declaration
 	
 	
