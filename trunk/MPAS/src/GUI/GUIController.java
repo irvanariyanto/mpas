@@ -311,13 +311,12 @@ public class GUIController {
 	}
 	
 	public void bFindPathActionPerformed(ActionEvent evt) {
-		Cursor hourglassCursor = new Cursor(Cursor.WAIT_CURSOR);
-		this._main.setCursor(hourglassCursor);
 		this._main.getMainPanel().getGridPanel().clearFinalPath();	
 		this._main.getMainPanel().getGridPanel().clearOpenList();
 		this._main.getMainPanel().getGridPanel().setAnimationwithIcon(false);
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(false);
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(false);
+		
 		//this._main.getMainPanel().getConfiguarationPanel().getInfoPanel().setText("");
 		if(this._main.getMainPanel().getGridPanel().isFinalPathFound()){
 			this._main.getTablesDialog().ClearTables();
@@ -326,11 +325,14 @@ public class GUIController {
 			//this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(true);
 		}
 		if (this._main.getMainPanel().getGridPanel().checkArguments()) {
+			Cursor hourglassCursor = new Cursor(Cursor.WAIT_CURSOR);
+			this._main.setCursor(hourglassCursor);
 			this._main.getMainPanel().getGridPanel().setEditMode(false);
 			this._main.getMainPanel().getConfiguarationPanel().getSettingsPanel().enableSettingsPanel(false);
 			this._controller.setTile(this._main.getMainPanel().getGridPanel().get_blockList());
 			this._controller.findPath(this._main.getMainPanel().getGridPanel().get_startsList(),this._main.getMainPanel().getGridPanel().get_FinishList());
 			this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStopButton(true);
+			this._main.getMainPanel().getConfiguarationPanel().getAnimationPanel().enablePanel(false);
 		} else {
 			this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(true);
 			this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(false);
