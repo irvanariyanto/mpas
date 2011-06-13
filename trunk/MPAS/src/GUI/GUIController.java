@@ -1,5 +1,6 @@
 package GUI;
 
+import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.HashMap;
@@ -67,6 +68,8 @@ public class GUIController {
 			@Override
 			public void handle(ApplicationEvent event) {
 				if (event instanceof finalPathEvent){
+					Cursor hourglassCursor = new Cursor(Cursor.DEFAULT_CURSOR);
+					_main.setCursor(hourglassCursor);
 					_main.getMainPanel().getConfiguarationPanel().getSettingsPanel().enableSettingsPanel(true);
 					Vector<Vector<myPoint>> path = GUIController.this._controller.getFinalPath();
 					float finalCost = ((finalPathEvent)event).getCost();
@@ -93,6 +96,8 @@ public class GUIController {
 					GUIController.this.reset();
 				}
 				else if (event instanceof PathNotFoundEvent){
+					Cursor hourglassCursor = new Cursor(Cursor.DEFAULT_CURSOR);
+					_main.setCursor(hourglassCursor);
 					_main.getMainPanel().getGridPanel().setEditMode(true);
 					_main.getMainPanel().getConfiguarationPanel().getSettingsPanel().enableSettingsPanel(true);
 					GUIController.this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(true);
@@ -306,7 +311,8 @@ public class GUIController {
 	}
 	
 	public void bFindPathActionPerformed(ActionEvent evt) {
-		
+		Cursor hourglassCursor = new Cursor(Cursor.WAIT_CURSOR);
+		this._main.setCursor(hourglassCursor);
 		this._main.getMainPanel().getGridPanel().clearFinalPath();	
 		this._main.getMainPanel().getGridPanel().clearOpenList();
 		this._main.getMainPanel().getGridPanel().setAnimationwithIcon(false);
@@ -455,6 +461,8 @@ public class GUIController {
 	}
 	
 	public void stop(){
+		Cursor hourglassCursor = new Cursor(Cursor.DEFAULT_CURSOR);
+		this._main.setCursor(hourglassCursor);
 		this._main.getMainPanel().getGridPanel().setEditMode(true);
 		this._main.getMainPanel().getConfiguarationPanel().getSettingsPanel().enableSettingsPanel(true);
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStopButton(false);
