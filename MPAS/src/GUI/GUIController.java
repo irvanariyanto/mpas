@@ -88,7 +88,7 @@ public class GUIController {
 					GUIController.this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(true);
 					GUIController.this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(true);
 					GUIController.this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStopButton(false);
-					GUIController.this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStepButton(true);
+					GUIController.this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStepButton(false);
 					//_animationDialog.getAnimationPanel().enableCheckBox(false);
 					if(!GUIController.this._main.getMainPanel().getConfiguarationPanel().getAnimationPanel().getIsSelectedCheckBox()){
 						GUIController.this._main.getMainPanel().getConfiguarationPanel().getAnimationPanel().enablePanel(false);
