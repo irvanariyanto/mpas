@@ -240,7 +240,7 @@ public class GUIController {
 		this._main.getMainPanel().getGridPanel().clearPositions();
 		this._main.getMainPanel().getConfiguarationPanel().getInfoPanel().clearFinalCost();
 		_gridSize = this._main.getMainPanel().getConfiguarationPanel().getSettingsPanel().getGridSize();
-		this._main.getMainPanel().ChangeGridPanel(_gridSize);	
+		this._main.getMainPanel().ChangeGridPanel(_gridSize,this._main.getWithGridLines());	
 		init_controller(_algorithmChosen,_heuristicChosen,_directionChosen,_numberOfAgents,_gridSize);
 		Runtime.getRuntime().gc();
 	}
@@ -492,7 +492,7 @@ public class GUIController {
     	File tMapFile = fc.getSelectedFile();
 		if (tMapFile != null){
 			TileBasedMap map = GridMapUtility.loadMap(tMapFile);
-			this._main.getMainPanel().ChangeGridPanel(map.getHeightInTiles()); 
+			this._main.getMainPanel().ChangeGridPanel(map.getHeightInTiles(),this._main.getWithGridLines()); 
 			this._controller.setMap(map);
 			this._main.getMainPanel().getConfiguarationPanel().getSettingsPanel().setGridSizeValue(map.getHeightInTiles());
 			this._main.getMainPanel().getGridPanel().drawMap(map);
@@ -530,7 +530,7 @@ public class GUIController {
 	    	File tFile = fc.getSelectedFile();
 	    	if (tFile != null){
 	    		Scenario s = GridMapUtility.loadScenario(tFile);
-				this._main.getMainPanel().ChangeGridPanel(s.getMap().getHeightInTiles()); 
+				this._main.getMainPanel().ChangeGridPanel(s.getMap().getHeightInTiles(),this._main.getWithGridLines()); 
 			//	this._mainPanel.get_controller().setMap(s.getMap());
 				int numOfAgents = s.getStartLocations().size();
 				this._controller.setNumberOfAgents(numOfAgents);

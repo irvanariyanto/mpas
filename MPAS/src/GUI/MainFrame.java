@@ -219,6 +219,10 @@ public class MainFrame extends JFrame {
 	 public void setStatusText(String s) {
 		 status.setText(s);
 	 }
+	 
+	 public boolean getWithGridLines() {
+		 return this._ShowGridLine.isSelected();
+	 }
 
 	
 
