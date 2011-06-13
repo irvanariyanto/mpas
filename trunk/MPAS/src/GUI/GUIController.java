@@ -467,7 +467,7 @@ public class GUIController {
 		this._main.getMainPanel().getConfiguarationPanel().getSettingsPanel().enableSettingsPanel(true);
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStopButton(false);
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(true);
-		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(true);
+		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(false);
 
 		reset();
 		if (this._controller.getAlgorithmThread() != null){
