@@ -67,10 +67,11 @@ public class mainPanel extends JPanel implements ApplicationEventSource{
 	 * change the grid panel to the new grid size which is given
 	 * @param gridSize
 	 */
-	public void ChangeGridPanel(int gridSize){		
+	public void ChangeGridPanel(int gridSize, boolean withGridLines){		
 		this.remove(_grid );
 		this._grid = new GridPanel(gridSize);
 		this.add(_grid , BorderLayout.CENTER);
+		this._grid.setWithGridLines(withGridLines);
 		this._grid .revalidate();
 		this._grid.addListener(new MainFrameListener());
 	}
