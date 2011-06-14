@@ -81,6 +81,9 @@ public class AStarSearch<E> extends PausableSearchAlgorithm<E> {
 				else if(tentativeCost < this._expaned.get(neighbor).get_cost()){
 					tentativeIsBetter = true;
 				}
+				else{
+					tentativeIsBetter = false;
+				}
 				if (tentativeIsBetter){
 					this._expaned.put(neighbor, neighbor);
 					// new addition
