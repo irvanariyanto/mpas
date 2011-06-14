@@ -387,7 +387,7 @@ public class Cell extends Component implements ApplicationEventSource {
 		Color backgr = this.getBackgroundColor();
 		if (!Color.white.equals(backgr)) {
 			g2d.setColor(backgr);
-			g2d.fillRect(0, 0, size.width - 1, size.height - 1);
+			g2d.fillRect(0, 0, size.width - 2, size.height - 2);
 			
 			int StartAgnet = isStatusesContains(Status.Start);
 			if(StartAgnet!= -1){
@@ -399,7 +399,7 @@ public class Cell extends Component implements ApplicationEventSource {
 				}
 				else{
 					g2d.setColor(Color.green);
-					g2d.fillRect(0,0, size.width - 1, size.height - 1);
+					g2d.fillRect(0,0, size.width - 2, size.height - 2);
 				}
 			}//end of ifelse
 			int FinishAgnet = isStatusesContains(Status.Finish);
@@ -412,7 +412,7 @@ public class Cell extends Component implements ApplicationEventSource {
 				}
 				else{
 					g2d.setColor(Color.red);
-					g2d.fillRect(0, 0, size.width - 1, size.height - 1);
+					g2d.fillRect(0, 0, size.width - 2, size.height - 2);
 				}
 			}
 			
