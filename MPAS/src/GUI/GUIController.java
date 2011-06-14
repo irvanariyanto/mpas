@@ -332,7 +332,7 @@ public class GUIController {
 			this._controller.setTile(this._main.getMainPanel().getGridPanel().get_blockList());
 			this._controller.findPath(this._main.getMainPanel().getGridPanel().get_startsList(),this._main.getMainPanel().getGridPanel().get_FinishList());
 			this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStopButton(true);
-			this._main.getMainPanel().getConfiguarationPanel().getAnimationPanel().enablePanel(false);
+			//this._main.getMainPanel().getConfiguarationPanel().getAnimationPanel().enablePanel(false);
 		} else {
 			this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(true);
 			this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(false);

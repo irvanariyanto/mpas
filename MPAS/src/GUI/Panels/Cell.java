@@ -78,7 +78,7 @@ public class Cell extends Component implements ApplicationEventSource {
 		this.backgroundColor = Color.white;
 		this._timeline = new Timeline(this);
 		this._timeline.setDuration(_timer);
-		this._timeline.addPropertyToInterpolate("backgroundColor", Color.blue,Color.white);
+		//this._timeline.addPropertyToInterpolate("backgroundColor", Color.blue,Color.white);
 		this._repaintTimeline = repaintTimeline;
 		this.isAnimating = false;
 	}
@@ -111,18 +111,6 @@ public class Cell extends Component implements ApplicationEventSource {
 		this._timer = time;
 	}
 
-	/*
-	 * //animation addon 
-	 * public void doAnimation(boolean isAnimating){ 
-	 * if (this.isAnimating == isAnimating){ 
-	 * 		return; 
-	 * } 
-	 * this.isAnimating =isAnimating; 
-	 * if (this.isAnimating){ 
-	 * 		this._timeline.replay(); 
-	 * } 
-	 * }
-	 */
 	public void doAnimation(boolean isAnimating, Color color) {
 		if (this.isAnimating == isAnimating) {
 			return;
@@ -387,7 +375,12 @@ public class Cell extends Component implements ApplicationEventSource {
 		Color backgr = this.getBackgroundColor();
 		if (!Color.white.equals(backgr)) {
 			g2d.setColor(backgr);
-			g2d.fillRect(0, 0, size.width - 2, size.height - 2);
+			if(_withGridLine){
+				g2d.fillRect(0, 0, size.width - 2, size.height - 2);
+			}
+			else{
+				g2d.fillRect(0, 0, size.width - 1, size.height - 1);
+			}
 			
 			int StartAgnet = isStatusesContains(Status.Start);
 			if(StartAgnet!= -1){
@@ -415,10 +408,6 @@ public class Cell extends Component implements ApplicationEventSource {
 					g2d.fillRect(0, 0, size.width - 2, size.height - 2);
 				}
 			}
-			
-			
-			
-			
 		}
 		// amit's edition ends
 	}
@@ -699,8 +688,9 @@ public class Cell extends Component implements ApplicationEventSource {
 	 * stops the cell animation
 	 */
 	public synchronized void stopAnimation() {
-		this._timeline.end();
 		this.backgroundColor = Color.white;
+		this._timeline.end();		
+		repaint();
 
 
 	}
