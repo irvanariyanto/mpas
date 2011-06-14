@@ -376,7 +376,7 @@ public class Cell extends Component implements ApplicationEventSource {
 		if (!Color.white.equals(backgr)) {
 			g2d.setColor(backgr);
 			if(_withGridLine){
-				g2d.fillRect(0, 0, size.width - 2, size.height - 2);
+				g2d.fillRect(1, 1, size.width - 3, size.height - 3);
 			}
 			else{
 				g2d.fillRect(0, 0, size.width - 1, size.height - 1);
