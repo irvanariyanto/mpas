@@ -104,14 +104,27 @@ public class CAStarState implements CAstarStateInterface<myPoint>,Comparable<CAS
 		
 	}
 	private boolean IsLegal(myPoint myPosition,myPoint move) {
-		TableKey spotafter = new TableKey(move.getX(), move.getY(), this._t + 1);
-		TableKey spotbefore = new TableKey(move.getX(),move.getY(),this._t);
-		TableKey mySpotafter = new TableKey(myPosition.getX(), myPosition.getY(), this._t + 1);
-		return !_reservationTable.containsKey(spotafter) &&
-				(!_reservationTable.containsKey(spotbefore) ||  
-							(!_reservationTable.containsKey(mySpotafter) || _reservationTable.get(mySpotafter) != _reservationTable.get(spotbefore)));
+		TableKey spotafter = new TableKey(move.getX(), move.getY(), this._t + 1); // where this agent will be if it takes the move after the move
+		TableKey spotbefore = new TableKey(move.getX(),move.getY(),this._t); // the place where the agent is going before it takes the move
+		TableKey mySpotafter = new TableKey(myPosition.getX(), myPosition.getY(), this._t + 1); // my old position after i moved
+		return !_reservationTable.containsKey(spotafter) && // first condition - check that the cell isn't occupied
+				!isCollide(spotbefore,mySpotafter);
 		
 		
+	}
+	/** 
+	 * checks if a collision will accure if the step is taken
+	 * @param spotbefore - where the agent is before the move
+	 * @param mySpotafter - same as spotbefore but with t+1
+	 * @return
+	 */
+	public boolean isCollide(TableKey spotbefore,TableKey mySpotafter){
+		if (!_reservationTable.containsKey(spotbefore))
+			return false;
+		else if (_reservationTable.containsKey(spotbefore) && _reservationTable.containsKey(mySpotafter) && _reservationTable.get(spotbefore).intValue() == _reservationTable.get(mySpotafter).intValue())
+			return true;
+		else
+			return false;
 	}
 	@Override
 	public float get_f() {
