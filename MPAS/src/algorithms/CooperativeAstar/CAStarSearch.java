@@ -133,7 +133,8 @@ public class CAStarSearch<E> extends PausableSearchAlgorithm<E>{
 		for (int i = singlePath.size() - 1; i >= 0 ;i--){
 			StateInterface<E> tStep = singlePath.elementAt(i);
 			E data = tStep.get_Coordinates().elementAt(0);
-			_reservTable.put(_factory.createKey(data, step+1),agentNum );
+			_reservTable.put(_factory.createKey(data, step),agentNum );
+		//	_reservTable.put(_factory.createKey(data, step+1),agentNum );
 			step++;
 		}
 		
