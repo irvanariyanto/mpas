@@ -191,4 +191,12 @@ public class ControlPanel extends JPanel {
 		this._bStep.setEnabled(b);
 		
 	}
+
+	public boolean isSelectedAutoStep() {
+		return this._tbAutoStepMode.isSelected();
+	}
+
+	public void setSelectedAutoStep(boolean b) {
+		this._tbAutoStepMode.setSelected(b);
+	}
 }
