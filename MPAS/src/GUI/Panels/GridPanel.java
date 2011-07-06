@@ -534,9 +534,11 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 			for (int i = 0; i < _finalPaths.size(); i++) {
 				Vector<myPoint> tAgentPath = _finalPaths.elementAt(i);
 				myPoint p = tAgentPath.elementAt(step);
+				myPoint prevP = tAgentPath.elementAt(step-1);
 				int agentNum = i + 1;
-				this._grid[p.getX()][p.getY()].removeTileStatus(Status.Path,
-						agentNum);
+				if(!p.equals(prevP)){
+					this._grid[p.getX()][p.getY()].removeTileStatus(Status.Path,agentNum);
+				}
 
 				/*
 				 * if(this._grid[p.getX()][p.getY()].getTileStatusAt(0) !=
