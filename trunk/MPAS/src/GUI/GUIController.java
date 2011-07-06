@@ -71,6 +71,9 @@ public class GUIController {
 					Cursor hourglassCursor = new Cursor(Cursor.DEFAULT_CURSOR);
 					_main.setCursor(hourglassCursor);
 					_main.getMainPanel().getConfiguarationPanel().getSettingsPanel().enableSettingsPanel(true);
+					_main.getMainPanel().getConfiguarationPanel().getAnimationPanel().enablePanel(true);
+					_main.getMainPanel().getConfiguarationPanel().getAnimationPanel().enableCheckBox(false);
+					_main.getMainPanel().getConfiguarationPanel().getControlPanel().enableAutoStepMode(false);
 					Vector<Vector<myPoint>> path = GUIController.this._controller.getFinalPath();
 					float finalCost = ((finalPathEvent)event).getCost();
 					GUIController.this.setStatusText("Path is found");		
@@ -288,6 +291,7 @@ public class GUIController {
 		this._main.getMainPanel().getConfiguarationPanel().getInfoPanel().clearFinalCost();
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(true);
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(false);
+		
 	}
 	
 	public void bRandomMapActionPerformed(ActionEvent evt) {
@@ -308,6 +312,7 @@ public class GUIController {
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(false);
 		
 		
+		
 	}
 	
 	public void bFindPathActionPerformed(ActionEvent evt) {
@@ -316,7 +321,10 @@ public class GUIController {
 		this._main.getMainPanel().getGridPanel().setAnimationwithIcon(false);
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(false);
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(false);
-		
+		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStepButton(false);
+		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableAutoStepMode(false);
+		this._main.getMainPanel().getConfiguarationPanel().getAnimationPanel().enablePanel(false);
+		this._main.getMainPanel().getConfiguarationPanel().getAnimationPanel().enableCheckBox(false);
 		//this._main.getMainPanel().getConfiguarationPanel().getInfoPanel().setText("");
 		if(this._main.getMainPanel().getGridPanel().isFinalPathFound()){
 			this._main.getTablesDialog().ClearTables();
@@ -336,6 +344,9 @@ public class GUIController {
 		} else {
 			this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(true);
 			this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(false);
+			this._main.getMainPanel().getConfiguarationPanel().getAnimationPanel().enablePanel(true);
+			this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStepButton(true);
+			this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableAutoStepMode(true);
 			JOptionPane.showMessageDialog(this._main.getMainPanel(),
 					"You havn't entered all the parameters, please try again",
 					"Missing Argumets", JOptionPane.ERROR_MESSAGE);
@@ -353,8 +364,9 @@ public class GUIController {
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(true);
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(false);
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStepButton(true);
-		GUIController.this._main.getMainPanel().getConfiguarationPanel().getAnimationPanel().enablePanel(true);
-		GUIController.this._main.getMainPanel().getConfiguarationPanel().getAnimationPanel().setAnimationCheckBox(false);						
+		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableAutoStepMode(true);
+		this._main.getMainPanel().getConfiguarationPanel().getAnimationPanel().enablePanel(true);
+		this._main.getMainPanel().getConfiguarationPanel().getAnimationPanel().setAnimationCheckBox(false);						
 		this._animatedPath = false;
 		_finalAnimationThread = null;
 		this.setStatusText(" ");
@@ -470,6 +482,9 @@ public class GUIController {
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStopButton(false);
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(true);
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(false);
+		this._main.getMainPanel().getConfiguarationPanel().getAnimationPanel().enablePanel(true);
+		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStepButton(true);
+		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableAutoStepMode(true);
 		if(this._main.getMainPanel().getConfiguarationPanel().getControlPanel().isSelectedAutoStep()){
 			this._main.getMainPanel().getConfiguarationPanel().getControlPanel().setSelectedAutoStep(false);
 			this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStepButton(true);
