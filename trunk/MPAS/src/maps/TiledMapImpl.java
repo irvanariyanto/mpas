@@ -51,8 +51,11 @@ public class TiledMapImpl implements TileBasedMap {
 
 	@Override
 	public double getCost(int sx, int sy, int tx, int ty) {
-		if (Math.abs(sx - tx) + Math.abs(sy-ty) > 1)
+		double diff = Math.abs(sx - tx) + Math.abs(sy-ty);
+		if (diff > 1)
 			return Math.sqrt(2.0);
+		else if (diff == 0)
+			return 0;
 		else
 			return 1;
 	}
@@ -92,6 +95,8 @@ public class TiledMapImpl implements TileBasedMap {
 		int diff = Math.abs(from.getX() - to.getX()) + Math.abs(from.getY() - to.getY());
 		if (diff > 1)
 			return Math.sqrt(2);
+		else if (diff == 0)
+			return 0;
 		else
 			return 1;
 	}

@@ -69,7 +69,7 @@ public class AStarSearch<E> extends PausableSearchAlgorithm<E> {
 			for (StateInterface<E> neighbor : neighbors){
 				if (this._closedList.contains(neighbor))
 					continue;
-				float tentativeCost = current.get_cost() + current.calcDistance(neighbor);
+				float tentativeCost = current.get_cost() + calcDistance(current,neighbor,goal);
 				neighbor.set_cost(tentativeCost);
 				neighbor.set_heuristic(_heuristic.calcHeuristic(neighbor, goal));
 				neighbor.set_parent(current);
@@ -95,6 +95,27 @@ public class AStarSearch<E> extends PausableSearchAlgorithm<E> {
 		}
 		return null;
 	}
+	/**
+	 * fixes the issue where an agent wait action where not in goal costs 0
+	 * @param current
+	 * @param neighbor
+	 * @param goal
+	 * @return
+	 */
+	private float calcDistance(StateInterface<E> current,
+			StateInterface<E> neighbor,StateInterface<E> goal) {
+		float distFix = 0;
+		for (int i = 0; i < current.get_Coordinates().size();i++){
+			E currentCoordinate = current.get_Coordinates().elementAt(i);
+			E neightborCoordinate = neighbor.get_Coordinates().elementAt(i);
+			E goalCoordinate = goal.get_Coordinates().elementAt(i);
+			if (currentCoordinate.equals(neightborCoordinate) && !currentCoordinate.equals(goalCoordinate)){
+				distFix++;
+			}
+		}
+		return distFix + current.calcDistance(neighbor);
+	}
+	
 	private Vector<StateInterface<E>> reconstructPath(StateInterface<E> initialState,StateInterface<E> current) {
 		Vector<StateInterface<E>> path = new Vector<StateInterface<E>>();
 		if (current != null ) {
