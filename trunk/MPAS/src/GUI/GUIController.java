@@ -125,6 +125,8 @@ public class GUIController {
 					if (_writeToTables){
 						_main.getTablesDialog().addToOpenList(e.getState().get_Coordinates(),e.getState().get_cost(), e.getState().get_heuristic(), e.getState().get_f());
 					}
+					// new fix 12.7.2011
+					/*
 					if (_animation){
 						Vector<myPoint> v = e.getState().get_Coordinates();
 						for (int i = 0; i < v.size() ;i++){
@@ -136,6 +138,7 @@ public class GUIController {
 							_main.getMainPanel().getGridPanel().animateCell(p.getX(), p.getY(),ColorManager.getInstance().getColor(currentAgent));
 						}
 					}
+					*/
 				}	
 				else if (event instanceof SingleAgentSearchEvent){
 					_agentNum = ((SingleAgentSearchEvent)event).getAgentNum();
@@ -163,6 +166,8 @@ public class GUIController {
 						_main.getTablesDialog().addToClosedList(e.getState().get_Coordinates(),e.getState().get_cost(), e.getState().get_heuristic(), e.getState().get_f());
 						
 					}
+					// new fix 12.7.2011
+					/*
 					if (_animation){
 						Vector<myPoint> v = e.getState().get_Coordinates();
 						for (int i = 0; i < v.size() ;i++){
@@ -174,12 +179,25 @@ public class GUIController {
 							_main.getMainPanel().getGridPanel().animateCell(p.getX(), p.getY(),ColorManager.getInstance().getColor(currentAgent));
 						}
 					}
+					*/
 				}
 				else if (event instanceof removeFromOpenListEvent<?>){
 					removeFromOpenListEvent<myPoint> e = (removeFromOpenListEvent<myPoint>)event;
 					if (_writeToTables){
 						_main.getTablesDialog().currentStateChange(e.getState().get_Coordinates(),e.getState().get_cost(), e.getState().get_heuristic(), e.getState().get_f());
 						_main.getTablesDialog().removeFromOpenList(e.getState().get_Coordinates(),e.getState().get_cost(), e.getState().get_heuristic(), e.getState().get_f());
+					}
+					// new fix 12.7.2011
+					if (_animation){
+						Vector<myPoint> v = e.getState().get_Coordinates();
+						for (int i = 0; i < v.size() ;i++){
+							myPoint p = v.elementAt(i);
+							String currentAgent = "agent" + (i+1);
+							if (v.size() == 1){
+								currentAgent = "agent" + _agentNum;
+							}
+							_main.getMainPanel().getGridPanel().animateCell(p.getX(), p.getY(),ColorManager.getInstance().getColor(currentAgent));
+						}
 					}
 				}
 			}
