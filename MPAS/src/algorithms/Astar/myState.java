@@ -1,7 +1,9 @@
 package algorithms.Astar;
 
 import java.util.Vector;
+import java.util.logging.Logger;
 
+import Utils.MyLogger;
 import algorithms.myPoint;
 import algorithms.Interfaces.StateInterface;
 
@@ -15,6 +17,7 @@ public class myState implements Comparable<myState>,StateInterface<myPoint> {
 	private float _cost;
 	private float _heuristic;
 	private MapInterface<myPoint> _map;
+	private int _hashCode;
 	
 	public myState(Vector<myPoint> coordinates,MapInterface<myPoint> map) {
 		this._Coordinates = coordinates;
@@ -22,6 +25,17 @@ public class myState implements Comparable<myState>,StateInterface<myPoint> {
 		this._heuristic = 0;
 		this._parent = null;
 		this._map = map;
+		this._hashCode = hashCode();
+	}
+	@Override
+	public int hashCode() {
+		int x = 1;
+		int y = 1;
+		for (myPoint p : this._Coordinates){
+			x *= p.getX();
+			y *= p.getY();
+		}
+		return x + y;
 	}
 
 	public myState(myState state) {
@@ -30,6 +44,11 @@ public class myState implements Comparable<myState>,StateInterface<myPoint> {
 		this._heuristic = state.get_heuristic();
 		this._parent = state.get_parent();
 		this._map = state.getMap();
+		this._hashCode = state.getHashCode();
+	}
+
+	private int getHashCode() {
+		return this._hashCode;
 	}
 
 	public MapInterface<myPoint> getMap() {
@@ -89,15 +108,7 @@ public class myState implements Comparable<myState>,StateInterface<myPoint> {
 			}
 		}
 	}
-	@Override
-	public int hashCode(){
-		int ans = 0;
-		for (int i = 0 ; i < this._Coordinates.size();i++){
-			myPoint p = this._Coordinates.elementAt(i);
-			ans += p.getX() + p.getY();
-		}
-		return ans;
-	}
+
 	@Override
 	public boolean equals(Object other) {
 		if (!(other instanceof myState)) {
@@ -105,11 +116,16 @@ public class myState implements Comparable<myState>,StateInterface<myPoint> {
 		} else {
 			boolean ans = true;
 			myState s = (myState)other;
-			for (int i = 0; i < this._Coordinates.size(); i++) {
-				if (!this._Coordinates.elementAt(i).equals(
-						s.get_Coordinates().elementAt(i))) {
-					ans = false;
-					break;
+			if (this._hashCode != s.getHashCode()){
+				ans = false;
+			}
+			else{
+				for (int i = 0; i < this._Coordinates.size(); i++) {
+					if (!this._Coordinates.elementAt(i).equals(
+							s.get_Coordinates().elementAt(i))) {
+						ans = false;
+						break;
+					}
 				}
 			}
 			return ans;
@@ -118,11 +134,16 @@ public class myState implements Comparable<myState>,StateInterface<myPoint> {
 
 	public boolean equals(myState other) {
 		boolean ans = true;
-		for (int i = 0; i < this._Coordinates.size(); i++) {
-			if (!this._Coordinates.elementAt(i).equals(
-					other.get_Coordinates().elementAt(i))) {
-				ans = false;
-				break;
+		if (this._hashCode != other.getHashCode()){
+			ans = false;
+		}
+		else{
+			for (int i = 0; i < this._Coordinates.size(); i++) {
+				if (!this._Coordinates.elementAt(i).equals(
+						other.get_Coordinates().elementAt(i))) {
+					ans = false;
+					break;
+				}
 			}
 		}
 		return ans;
