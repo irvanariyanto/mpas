@@ -4,6 +4,8 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 
 import GUI.GUIController;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class AnimationDialog extends JDialog{
 
@@ -18,7 +20,13 @@ public class AnimationDialog extends JDialog{
 		setContentPane(_animationPanel);
 		this.setTitle("Animation");
 		this.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
-        this.pack();		
+        this.pack();
+        this.addWindowListener(new WindowAdapter() {
+        	public void windowClosing(WindowEvent we) {
+        		_guiController.setWithAnimatedPath(false);
+        		_guiController.KillAnimatedPathThread();
+            }
+		});
 	}
 
 	public int getAnimationSpeedValue() {

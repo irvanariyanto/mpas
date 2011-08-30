@@ -32,6 +32,7 @@ import EventMechanism.Events.SingleAgentSearchEvent;
 import EventMechanism.Events.finalPathEvent;
 import EventMechanism.Events.removeFromOpenListEvent;
 import EventMechanism.Events.showStepEvent;
+import GUI.Panels.AnimationDialog;
 import GUI.Panels.Cell;
 import GUI.Utils.ColorManager;
 import GUI.Utils.ScenarioFileFilter;
@@ -57,7 +58,7 @@ public class GUIController {
 	private boolean _animation = false;
 	private boolean _animatedPath = false;
 	private int _agentNum; //used for color selection for each single A* run inside the CA* algorithm
-	//AnimationDialog _animationDialog;
+	
 	public GUIController(){
 		_controller = new GridController();
 		_firstStep = true;	
@@ -71,8 +72,6 @@ public class GUIController {
 					Cursor hourglassCursor = new Cursor(Cursor.DEFAULT_CURSOR);
 					_main.setCursor(hourglassCursor);
 					_main.getMainPanel().getConfiguarationPanel().getSettingsPanel().enableSettingsPanel(true);
-					_main.getMainPanel().getConfiguarationPanel().getAnimationPanel().enablePanel(true);
-					_main.getMainPanel().getConfiguarationPanel().getAnimationPanel().enableCheckBox(false);
 					_main.getMainPanel().getConfiguarationPanel().getControlPanel().enableAutoStepMode(false);
 					Vector<Vector<myPoint>> path = GUIController.this._controller.getFinalPath();
 					float finalCost = ((finalPathEvent)event).getCost();
@@ -92,9 +91,8 @@ public class GUIController {
 					GUIController.this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(true);
 					GUIController.this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStopButton(false);
 					GUIController.this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStepButton(false);
-					//_animationDialog.getAnimationPanel().enableCheckBox(false);
-					if(!GUIController.this._main.getMainPanel().getConfiguarationPanel().getAnimationPanel().getIsSelectedCheckBox()){
-						GUIController.this._main.getMainPanel().getConfiguarationPanel().getAnimationPanel().enablePanel(false);
+					if(GUIController.this._animatedPath){
+						GUIController.this._main.getAnimationPanel().enablePanel(true);
 					}
 					GUIController.this.reset();
 				}
@@ -341,13 +339,12 @@ public class GUIController {
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(false);
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStepButton(false);
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableAutoStepMode(false);
-		this._main.getMainPanel().getConfiguarationPanel().getAnimationPanel().enablePanel(false);
-		this._main.getMainPanel().getConfiguarationPanel().getAnimationPanel().enableCheckBox(false);
+		this._main.getAnimationPanel().enablePanel(false);
 		//this._main.getMainPanel().getConfiguarationPanel().getInfoPanel().setText("");
 		if(this._main.getMainPanel().getGridPanel().isFinalPathFound()){
 			this._main.getTablesDialog().ClearTables();
 			_finalAnimationThread = null;
-			this._main.getMainPanel().getConfiguarationPanel().getAnimationPanel().enableCheckBox(false);
+			this._main.getAnimationPanel().enablePanel(false);
 			//this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(true);
 		}
 		if (this._main.getMainPanel().getGridPanel().checkArguments()) {
@@ -358,11 +355,11 @@ public class GUIController {
 			this._controller.setTile(this._main.getMainPanel().getGridPanel().get_blockList());
 			this._controller.findPath(this._main.getMainPanel().getGridPanel().get_startsList(),this._main.getMainPanel().getGridPanel().get_FinishList());
 			this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStopButton(true);
-			//this._main.getMainPanel().getConfiguarationPanel().getAnimationPanel().enablePanel(false);
+			this._main.getAnimationPanel().enablePanel(false);
 		} else {
 			this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(true);
 			this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(false);
-			this._main.getMainPanel().getConfiguarationPanel().getAnimationPanel().enablePanel(true);
+			this._main.getAnimationPanel().enablePanel(true);
 			this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStepButton(true);
 			this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableAutoStepMode(true);
 			JOptionPane.showMessageDialog(this._main.getMainPanel(),
@@ -383,8 +380,7 @@ public class GUIController {
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(false);
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStepButton(true);
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableAutoStepMode(true);
-		this._main.getMainPanel().getConfiguarationPanel().getAnimationPanel().enablePanel(true);
-		this._main.getMainPanel().getConfiguarationPanel().getAnimationPanel().setAnimationCheckBox(false);						
+		this._main.getAnimationPanel().enablePanel(true);						
 		this._animatedPath = false;
 		_finalAnimationThread = null;
 		this.setStatusText(" ");
@@ -443,12 +439,11 @@ public class GUIController {
 
 	public void bPlayActionPerformed(ActionEvent evt) {
 		if(_finalAnimationThread == null && _animatedPath){
-			_finalAnimationThread = new FinalPathThread(this._main.getMainPanel().getConfiguarationPanel().getAnimationPanel().getAnimationSpeedValue()*10,this);
+			_finalAnimationThread = new FinalPathThread(this._main.getAnimationPanel().getAnimationSpeedValue()*10,this);
 			_finalAnimationThread.start();			
 		}
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(false);			
-		//_main.getMainPanel().getGridPanel().setFinalPathStep (0);
-		
+		//_main.getMainPanel().getGridPanel().setFinalPathStep (0);	
 	}
 
 	public void bNextActionPerformed(ActionEvent evt) {
@@ -500,7 +495,7 @@ public class GUIController {
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStopButton(false);
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(true);
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(false);
-		this._main.getMainPanel().getConfiguarationPanel().getAnimationPanel().enablePanel(true);
+		this._main.getAnimationPanel().enablePanel(true);
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableStepButton(true);
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableAutoStepMode(true);
 		if(this._main.getMainPanel().getConfiguarationPanel().getControlPanel().isSelectedAutoStep()){
@@ -583,17 +578,10 @@ public class GUIController {
 	    	this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(true);
 	}
 	
-	/*public void openAnimationDiaglog() {
-		if (_animationDialog ==null){
-			_animationDialog= new AnimationDialog(this._main,this);
-			_animationDialog.setVisible(true);
-		}
-		_animationDialog.setVisible(true);
-	
-	}*/
+
 	
 	public int getAnimationSpeedValue(){
-		return this._main.getMainPanel().getConfiguarationPanel().getAnimationPanel().getAnimationSpeedValue();
+		return this._main.getAnimationPanel().getAnimationSpeedValue();
 	}
 	
 	
@@ -641,15 +629,26 @@ public class GUIController {
 		this._writeToTables = selected;
 		
 	}
-
-	public void withAnimatedPath(boolean selected) {
-		this._animatedPath  = selected;
-		
+	
+	public void setWithAnimatedPath(boolean selected) {
+		this._animatedPath  = selected;		
+	}
+	
+	public boolean getWithAnimatedPath() {
+		return this._animatedPath ;		
 	}
 	
 	public void setStatusText(String s) {
 		 this._main.setStatusText(s);
 	 }
+
+	public void KillAnimatedPathThread() {
+		if(_finalAnimationThread!=null){
+			_finalAnimationThread.setFinished(true);
+			_finalAnimationThread=null;
+		}
+		this._main.getMainPanel().getGridPanel().clearFinalPath();
+	}
 
 	
 
