@@ -33,7 +33,7 @@ public class AnimationPanel extends JPanel {
 	private ImageIcon _iPause = new ImageIcon(this.getClass().getResource("/resources/icons/AnimationIcons/pause.png"),"Pause");
 	private JPanel _playerPanel;
 	private JPanel _speedPanel;
-	private JCheckBoxMenuItem _withAnimation;
+	//private JCheckBoxMenuItem _withAnimation;
 
 	// End of variables declaration
 	
@@ -62,7 +62,7 @@ public class AnimationPanel extends JPanel {
 		_lSpeed = new JLabel(_sAnimationSpeed.getValue() * 100 + " msec");
 		_speedPanel.setBorder(BorderFactory.createTitledBorder("Animation Speed"));
 		
-		_withAnimation = new JCheckBoxMenuItem("Run with Animation");
+		//_withAnimation = new JCheckBoxMenuItem("Run with Animation");
 		_sAnimationSpeed.addChangeListener(new ChangeListener() {
 			//TODO remove duplicate listeners
 			public void stateChanged(ChangeEvent e) {
@@ -75,11 +75,7 @@ public class AnimationPanel extends JPanel {
 			}
 		});
 		
-		_withAnimation.addActionListener(new  ActionListener() {
-	    	 public void actionPerformed( ActionEvent evt) {
-	    		 _guiController.withAnimatedPath(((JCheckBoxMenuItem)evt.getSource()).isSelected());
-	         }
-	     });
+		
 		_bPrevious.addActionListener(new  ActionListener() {
 	    	 public void actionPerformed( ActionEvent evt) {
 	    		 _guiController.bPreviousActionPerformed(evt);
@@ -115,9 +111,7 @@ public class AnimationPanel extends JPanel {
 		_speedPanel.add(_sAnimationSpeed);
 		_speedPanel.add(_lSpeed);
 		this.add(_playerPanel);
-		this.add(_speedPanel);
-		this.add(_withAnimation);
-		
+		this.add(_speedPanel);	
 	}
 	
 	public void setSpeedLabel(String string) {
@@ -129,9 +123,9 @@ public class AnimationPanel extends JPanel {
 		return this._sAnimationSpeed.getValue();
 	}
 	
-	public void enableCheckBox(boolean bool) {
+	/*public void enableCheckBox(boolean bool) {
 		this._withAnimation.setEnabled(bool);		
-	}
+	}*/
 	
 	public void enablePanel(boolean bool) {
 		this._bPrevious.setEnabled(bool);	
@@ -139,19 +133,19 @@ public class AnimationPanel extends JPanel {
 		this._bNext.setEnabled(bool);	
 		this._bPause.setEnabled(bool);	
 		this._sAnimationSpeed.setEnabled(bool);	
-		this._withAnimation.setEnabled(bool);	
+	//	this._withAnimation.setEnabled(bool);	
 	}
 
 
-	public void setAnimationCheckBox(boolean b) {
+	/*public void setAnimationCheckBox(boolean b) {
 		this._withAnimation.setSelected(b);
 		this._guiController.withAnimatedPath(b);
-	}
+	}*/
 
 
-	public boolean getIsSelectedCheckBox() {
+	/*public boolean getIsSelectedCheckBox() {
 		return this._withAnimation.isSelected();
-	}
+	}*/
 
 
 }
