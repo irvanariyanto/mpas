@@ -16,8 +16,8 @@ import maps.GridMapUtility;
 import maps.Scenario;
 import maps.TileBasedMap;
 
+import algorithms.TableKeyInterface;
 import algorithms.myPoint;
-import algorithms.CooperativeAstar.TableKeyInterface;
 
 import Controller.GridController;
 import Defaults.Enums.Status;
