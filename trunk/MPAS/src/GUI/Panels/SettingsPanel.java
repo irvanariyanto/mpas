@@ -92,7 +92,7 @@ public class SettingsPanel extends JPanel  {
 		
 
 
-		_cAlgorithm.setModel(new DefaultComboBoxModel(new String[] { "A-Star","Cooperative A*" }));
+		_cAlgorithm.setModel(new DefaultComboBoxModel(new String[] { "A-Star","Cooperative A*","AStarSID" }));
 		_cHeuristic.setModel(new DefaultComboBoxModel(new String[] { "Manhattan " ,"DiagonalDistance"}));
 		_cDirections.setModel(new DefaultComboBoxModel(new String[] {"4 Directions", "8 Directions" }));
 		String[] arr = new String[defaultsValues.NumberOfAgents];

@@ -36,6 +36,8 @@ import algorithms.Interfaces.SearchInterface;
 import algorithms.Interfaces.StateInterface;
 import algorithms.Astar.AStarSearch;
 import algorithms.Astar.myState;
+import algorithms.AstarID.AstarSIDSearch;
+import algorithms.AstarID.PointGroupsManagerFactory;
 
 public class GridController implements ControllerInterFace<myPoint>,ApplicationEventListener,ApplicationEventSource{
 	
@@ -83,6 +85,13 @@ public class GridController implements ControllerInterFace<myPoint>,ApplicationE
 			goal = new CAStarState(endPoints,_map,table);
 			this._pathFinder.addListener(this);
 		}
+		else if (_algorithm.equals("AStarSID")){
+			PointGroupsManagerFactory factory = new PointGroupsManagerFactory();
+			this._pathFinder = new AstarSIDSearch<myPoint>(_heuristic, factory);
+			start = new myState(starts, this._map);
+			goal = new myState(endPoints,this._map);
+			this._pathFinder.addListener(this);
+		}
 		else{
 			start = new myState(starts, this._map);
 			goal = new myState(endPoints,this._map);
@@ -102,6 +111,13 @@ public class GridController implements ControllerInterFace<myPoint>,ApplicationE
 			this._pathFinder = new CAStarSearch<myPoint>(_heuristic,factory,table);
 			start = new CAStarState(starts, _map,table);
 			goal = new CAStarState(endPoints,_map,table);
+			this._pathFinder.addListener(this);
+		}
+		else if (_algorithm.equals("AStarSID")){
+			PointGroupsManagerFactory factory = new PointGroupsManagerFactory();
+			this._pathFinder = new AstarSIDSearch<myPoint>(_heuristic, factory);
+			start = new myState(starts, this._map);
+			goal = new myState(endPoints,this._map);
 			this._pathFinder.addListener(this);
 		}
 		else{
