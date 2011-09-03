@@ -9,6 +9,8 @@ import EventMechanism.ApplicationEventListener;
 import EventMechanism.Events.ReservationTableUpdateEvent;
 import EventMechanism.Events.SingleAgentSearchEvent;
 import Utils.MyLogger;
+import algorithms.AbstractKeyFactory;
+import algorithms.TableKeyInterface;
 import algorithms.Interfaces.PausableSearchAlgorithm;
 import algorithms.Interfaces.StateInterface;
 import algorithms.Astar.AStarSearch;

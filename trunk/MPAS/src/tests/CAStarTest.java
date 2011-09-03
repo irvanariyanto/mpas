@@ -6,11 +6,11 @@ import heuristics.ManhattanHeuristic;
 import java.util.HashMap;
 import java.util.Vector;
 
+import algorithms.PointKeyFactory;
+import algorithms.TableKeyInterface;
 import algorithms.myPoint;
 import algorithms.CooperativeAstar.CAStarSearch;
 import algorithms.CooperativeAstar.CAStarState;
-import algorithms.CooperativeAstar.PointKeyFactory;
-import algorithms.CooperativeAstar.TableKeyInterface;
 import algorithms.Interfaces.SearchInterface;
 import algorithms.Interfaces.StateInterface;
 import maps.TileBasedMap;

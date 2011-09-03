@@ -2,7 +2,7 @@ package EventMechanism.Events;
 
 import java.util.HashMap;
 
-import algorithms.CooperativeAstar.TableKeyInterface;
+import algorithms.TableKeyInterface;
 import EventMechanism.ApplicationEvent;
 import EventMechanism.ApplicationEventSource;
 

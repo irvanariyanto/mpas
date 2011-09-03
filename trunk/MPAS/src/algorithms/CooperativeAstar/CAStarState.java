@@ -7,6 +7,8 @@ import java.util.Vector;
 import maps.MapInterface;
 import maps.TileBasedMap;
 
+import algorithms.TableKey;
+import algorithms.TableKeyInterface;
 import algorithms.myPoint;
 import algorithms.Interfaces.StateInterface;
 
