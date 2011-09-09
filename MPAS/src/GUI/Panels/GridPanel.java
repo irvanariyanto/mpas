@@ -893,7 +893,14 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 
 		}
 	}
-
+	public void drawOneStep(Vector<myPoint> tStep,
+			Vector<Integer> currentAgents) {
+		for (int i = 0; i < tStep.size(); i++){
+			myPoint p = tStep.elementAt(i);
+			drawOpenListCell(p.getX(), p.getY(), currentAgents.elementAt(i) + 1);
+		}
+		
+	}
 	public void setEmptyStep(Vector<myPoint> tStep) {
 		for (int j = 0; j < tStep.size(); j++) {
 			myPoint p = tStep.elementAt(j);
@@ -1037,5 +1044,7 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 			}
 		}
 	}
+
+
 
 }

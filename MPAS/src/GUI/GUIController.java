@@ -116,7 +116,13 @@ public class GUIController {
 				}
 				else if (event instanceof showStepEvent<?>){
 					GUIController.this.oldState = ((showStepEvent<myPoint>)event).getCoordinates();
-					GUIController.this._main.getMainPanel().getGridPanel().drawOneStep(GUIController.this.oldState,_agentNum);
+					if (GUIController.this.isSID){
+						GUIController.this._main.getMainPanel().getGridPanel().drawOneStep(GUIController.this.oldState,GUIController.this._currentAgents);
+					}
+					else{
+						GUIController.this._main.getMainPanel().getGridPanel().drawOneStep(GUIController.this.oldState,_agentNum);
+					}
+
 					//GUIController.this._main.getMainPanel().getConfiguarationPanel().getInfoPanel().writeToTextArea(GUIController.this.oldState.toString());	
 				}
 				else if (event instanceof OpenListChangeEvent<?>){

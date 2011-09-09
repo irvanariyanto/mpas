@@ -8,6 +8,7 @@ import maps.MapInterface;
 
 import sun.management.resources.agent;
 
+import EventMechanism.ApplicationEvent;
 import EventMechanism.ApplicationEventListener;
 import EventMechanism.ApplicationEventListenerCollection;
 import EventMechanism.ApplicationEventSource;
@@ -235,5 +236,7 @@ public class GroupsManager implements  GroupsManagerInterface<StateInterface<myP
 		this._listeners.clear();
 		
 	}
+
+
 
 }
