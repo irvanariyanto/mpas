@@ -130,5 +130,9 @@ public class AStarSearch<E> extends PausableSearchAlgorithm<E> {
 		return path;
 	}
 
-
+	public void reset(){
+		this._openList.clear();
+		this._closedList.clear();
+		this._expaned.clear();
+	}
 }
