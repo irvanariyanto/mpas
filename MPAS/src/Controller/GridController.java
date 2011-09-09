@@ -242,6 +242,9 @@ public class GridController implements ControllerInterFace<myPoint>,ApplicationE
 		else if (event instanceof ReservationTableUpdateEvent<?>){
 			this._listeners.fireEvent(event);
 		}
+		else{
+			this._listeners.fireEvent(event);
+		}
 		
 	}
 	@Override
