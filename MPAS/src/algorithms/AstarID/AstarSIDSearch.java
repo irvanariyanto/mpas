@@ -21,6 +21,7 @@ public class AstarSIDSearch<E> extends PausableSearchAlgorithm<E> {
 	private AbstractGroupsManagerFactory<E> _managerFactory;
 	
 	public AstarSIDSearch(HeuristicInterface<StateInterface<E>> heuristic,AbstractGroupsManagerFactory<E> factory){
+		super();
 		this._heuristic = heuristic;
 		this._managerFactory = factory;
 		this._AStarSearch = new AStarSearch<E>(heuristic);
@@ -36,12 +37,17 @@ public class AstarSIDSearch<E> extends PausableSearchAlgorithm<E> {
 		while (isConflicted){
 			isConflicted = false;
 			int[] conflicted = groupsManager.simulatePath();
-			if (conflicted[0] != -1){
-				groupsManager.mergeGroups(conflicted[0], conflicted[1]);
-				isConflicted = true;
+			if (conflicted == null){
+				return null;
 			}
-			
+			else{
+				if (conflicted[0] != -1){
+					groupsManager.mergeGroups(conflicted[0], conflicted[1]);
+					isConflicted = true;
+				}
+			}
 		}
+		return groupsManager.combineAllPaths();
 		//TODO combine all paths back together
 		
 		//1. Assign each agent a singleton group
@@ -53,7 +59,6 @@ public class AstarSIDSearch<E> extends PausableSearchAlgorithm<E> {
 		//7.until there are no conflicts
 		//8.combine paths of all groups.
 		
-		return null;
 	}
 	
 

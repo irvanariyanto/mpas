@@ -54,6 +54,7 @@ public class GroupsManager implements  GroupsManagerInterface<StateInterface<myP
 		}
 		myState startState = new myState(startCoordinates,this.map); 
 		myState goalState = new myState(goalCoordinates,this.map);
+		this.pathfinder.reset();
 		group.setPath(this.pathfinder.findPath(startState, goalState));
 		
 	}
@@ -66,34 +67,47 @@ public class GroupsManager implements  GroupsManagerInterface<StateInterface<myP
 		Map<TableKeyInterface<myPoint>,Integer> conflictsTable = new HashMap<TableKeyInterface<myPoint>,Integer>();
 		for (Integer groupID : this.groups.keySet()){
 			Vector<StateInterface<myPoint>> path = this.groups.get(groupID).getPath();
-			for (int timeStep = 0; timeStep < path.size(); timeStep++){
-				StateInterface<myPoint> tState = path.get(timeStep);
-				Vector<myPoint> coordinates = tState.get_Coordinates();
-				for (int agentNum = 0; agentNum < coordinates.size();agentNum++){
-					myPoint point = coordinates.get(agentNum);
-					myPoint oldSpot =  timeStep == 0 ? agents.get(agentNum).getStart() : path.get(timeStep - 1).get_Coordinates().get(agentNum);
-					TableKeyInterface<myPoint> tableKey = new TableKey(point.getX(),point.getY(),timeStep);
-					int conflict = isLegal(oldSpot,point,timeStep,conflictsTable);
-					if (conflict == -1){
-						conflictsTable.put(tableKey, agentNum);
-					}
-					else{
-						res[0] = conflict;
-						res[1] = agentNum;
-						return res;
+			if (path == null){
+				return null;
+			}
+			else{
+				for (int timeStep = path.size() - 1; timeStep >= 0 ; timeStep--){
+					StateInterface<myPoint> tState = path.get(timeStep);
+					int realTimeStep = path.size() - timeStep - 1;
+					Vector<myPoint> coordinates = tState.get_Coordinates();
+					for (int agentNum = 0; agentNum < coordinates.size();agentNum++){
+						int agentID =  ((Agent<myPoint>)this.groups.get(groupID).getAgents().values().toArray()[agentNum]).getId();
+						myPoint point = coordinates.get(agentNum);
+						if (timeStep == path.size() - 1){
+							TableKeyInterface<myPoint> tableKey = new TableKey(point.getX(),point.getY(),realTimeStep);
+							conflictsTable.put(tableKey, agentID);
+						}
+						else{
+							myPoint oldSpot =  path.get(timeStep + 1).get_Coordinates().get(agentNum);
+							TableKeyInterface<myPoint> tableKey = new TableKey(point.getX(),point.getY(),realTimeStep);
+							int conflict = isLegal(oldSpot,point,timeStep,conflictsTable);
+							if (conflict == -1){
+								conflictsTable.put(tableKey, agentID);
+							}
+							else{
+								res[0] = conflict;
+								res[1] = agentID;
+								return res;
+							}
+						}
 					}
 				}
-				
 			}
-			
 		}
 		return res;
 	}
 
 	@Override
 	public void mergeGroups(int firstIndex, int secondIndex) {
-		Group<myPoint> first = groups.get(agents.get(firstIndex).getgroupID());
-		Group<myPoint> second = groups.get(agents.get(secondIndex).getgroupID());
+		int firstID = agents.get(firstIndex).getgroupID();
+		int secondID = agents.get(secondIndex).getgroupID();
+		Group<myPoint> first = groups.get(firstID);
+		Group<myPoint> second = groups.get(secondID);
 		int groupId = IDGenerator.getInstance().NextID();
 		Group<myPoint> newGroup = new Group<myPoint>(groupId);
 		for (Agent<myPoint> agentID : first.getAgents().values()){
@@ -103,8 +117,8 @@ public class GroupsManager implements  GroupsManagerInterface<StateInterface<myP
 		for (Agent<myPoint> agentID : second.getAgents().values()){
 			newGroup.addAgent(agentID);
 		}
-		this.groups.remove(first);
-		this.groups.remove(second);
+		this.groups.remove(firstID);
+		this.groups.remove(secondID);
 		this.groups.put(groupId, newGroup);
 		initializePath(newGroup);
 		
@@ -142,4 +156,35 @@ public class GroupsManager implements  GroupsManagerInterface<StateInterface<myP
 		
 		return null;
 	}
+
+	@Override
+	public Vector<StateInterface<myPoint>> combineAllPaths() {
+		int numOfAgents = agents.size();
+		Vector<StateInterface<myPoint>> res = new Vector<StateInterface<myPoint>>();
+		float allCost = 0;
+		int longestPath = 0;
+		for (Group<myPoint> tGroup : groups.values()){
+			int tSize = tGroup.getPath().size();
+			longestPath = longestPath < tSize ? tSize : longestPath;
+		}
+		for (int step = 0; step < longestPath;step++){
+			//StateInterface<myPoint> tState = new myState();
+			float tHeuristic = 0;
+			float tCost = 0;
+			Vector<myPoint> tCoordinates = new Vector<myPoint>();
+			for (int agentId = 0; agentId < numOfAgents ; agentId++){
+				Agent<myPoint> tAgent = agents.get(agentId);
+				int tGroupId = tAgent.getgroupID();
+				int tPlaceInVector = tAgent.getPlaceInVector();
+				int tPathLength = groups.get(tGroupId).getPath().size();
+				int diff = longestPath - tPathLength;
+				if (step < diff){ //padding
+					myPoint agentLocation = groups.get(tGroupId).getPath().get(0).get_Coordinates().elementAt(tPlaceInVector);
+
+				}
+			}
+		}
+		return null;
+	}
+
 }
