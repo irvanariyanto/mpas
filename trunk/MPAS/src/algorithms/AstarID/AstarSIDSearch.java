@@ -8,6 +8,7 @@ import java.util.Vector;
 
 import EventMechanism.ApplicationEvent;
 import EventMechanism.ApplicationEventListener;
+import EventMechanism.Events.showStepEvent;
 import Utils.MyLogger;
 import algorithms.AbstractKeyFactory;
 import algorithms.TableKey;
@@ -27,13 +28,13 @@ public class AstarSIDSearch<E> extends PausableSearchAlgorithm<E> implements App
 		super();
 		this._heuristic = heuristic;
 		this._managerFactory = factory;
-		this._AStarSearch = new AStarSearch<E>(heuristic);
+		this._AStarSearch = new AStarSearch<E>(heuristic,this._pause);
 		this._AStarSearch.addListener(this);
 		}
 	
 	@Override
 	public Vector<StateInterface<E>> findPath(StateInterface<E> start, StateInterface<E> goal) {
-
+		this._AStarSearch.setPause(this._pause);
 		//1+2
 		MyLogger.getInstance().info("Initializing groups manager");
 		GroupsManagerInterface<StateInterface<E>> groupsManager = this._managerFactory.createManager(start,goal,_AStarSearch,this);
@@ -60,8 +61,16 @@ public class AstarSIDSearch<E> extends PausableSearchAlgorithm<E> implements App
 
 	@Override
 	public void handle(ApplicationEvent event) {
+		if (event instanceof showStepEvent<?>){
+			this._listeners.fireEvent(event);
+		}
 		this._listeners.fireEvent(event);
 		
+	}
+	@Override
+	public synchronized void resume() {
+		super.resume();
+		this._AStarSearch.resume();
 	}
 	
 
