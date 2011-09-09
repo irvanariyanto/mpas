@@ -4,6 +4,7 @@
 package algorithms.AstarID;
 
 import maps.MapInterface;
+import EventMechanism.ApplicationEventListener;
 import algorithms.myPoint;
 import algorithms.Astar.AStarSearch;
 import algorithms.Interfaces.SearchInterface;
@@ -20,5 +21,5 @@ public abstract class AbstractGroupsManagerFactory<E> {
 
 	public abstract GroupsManagerInterface<StateInterface<E>> createManager(
 			StateInterface<E> start, StateInterface<E> goal,
-			AStarSearch<E> pathfinder);
+			AStarSearch<E> pathfinder,ApplicationEventListener listener);
 }

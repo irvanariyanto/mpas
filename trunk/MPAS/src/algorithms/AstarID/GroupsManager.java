@@ -8,6 +8,11 @@ import maps.MapInterface;
 
 import sun.management.resources.agent;
 
+import EventMechanism.ApplicationEventListener;
+import EventMechanism.ApplicationEventListenerCollection;
+import EventMechanism.ApplicationEventSource;
+import EventMechanism.Events.SIDGroupSearchEvent;
+import Utils.MyLogger;
 import algorithms.TableKey;
 import algorithms.TableKeyInterface;
 import algorithms.myPoint;
@@ -20,11 +25,14 @@ public class GroupsManager implements  GroupsManagerInterface<StateInterface<myP
 	private Map<Integer,Group<myPoint>> groups;
 	private AStarSearch<myPoint> pathfinder;
 	private MapInterface<myPoint> map;
-	public GroupsManager(StateInterface<myPoint> start,StateInterface<myPoint> goal,AStarSearch<myPoint> pathFinder){
+	protected ApplicationEventListenerCollection _listeners;
+	public GroupsManager(StateInterface<myPoint> start,StateInterface<myPoint> goal,AStarSearch<myPoint> pathFinder,ApplicationEventListener listener){
 		this.agents = new Vector<Agent<myPoint>>();
 		this.map = start.getMap();
 		this.groups = new HashMap<Integer, Group<myPoint>>();
 		this.pathfinder = pathFinder;
+		this._listeners = new ApplicationEventListenerCollection();
+		this.addListener(listener);
 		int numOfAgents = start.get_Coordinates().size();
 		for (int i = 0; i < numOfAgents; i++){
 			myPoint sPosition = start.get_Coordinates().get(i);
@@ -43,8 +51,8 @@ public class GroupsManager implements  GroupsManagerInterface<StateInterface<myP
 		int i = 0;
 		Vector<myPoint> startCoordinates = new Vector<myPoint>();
 		Vector<myPoint> goalCoordinates = new Vector<myPoint>();
-		for (Integer agentID : group.getAgents().keySet()){
-			Agent<myPoint> tAgent = group.getAgents().get(agentID);
+		for (Agent<myPoint> tAgent : group.getAgents()){
+//			Agent<myPoint> tAgent = group.getAgents().get(agentID);
 			tAgent.setPlaceInVector(i);
 			myPoint tStart = tAgent.getStart();
 			myPoint tGoal = tAgent.getGoal();
@@ -55,7 +63,9 @@ public class GroupsManager implements  GroupsManagerInterface<StateInterface<myP
 		myState startState = new myState(startCoordinates,this.map); 
 		myState goalState = new myState(goalCoordinates,this.map);
 		this.pathfinder.reset();
+		this._listeners.fireEvent(new SIDGroupSearchEvent(this,group.getAgents()));
 		group.setPath(this.pathfinder.findPath(startState, goalState));
+		MyLogger.getInstance().info("initialized new group:\n" + group.toString());
 		
 	}
 
@@ -66,6 +76,7 @@ public class GroupsManager implements  GroupsManagerInterface<StateInterface<myP
 		res[1] = -1;
 		Map<TableKeyInterface<myPoint>,Integer> conflictsTable = new HashMap<TableKeyInterface<myPoint>,Integer>();
 		for (Integer groupID : this.groups.keySet()){
+			MyLogger.getInstance().info("Adding group " + groupID + " to the conflicts table");
 			Vector<StateInterface<myPoint>> path = this.groups.get(groupID).getPath();
 			if (path == null){
 				return null;
@@ -76,7 +87,7 @@ public class GroupsManager implements  GroupsManagerInterface<StateInterface<myP
 					int realTimeStep = path.size() - timeStep - 1;
 					Vector<myPoint> coordinates = tState.get_Coordinates();
 					for (int agentNum = 0; agentNum < coordinates.size();agentNum++){
-						int agentID =  ((Agent<myPoint>)this.groups.get(groupID).getAgents().values().toArray()[agentNum]).getId();
+						int agentID =  this.groups.get(groupID).getAgents().elementAt(agentNum).getId();
 						myPoint point = coordinates.get(agentNum);
 						if (timeStep == path.size() - 1){
 							TableKeyInterface<myPoint> tableKey = new TableKey(point.getX(),point.getY(),realTimeStep);
@@ -85,19 +96,21 @@ public class GroupsManager implements  GroupsManagerInterface<StateInterface<myP
 						else{
 							myPoint oldSpot =  path.get(timeStep + 1).get_Coordinates().get(agentNum);
 							TableKeyInterface<myPoint> tableKey = new TableKey(point.getX(),point.getY(),realTimeStep);
-							int conflict = isLegal(oldSpot,point,timeStep,conflictsTable);
+							int conflict = isLegal(oldSpot,point,realTimeStep,conflictsTable);
 							if (conflict == -1){
 								conflictsTable.put(tableKey, agentID);
 							}
-							else{
+							else{								
 								res[0] = conflict;
 								res[1] = agentID;
+								MyLogger.getInstance().info("Conflict was found between agent " + res[0] + " and agent " + res[1]);
 								return res;
 							}
 						}
 					}
 				}
 			}
+			MyLogger.getInstance().info("Conflicts table after group " + groupID + "\n" + printConflictsTable(conflictsTable));
 		}
 		return res;
 	}
@@ -106,16 +119,17 @@ public class GroupsManager implements  GroupsManagerInterface<StateInterface<myP
 	public void mergeGroups(int firstIndex, int secondIndex) {
 		int firstID = agents.get(firstIndex).getgroupID();
 		int secondID = agents.get(secondIndex).getgroupID();
+		MyLogger.getInstance().info("Merging groups " + firstID + " and " + secondID);
 		Group<myPoint> first = groups.get(firstID);
 		Group<myPoint> second = groups.get(secondID);
 		int groupId = IDGenerator.getInstance().NextID();
 		Group<myPoint> newGroup = new Group<myPoint>(groupId);
-		for (Agent<myPoint> agentID : first.getAgents().values()){
-			newGroup.addAgent(agentID);
+		for (Agent<myPoint> tAgent : first.getAgents()){
+			newGroup.addAgent(tAgent);
 			
 		}
-		for (Agent<myPoint> agentID : second.getAgents().values()){
-			newGroup.addAgent(agentID);
+		for (Agent<myPoint> tAgent : second.getAgents()){
+			newGroup.addAgent(tAgent);
 		}
 		this.groups.remove(firstID);
 		this.groups.remove(secondID);
@@ -133,6 +147,7 @@ public class GroupsManager implements  GroupsManagerInterface<StateInterface<myP
 		TableKey spotafter = new TableKey(move.getX(), move.getY(), timeStep + 1); // where this agent will be if it takes the move after the move
 		TableKey spotbefore = new TableKey(move.getX(),move.getY(),timeStep); // the place where the agent is going before it takes the move
 		TableKey mySpotafter = new TableKey(myPosition.getX(), myPosition.getY(), timeStep + 1); // my old position after i moved
+		//MyLogger.getInstance().info("Check if move from " + toString() + " to " + move.toString() )
 		if (table.containsKey(spotafter)){
 			return table.get(spotafter);
 		}
@@ -151,40 +166,74 @@ public class GroupsManager implements  GroupsManagerInterface<StateInterface<myP
 			return -1;
 	}
 
-	public Vector<StateInterface<myPoint>> mergeAllPaths(){
-		
-		
-		return null;
-	}
+
 
 	@Override
 	public Vector<StateInterface<myPoint>> combineAllPaths() {
 		int numOfAgents = agents.size();
 		Vector<StateInterface<myPoint>> res = new Vector<StateInterface<myPoint>>();
-		float allCost = 0;
 		int longestPath = 0;
 		for (Group<myPoint> tGroup : groups.values()){
 			int tSize = tGroup.getPath().size();
 			longestPath = longestPath < tSize ? tSize : longestPath;
 		}
 		for (int step = 0; step < longestPath;step++){
-			//StateInterface<myPoint> tState = new myState();
+
 			float tHeuristic = 0;
 			float tCost = 0;
-			Vector<myPoint> tCoordinates = new Vector<myPoint>();
-			for (int agentId = 0; agentId < numOfAgents ; agentId++){
-				Agent<myPoint> tAgent = agents.get(agentId);
-				int tGroupId = tAgent.getgroupID();
-				int tPlaceInVector = tAgent.getPlaceInVector();
-				int tPathLength = groups.get(tGroupId).getPath().size();
-				int diff = longestPath - tPathLength;
-				if (step < diff){ //padding
-					myPoint agentLocation = groups.get(tGroupId).getPath().get(0).get_Coordinates().elementAt(tPlaceInVector);
+			Vector<myPoint> tCoordinates = new Vector<myPoint>(numOfAgents);
+			for (int j = 0; j < numOfAgents;j++){
+				tCoordinates.add(null);
+			}
+			for (Group<myPoint> tGroup : groups.values()){
+				int diff = longestPath - tGroup.getPath().size();
+				StateInterface<myPoint> tState;
+				if (step < diff){
+					tState= tGroup.getPath().elementAt(0);
 
 				}
+				else{
+					tState= tGroup.getPath().elementAt(step - diff);
+				}
+				tHeuristic += tState.get_heuristic();
+				tCost += tState.get_cost();
+				for (int i = 0; i < tState.get_Coordinates().size();i++){
+					myPoint tPoint = tState.get_Coordinates().elementAt(i);
+					int tAgentID = tGroup.getAgents().elementAt(i).getId();
+					tCoordinates.setElementAt(tPoint,tAgentID);
+					
+				}
+
 			}
+			StateInterface<myPoint> newState = new myState(tCoordinates,null);
+			newState.set_heuristic(tHeuristic);
+			newState.set_cost(tCost);
+			res.add(newState);
 		}
-		return null;
+		return res;
+	}
+	public String printConflictsTable(Map<TableKeyInterface<myPoint>,Integer> ctable){
+		String res = "";
+		for (TableKeyInterface<myPoint> key : ctable.keySet()){
+			res += "X: " + key.getCoordinates().getX() + " Y: " + key.getCoordinates().getY() + " T: " + key.getT() + " Agent: " + ctable.get(key) + "\n";
+		}
+		return res;
+	}
+
+	@Override
+	public void addListener(ApplicationEventListener listener) {
+		this._listeners.add(listener);
+		
+	}
+	@Override
+	public void removeListener(ApplicationEventListener listener) {
+		this._listeners.remove(listener);
+		
+	}
+	@Override
+	public void clearListeners() {
+		this._listeners.clear();
+		
 	}
 
 }

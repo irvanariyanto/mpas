@@ -28,6 +28,7 @@ import EventMechanism.Events.ClosedListChangeEvent;
 import EventMechanism.Events.OpenListChangeEvent;
 import EventMechanism.Events.PathNotFoundEvent;
 import EventMechanism.Events.ReservationTableUpdateEvent;
+import EventMechanism.Events.SIDGroupSearchEvent;
 import EventMechanism.Events.SingleAgentSearchEvent;
 import EventMechanism.Events.finalPathEvent;
 import EventMechanism.Events.removeFromOpenListEvent;
@@ -57,13 +58,16 @@ public class GUIController {
 	private boolean _writeToTables = false;
 	private boolean _animation = false;
 	private boolean _animatedPath = false;
+	private boolean isSID = false;
 	private int _agentNum; //used for color selection for each single A* run inside the CA* algorithm
-	
+	private Vector<Integer> _currentAgents; //used for coloring in SIDA*
 	public GUIController(){
 		_controller = new GridController();
 		_firstStep = true;	
 		_gridSize = defaultsValues.GridSize;
 		this._agentNum = 1;
+		this._currentAgents = new Vector<Integer>();
+		this._currentAgents.add(0);
 		this._controller.addListener(new ApplicationEventListener() {
 			
 			@Override
@@ -194,9 +198,16 @@ public class GUIController {
 							if (v.size() == 1){
 								currentAgent = "agent" + _agentNum;
 							}
+							if (isSID){
+								currentAgent = "agent" + (_currentAgents.elementAt(i) + 1);
+							}
 							_main.getMainPanel().getGridPanel().animateCell(p.getX(), p.getY(),ColorManager.getInstance().getColor(currentAgent));
 						}
 					}
+				}
+				else if (event instanceof SIDGroupSearchEvent){
+					SIDGroupSearchEvent e = (SIDGroupSearchEvent)event;
+					GUIController.this._currentAgents = e.getAgents();
 				}
 			}
 		});
@@ -220,6 +231,12 @@ public class GUIController {
 	
 	public void cAlgorithmActionPerformed(ActionEvent evt) {
 		_algorithmChosen = this._main.getMainPanel().getConfiguarationPanel().getSettingsPanel().getAlgorithm();
+		if (_algorithmChosen.equals("AStarSID")){
+			isSID = true;
+		}
+		else{
+			isSID = false;
+		}
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableFindPathButton(true);
 		this._main.getMainPanel().getConfiguarationPanel().getControlPanel().enableClearPathButton(false);
 		init_controller(_algorithmChosen,_heuristicChosen,_directionChosen,_numberOfAgents,_gridSize);
@@ -650,7 +667,12 @@ public class GUIController {
 		this._main.getMainPanel().getGridPanel().clearFinalPath();
 	}
 
-	
+	public boolean getIsSID(){
+		return this.isSID;
+	}
+	public void setIsSID(boolean value){
+		this.isSID = value;
+	}
 
 
 
