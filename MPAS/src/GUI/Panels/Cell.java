@@ -278,7 +278,7 @@ public class Cell extends Component implements ApplicationEventSource {
 		Composite alphaComp = AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, alpha);	
 		if(this._tileStatuses.size()== 1 && (this._tileStatuses.elementAt(0).getStatus()==Status.Empty) || this._tileStatuses.elementAt(0).getStatus()==Status.Blocked){
 			SetColorByStatus(g, this._tileStatuses.elementAt(0));
-			g.fillRect(0, 0, size.width - 1, size.height - 1);			
+			g.fillRect(0, 0, size.width - 1, size.height - 1);		//initialize grid	
 		}
 		else{
 			for (int i = this._tileStatuses.size()-1; i > 0; i--) {
@@ -289,17 +289,17 @@ public class Cell extends Component implements ApplicationEventSource {
 					g2d.setComposite(oldComp);
 					g.fillRect(0, 0, size.width - 1, size.height - 1);
 				}
-				if (tStatus.getStatus() == Status.Path){
-					g.fillRect(0, 0, size.width - 1, size.height - 1);
-				}
 				if (tStatus.getStatus() == Status.inOpenList || tStatus.getStatus() == Status.inClosedList){
 					g.fillRect(0, 0, size.width - 1, size.height - 1);
-				}				
+				}					
+				if (tStatus.getStatus() == Status.Path && !_animationwithIcon){
+					g.fillRect(0, 0, size.width - 1, size.height - 1);
+				}
 				if (tStatus.getStatus() == Status.Path && tStatus.getDirection() != null) {
 					g2d.setComposite(oldComp);
 					g.setColor(Color.black);
 					drawDircetions(g, tStatus.getDirection(), RectSize);
-				}
+				}			
 				if (tStatus.getStatus()== Status.Start && tStatus.getDirection() != null) {
 					g2d.setComposite(oldComp);
 					g.setColor(Color.black);
@@ -312,10 +312,6 @@ public class Cell extends Component implements ApplicationEventSource {
 				}
 				if (tStatus.getStatus() == Status.Start) {
 					g2d.setComposite(oldComp);
-					//TODO maybe remove...
-					if(_animationwithIcon){
-						g2d.setComposite(alphaComp);
-					}
 					if (RectSize.width > MINIMUM_SIZE && RectSize.height > MINIMUM_SIZE) {
 						BufferedImage carImage = loadImage(CarPath);
 						tint(carImage, Color.white, ColorManager.getInstance().getColor("agent" + tStatus.getAgnetNum()));
@@ -325,24 +321,7 @@ public class Cell extends Component implements ApplicationEventSource {
 						g2d.setColor(Color.green);
 						g2d.fillRect(0, 0, size.width - 1, size.height - 1);
 					}
-					g2d.setComposite(oldComp);
-					
-				}
-				if (tStatus.getStatus()== Status.Path && _animationwithIcon ) {
-					if (!isStatusesContains(Status.Finish, tStatus.getAgnetNum())){
-						g2d.setComposite(oldComp);
-						g.setColor(Color.white);
-						g.fillRect(0, 0, size.width - 1, size.height - 1);		
-						if (RectSize.width > MINIMUM_SIZE && RectSize.height > MINIMUM_SIZE) {
-							BufferedImage carImage = loadImage(CarPath);
-							tint(carImage, Color.white, ColorManager.getInstance().getColor("agent" + tStatus.getAgnetNum()));
-							g.drawImage(carImage, 2, 2, RectSize.width,RectSize.height, this);
-						}
-						else{
-							g2d.setColor(Color.green);
-							g2d.fillRect(0, 0, size.width - 1, size.height - 1);
-						}
-					}
+					g2d.setComposite(oldComp);					
 				}
 				if (tStatus.getStatus()== Status.Finish ) {
 					g2d.setComposite(oldComp);
@@ -356,6 +335,36 @@ public class Cell extends Component implements ApplicationEventSource {
 						g2d.fillRect(0, 0, size.width - 1, size.height - 1);
 					}
 				}
+				if (tStatus.getStatus()== Status.Path && _animationwithIcon ) {					
+					if (!isStatusesContains(Status.Finish, tStatus.getAgnetNum())){
+						g2d.setComposite(oldComp);
+						g.setColor(Color.white);
+						g.fillRect(0, 0, size.width - 1, size.height - 1);		
+						SetColorByStatus(g, tStatus);	
+						g2d.setComposite(alphaComp);
+						g.fillRect(0, 0, size.width - 1, size.height - 1);	
+						g2d.setComposite(oldComp);
+						if (RectSize.width > MINIMUM_SIZE && RectSize.height > MINIMUM_SIZE) {
+							BufferedImage carImage = loadImage(CarPath);
+							tint(carImage, Color.white, ColorManager.getInstance().getColor("agent" + tStatus.getAgnetNum()));
+							g.drawImage(carImage, 2, 2, RectSize.width,RectSize.height, this);
+						}
+						else{
+							g2d.setColor(Color.green);
+							g2d.fillRect(0, 0, size.width - 1, size.height - 1);
+						}
+					}
+					else{//finish & path
+						g2d.setComposite(oldComp);
+						g.setColor(Color.white);
+						g.fillRect(0, 0, size.width - 1, size.height - 1);		
+						SetColorByStatus(g, tStatus);	
+						g2d.setComposite(alphaComp);
+						g.fillRect(0, 0, size.width - 1, size.height - 1);	
+						g2d.setComposite(oldComp);
+					}
+				}
+				
 				
 			}//end of for
 			
@@ -423,7 +432,7 @@ public class Cell extends Component implements ApplicationEventSource {
 		return res;
 	}
 
-	private boolean isStatusesContains( Status status, int agnet){
+	public boolean isStatusesContains( Status status, int agnet){
 		boolean res = false;
 		for (int i=0; i< this._tileStatuses.size(); i++){
 			TileStatus tileStatuses  = this._tileStatuses.elementAt(i);
@@ -468,12 +477,8 @@ public class Cell extends Component implements ApplicationEventSource {
 			g.setColor(tColor);
 		}
 		if (tStatus.equals(Status.Path)) {
-			if (_animationwithIcon) {
-				g.setColor(Color.white);
-			} else {
-				Color tColor = ColorManager.getInstance().getColor("agent" + tileStatus.getAgnetNum());
-				g.setColor(tColor);
-			}
+			Color tColor = ColorManager.getInstance().getColor("agent" + tileStatus.getAgnetNum());
+			g.setColor(tColor);
 		}
 
 	}

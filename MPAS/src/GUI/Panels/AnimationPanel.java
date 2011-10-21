@@ -75,7 +75,11 @@ public class AnimationPanel extends JPanel {
 			}
 		});
 		
-		
+		/*_withAnimation.addActionListener(new  ActionListener() {
+			public void actionPerformed( ActionEvent evt) {	
+				_guiController.setWithAnimatedPath(((JCheckBoxMenuItem)evt.getSource()).isSelected());		
+				}		
+		});*/
 		_bPrevious.addActionListener(new  ActionListener() {
 	    	 public void actionPerformed( ActionEvent evt) {
 	    		 _guiController.bPreviousActionPerformed(evt);
@@ -112,6 +116,7 @@ public class AnimationPanel extends JPanel {
 		_speedPanel.add(_lSpeed);
 		this.add(_playerPanel);
 		this.add(_speedPanel);	
+		//this.add(_withAnimation);
 	}
 	
 	public void setSpeedLabel(String string) {
@@ -133,17 +138,17 @@ public class AnimationPanel extends JPanel {
 		this._bNext.setEnabled(bool);	
 		this._bPause.setEnabled(bool);	
 		this._sAnimationSpeed.setEnabled(bool);	
-	//	this._withAnimation.setEnabled(bool);	
+		//this._withAnimation.setEnabled(bool);	
 	}
 
 
 	/*public void setAnimationCheckBox(boolean b) {
 		this._withAnimation.setSelected(b);
-		this._guiController.withAnimatedPath(b);
-	}*/
+		this._guiController.setWithAnimatedPath(b);
+	}
 
 
-	/*public boolean getIsSelectedCheckBox() {
+	public boolean getIsSelectedCheckBox() {
 		return this._withAnimation.isSelected();
 	}*/
 

@@ -36,7 +36,7 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	private myPoint[] _finishes = new myPoint[NUM_OF_AGENT];
 	private Vector<myPoint> _blockList;
 	private Vector<Vector<myPoint>> _finalPaths;
-	private int _finalPathStep = 0;
+	private int _finalPathStep = 1;
 	// End of variables declaration
 
 	// animation addition
@@ -170,21 +170,16 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	 */
 	public void setStartCell(myPoint p, int agentNumber) {
 		if (this._starts[agentNumber - 1] == null) {
-			if (!this.get_startsList().contains(p)
-					&& (!this.get_blockList().contains(p))) {
+			if (!this.get_startsList().contains(p) && (!this.get_blockList().contains(p))) {
 				this._starts[agentNumber - 1] = p;
-				this._grid[p.getX()][p.getY()].addTileStatus(Status.Start,
-						agentNumber);
+				this._grid[p.getX()][p.getY()].addTileStatus(Status.Start,agentNumber);
 			}
 		} else {
 
-			if (!this.get_startsList().contains(p)
-					&& (!this.get_blockList().contains(p))) {
-				this._grid[this._starts[agentNumber - 1].getX()][this._starts[agentNumber - 1]
-						.getY()].removeTileStatus(Status.Start);
+			if (!this.get_startsList().contains(p) && (!this.get_blockList().contains(p))) {
+				this._grid[this._starts[agentNumber - 1].getX()][this._starts[agentNumber - 1].getY()].removeTileStatus(Status.Start);
 				this._starts[agentNumber - 1] = p;
-				this._grid[p.getX()][p.getY()].addTileStatus(Status.Start,
-						agentNumber);
+				this._grid[p.getX()][p.getY()].addTileStatus(Status.Start,agentNumber);
 			}
 		}
 		repaint();
@@ -462,10 +457,9 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	}
 
 	public void drawFinalPathCell(int x, int y, int agent) {
-		// if(this._grid[x][y].getTileStatusAt(0) != Status.Start &&
-		// this._grid[x][y].getTileStatusAt(0) != Status.Finish ){
-		this._grid[x][y].addTileStatus(Status.Path, agent);
-		// }
+		if(!this._grid[x][y].isStatusesContains(Status.Path, agent)){
+			this._grid[x][y].addTileStatus(Status.Path, agent);
+		}
 		repaint();
 	}
 
@@ -530,29 +524,24 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 			step = 1;
 		}
 		if (_finalPaths != null && !_finalPaths.isEmpty()) {
-			// Vector<myPoint> prevStep = getFinalStep(step-1);
 			for (int i = 0; i < _finalPaths.size(); i++) {
 				Vector<myPoint> tAgentPath = _finalPaths.elementAt(i);
 				myPoint p = tAgentPath.elementAt(step);
 				myPoint prevP = tAgentPath.elementAt(step-1);
 				int agentNum = i + 1;
 				if(!p.equals(prevP)){
-					this._grid[p.getX()][p.getY()].removeTileStatus(Status.Path,agentNum);
+					if(this._grid[p.getX()][p.getY()].getAnimationwithIcon()){
+						this._grid[p.getX()][p.getY()].setAnimationwithIcon(false);
+						//this._grid[p.getX()][p.getY()].removeTileStatus(Status.Start,agentNum);
+					}
+					//to remove the car from start
 				}
-
-				/*
-				 * if(this._grid[p.getX()][p.getY()].getTileStatusAt(0) !=
-				 * Status.Finish &&
-				 * this._grid[p.getX()][p.getY()].getTileStatusAt(0) !=
-				 * Status.Start){
-				 * this._grid[p.getX()][p.getY()].removeTileStatus(Status.Path);
-				 * this
-				 * ._grid[p.getX()][p.getY()].removeTileStatus(Status.Start); }
-				 */
 			}
 		}
 		repaint();
 	}
+	
+	
 
 	public void removeTileStatus(Vector<myPoint> oldState, Status status) {
 		for (int i = 0; i < oldState.size(); i++) {
@@ -582,7 +571,7 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 					clearOneFinalStep(i);
 				}
 			}
-			drawOneFinalStep(_finalPaths.elementAt(0).size() - 1);
+			drawOneFinalStep(_finalPaths.elementAt(0).size());
 			_finalPathStep = 0;
 		}
 	}
@@ -606,12 +595,12 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	public void drawNextFinalStep() {
 		if (_finalPaths != null && !_finalPaths.isEmpty()) {
 			int tSize = _finalPaths.elementAt(0).size();
-			if (_finalPathStep < tSize) {
+			if (_finalPathStep+1 < tSize) {
 				_finalPathStep++;
-				drawOneFinalStep(tSize - _finalPathStep);
-				if (_finalPathStep != 1) {
-					clearOneFinalStep(tSize - _finalPathStep + 1);
-				}
+				drawOneFinalStep(tSize - _finalPathStep-1);
+				//if (_finalPathStep != 1) {
+				clearOneFinalStep(tSize - _finalPathStep );
+				//}
 			} else {
 				_finalPathStep = 0;
 			}
