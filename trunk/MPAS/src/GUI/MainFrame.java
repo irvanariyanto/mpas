@@ -202,7 +202,7 @@ public class MainFrame extends JFrame {
 					_animationDialog= new AnimationDialog(MainFrame.this,_guiController);
 				}
 				_animationDialog.setVisible(true);
-				_animationDialog.getAnimationPanel().enablePanel(false);	
+				//_animationDialog.getAnimationPanel().enablePanel(false);	
 				_guiController.setWithAnimatedPath(true);
 			}
 		});
