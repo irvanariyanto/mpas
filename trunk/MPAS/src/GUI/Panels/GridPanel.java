@@ -36,7 +36,7 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	private myPoint[] _finishes = new myPoint[NUM_OF_AGENT];
 	private Vector<myPoint> _blockList;
 	private Vector<Vector<myPoint>> _finalPaths;
-	private int _finalPathStep = 1;
+	private int _finalPathStep = 0;
 	// End of variables declaration
 
 	// animation addition
@@ -534,14 +534,11 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 						this._grid[p.getX()][p.getY()].setAnimationwithIcon(false);
 						//this._grid[p.getX()][p.getY()].removeTileStatus(Status.Start,agentNum);
 					}
-					//to remove the car from start
 				}
 			}
 		}
 		repaint();
 	}
-	
-	
 
 	public void removeTileStatus(Vector<myPoint> oldState, Status status) {
 		for (int i = 0; i < oldState.size(); i++) {
@@ -571,7 +568,7 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 					clearOneFinalStep(i);
 				}
 			}
-			drawOneFinalStep(_finalPaths.elementAt(0).size());
+			drawOneFinalStep(_finalPaths.elementAt(0).size() - 1);
 			_finalPathStep = 0;
 		}
 	}
@@ -595,12 +592,15 @@ public class GridPanel extends JPanel implements ApplicationEventSource {
 	public void drawNextFinalStep() {
 		if (_finalPaths != null && !_finalPaths.isEmpty()) {
 			int tSize = _finalPaths.elementAt(0).size();
-			if (_finalPathStep+1 < tSize) {
+			if (_finalPathStep < tSize) {
 				_finalPathStep++;
-				drawOneFinalStep(tSize - _finalPathStep-1);
-				//if (_finalPathStep != 1) {
-				clearOneFinalStep(tSize - _finalPathStep );
-				//}
+				drawOneFinalStep(tSize - _finalPathStep);
+				if (_finalPathStep != 1) {
+					clearOneFinalStep(tSize - _finalPathStep + 1);
+				}
+				if (_finalPathStep == tSize) {
+					clearOneFinalStep(0);
+				}
 			} else {
 				_finalPathStep = 0;
 			}
