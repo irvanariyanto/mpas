@@ -323,6 +323,26 @@ public class Cell extends Component implements ApplicationEventSource {
 					}
 					g2d.setComposite(oldComp);					
 				}
+				if (tStatus.getStatus()== Status.Path && _animationwithIcon ) {					
+						//g2d.setComposite(oldComp);
+						//g.setColor(Color.white);
+						//g.fillRect(0, 0, size.width - 1, size.height - 1);		
+						SetColorByStatus(g, tStatus);	
+						g2d.setComposite(alphaComp);
+						g.fillRect(0, 0, size.width - 1, size.height - 1);	
+						g2d.setComposite(oldComp);
+						if (!isStatusesContains(Status.Finish, tStatus.getAgnetNum())){
+							if (RectSize.width > MINIMUM_SIZE && RectSize.height > MINIMUM_SIZE) {
+								BufferedImage carImage = loadImage(CarPath);
+								tint(carImage, Color.white, ColorManager.getInstance().getColor("agent" + tStatus.getAgnetNum()));
+								g.drawImage(carImage, 2, 2, RectSize.width,RectSize.height, this);
+							}
+							else{
+								g2d.setColor(Color.green);
+								g2d.fillRect(0, 0, size.width - 1, size.height - 1);
+							}
+						}
+				}
 				if (tStatus.getStatus()== Status.Finish ) {
 					g2d.setComposite(oldComp);
 					if (RectSize.width > MINIMUM_SIZE && RectSize.height > MINIMUM_SIZE) {
@@ -335,36 +355,6 @@ public class Cell extends Component implements ApplicationEventSource {
 						g2d.fillRect(0, 0, size.width - 1, size.height - 1);
 					}
 				}
-				if (tStatus.getStatus()== Status.Path && _animationwithIcon ) {					
-					if (!isStatusesContains(Status.Finish, tStatus.getAgnetNum())){
-						g2d.setComposite(oldComp);
-						g.setColor(Color.white);
-						g.fillRect(0, 0, size.width - 1, size.height - 1);		
-						SetColorByStatus(g, tStatus);	
-						g2d.setComposite(alphaComp);
-						g.fillRect(0, 0, size.width - 1, size.height - 1);	
-						g2d.setComposite(oldComp);
-						if (RectSize.width > MINIMUM_SIZE && RectSize.height > MINIMUM_SIZE) {
-							BufferedImage carImage = loadImage(CarPath);
-							tint(carImage, Color.white, ColorManager.getInstance().getColor("agent" + tStatus.getAgnetNum()));
-							g.drawImage(carImage, 2, 2, RectSize.width,RectSize.height, this);
-						}
-						else{
-							g2d.setColor(Color.green);
-							g2d.fillRect(0, 0, size.width - 1, size.height - 1);
-						}
-					}
-					else{//finish & path
-						g2d.setComposite(oldComp);
-						g.setColor(Color.white);
-						g.fillRect(0, 0, size.width - 1, size.height - 1);		
-						SetColorByStatus(g, tStatus);	
-						g2d.setComposite(alphaComp);
-						g.fillRect(0, 0, size.width - 1, size.height - 1);	
-						g2d.setComposite(oldComp);
-					}
-				}
-				
 				
 			}//end of for
 			
@@ -454,7 +444,7 @@ public class Cell extends Component implements ApplicationEventSource {
 
 	private void SetColorByStatus(Graphics g, TileStatus tileStatus) {
 		Status tStatus = tileStatus.getStatus(); 
-		if (tStatus.equals(Status.Empty)) {
+		if (tStatus.equals(Status.Empty) ) {
 			g.setColor(Color.white);
 		}
 		if (tStatus.equals(Status.Start)) {
